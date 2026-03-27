@@ -1,0 +1,94 @@
+{
+  "prototype_version": "0.1",
+  "examples": {
+    "new_policy_intake_request": {
+      "request_type": "net_new",
+      "document_type": "Policy",
+      "title": "Third-Party Compliance Oversight Policy",
+      "business_need": "Create a Block-level policy for oversight of third-party compliance obligations.",
+      "regulatory_trigger": "Expanded regulator focus on third-party risk management controls",
+      "compliance_domain": "Compliance Governance",
+      "affected_entities": [
+        "Block",
+        "Cash App",
+        "Square"
+      ],
+      "owner": "Global Compliance Policy Lead",
+      "delegate": "Third-Party Risk Program Manager",
+      "stakeholders": [
+        "Legal Counsel",
+        "Consumer Protection",
+        "Anti-Financial Crimes",
+        "Compliance Engineering & Technology"
+      ]
+    },
+    "intake_agent_output": {
+      "recommendation": "Create new Policy",
+      "rationale": [
+        "No existing Block-level policy covers the full scope",
+        "Existing standards are narrower and operational"
+      ],
+      "overlap_risks": [
+        "Existing vendor due diligence standard partially overlaps control language"
+      ],
+      "next_step": "Proceed to Tollgate 1 review with governance metadata assignment"
+    },
+    "qc_checklist_output": {
+      "qc_status": "return_to_owner",
+      "findings": [
+        {
+          "severity": "medium",
+          "issue": "Related Standards section is incomplete"
+        },
+        {
+          "severity": "medium",
+          "issue": "Record retention section does not yet specify regulatory retention overlap"
+        },
+        {
+          "severity": "low",
+          "issue": "Scope section does not list all relevant entities"
+        }
+      ],
+      "required_remediation": [
+        "Add related Standard references",
+        "Confirm retention language with Legal Counsel",
+        "Update scope list with Owner-confirmed entities"
+      ]
+    },
+    "approval_route_output": {
+      "tier": "Tier 2",
+      "approver_list": [
+        "Owner attestation complete",
+        "Compliance Leadership",
+        "Compliance Policy Committee"
+      ],
+      "required_attachments": [
+        "Clean document",
+        "Redline copy",
+        "Change summary",
+        "Revision and approval history update"
+      ]
+    },
+    "deferment_request": {
+      "logicgate_record_id": "POL-001245",
+      "document_title": "Third-Party Compliance Oversight Policy",
+      "current_review_due_date": "2026-09-15",
+      "requested_extension_days": 45,
+      "reason": "Pending regulator guidance and dependency on enterprise third-party inventory redesign",
+      "owner": "Global Compliance Policy Lead",
+      "leadership_approval_required": true
+    },
+    "exception_record": {
+      "logicgate_record_id": "STD-00918",
+      "document_title": "Transaction Monitoring Standard",
+      "exception_reason": "Legacy tooling cannot meet new review cadence for one region until migration is complete",
+      "mitigating_controls": [
+        "Manual review escalation",
+        "Weekly QA sample",
+        "Regional leadership oversight"
+      ],
+      "requested_start_date": "2026-05-01",
+      "requested_end_date": "2026-08-31"
+    }
+  }
+}

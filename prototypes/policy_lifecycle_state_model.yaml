@@ -1,0 +1,196 @@
+prototype_version: 0.1
+workflow_name: Block Policy Lifecycle
+system_of_record: LogicGate
+
+record_types:
+  - Policy
+  - Standard
+
+global_rules:
+  - "Procedures may be linked, but are not governed by the Policy Team under this workflow."
+  - "Net new documents must pass intake review and conflict checking before drafting."
+  - "Owner attestation is required before formal approvals."
+  - "Publication requires approval evidence plus redline or detailed change summary."
+  - "Material changes preserve approval routing and revision history requirements."
+
+stages:
+  - id: trigger
+    label: Trigger
+    description: "Need identified through regulatory event, annual review, audit, gap, change request, or retirement need."
+    allowed_next:
+      - intake_requested
+
+  - id: intake_requested
+    label: Tollgate 1 Requested
+    description: "Owner submits intake or off-cycle request."
+    required_fields:
+      - request_type
+      - document_type
+      - business_need
+      - compliance_domain
+      - owner
+    allowed_next:
+      - intake_review
+
+  - id: intake_review
+    label: Tollgate 1 Review
+    description: "Governance confirms in-scope type, overlap analysis, hierarchy fit, and drafting path."
+    decisions:
+      - reuse_existing_document
+      - revise_existing_document
+      - create_new_standard
+      - create_new_policy
+      - reject_or_rework_request
+    allowed_next:
+      - drafting
+      - closed_no_action
+
+  - id: drafting
+    label: Tollgate 2 Drafting
+    description: "Owner or Delegate drafts using approved template and gathers related materials."
+    required_fields:
+      - template_type
+      - draft_link
+      - related_documents
+      - owner_or_delegate
+    allowed_next:
+      - stakeholder_review
+
+  - id: stakeholder_review
+    label: Stakeholder Review
+    description: "Owner gathers legal and stakeholder feedback and preserves redline history."
+    required_fields:
+      - stakeholder_list
+      - redline_link
+      - feedback_summary
+    allowed_next:
+      - qc_review
+
+  - id: qc_review
+    label: Tollgate 3 QC Review
+    description: "Policy Team executes the QC checklist."
+    required_fields:
+      - qc_checklist_status
+      - required_sections_complete
+    decisions:
+      - pass_qc
+      - return_to_owner_for_updates
+    allowed_next:
+      - owner_attestation
+      - drafting
+
+  - id: owner_attestation
+    label: Owner Attestation
+    description: "Owner attests to document content and approval package readiness."
+    required_fields:
+      - owner_attested
+      - clean_copy_link
+      - redline_or_change_summary_link
+    allowed_next:
+      - approval_routing
+
+  - id: approval_routing
+    label: Tollgate 4 Approval Routing
+    description: "Document follows Tier 1, Tier 2, or Tier 3 approval path."
+    required_fields:
+      - tier
+      - approver_list
+      - approval_packet_link
+    decisions:
+      - approved
+      - rejected
+      - needs_revision
+    allowed_next:
+      - publication_ready
+      - drafting
+
+  - id: publication_ready
+    label: Publication Ready
+    description: "Final approval evidence received and record is ready for SOR publication."
+    required_fields:
+      - approval_evidence
+      - revision_history_updated
+      - effective_date
+    allowed_next:
+      - published
+
+  - id: published
+    label: Published
+    description: "Published in LogicGate SOR and Go/Policy."
+    required_fields:
+      - publication_date
+      - next_review_date
+    allowed_next:
+      - implementation
+      - maintenance
+
+  - id: implementation
+    label: Implementation and Awareness
+    description: "Owner drives implementation plan, awareness, and training activity."
+    allowed_next:
+      - maintenance
+
+  - id: maintenance
+    label: Maintenance
+    description: "Annual review, off-cycle changes, exceptions, deferments, or retirement."
+    decisions:
+      - immaterial_change
+      - material_change
+      - deferment
+      - exception
+      - retirement
+      - no_change_after_review
+    allowed_next:
+      - intake_requested
+      - published
+      - retirement_review
+
+  - id: retirement_review
+    label: Retirement Review
+    description: "Retirement request follows required approval path and archival preparation."
+    allowed_next:
+      - archived
+
+  - id: archived
+    label: Archived
+    description: "Document removed from staff access and retained per retention rules."
+    allowed_next: []
+
+  - id: closed_no_action
+    label: Closed No Action
+    description: "Request resolved through existing coverage or rejected at intake."
+    allowed_next: []
+
+maintenance_rules:
+  immaterial_change:
+    approval_expectation: "Owner notifies Policy Team and receives acknowledgement."
+    records_required:
+      - revision_history_update
+  material_change:
+    approval_expectation: "Reapproval per Compliance Document Approval Matrix."
+    records_required:
+      - documented_approval
+      - detailed_redline_or_change_summary
+  deferment:
+    policy_team_authority: "Up to 30 days past scheduled review date"
+    leadership_required: "More than 30 days"
+    max_single_deferral: "6 months"
+  exception:
+    records_required:
+      - written_request
+      - rationale
+      - mitigating_controls
+      - written_approval
+  retirement:
+    records_required:
+      - retirement_rationale
+      - approval_evidence
+      - archival_package
+
+tier_rules:
+  tier_1:
+    summary: "Policies only, typically enterprise-wide or board-relevant."
+  tier_2:
+    summary: "Policies and Standards core to key compliance laws or brand-specific guidance."
+  tier_3:
+    summary: "Standards supporting day-to-day execution and operational activities."

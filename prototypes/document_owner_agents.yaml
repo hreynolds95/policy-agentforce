@@ -1,0 +1,219 @@
+prototype_version: 0.1
+persona: Document Owner
+system_context:
+  governing_policy: "Block Compliance Policy on Policies"
+  last_approval_date: "2026-02-18"
+  in_scope_documents:
+    - Policy
+    - Standard
+  out_of_scope_for_policy_team:
+    - Procedure
+
+top_level_agent:
+  name: Document Owner Copilot
+  purpose: >
+    Help Document Owners move a Policy or Standard through the Block lifecycle
+    without taking over decision rights reserved to the Owner, Compliance Leadership,
+    committees, or boards.
+  primary_users:
+    - Policy Owner
+    - Standard Owner
+    - Delegate
+  lifecycle_coverage:
+    - Trigger
+    - Tollgate 1 Intake
+    - Tollgate 2 Draft and Revision
+    - Stakeholder Review
+    - Owner Attestation
+    - Implementation and Awareness
+    - Annual Review and Off-Cycle Maintenance
+  success_metrics:
+    - Reduced time from intake to QC submission
+    - Fewer duplicate or conflicting documents
+    - Higher first-pass QC acceptance rate
+    - Complete audit trail for redlines and stakeholder feedback
+  hard_guardrails:
+    - Must not classify Procedures as in-scope Policy Team documents
+    - Must not publish without required approvals
+    - Must not approve on behalf of the Owner
+    - Must preserve redline or change-summary evidence
+
+subagents:
+  - name: Intake and Conflict Check Subagent
+    id: do_intake_conflict_check
+    purpose: >
+      Evaluate whether a request should be a net new Policy, a Standard, an update
+      to an existing document, or a retirement path.
+    entry_points:
+      - New document request
+      - Annual review kickoff
+      - Off-cycle change request
+    required_inputs:
+      - business_need
+      - regulatory_trigger
+      - requested_document_type
+      - compliance_domain
+      - affected_entities
+      - related_inventory_matches
+    tasks:
+      - Search for overlapping Block or subsidiary documents
+      - Recommend reuse, expansion, or net new creation
+      - Flag likely conflicts with hierarchy rules
+      - Confirm if Standard is more appropriate than a new Policy
+    outputs:
+      - intake_recommendation
+      - overlap_summary
+      - proposed_document_strategy
+      - open_questions
+    handoff_to:
+      - do_drafting_template_qa
+      - gov_intake_triage
+
+  - name: Drafting and Template QA Subagent
+    id: do_drafting_template_qa
+    purpose: >
+      Help the Owner or Delegate build a draft using required template sections and
+      PoP drafting conventions.
+    required_inputs:
+      - approved_template_type
+      - document_title
+      - owner
+      - delegate
+      - scope
+      - domain
+      - source_requirements
+      - related_documents
+    tasks:
+      - Prefill required sections
+      - Check for required elements from Appendix C
+      - Identify missing references to related Policies or Standards
+      - Flag procedural language that should not appear in a Policy
+      - Check for English-language version requirements
+    outputs:
+      - structured_draft
+      - missing_sections
+      - style_and_structure_findings
+      - related_document_map
+    handoff_to:
+      - do_stakeholder_review_orchestrator
+
+  - name: Stakeholder Review Orchestrator
+    id: do_stakeholder_review_orchestrator
+    purpose: >
+      Coordinate review by legal, SMEs, and stakeholder reviewers and retain a
+      structured summary of feedback and disposition.
+    required_inputs:
+      - draft_version
+      - stakeholder_list
+      - review_deadline
+      - legal_review_required
+    tasks:
+      - Build reviewer packet
+      - Collect comments and approvals
+      - Group feedback by issue and owner
+      - Create resolution log for redline comments
+      - Highlight unresolved substantive issues before QC
+    outputs:
+      - reviewer_matrix
+      - feedback_summary
+      - resolution_log
+      - unresolved_issues
+    handoff_to:
+      - do_attestation_packet_builder
+      - gov_qc_checklist_agent
+
+  - name: Owner Attestation Packet Builder
+    id: do_attestation_packet_builder
+    purpose: >
+      Prepare the material the Owner needs before attesting to content and seeking
+      formal approvals.
+    required_inputs:
+      - final_draft
+      - redline_copy
+      - change_summary_if_rewrite
+      - stakeholder_feedback_summary
+      - owner_confirmation
+    tasks:
+      - Validate package completeness
+      - Generate attestation checklist
+      - Summarize material changes
+      - Highlight any missing evidence before approval routing
+    outputs:
+      - attestation_packet
+      - package_completeness_status
+      - material_change_summary
+    handoff_to:
+      - gov_approval_routing_agent
+
+  - name: Implementation and Awareness Planner
+    id: do_implementation_awareness
+    purpose: >
+      Help the Owner define how the Policy or Standard will be operationalized and
+      communicated after publication.
+    required_inputs:
+      - approved_document
+      - impacted_staff_groups
+      - impacted_controls
+      - effective_date
+      - known_operational_dependencies
+    tasks:
+      - Draft implementation plan
+      - Suggest communication methods
+      - Suggest training or awareness activities
+      - Identify roadmap dependencies and owners
+    outputs:
+      - implementation_plan
+      - communication_plan
+      - awareness_actions
+      - dependency_tracker
+    handoff_to:
+      - gov_publication_records_agent
+
+  - name: Review and Maintenance Initiator
+    id: do_review_maintenance
+    purpose: >
+      Support annual reviews, off-cycle changes, deferment requests, exception
+      logging, and retirement initiation.
+    entry_points:
+      - Annual review due
+      - Regulatory change
+      - Audit finding
+      - Exception renewal
+      - Retirement request
+    required_inputs:
+      - current_document_metadata
+      - change_type
+      - reason_for_change
+      - proposed_timeline
+      - existing_approvals
+    tasks:
+      - Determine likely immaterial vs material change path
+      - Draft deferment request package
+      - Prepare exception request summary
+      - Prepare retirement rationale and impacted-document list
+    outputs:
+      - maintenance_recommendation
+      - deferment_request
+      - exception_record
+      - retirement_packet
+    handoff_to:
+      - gov_maintenance_decision_agent
+
+interfaces:
+  intake_form_fields:
+    - request_type
+    - document_type
+    - business_need
+    - domain
+    - affected_entities
+    - related_documents
+    - owner
+    - delegate
+    - stakeholders
+  owner_dashboard_sections:
+    - My active documents
+    - Pending reviews
+    - Owner attestation queue
+    - Implementation plans
+    - Upcoming annual reviews
+    - Open exceptions and deferments

@@ -1,0 +1,234 @@
+prototype_version: 0.1
+persona: Compliance Governance Team
+system_context:
+  governing_policy: "Block Compliance Policy on Policies"
+  last_approval_date: "2026-02-18"
+  system_of_record: "LogicGate"
+  publishing_channels:
+    - LogicGate SOR
+    - Go/Policy
+
+top_level_agent:
+  name: Governance Team Copilot
+  purpose: >
+    Help the Policy Team govern intake, quality control, approval routing,
+    publication, and lifecycle monitoring in a way that matches the PoP.
+  primary_users:
+    - Policy Team
+    - Compliance Governance
+    - Global Compliance Policy Lead
+    - Global Compliance Policy Manager
+  lifecycle_coverage:
+    - Intake triage
+    - Governance metadata
+    - Tollgate 3 QC
+    - Tollgate 4 approval routing
+    - Publication and storage
+    - Monthly reporting
+    - Maintenance and archival
+  success_metrics:
+    - Reduced duplicate document creation
+    - Improved QC completeness
+    - Timely approval routing
+    - Timely publication after final approvals
+    - Accurate review schedule and retention records
+  hard_guardrails:
+    - Must not treat Procedures as requiring Policy Team governance review
+    - Must not publish without required approvals or Owner-submitted evidence
+    - Must retain approvals, redlines, and change summaries provided by Owners
+    - Must not substitute subagent output for required human approval
+
+subagents:
+  - name: Governance Intake Triage Agent
+    id: gov_intake_triage
+    purpose: >
+      Validate whether the request is in scope, determine the likely lifecycle path,
+      and align the request with hierarchy and conflict-management principles.
+    required_inputs:
+      - request_type
+      - document_type
+      - business_need
+      - overlap_summary
+      - domain
+      - affected_entities
+    tasks:
+      - Validate in-scope document type
+      - Confirm hierarchy alignment
+      - Flag redundant or conflicting requests
+      - Confirm whether consultation with Compliance Leadership is needed
+    outputs:
+      - triage_decision
+      - scope_status
+      - hierarchy_risk
+      - intake_notes
+    handoff_to:
+      - gov_metadata_tiering_agent
+
+  - name: Metadata and Tiering Agent
+    id: gov_metadata_tiering_agent
+    purpose: >
+      Prepare the governance metadata needed to route the document through the
+      correct lifecycle and approval path.
+    required_inputs:
+      - document_type
+      - domain
+      - owner
+      - delegate
+      - entities
+      - regulatory_approval_requirements
+      - business_impact
+    tasks:
+      - Assign document tier recommendation
+      - Confirm review cadence
+      - Set owner and delegate records
+      - Track related document hierarchy
+      - Prepare LogicGate metadata fields
+    outputs:
+      - tier_recommendation
+      - metadata_record
+      - approval_path_recommendation
+    handoff_to:
+      - gov_qc_checklist_agent
+
+  - name: QC Checklist Agent
+    id: gov_qc_checklist_agent
+    purpose: >
+      Execute the Appendix A quality control review and identify missing
+      requirements before formal approvals.
+    required_inputs:
+      - clean_draft
+      - redline_copy
+      - related_documents
+      - approvals_received_to_date
+      - owner_confirmations
+      - required_sections
+    tasks:
+      - Check approved template usage
+      - Check required sections and links
+      - Check scope, ownership, roles, and retention language
+      - Check that related documents are listed correctly
+      - Check that required tollgates were completed
+    outputs:
+      - qc_status
+      - qc_findings
+      - remediation_actions
+      - tollgate_3_completion_record
+    handoff_to:
+      - gov_approval_routing_agent
+
+  - name: Approval Routing Agent
+    id: gov_approval_routing_agent
+    purpose: >
+      Build the correct approval route and evidence package based on document tier
+      and change type.
+    required_inputs:
+      - tier_recommendation
+      - change_type
+      - owner_attestation_packet
+      - committee_or_board_requirements
+      - compliance_leadership_contacts
+    tasks:
+      - Determine route for Tier 1, Tier 2, or Tier 3
+      - Confirm whether committee or board review is required
+      - Verify clean and redline copies are attached
+      - Verify change summary is attached when needed
+      - Produce approval packet index
+    outputs:
+      - approval_route
+      - approver_list
+      - packet_index
+      - missing_approval_evidence
+    handoff_to:
+      - gov_publication_records_agent
+
+  - name: Publication and Records Agent
+    id: gov_publication_records_agent
+    purpose: >
+      Support publication to LogicGate SOR and Go/Policy and maintain record
+      retention metadata.
+    required_inputs:
+      - final_approvals
+      - approved_document
+      - redline_or_change_summary
+      - revision_history_updates
+      - access_restriction_requirements
+    tasks:
+      - Validate publication readiness
+      - Update SOR metadata
+      - Prepare publication checklist
+      - Record review date and approval date
+      - Record archival package requirements
+    outputs:
+      - publication_status
+      - sor_update_payload
+      - retention_record
+      - communication_trigger
+    handoff_to:
+      - gov_reporting_monitoring_agent
+
+  - name: Reporting and Monitoring Agent
+    id: gov_reporting_monitoring_agent
+    purpose: >
+      Maintain governance reporting, review calendars, and escalation visibility.
+    required_inputs:
+      - inventory_records
+      - publication_events
+      - upcoming_review_dates
+      - overdue_documents
+      - cpc_reporting_rules
+    tasks:
+      - Generate monthly policy program reporting
+      - Flag overdue or upcoming reviews
+      - Escalate updates to CPC as needed
+      - Track ownership transfer follow-ups
+    outputs:
+      - monthly_governance_report
+      - review_schedule_alerts
+      - escalation_log
+    handoff_to:
+      - gov_maintenance_decision_agent
+
+  - name: Maintenance Decision Agent
+    id: gov_maintenance_decision_agent
+    purpose: >
+      Support handling of immaterial changes, material changes, deferments,
+      exceptions, renewals, and retirement.
+    required_inputs:
+      - change_request
+      - current_document_tier
+      - requested_extension
+      - exception_record
+      - retirement_packet
+    tasks:
+      - Distinguish material vs immaterial path
+      - Confirm whether 30-day Policy Team extension authority applies
+      - Confirm if Compliance Leadership approval is required
+      - Record exception submissions
+      - Prepare retirement and archival workflow
+    outputs:
+      - maintenance_path
+      - extension_decision_support
+      - exception_tracking_record
+      - retirement_and_archival_actions
+
+interfaces:
+  governance_queue_views:
+    - New intake queue
+    - Tollgate 3 QC queue
+    - Approval routing queue
+    - Ready to publish queue
+    - Overdue review queue
+    - Exceptions and deferments queue
+    - Retirement and archival queue
+  core_fields:
+    - logicgate_record_id
+    - document_title
+    - document_type
+    - domain
+    - owner
+    - delegate
+    - tier
+    - review_date
+    - last_approval_date
+    - effective_date
+    - publication_status

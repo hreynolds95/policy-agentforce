@@ -1,0 +1,154 @@
+<svg width="1440" height="1320" viewBox="0 0 1440 1320" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #f6f6f4; }
+      .panel { fill: #ffffff; stroke: #252525; stroke-width: 2; rx: 14; }
+      .panel-soft { fill: #fbfbfa; stroke: #6d6d6d; stroke-width: 1.5; rx: 12; }
+      .chip { fill: #ededed; stroke: #2f2f2f; stroke-width: 1.5; rx: 18; }
+      .title { font: 700 30px Arial, sans-serif; fill: #151515; }
+      .h1 { font: 700 22px Arial, sans-serif; fill: #151515; }
+      .h2 { font: 700 18px Arial, sans-serif; fill: #151515; }
+      .body { font: 14px Arial, sans-serif; fill: #333333; }
+      .small { font: 12px Arial, sans-serif; fill: #565656; }
+      .divider { stroke: #909090; stroke-width: 1.5; }
+      .dashed { stroke: #7b7b7b; stroke-width: 1.5; stroke-dasharray: 8 6; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1320"/>
+
+  <text class="title" x="40" y="48">Document Owner Pre-Submission QC Assistant</text>
+  <text class="small" x="40" y="72">Focused LogicGate screen for submitting drafted changes, running PoP tollgate checks, reviewing enhancements, and handing off into the standard approval workflow.</text>
+
+  <rect class="panel" x="32" y="100" width="1376" height="98"/>
+  <text class="h1" x="60" y="138">Third-Party Compliance Oversight Policy</text>
+  <text class="small" x="60" y="162">LogicGate record: POL-001245  |  Document type: Policy  |  Domain: Compliance Governance  |  Next review due: 2027-02-18</text>
+  <rect class="chip" x="1152" y="122" width="102" height="32"/>
+  <text class="body" x="1181" y="143">Tier 2</text>
+  <rect class="chip" x="1268" y="122" width="112" height="32"/>
+  <text class="body" x="1294" y="143">Draft check</text>
+
+  <rect class="panel" x="32" y="218" width="1376" height="104"/>
+  <text class="h2" x="60" y="252">Simple 4-step owner flow</text>
+  <line class="divider" x1="80" y1="286" x2="1360" y2="286"/>
+  <rect class="chip" x="84" y="270" width="238" height="32"/>
+  <text class="small" x="140" y="290">1. Upload drafted changes</text>
+  <rect class="chip" x="350" y="270" width="236" height="32"/>
+  <text class="small" x="409" y="290">2. Run PoP QC check</text>
+  <rect class="chip" x="614" y="270" width="286" height="32"/>
+  <text class="small" x="676" y="290">3. Review enhancements</text>
+  <rect class="chip" x="928" y="270" width="336" height="32"/>
+  <text class="small" x="998" y="290">4. Submit back to LogicGate flow</text>
+
+  <rect class="panel" x="32" y="342" width="396" height="860"/>
+  <text class="h1" x="60" y="378">1. Upload and confirm</text>
+
+  <rect class="panel-soft" x="60" y="398" width="340" height="108"/>
+  <text class="small" x="76" y="424">Draft package</text>
+  <text class="body" x="76" y="454">[ Upload clean draft ]</text>
+  <text class="body" x="76" y="482">[ Upload redline ]</text>
+  <text class="body" x="76" y="510">or [ Upload change summary for rewrite ]</text>
+
+  <rect class="panel-soft" x="60" y="522" width="340" height="128"/>
+  <text class="small" x="76" y="548">Auto-filled from LogicGate</text>
+  <text class="body" x="76" y="578">Owner ............. Global Compliance Policy Lead</text>
+  <text class="body" x="76" y="606">Delegate .......... Third-Party Risk Program Manager</text>
+  <text class="body" x="76" y="634">Domain ............ Compliance Governance</text>
+
+  <rect class="panel-soft" x="60" y="666" width="340" height="150"/>
+  <text class="small" x="76" y="692">Owner only answers 5 quick prompts</text>
+  <text class="body" x="76" y="722">1. What changed?</text>
+  <text class="body" x="76" y="748">2. Material or immaterial?</text>
+  <text class="body" x="76" y="774">3. Any new related Standards or Policies?</text>
+  <text class="body" x="76" y="800">4. Any retention or legal impact?</text>
+
+  <rect class="panel-soft" x="60" y="832" width="340" height="168"/>
+  <text class="small" x="76" y="858">Optional supporting evidence</text>
+  <text class="body" x="76" y="888">[ Upload stakeholder comments ]</text>
+  <text class="body" x="76" y="916">[ Upload legal review note ]</text>
+  <text class="body" x="76" y="944">[ Link related doc ]</text>
+  <text class="small" x="76" y="978">The system should not require these unless the PoP path calls for them.</text>
+
+  <rect class="panel-soft" x="60" y="1016" width="340" height="160"/>
+  <text class="small" x="76" y="1042">Run check</text>
+  <text class="body" x="76" y="1072">[ Run Policy-on-Policies QC ]</text>
+  <text class="body" x="76" y="1100">Expected output:</text>
+  <text class="body" x="76" y="1128">- required fixes</text>
+  <text class="body" x="76" y="1154">- recommended enhancements</text>
+
+  <rect class="panel" x="448" y="342" width="594" height="860"/>
+  <text class="h1" x="476" y="378">2. QC results and recommended enhancements</text>
+
+  <rect class="panel-soft" x="476" y="398" width="538" height="92"/>
+  <text class="small" x="492" y="424">PoP QC summary</text>
+  <text class="body" x="492" y="454">Ready score: 78%</text>
+  <text class="body" x="492" y="480">2 required fixes before Tollgate 3 handoff  |  4 recommended improvements</text>
+
+  <rect class="panel-soft" x="476" y="506" width="538" height="184"/>
+  <text class="small" x="492" y="532">Required fixes</text>
+  <text class="body" x="492" y="562">1. Related Documents section is incomplete for linked Standards</text>
+  <text class="body" x="492" y="592">Why it matters: Appendix A and C require related documents to be listed</text>
+  <text class="body" x="492" y="622">Recommended enhancement: add the overlapping vendor due diligence Standard</text>
+  <text class="body" x="492" y="662">2. Record Retention section is missing regulatory retention detail</text>
+
+  <rect class="panel-soft" x="476" y="706" width="538" height="200"/>
+  <text class="small" x="492" y="732">Recommended enhancements</text>
+  <text class="body" x="492" y="762">- Rewrite one section in plainer business language</text>
+  <text class="body" x="492" y="790">- Remove procedural wording from requirements section</text>
+  <text class="body" x="492" y="818">- Align glossary term with Compliance Definitions Glossary</text>
+  <text class="body" x="492" y="846">- Add entity list to Scope section</text>
+  <text class="small" x="492" y="880">Each item should support: Accept suggestion | Edit myself | Dismiss with note</text>
+
+  <rect class="panel-soft" x="476" y="922" width="260" height="254"/>
+  <text class="small" x="492" y="948">Checklist view</text>
+  <text class="body" x="492" y="978">[x] Approved template used</text>
+  <text class="body" x="492" y="1006">[x] Required sections present</text>
+  <text class="body" x="492" y="1034">[ ] Related docs complete</text>
+  <text class="body" x="492" y="1062">[ ] Retention language complete</text>
+  <text class="body" x="492" y="1090">[x] Scope mostly complete</text>
+  <text class="body" x="492" y="1118">[x] Redline attached</text>
+  <text class="body" x="492" y="1146">[ ] Legal review evidence needed?</text>
+
+  <rect class="panel-soft" x="754" y="922" width="260" height="254"/>
+  <text class="small" x="770" y="948">Suggested text panel</text>
+  <line class="dashed" x1="770" y1="966" x2="998" y2="966"/>
+  <text class="body" x="770" y="996">Related Documentation:</text>
+  <text class="body" x="770" y="1024">- Vendor Due Diligence Standard</text>
+  <text class="body" x="770" y="1064">Record Retention:</text>
+  <text class="body" x="770" y="1092">Add specific retention language</text>
+  <text class="small" x="770" y="1136">Owners should be able to copy, accept, or edit inline.</text>
+
+  <rect class="panel" x="1062" y="342" width="346" height="860"/>
+  <text class="h1" x="1090" y="378">3. Ready-to-submit panel</text>
+
+  <rect class="panel-soft" x="1090" y="398" width="290" height="118"/>
+  <text class="small" x="1106" y="424">Submission readiness</text>
+  <text class="body" x="1106" y="454">Required fixes resolved .... 1 of 2</text>
+  <text class="body" x="1106" y="482">Enhancements accepted ...... 3 of 4</text>
+  <text class="body" x="1106" y="510">Package complete ........... No</text>
+
+  <rect class="panel-soft" x="1090" y="532" width="290" height="168"/>
+  <text class="small" x="1106" y="558">What gets sent to LogicGate</text>
+  <text class="body" x="1106" y="588">- Clean draft</text>
+  <text class="body" x="1106" y="616">- Redline or change summary</text>
+  <text class="body" x="1106" y="644">- QC summary</text>
+  <text class="body" x="1106" y="672">- Open issues, if any</text>
+
+  <rect class="panel-soft" x="1090" y="716" width="290" height="150"/>
+  <text class="small" x="1106" y="742">Owner time saver tools</text>
+  <text class="body" x="1106" y="772">[ Auto-fill metadata ]</text>
+  <text class="body" x="1106" y="800">[ Generate change summary ]</text>
+  <text class="body" x="1106" y="828">[ Build related docs list ]</text>
+
+  <rect class="panel-soft" x="1090" y="882" width="290" height="150"/>
+  <text class="small" x="1106" y="908">Final action</text>
+  <text class="body" x="1106" y="938">[ Save draft ]</text>
+  <text class="body" x="1106" y="966">[ Resolve fixes ]</text>
+  <text class="body" x="1106" y="994">[ Submit to Governance queue ]</text>
+
+  <rect class="panel-soft" x="1090" y="1048" width="290" height="128"/>
+  <text class="small" x="1106" y="1074">Activity log</text>
+  <text class="body" x="1106" y="1104">10:12 QC run completed</text>
+  <text class="body" x="1106" y="1132">10:13 Suggested 4 enhancements</text>
+  <text class="body" x="1106" y="1160">10:15 Waiting for owner update</text>
+</svg>

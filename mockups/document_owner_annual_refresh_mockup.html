@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Owner Annual Refresh Mockup</title>
+  <style>
+    :root {
+      --bg: #f3f1eb;
+      --panel: #fffdf8;
+      --panel-2: #f8f4ec;
+      --ink: #1d2a22;
+      --muted: #5c675f;
+      --line: #c6c0b4;
+      --accent: #0f6d5d;
+      --accent-soft: #d8efe9;
+      --warn: #b65b2a;
+      --warn-soft: #fbe4d8;
+      --danger: #9f3530;
+      --danger-soft: #f7dfdb;
+      --ok: #2c6d3e;
+      --ok-soft: #def0e2;
+      --shadow: 0 18px 42px rgba(32, 34, 29, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at top left, #fff6df 0, transparent 24%),
+        linear-gradient(180deg, #f8f5ef 0%, var(--bg) 100%);
+      color: var(--ink);
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+    }
+
+    .page {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      font-size: 34px;
+      line-height: 1.1;
+      margin: 0;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .secondary-btn {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: #9fd0c5;
+    }
+
+    .small-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .ghost-btn:hover, .primary-btn:hover, .secondary-btn:hover, .small-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(25, 30, 27, 0.08);
+    }
+
+    .notification {
+      background: linear-gradient(135deg, #fff8e7 0%, #f6efdf 100%);
+      border: 1px solid #e8ddbc;
+      border-radius: 22px;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .notification strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+      line-height: 1.15;
+      margin: 0 0 8px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .meta-card, .mini-stat {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .meta-label, .card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      font-size: 14px;
+    }
+
+    .chip.warn {
+      background: var(--warn-soft);
+      color: var(--warn);
+      border-color: #edb899;
+    }
+
+    .chip.ok {
+      background: var(--ok-soft);
+      color: var(--ok);
+      border-color: #afd2b8;
+    }
+
+    .flow-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .step-pill {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr) 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #e5dfd2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .panel-body {
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .radio-list, .check-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    label.option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #d6d0c2;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    label.option.active {
+      border-color: #7db8ac;
+      background: #f3fbf8;
+    }
+
+    .textarea, .input-display {
+      width: 100%;
+      border: 1px solid #d4cebf;
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: white;
+      color: var(--ink);
+    }
+
+    textarea.textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+
+    .upload-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .upload-box {
+      background: white;
+      border: 1.5px dashed #b9b1a0;
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .upload-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .upload-status {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .finding-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .finding {
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+      overflow: hidden;
+    }
+
+    .finding.must {
+      border-color: #e0a088;
+      background: linear-gradient(180deg, #fff5f0 0%, #fff 36%);
+    }
+
+    .finding.reco {
+      border-color: #d9d2c3;
+      background: linear-gradient(180deg, #fbf8f1 0%, #fff 36%);
+    }
+
+    .finding-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px 10px;
+    }
+
+    .finding-title {
+      font-size: 18px;
+      margin: 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .badge.must {
+      border-color: #e0a088;
+      color: var(--warn);
+      background: var(--warn-soft);
+    }
+
+    .badge.reco {
+      color: var(--muted);
+    }
+
+    .finding-body {
+      padding: 0 16px 16px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .finding-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .suggested-text {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f7f4ec;
+      border: 1px dashed #c5bcab;
+      font-size: 14px;
+      line-height: 1.45;
+      display: none;
+      white-space: pre-line;
+    }
+
+    .finding.show-text .suggested-text {
+      display: block;
+    }
+
+    .finding.resolved {
+      opacity: 0.63;
+    }
+
+    .finding.resolved .finding-title {
+      text-decoration: line-through;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid #ddd5c8;
+    }
+
+    .check-item strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .check-status {
+      color: var(--muted);
+    }
+
+    .check-status.ok {
+      color: var(--ok);
+    }
+
+    .check-status.warn {
+      color: var(--warn);
+    }
+
+    .side-note {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .readiness {
+      display: grid;
+      gap: 12px;
+    }
+
+    .mini-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .mini-stat-value {
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .mini-stat-value.warn { color: var(--warn); }
+    .mini-stat-value.ok { color: var(--ok); }
+
+    .activity {
+      display: grid;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .activity-item {
+      padding-left: 14px;
+      border-left: 2px solid #ddd5c6;
+      color: var(--muted);
+    }
+
+    .footer-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .footer-actions .primary-btn[disabled] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .subtle {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .resolved-note {
+      font-size: 13px;
+      color: var(--ok);
+      margin-top: 10px;
+      display: none;
+    }
+
+    .finding.resolved .resolved-note {
+      display: block;
+    }
+
+    dialog {
+      border: none;
+      border-radius: 24px;
+      width: min(560px, calc(100vw - 40px));
+      padding: 0;
+      box-shadow: 0 24px 70px rgba(26, 28, 24, 0.22);
+    }
+
+    dialog::backdrop {
+      background: rgba(24, 27, 23, 0.4);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal {
+      padding: 24px;
+      background: var(--panel);
+    }
+
+    .modal h3 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .modal ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .submitted-banner {
+      display: none;
+      padding: 12px 16px;
+      border-radius: 16px;
+      background: var(--ok-soft);
+      color: var(--ok);
+      border: 1px solid #abd0b3;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .panel.read-only {
+      opacity: 0.78;
+    }
+
+    .panel.read-only .panel-body {
+      pointer-events: none;
+    }
+
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Clickable HTML Mockup</p>
+        <h1>Document Owner Annual Refresh</h1>
+      </div>
+      <div class="topbar-actions">
+        <button class="ghost-btn" id="resetDemo">Reset demo</button>
+      </div>
+    </div>
+
+    <section class="notification">
+      <div>
+        <strong>Annual review due in 14 days</strong>
+        <div>LogicGate has assigned this refresh to the Document Owner for pre-submission Policy on Policies QC.</div>
+      </div>
+      <button class="secondary-btn" id="focusRefresh">Open annual refresh</button>
+    </section>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">LogicGate Record</p>
+          <h2 class="hero-title">Third-Party Compliance Oversight Policy</h2>
+          <div class="subtle">POL-001245 · Policy · Compliance Governance · Owner: Global Compliance Policy Lead · Delegate: Third-Party Risk Program Manager</div>
+        </div>
+        <div class="chips">
+          <span class="chip">Tier 2</span>
+          <span class="chip warn" id="statusChipMain">Annual refresh due</span>
+          <span class="chip" id="statusChipSecondary">Draft check not started</span>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="meta-label">Next Review Due</div>
+          <div class="meta-value">February 18, 2027</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Last Approval Date</div>
+          <div class="meta-value">February 18, 2026</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Related Documents</div>
+          <div class="meta-value">Vendor Due Diligence Standard<br />Third-Party Risk Procedure</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Prior Approver Path</div>
+          <div class="meta-value">Owner Attestation → Compliance Leadership → CPC</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Open Exceptions</div>
+          <div class="meta-value">None recorded</div>
+        </div>
+      </div>
+      <div class="flow-strip">
+        <div class="step-pill">1. Upload drafted changes</div>
+        <div class="step-pill">2. Run PoP QC check</div>
+        <div class="step-pill">3. Resolve findings fast</div>
+        <div class="step-pill">4. Submit to Governance queue</div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="panel" id="leftPanel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Owner Input</p>
+            <h3 class="panel-title">What changed this year?</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="card">
+            <div class="card-label">Refresh type</div>
+            <div class="radio-list" id="refreshTypeList">
+              <label class="option">
+                <input type="radio" name="refreshType" value="no-change" />
+                <span>No substantive changes</span>
+              </label>
+              <label class="option">
+                <input type="radio" name="refreshType" value="updated" />
+                <span>Updated content</span>
+              </label>
+              <label class="option">
+                <input type="radio" name="refreshType" value="material" />
+                <span>Potential material change</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Owner change summary</div>
+            <textarea class="textarea" id="changeSummary" placeholder="Example: Updated scope to include one new business line and revised retention language."></textarea>
+            <div class="check-list" style="margin-top: 14px;">
+              <label class="option">
+                <input type="checkbox" id="needsLegal" />
+                <span>Legal review may be needed</span>
+              </label>
+              <label class="option">
+                <input type="checkbox" id="needsRelatedDocs" />
+                <span>Related documents may need updates</span>
+              </label>
+              <label class="option">
+                <input type="checkbox" id="needsRetention" />
+                <span>Retention language may need updates</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Upload review package</div>
+            <div class="upload-grid">
+              <div class="upload-box" data-upload="clean">
+                <div><strong>Clean draft</strong></div>
+                <div class="upload-row">
+                  <span class="upload-status" id="cleanStatus">Not uploaded</span>
+                  <button class="small-btn" type="button">Upload sample</button>
+                </div>
+              </div>
+              <div class="upload-box" data-upload="redline">
+                <div><strong>Redline</strong></div>
+                <div class="upload-row">
+                  <span class="upload-status" id="redlineStatus">Not uploaded</span>
+                  <button class="small-btn" type="button">Upload sample</button>
+                </div>
+              </div>
+              <div class="upload-box" data-upload="change-summary">
+                <div><strong>Change summary</strong> <span class="subtle">(optional for rewrites)</span></div>
+                <div class="upload-row">
+                  <span class="upload-status" id="changeSummaryFileStatus">Optional</span>
+                  <button class="small-btn" type="button">Upload sample</button>
+                </div>
+              </div>
+              <div class="upload-box" data-upload="legal-evidence">
+                <div><strong>Legal or stakeholder evidence</strong> <span class="subtle">(optional)</span></div>
+                <div class="upload-row">
+                  <span class="upload-status" id="evidenceStatus">Optional</span>
+                  <button class="small-btn" type="button">Upload sample</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Time saver</div>
+            <div class="side-note">
+              LogicGate already knows the owner, delegate, tier, domain, due date, related documents, and prior approval route. This screen asks only for the delta.
+            </div>
+          </div>
+
+          <button class="primary-btn" id="runQcBtn">Run annual refresh QC</button>
+        </div>
+      </section>
+
+      <section class="panel" id="centerPanel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Agent Output</p>
+            <h3 class="panel-title">QC results and recommended enhancements</h3>
+          </div>
+          <button class="ghost-btn" id="rerunBtn" type="button">Re-run QC</button>
+        </div>
+        <div class="panel-body">
+          <div class="submitted-banner" id="submittedBanner">
+            Submitted to Governance. This record is now read-only for the owner until Governance returns it.
+          </div>
+
+          <div class="summary-grid">
+            <div class="card">
+              <div class="card-label">Submission readiness</div>
+              <div class="summary-grid">
+                <div class="mini-stat">
+                  <div>
+                    <div class="card-label">Required fixes open</div>
+                  </div>
+                  <div class="mini-stat-value warn" id="mustCount">2</div>
+                </div>
+                <div class="mini-stat">
+                  <div>
+                    <div class="card-label">Recommended items open</div>
+                  </div>
+                  <div class="mini-stat-value" id="recoCount">4</div>
+                </div>
+                <div class="mini-stat">
+                  <div>
+                    <div class="card-label">Package complete</div>
+                  </div>
+                  <div class="mini-stat-value warn" id="packageStatus">No</div>
+                </div>
+                <div class="mini-stat">
+                  <div>
+                    <div class="card-label">Expected next stage</div>
+                  </div>
+                  <div class="mini-stat-value" style="font-size:18px;" id="nextStage">Governance QC queue</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-label">Checklist summary</div>
+              <div class="checklist" id="checklist">
+                <div class="check-item"><strong>Approved template used</strong><span class="check-status ok">Complete</span></div>
+                <div class="check-item"><strong>Required sections present</strong><span class="check-status ok">Complete</span></div>
+                <div class="check-item"><strong>Related documents complete</strong><span class="check-status warn" data-check="related">Needs fix</span></div>
+                <div class="check-item"><strong>Retention language complete</strong><span class="check-status warn" data-check="retention">Needs fix</span></div>
+                <div class="check-item"><strong>Redline or change summary attached</strong><span class="check-status ok" data-check="evidence">Complete</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+              <div>
+                <div class="card-label">View</div>
+                <div class="subtle">Use filters to focus on only what blocks submission.</div>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="small-btn filter-btn" data-filter="all">All findings</button>
+                <button class="small-btn filter-btn" data-filter="must">Must fix</button>
+                <button class="small-btn filter-btn" data-filter="reco">Recommended</button>
+                <button class="small-btn" id="toggleSuggestedText">Show suggested text</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="finding-list" id="findingList">
+            <article class="finding must" data-kind="must" data-check-target="related">
+              <div class="finding-head">
+                <div>
+                  <span class="badge must">Must fix</span>
+                  <h4 class="finding-title">Related Documents section is incomplete</h4>
+                </div>
+                <span class="badge">Appendix A / Appendix C</span>
+              </div>
+              <div class="finding-body">
+                The uploaded draft does not list a linked Standard even though the LogicGate record already shows one overlapping related document.
+                <div class="suggested-text">Suggested enhancement:
+Add "Vendor Due Diligence Standard" to the Related Documentation section and note that it should be read in conjunction with this Policy.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Resolved in the mockup. The finding now counts as cleared.</div>
+              </div>
+            </article>
+
+            <article class="finding must" data-kind="must" data-check-target="retention">
+              <div class="finding-head">
+                <div>
+                  <span class="badge must">Must fix</span>
+                  <h4 class="finding-title">Record Retention section is missing detail</h4>
+                </div>
+                <span class="badge">Appendix A</span>
+              </div>
+              <div class="finding-body">
+                The draft includes a retention heading, but the language is too generic to satisfy the Policy on Policies quality check.
+                <div class="suggested-text">Suggested enhancement:
+Expand the Record Retention section to reference the Data Classification and Handling Policy and any longer applicable regulatory retention standard.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Resolved in the mockup. The finding now counts as cleared.</div>
+              </div>
+            </article>
+
+            <article class="finding reco">
+              <div class="finding-head">
+                <div>
+                  <span class="badge reco">Recommended</span>
+                  <h4 class="finding-title">Simplify one section into plainer business language</h4>
+                </div>
+                <span class="badge">Style guidance</span>
+              </div>
+              <div class="finding-body">
+                One paragraph reads like implementation guidance rather than a high-level policy statement.
+                <div class="suggested-text">Suggested enhancement:
+Replace detailed execution steps with a principle-based policy requirement and move operational specifics to a Standard or Procedure.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Marked handled for the demo.</div>
+              </div>
+            </article>
+
+            <article class="finding reco">
+              <div class="finding-head">
+                <div>
+                  <span class="badge reco">Recommended</span>
+                  <h4 class="finding-title">Remove procedural wording from requirements section</h4>
+                </div>
+                <span class="badge">Document hierarchy</span>
+              </div>
+              <div class="finding-body">
+                The draft contains prescriptive workflow language that likely belongs in a Standard or Procedure, not the Policy itself.
+                <div class="suggested-text">Suggested enhancement:
+Reframe the clause as a required outcome and move process steps to the supporting Standard.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Marked handled for the demo.</div>
+              </div>
+            </article>
+
+            <article class="finding reco">
+              <div class="finding-head">
+                <div>
+                  <span class="badge reco">Recommended</span>
+                  <h4 class="finding-title">Align glossary term with approved definitions</h4>
+                </div>
+                <span class="badge">Definitions glossary</span>
+              </div>
+              <div class="finding-body">
+                One defined term differs slightly from the standard glossary used across compliance documents.
+                <div class="suggested-text">Suggested enhancement:
+Use the glossary-approved definition and capitalization for the relevant defined term.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Marked handled for the demo.</div>
+              </div>
+            </article>
+
+            <article class="finding reco">
+              <div class="finding-head">
+                <div>
+                  <span class="badge reco">Recommended</span>
+                  <h4 class="finding-title">Add one missing entity to the Scope section</h4>
+                </div>
+                <span class="badge">Scope accuracy</span>
+              </div>
+              <div class="finding-body">
+                The current scope list may not include all business lines indicated in the owner summary.
+                <div class="suggested-text">Suggested enhancement:
+Confirm the entity list with the Owner and update the Scope section to match all in-scope entities.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Marked handled for the demo.</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel" id="rightPanel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Ready to Submit</p>
+            <h3 class="panel-title">Package handoff</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="readiness">
+            <div class="mini-stat">
+              <div>
+                <div class="card-label">Current status</div>
+                <div id="statusText">Draft check not started</div>
+              </div>
+              <span class="badge" id="statusBadge">Open</span>
+            </div>
+            <div class="mini-stat">
+              <div>
+                <div class="card-label">Ready score</div>
+              </div>
+              <div class="mini-stat-value" id="readyScore">0%</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">What gets sent to Governance</div>
+            <div class="checklist">
+              <div class="check-item"><strong>Clean draft</strong><span class="check-status" id="pkgClean">Missing</span></div>
+              <div class="check-item"><strong>Redline or change summary</strong><span class="check-status" id="pkgRedline">Missing</span></div>
+              <div class="check-item"><strong>Owner change explanation</strong><span class="check-status" id="pkgExplanation">Missing</span></div>
+              <div class="check-item"><strong>QC summary</strong><span class="check-status" id="pkgQc">Not generated</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Owner time savers</div>
+            <div class="footer-actions">
+              <button class="secondary-btn" id="fillDemo">Auto-fill owner summary</button>
+              <button class="ghost-btn" id="bulkAccept">Accept all recommended</button>
+              <button class="ghost-btn" id="simulateEvidence">Attach stakeholder evidence</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Activity log</div>
+            <div class="activity" id="activityLog">
+              <div class="activity-item">Waiting for owner to start annual refresh.</div>
+            </div>
+          </div>
+
+          <div class="footer-actions">
+            <button class="ghost-btn" id="saveDraftBtn">Save draft</button>
+            <button class="primary-btn" id="submitBtn" disabled>Submit to Governance queue</button>
+            <div class="subtle" id="submitHint">Resolve required fixes before submit becomes available.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <dialog id="submitDialog">
+    <div class="modal">
+      <h3>Submit annual refresh?</h3>
+      <div>This will hand the package back to the Governance queue for Tollgate 3 QC review.</div>
+      <ul id="modalSummary"></ul>
+      <div class="modal-actions">
+        <button class="ghost-btn" id="cancelSubmit">Cancel</button>
+        <button class="primary-btn" id="confirmSubmit">Confirm submit</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const state = {
+      refreshType: "",
+      uploads: {
+        clean: false,
+        redline: false,
+        "change-summary": false,
+        "legal-evidence": false
+      },
+      qcRun: false,
+      submitted: false,
+      findings: []
+    };
+
+    const defaultFindings = [
+      { id: 1, kind: "must", title: "Related Documents section is incomplete", resolved: false, checkTarget: "related" },
+      { id: 2, kind: "must", title: "Record Retention section is missing detail", resolved: false, checkTarget: "retention" },
+      { id: 3, kind: "reco", title: "Simplify one section into plainer business language", resolved: false },
+      { id: 4, kind: "reco", title: "Remove procedural wording from requirements section", resolved: false },
+      { id: 5, kind: "reco", title: "Align glossary term with approved definitions", resolved: false },
+      { id: 6, kind: "reco", title: "Add one missing entity to the Scope section", resolved: false }
+    ];
+
+    const elements = {
+      runQcBtn: document.getElementById("runQcBtn"),
+      rerunBtn: document.getElementById("rerunBtn"),
+      submitBtn: document.getElementById("submitBtn"),
+      saveDraftBtn: document.getElementById("saveDraftBtn"),
+      fillDemo: document.getElementById("fillDemo"),
+      bulkAccept: document.getElementById("bulkAccept"),
+      simulateEvidence: document.getElementById("simulateEvidence"),
+      resetDemo: document.getElementById("resetDemo"),
+      focusRefresh: document.getElementById("focusRefresh"),
+      toggleSuggestedText: document.getElementById("toggleSuggestedText"),
+      changeSummary: document.getElementById("changeSummary"),
+      mustCount: document.getElementById("mustCount"),
+      recoCount: document.getElementById("recoCount"),
+      packageStatus: document.getElementById("packageStatus"),
+      readyScore: document.getElementById("readyScore"),
+      statusText: document.getElementById("statusText"),
+      statusBadge: document.getElementById("statusBadge"),
+      submitHint: document.getElementById("submitHint"),
+      statusChipMain: document.getElementById("statusChipMain"),
+      statusChipSecondary: document.getElementById("statusChipSecondary"),
+      findingList: document.getElementById("findingList"),
+      activityLog: document.getElementById("activityLog"),
+      pkgClean: document.getElementById("pkgClean"),
+      pkgRedline: document.getElementById("pkgRedline"),
+      pkgExplanation: document.getElementById("pkgExplanation"),
+      pkgQc: document.getElementById("pkgQc"),
+      submitDialog: document.getElementById("submitDialog"),
+      modalSummary: document.getElementById("modalSummary"),
+      submittedBanner: document.getElementById("submittedBanner"),
+      leftPanel: document.getElementById("leftPanel")
+    };
+
+    function init() {
+      state.findings = defaultFindings.map(f => ({ ...f }));
+      bindRefreshOptions();
+      bindUploads();
+      bindFindingActions();
+      bindFilters();
+      bindButtons();
+      updateUI();
+    }
+
+    function bindRefreshOptions() {
+      document.querySelectorAll('input[name="refreshType"]').forEach(input => {
+        input.addEventListener("change", () => {
+          state.refreshType = input.value;
+          document.querySelectorAll("#refreshTypeList .option").forEach(label => label.classList.remove("active"));
+          input.closest(".option").classList.add("active");
+          logActivity(`Refresh type captured: ${humanRefreshType(input.value)}.`);
+          updateUI();
+        });
+      });
+    }
+
+    function bindUploads() {
+      document.querySelectorAll("[data-upload]").forEach(box => {
+        const kind = box.getAttribute("data-upload");
+        const btn = box.querySelector("button");
+        btn.addEventListener("click", () => {
+          state.uploads[kind] = !state.uploads[kind];
+          const label = state.uploads[kind] ? "uploaded" : "removed";
+          logActivity(`${humanUploadName(kind)} ${label}.`);
+          updateUploadLabels();
+          updateUI();
+        });
+      });
+    }
+
+    function bindFindingActions() {
+      document.querySelectorAll(".resolve-btn").forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          const findingEl = btn.closest(".finding");
+          const findingIndex = Array.from(document.querySelectorAll(".finding")).indexOf(findingEl);
+          if (state.findings[findingIndex].resolved) return;
+          state.findings[findingIndex].resolved = true;
+          const action = btn.dataset.action;
+          logActivity(`Handled finding: "${state.findings[findingIndex].title}" via ${action}.`);
+          updateUI();
+        });
+      });
+    }
+
+    function bindFilters() {
+      document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const filter = btn.dataset.filter;
+          document.querySelectorAll(".filter-btn").forEach(b => b.style.background = "white");
+          btn.style.background = "var(--accent-soft)";
+          document.querySelectorAll(".finding").forEach(finding => {
+            if (filter === "all") {
+              finding.style.display = "";
+            } else {
+              finding.style.display = finding.dataset.kind === filter ? "" : "none";
+            }
+          });
+        });
+      });
+    }
+
+    function bindButtons() {
+      elements.runQcBtn.addEventListener("click", runQc);
+      elements.rerunBtn.addEventListener("click", runQc);
+      elements.fillDemo.addEventListener("click", fillDemoData);
+      elements.bulkAccept.addEventListener("click", acceptAllRecommended);
+      elements.simulateEvidence.addEventListener("click", () => {
+        state.uploads["legal-evidence"] = true;
+        logActivity("Supporting evidence attached.");
+        updateUploadLabels();
+        updateUI();
+      });
+      elements.saveDraftBtn.addEventListener("click", () => logActivity("Draft saved to LogicGate."));
+      elements.submitBtn.addEventListener("click", openSubmitModal);
+      document.getElementById("cancelSubmit").addEventListener("click", () => elements.submitDialog.close());
+      document.getElementById("confirmSubmit").addEventListener("click", confirmSubmit);
+      elements.resetDemo.addEventListener("click", resetDemo);
+      elements.focusRefresh.addEventListener("click", () => {
+        document.querySelector(".layout").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      elements.toggleSuggestedText.addEventListener("click", toggleSuggestedText);
+    }
+
+    function fillDemoData() {
+      if (!state.refreshType) {
+        const updated = document.querySelector('input[value="updated"]');
+        updated.checked = true;
+        updated.dispatchEvent(new Event("change"));
+      }
+      elements.changeSummary.value = "Updated scope to include one new business line, added a linked Standard reference, and refreshed retention language for annual review.";
+      state.uploads.clean = true;
+      state.uploads.redline = true;
+      logActivity("Owner summary auto-filled for demo.");
+      updateUploadLabels();
+      updateUI();
+    }
+
+    function acceptAllRecommended() {
+      state.findings.forEach(finding => {
+        if (finding.kind === "reco") finding.resolved = true;
+      });
+      logActivity("All recommended improvements accepted.");
+      updateUI();
+    }
+
+    function runQc() {
+      if (!canRunQc()) {
+        logActivity("QC could not run yet. Refresh type, change summary, clean draft, and redline are required.");
+        return;
+      }
+      state.qcRun = true;
+      logActivity("Annual refresh QC completed.");
+      updateUI();
+    }
+
+    function openSubmitModal() {
+      const mustOpen = getOpenCount("must");
+      const recoOpen = getOpenCount("reco");
+      elements.modalSummary.innerHTML = `
+        <li>Required fixes open: ${mustOpen}</li>
+        <li>Recommended improvements still open: ${recoOpen}</li>
+        <li>Package includes clean draft, redline or change summary, owner explanation, and QC summary.</li>
+        <li>Expected next stage: Governance QC queue.</li>
+      `;
+      elements.submitDialog.showModal();
+    }
+
+    function confirmSubmit() {
+      state.submitted = true;
+      elements.submitDialog.close();
+      logActivity("Submitted to Governance queue.");
+      updateUI();
+    }
+
+    function resetDemo() {
+      window.location.reload();
+    }
+
+    function toggleSuggestedText() {
+      document.querySelectorAll(".finding").forEach(card => card.classList.toggle("show-text"));
+    }
+
+    function updateUploadLabels() {
+      document.getElementById("cleanStatus").textContent = state.uploads.clean ? "Uploaded: policy_clean_v3.docx" : "Not uploaded";
+      document.getElementById("redlineStatus").textContent = state.uploads.redline ? "Uploaded: policy_redline_v3.docx" : "Not uploaded";
+      document.getElementById("changeSummaryFileStatus").textContent = state.uploads["change-summary"] ? "Uploaded: annual_change_summary.pdf" : "Optional";
+      document.getElementById("evidenceStatus").textContent = state.uploads["legal-evidence"] ? "Uploaded: review_evidence.zip" : "Optional";
+    }
+
+    function updateFindings() {
+      const findingEls = document.querySelectorAll(".finding");
+      findingEls.forEach((el, i) => {
+        const resolved = state.findings[i].resolved;
+        el.classList.toggle("resolved", resolved);
+      });
+    }
+
+    function updateChecklist() {
+      const related = document.querySelector('[data-check="related"]');
+      const retention = document.querySelector('[data-check="retention"]');
+      const evidence = document.querySelector('[data-check="evidence"]');
+      related.textContent = state.findings.find(f => f.checkTarget === "related").resolved ? "Complete" : "Needs fix";
+      related.className = "check-status " + (state.findings.find(f => f.checkTarget === "related").resolved ? "ok" : "warn");
+      retention.textContent = state.findings.find(f => f.checkTarget === "retention").resolved ? "Complete" : "Needs fix";
+      retention.className = "check-status " + (state.findings.find(f => f.checkTarget === "retention").resolved ? "ok" : "warn");
+      const evidenceOk = state.uploads.redline || state.uploads["change-summary"];
+      evidence.textContent = evidenceOk ? "Complete" : "Missing";
+      evidence.className = "check-status " + (evidenceOk ? "ok" : "warn");
+    }
+
+    function updatePackage() {
+      setPackageLine(elements.pkgClean, state.uploads.clean);
+      setPackageLine(elements.pkgRedline, state.uploads.redline || state.uploads["change-summary"]);
+      setPackageLine(elements.pkgExplanation, elements.changeSummary.value.trim().length > 0);
+      elements.pkgQc.textContent = state.qcRun ? "Generated" : "Not generated";
+      elements.pkgQc.className = "check-status " + (state.qcRun ? "ok" : "");
+    }
+
+    function setPackageLine(el, ok) {
+      el.textContent = ok ? "Included" : "Missing";
+      el.className = "check-status " + (ok ? "ok" : "");
+    }
+
+    function updateUI() {
+      updateUploadLabels();
+      updateFindings();
+      updateChecklist();
+      updatePackage();
+
+      const mustOpen = getOpenCount("must");
+      const recoOpen = getOpenCount("reco");
+      const packageComplete = state.uploads.clean && (state.uploads.redline || state.uploads["change-summary"]) && elements.changeSummary.value.trim().length > 0 && state.qcRun;
+      const ready = state.qcRun && mustOpen === 0 && packageComplete;
+
+      elements.mustCount.textContent = state.qcRun ? mustOpen : "—";
+      elements.recoCount.textContent = state.qcRun ? recoOpen : "—";
+      elements.packageStatus.textContent = packageComplete ? "Yes" : "No";
+      elements.packageStatus.className = "mini-stat-value " + (packageComplete ? "ok" : "warn");
+      elements.readyScore.textContent = computeReadyScore(packageComplete, mustOpen, recoOpen);
+      elements.submitBtn.disabled = !ready || state.submitted;
+
+      if (state.submitted) {
+        elements.statusText.textContent = "Submitted to Governance";
+        elements.statusBadge.textContent = "Submitted";
+        elements.statusBadge.className = "badge";
+        elements.statusChipSecondary.textContent = "Submitted";
+        elements.statusChipSecondary.className = "chip ok";
+        elements.statusChipMain.textContent = "Annual refresh completed";
+        elements.statusChipMain.className = "chip ok";
+        elements.submitHint.textContent = "Governance now owns the next step.";
+        elements.submittedBanner.style.display = "block";
+        elements.leftPanel.classList.add("read-only");
+      } else if (ready) {
+        elements.statusText.textContent = "Ready for submission";
+        elements.statusBadge.textContent = "Ready";
+        elements.statusBadge.className = "badge";
+        elements.statusChipSecondary.textContent = "Ready for submission";
+        elements.statusChipSecondary.className = "chip ok";
+        elements.submitHint.textContent = "Required fixes are cleared. You can submit to Governance.";
+      } else if (state.qcRun) {
+        elements.statusText.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
+        elements.statusBadge.textContent = mustOpen > 0 ? "Updates needed" : "QC complete";
+        elements.statusBadge.className = "badge";
+        elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
+        elements.statusChipSecondary.className = "chip";
+        elements.submitHint.textContent = mustOpen > 0 ? "Resolve required fixes before submit becomes available." : "Add any final edits, then submit.";
+      } else if (canRunQc()) {
+        elements.statusText.textContent = "Files uploaded";
+        elements.statusBadge.textContent = "Ready to run QC";
+        elements.statusBadge.className = "badge";
+        elements.statusChipSecondary.textContent = "Files uploaded";
+        elements.statusChipSecondary.className = "chip";
+        elements.submitHint.textContent = "Run annual refresh QC to see required fixes and recommendations.";
+      } else if (state.refreshType) {
+        elements.statusText.textContent = "Refresh type captured";
+        elements.statusBadge.textContent = "In progress";
+        elements.statusBadge.className = "badge";
+        elements.statusChipSecondary.textContent = "Refresh type captured";
+        elements.statusChipSecondary.className = "chip";
+      } else {
+        elements.statusText.textContent = "Draft check not started";
+        elements.statusBadge.textContent = "Open";
+        elements.statusBadge.className = "badge";
+        elements.statusChipSecondary.textContent = "Draft check not started";
+        elements.statusChipSecondary.className = "chip";
+      }
+    }
+
+    function canRunQc() {
+      return Boolean(state.refreshType && elements.changeSummary.value.trim() && state.uploads.clean && (state.uploads.redline || state.uploads["change-summary"]));
+    }
+
+    function getOpenCount(kind) {
+      return state.findings.filter(f => f.kind === kind && !f.resolved).length;
+    }
+
+    function computeReadyScore(packageComplete, mustOpen, recoOpen) {
+      if (!state.qcRun) return "0%";
+      let score = 58;
+      if (state.uploads.clean) score += 8;
+      if (state.uploads.redline || state.uploads["change-summary"]) score += 8;
+      if (elements.changeSummary.value.trim()) score += 6;
+      score -= mustOpen * 12;
+      score -= recoOpen * 3;
+      if (packageComplete) score += 10;
+      score = Math.max(0, Math.min(100, score));
+      return score + "%";
+    }
+
+    function humanUploadName(kind) {
+      const map = {
+        clean: "Clean draft",
+        redline: "Redline",
+        "change-summary": "Change summary",
+        "legal-evidence": "Supporting evidence"
+      };
+      return map[kind];
+    }
+
+    function humanRefreshType(value) {
+      const map = {
+        "no-change": "No substantive changes",
+        updated: "Updated content",
+        material: "Potential material change"
+      };
+      return map[value] || value;
+    }
+
+    function logActivity(text) {
+      const item = document.createElement("div");
+      item.className = "activity-item";
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      item.textContent = `${hh}:${mm} ${text}`;
+      elements.activityLog.prepend(item);
+    }
+
+    init();
+  </script>
+</body>
+</html>

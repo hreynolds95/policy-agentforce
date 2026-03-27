@@ -1,0 +1,186 @@
+<svg width="1440" height="1800" viewBox="0 0 1440 1800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #f5f5f3; }
+      .panel { fill: #ffffff; stroke: #252525; stroke-width: 2; rx: 14; }
+      .panel-soft { fill: #fafaf8; stroke: #676767; stroke-width: 1.5; rx: 12; }
+      .nav { fill: #e8e8e3; stroke: #252525; stroke-width: 2; rx: 18; }
+      .chip { fill: #ededed; stroke: #2f2f2f; stroke-width: 1.5; rx: 20; }
+      .title { font: 700 30px Arial, sans-serif; fill: #151515; }
+      .h1 { font: 700 22px Arial, sans-serif; fill: #151515; }
+      .h2 { font: 700 18px Arial, sans-serif; fill: #151515; }
+      .body { font: 14px Arial, sans-serif; fill: #333333; }
+      .small { font: 12px Arial, sans-serif; fill: #555555; }
+      .divider { stroke: #8e8e8e; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1440" height="1800"/>
+
+  <text class="title" x="40" y="48">Compliance Governance / Policy Team Wireframe</text>
+  <text class="small" x="40" y="72">Low-fidelity screen for LogicGate-centered intake triage, QC, approvals, publication, reporting, and maintenance decisions.</text>
+
+  <rect class="nav" x="32" y="100" width="252" height="1650"/>
+  <text class="h1" x="56" y="145">Governance Queue</text>
+  <rect class="panel-soft" x="52" y="170" width="212" height="54"/>
+  <text class="body" x="68" y="203">New Intake</text>
+  <rect class="panel-soft" x="52" y="236" width="212" height="54"/>
+  <text class="body" x="68" y="269">Tollgate 3 QC</text>
+  <rect class="panel-soft" x="52" y="302" width="212" height="54"/>
+  <text class="body" x="68" y="335">Approval Routing</text>
+  <rect class="panel-soft" x="52" y="368" width="212" height="54"/>
+  <text class="body" x="68" y="401">Ready to Publish</text>
+  <rect class="panel-soft" x="52" y="434" width="212" height="54"/>
+  <text class="body" x="68" y="467">Overdue Reviews</text>
+  <rect class="panel-soft" x="52" y="500" width="212" height="54"/>
+  <text class="body" x="68" y="533">Exceptions and Deferments</text>
+  <rect class="panel-soft" x="52" y="566" width="212" height="54"/>
+  <text class="body" x="68" y="599">Retirement and Archival</text>
+
+  <text class="h2" x="56" y="678">Filters</text>
+  <rect class="panel-soft" x="52" y="696" width="212" height="170"/>
+  <text class="body" x="68" y="728">Document type</text>
+  <text class="body" x="68" y="758">Domain</text>
+  <text class="body" x="68" y="788">Tier</text>
+  <text class="body" x="68" y="818">Approver path</text>
+  <text class="body" x="68" y="848">Review date</text>
+
+  <text class="h2" x="56" y="918">Governance agents</text>
+  <rect class="panel-soft" x="52" y="936" width="212" height="228"/>
+  <text class="body" x="68" y="968">Intake triage</text>
+  <text class="body" x="68" y="998">Metadata and tiering</text>
+  <text class="body" x="68" y="1028">QC checklist</text>
+  <text class="body" x="68" y="1058">Approval routing</text>
+  <text class="body" x="68" y="1088">Publication and records</text>
+  <text class="body" x="68" y="1118">Reporting and monitoring</text>
+  <text class="body" x="68" y="1148">Maintenance decisions</text>
+
+  <rect class="panel" x="308" y="100" width="1100" height="106"/>
+  <text class="h1" x="336" y="140">Governance Dashboard</text>
+  <text class="small" x="336" y="164">LogicGate SOR control surface for Block policy lifecycle governance</text>
+  <rect class="panel-soft" x="1006" y="122" width="166" height="28"/>
+  <text class="small" x="1026" y="141">Search title or record ID</text>
+  <rect class="panel-soft" x="1184" y="122" width="92" height="28"/>
+  <text class="small" x="1213" y="141">Filter</text>
+  <rect class="panel-soft" x="1288" y="122" width="92" height="28"/>
+  <text class="small" x="1312" y="141">Export</text>
+
+  <rect class="panel" x="308" y="224" width="1100" height="138"/>
+  <text class="h2" x="336" y="256">Program snapshot</text>
+  <rect class="panel-soft" x="336" y="274" width="180" height="60"/>
+  <text class="small" x="352" y="298">Net new intake</text>
+  <text class="body" x="352" y="322">14 open</text>
+  <rect class="panel-soft" x="532" y="274" width="180" height="60"/>
+  <text class="small" x="548" y="298">QC queue</text>
+  <text class="body" x="548" y="322">9 waiting</text>
+  <rect class="panel-soft" x="728" y="274" width="180" height="60"/>
+  <text class="small" x="744" y="298">Approvals pending</text>
+  <text class="body" x="744" y="322">6 routed</text>
+  <rect class="panel-soft" x="924" y="274" width="180" height="60"/>
+  <text class="small" x="940" y="298">Ready to publish</text>
+  <text class="body" x="940" y="322">3 approved</text>
+  <rect class="panel-soft" x="1120" y="274" width="180" height="60"/>
+  <text class="small" x="1136" y="298">Overdue reviews</text>
+  <text class="body" x="1136" y="322">11 records</text>
+
+  <rect class="panel" x="308" y="384" width="670" height="480"/>
+  <text class="h1" x="336" y="420">Primary queue table</text>
+  <rect class="panel-soft" x="336" y="442" width="614" height="44"/>
+  <text class="small" x="352" y="468">Record ID</text>
+  <text class="small" x="462" y="468">Title</text>
+  <text class="small" x="710" y="468">Stage</text>
+  <text class="small" x="808" y="468">Tier</text>
+  <text class="small" x="874" y="468">Due</text>
+  <rect class="panel-soft" x="336" y="498" width="614" height="62"/>
+  <text class="body" x="352" y="536">POL-001245   Third-Party Compliance Oversight Policy   Intake review   T2   4/12</text>
+  <rect class="panel-soft" x="336" y="572" width="614" height="62"/>
+  <text class="body" x="352" y="610">STD-000918   Transaction Monitoring Standard            QC review      T3   4/08</text>
+  <rect class="panel-soft" x="336" y="646" width="614" height="62"/>
+  <text class="body" x="352" y="684">POL-000442   AML Enterprise Policy                      Approvals      T1   4/25</text>
+  <rect class="panel-soft" x="336" y="720" width="614" height="62"/>
+  <text class="body" x="352" y="758">POL-000761   Fair Lending Policy                        Publish        T2   4/03</text>
+  <rect class="panel-soft" x="336" y="794" width="614" height="42"/>
+  <text class="small" x="352" y="820">Bulk actions: assign reviewer | send reminder | export packet | update date</text>
+
+  <rect class="panel" x="998" y="384" width="410" height="480"/>
+  <text class="h1" x="1028" y="420">Selected record</text>
+  <text class="body" x="1028" y="452">POL-001245</text>
+  <text class="body" x="1028" y="478">Third-Party Compliance Oversight Policy</text>
+  <line class="divider" x1="1028" y1="494" x2="1378" y2="494"/>
+  <text class="small" x="1028" y="522">Owner</text>
+  <text class="body" x="1166" y="522">Global Compliance Policy Lead</text>
+  <text class="small" x="1028" y="550">Document type</text>
+  <text class="body" x="1166" y="550">Policy</text>
+  <text class="small" x="1028" y="578">Domain</text>
+  <text class="body" x="1166" y="578">Compliance Governance</text>
+  <text class="small" x="1028" y="606">Tier</text>
+  <text class="body" x="1166" y="606">Tier 2 (recommended)</text>
+  <text class="small" x="1028" y="634">Current stage</text>
+  <text class="body" x="1166" y="634">Intake review</text>
+  <text class="small" x="1028" y="662">Related docs</text>
+  <text class="body" x="1166" y="662">1 overlapping Standard</text>
+  <rect class="panel-soft" x="1028" y="700" width="350" height="120"/>
+  <text class="small" x="1044" y="724">Intake triage agent summary</text>
+  <text class="body" x="1044" y="752">- No full Block-level policy found</text>
+  <text class="body" x="1044" y="780">- Standard overlap should be linked, not replaced</text>
+  <text class="body" x="1044" y="808">- Proceed to drafting with Tier 2 route</text>
+
+  <rect class="panel" x="308" y="886" width="540" height="348"/>
+  <text class="h1" x="336" y="922">QC checklist workspace</text>
+  <rect class="panel-soft" x="336" y="946" width="480" height="74"/>
+  <text class="body" x="352" y="974">[x] Approved template used</text>
+  <text class="body" x="352" y="1000">[ ] Related docs listed correctly</text>
+  <rect class="panel-soft" x="336" y="1034" width="480" height="74"/>
+  <text class="body" x="352" y="1062">[x] Scope includes all relevant entities</text>
+  <text class="body" x="352" y="1088">[ ] Record retention language confirmed</text>
+  <rect class="panel-soft" x="336" y="1122" width="480" height="84"/>
+  <text class="small" x="352" y="1146">QC actions</text>
+  <text class="body" x="352" y="1174">Return to Owner | Mark Tollgate 3 complete | Request clarification</text>
+
+  <rect class="panel" x="868" y="886" width="540" height="348"/>
+  <text class="h1" x="896" y="922">Approval routing and publication</text>
+  <rect class="panel-soft" x="896" y="946" width="480" height="88"/>
+  <text class="small" x="912" y="970">Approver path</text>
+  <text class="body" x="912" y="998">Owner attestation -> Compliance Leadership -> CPC</text>
+  <text class="body" x="912" y="1022">Committee and board fields appear only when required</text>
+  <rect class="panel-soft" x="896" y="1048" width="480" height="78"/>
+  <text class="small" x="912" y="1072">Approval packet status</text>
+  <text class="body" x="912" y="1100">Clean copy | Redline | Change summary | Evidence log</text>
+  <rect class="panel-soft" x="896" y="1140" width="480" height="66"/>
+  <text class="small" x="912" y="1164">Publication readiness</text>
+  <text class="body" x="912" y="1192">Ready for LogicGate SOR + Go/Policy upload</text>
+
+  <rect class="panel" x="308" y="1256" width="1100" height="438"/>
+  <text class="h1" x="336" y="1292">Maintenance, reporting, and archival</text>
+
+  <rect class="panel-soft" x="336" y="1314" width="250" height="160"/>
+  <text class="small" x="352" y="1338">Review calendar</text>
+  <text class="body" x="352" y="1368">Upcoming annual reviews</text>
+  <text class="body" x="352" y="1396">30-day extension authority</text>
+  <text class="body" x="352" y="1424">Escalate &gt; 30 days</text>
+
+  <rect class="panel-soft" x="602" y="1314" width="250" height="160"/>
+  <text class="small" x="618" y="1338">Exception and deferment queue</text>
+  <text class="body" x="618" y="1368">Reason and mitigating controls</text>
+  <text class="body" x="618" y="1396">Renewal date</text>
+  <text class="body" x="618" y="1424">Leadership evidence</text>
+
+  <rect class="panel-soft" x="868" y="1314" width="250" height="160"/>
+  <text class="small" x="884" y="1338">Monthly governance reporting</text>
+  <text class="body" x="884" y="1368">Inventory status</text>
+  <text class="body" x="884" y="1396">CPC escalation log</text>
+  <text class="body" x="884" y="1424">Ownership transfer follow-up</text>
+
+  <rect class="panel-soft" x="1134" y="1314" width="244" height="160"/>
+  <text class="small" x="1150" y="1338">Retirement and archival</text>
+  <text class="body" x="1150" y="1368">Approval evidence</text>
+  <text class="body" x="1150" y="1396">Remove staff access</text>
+  <text class="body" x="1150" y="1424">Archive package</text>
+
+  <rect class="panel-soft" x="336" y="1490" width="1042" height="170"/>
+  <text class="small" x="352" y="1514">Governance agent activity log</text>
+  <text class="body" x="352" y="1544">09:15  Intake triage agent flagged overlap with one existing Standard</text>
+  <text class="body" x="352" y="1572">09:22  Metadata and tiering agent recommended Tier 2 routing</text>
+  <text class="body" x="352" y="1600">09:31  QC agent returned missing retention language to Owner</text>
+  <text class="body" x="352" y="1628">09:48  Publication agent marked record not ready until approval evidence uploaded</text>
+</svg>
