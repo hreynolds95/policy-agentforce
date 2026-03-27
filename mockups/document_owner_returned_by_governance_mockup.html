@@ -6,31 +6,31 @@
   <title>Document Owner Returned by Governance Mockup</title>
   <style>
     :root {
-      --bg: #f4f0e8;
-      --panel: rgba(255, 252, 246, 0.9);
-      --panel-2: #f8f3ea;
-      --line: #d1c8b8;
-      --ink: #1d2922;
-      --muted: #606961;
-      --accent: #0d6a5d;
-      --accent-soft: #d7eee7;
-      --warn: #b4602f;
-      --warn-soft: #fbe6d8;
-      --danger: #a13d39;
-      --danger-soft: #f7dfdc;
-      --ok: #2f6e42;
-      --ok-soft: #def0e2;
-      --shadow: 0 20px 46px rgba(28, 30, 27, 0.09);
+      --bg: #050505;
+      --panel: rgba(255, 255, 255, 0.97);
+      --panel-2: #f6f6f6;
+      --line: #252525;
+      --ink: #090909;
+      --muted: #616161;
+      --accent: #b8ff2c;
+      --accent-soft: #efffcb;
+      --warn: #7cc700;
+      --warn-soft: #efffcb;
+      --danger: #0a0a0a;
+      --danger-soft: #f1f1f1;
+      --ok: #7cc700;
+      --ok-soft: #efffcb;
+      --shadow: 0 20px 46px rgba(0, 0, 0, 0.26);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      color: var(--ink);
+      color: white;
       background:
-        radial-gradient(circle at top left, #fff6de 0, transparent 22%),
-        linear-gradient(180deg, #faf6ef 0%, var(--bg) 100%);
+        radial-gradient(circle at top left, rgba(184, 255, 44, 0.18) 0, transparent 22%),
+        linear-gradient(180deg, #0a0a0a 0%, var(--bg) 100%);
     }
 
     button, input, textarea { font: inherit; }
@@ -75,14 +75,14 @@
 
     .primary-btn {
       background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+      color: #050505;
+      border-color: #9ddd19;
     }
 
     .secondary-btn {
       background: var(--accent-soft);
-      color: var(--accent);
-      border-color: #a2d1c5;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .small-btn {
@@ -96,8 +96,8 @@
     }
 
     .banner {
-      background: linear-gradient(135deg, #fff1ea 0%, #f9dfdb 100%);
-      border: 1px solid #e7b8af;
+      background: linear-gradient(135deg, rgba(184, 255, 44, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+      border: 1px solid rgba(184, 255, 44, 0.45);
       border-radius: 24px;
       padding: 18px 20px;
       display: flex;
@@ -112,7 +112,7 @@
       display: block;
       font-size: 20px;
       margin-bottom: 4px;
-      color: var(--danger);
+      color: white;
     }
 
     .hero {
@@ -122,6 +122,7 @@
       padding: 22px 24px;
       box-shadow: var(--shadow);
       margin-bottom: 18px;
+      color: var(--ink);
     }
 
     .hero-top {
@@ -155,20 +156,20 @@
 
     .chip.warn {
       background: var(--warn-soft);
-      color: var(--warn);
-      border-color: #edbe9c;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .chip.danger {
       background: var(--danger-soft);
-      color: var(--danger);
-      border-color: #e1aca8;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .chip.ok {
       background: var(--ok-soft);
-      color: var(--ok);
-      border-color: #afd1b8;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .meta-grid {
@@ -210,6 +211,7 @@
       border-radius: 24px;
       box-shadow: var(--shadow);
       overflow: hidden;
+      color: var(--ink);
     }
 
     .panel-header {
@@ -307,15 +309,15 @@
     }
 
     .badge.must {
-      color: var(--warn);
-      border-color: #e2ab91;
+      color: #050505;
+      border-color: #b8ff2c;
       background: var(--warn-soft);
     }
 
     .badge.returned {
-      color: var(--danger);
-      border-color: #dfb0ad;
-      background: var(--danger-soft);
+      color: #050505;
+      border-color: #b8ff2c;
+      background: var(--accent-soft);
     }
 
     .summary-grid {
@@ -331,7 +333,7 @@
 
     .finding {
       background: white;
-      border: 1px solid #e0a68f;
+      border: 1px solid #b8ff2c;
       border-radius: 18px;
       overflow: hidden;
     }
@@ -346,7 +348,7 @@
       align-items: center;
       gap: 12px;
       padding: 14px 16px 10px;
-      background: linear-gradient(180deg, #fff6f0 0%, #fff 100%);
+      background: linear-gradient(180deg, #f5ffd9 0%, #fff 100%);
     }
 
     .finding-title {
@@ -414,7 +416,7 @@
     }
 
     .check-status.ok { color: var(--ok); }
-    .check-status.warn { color: var(--warn); }
+    .check-status.warn { color: #6aa800; }
 
     .mini-stat {
       display: flex;
@@ -503,9 +505,9 @@
     .success-banner {
       display: none;
       background: var(--ok-soft);
-      border: 1px solid #abd0b2;
+      border: 1px solid #b8ff2c;
       border-radius: 16px;
-      color: var(--ok);
+      color: #050505;
       padding: 12px 14px;
       font-size: 14px;
     }

@@ -6,21 +6,21 @@
   <title>Document Owner Annual Refresh Mockup</title>
   <style>
     :root {
-      --bg: #f3f1eb;
-      --panel: #fffdf8;
-      --panel-2: #f8f4ec;
-      --ink: #1d2a22;
-      --muted: #5c675f;
-      --line: #c6c0b4;
-      --accent: #0f6d5d;
-      --accent-soft: #d8efe9;
-      --warn: #b65b2a;
-      --warn-soft: #fbe4d8;
-      --danger: #9f3530;
-      --danger-soft: #f7dfdb;
-      --ok: #2c6d3e;
-      --ok-soft: #def0e2;
-      --shadow: 0 18px 42px rgba(32, 34, 29, 0.08);
+      --bg: #050505;
+      --panel: rgba(255, 255, 255, 0.97);
+      --panel-2: #f6f6f6;
+      --ink: #090909;
+      --muted: #616161;
+      --line: #252525;
+      --accent: #b8ff2c;
+      --accent-soft: #efffcb;
+      --warn: #7cc700;
+      --warn-soft: #efffcb;
+      --danger: #0a0a0a;
+      --danger-soft: #f1f1f1;
+      --ok: #7cc700;
+      --ok-soft: #efffcb;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
       --radius: 18px;
     }
 
@@ -29,9 +29,9 @@
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       background:
-        radial-gradient(circle at top left, #fff6df 0, transparent 24%),
-        linear-gradient(180deg, #f8f5ef 0%, var(--bg) 100%);
-      color: var(--ink);
+        radial-gradient(circle at top left, rgba(184, 255, 44, 0.18) 0, transparent 24%),
+        linear-gradient(180deg, #0a0a0a 0%, var(--bg) 100%);
+      color: white;
     }
 
     button, input, textarea, select {
@@ -84,14 +84,14 @@
 
     .primary-btn {
       background: var(--accent);
-      color: white;
-      border-color: var(--accent);
+      color: #050505;
+      border-color: #9ddd19;
     }
 
     .secondary-btn {
       background: var(--accent-soft);
-      color: var(--accent);
-      border-color: #9fd0c5;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .small-btn {
@@ -105,8 +105,8 @@
     }
 
     .notification {
-      background: linear-gradient(135deg, #fff8e7 0%, #f6efdf 100%);
-      border: 1px solid #e8ddbc;
+      background: linear-gradient(135deg, rgba(184, 255, 44, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
+      border: 1px solid rgba(184, 255, 44, 0.45);
       border-radius: 22px;
       padding: 18px 20px;
       display: flex;
@@ -121,6 +121,7 @@
       display: block;
       font-size: 20px;
       margin-bottom: 4px;
+      color: white;
     }
 
     .hero {
@@ -130,6 +131,7 @@
       padding: 22px 24px;
       box-shadow: var(--shadow);
       margin-bottom: 18px;
+      color: var(--ink);
     }
 
     .hero-top {
@@ -189,14 +191,14 @@
 
     .chip.warn {
       background: var(--warn-soft);
-      color: var(--warn);
-      border-color: #edb899;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .chip.ok {
       background: var(--ok-soft);
-      color: var(--ok);
-      border-color: #afd2b8;
+      color: #050505;
+      border-color: #b8ff2c;
     }
 
     .flow-strip {
@@ -227,6 +229,7 @@
       border-radius: 24px;
       box-shadow: var(--shadow);
       overflow: hidden;
+      color: var(--ink);
     }
 
     .panel-header {
@@ -280,8 +283,8 @@
     }
 
     label.option.active {
-      border-color: #7db8ac;
-      background: #f3fbf8;
+      border-color: #9ddd19;
+      background: #efffcb;
     }
 
     .textarea, .input-display {
@@ -336,8 +339,8 @@
     }
 
     .finding.must {
-      border-color: #e0a088;
-      background: linear-gradient(180deg, #fff5f0 0%, #fff 36%);
+      border-color: #b8ff2c;
+      background: linear-gradient(180deg, #f5ffd9 0%, #fff 36%);
     }
 
     .finding.reco {
@@ -370,8 +373,8 @@
     }
 
     .badge.must {
-      border-color: #e0a088;
-      color: var(--warn);
+      border-color: #b8ff2c;
+      color: #050505;
       background: var(--warn-soft);
     }
 
@@ -452,7 +455,7 @@
     }
 
     .check-status.warn {
-      color: var(--warn);
+      color: #6aa800;
     }
 
     .side-note {
@@ -564,8 +567,8 @@
       padding: 12px 16px;
       border-radius: 16px;
       background: var(--ok-soft);
-      color: var(--ok);
-      border: 1px solid #abd0b3;
+      color: #050505;
+      border: 1px solid #b8ff2c;
       margin-bottom: 12px;
       font-size: 14px;
     }
