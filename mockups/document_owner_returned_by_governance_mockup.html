@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document Owner Returned by Governance Mockup</title>
+  <title>Quincy Returned-State Mockup</title>
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
@@ -532,7 +532,7 @@
     <div class="topbar">
       <div>
         <p class="eyebrow">Clickable HTML Mockup</p>
-        <h1>Returned by Governance</h1>
+        <h1>Quincy</h1>
       </div>
       <button class="ghost-btn" id="resetDemo">Reset demo</button>
     </div>
@@ -540,15 +540,15 @@
     <section class="banner">
       <div>
         <strong>Returned by Governance for owner updates</strong>
-        <div>Governance completed Tollgate 3 review and returned the record with two required updates. Prior uploads and accepted improvements were preserved.</div>
+        <div>Governance completed review and returned the package with two required updates. Quincy preserves the verified Google Doc, prior summary, and accepted improvements so the owner only fixes what changed.</div>
       </div>
-      <button class="secondary-btn" id="jumpToFixes">Resume fixes</button>
+      <button class="secondary-btn" id="jumpToFixes">Resume in Quincy</button>
     </section>
 
     <section class="hero">
       <div class="hero-top">
         <div>
-          <p class="eyebrow">LogicGate Record</p>
+          <p class="eyebrow">Source LogicGate Record</p>
           <h2 class="hero-title">Third-Party Compliance Oversight Policy</h2>
           <div class="subtle">POL-001245 · Policy · Compliance Governance · Owner: Global Compliance Policy Lead · Delegate: Third-Party Risk Program Manager</div>
         </div>
@@ -568,8 +568,8 @@
           <div class="meta-value">Tollgate 3 QC review</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Prior owner package</div>
-          <div class="meta-value">Clean draft + redline + QC summary preserved</div>
+          <div class="meta-label">Prior Quincy package</div>
+          <div class="meta-value">Google Doc link + change summary + QC audit trail preserved</div>
         </div>
         <div class="meta-card">
           <div class="meta-label">Accepted enhancements already saved</div>
@@ -619,21 +619,21 @@
             <div class="card-label">Preserved package</div>
             <div class="upload-grid">
               <div class="upload-box">
-                <div><strong>Clean draft</strong></div>
+                <div><strong>Reference clean draft</strong></div>
                 <div class="upload-row">
                   <span class="upload-status">policy_clean_v3.docx preserved</span>
                   <button class="small-btn" type="button" data-upload="clean">Replace</button>
                 </div>
               </div>
               <div class="upload-box">
-                <div><strong>Redline</strong></div>
+                <div><strong>Verified editable Google Doc</strong></div>
                 <div class="upload-row">
-                  <span class="upload-status">policy_redline_v3.docx preserved</span>
-                  <button class="small-btn" type="button" data-upload="redline">Replace</button>
+                  <span class="upload-status">Verified Google Doc link preserved</span>
+                  <button class="small-btn" type="button" data-upload="redline">Refresh link</button>
                 </div>
               </div>
               <div class="upload-box">
-                <div><strong>Owner explanation</strong></div>
+                <div><strong>Proposed change summary</strong></div>
                 <div class="upload-row">
                   <span class="upload-status">Preserved from prior submission</span>
                   <button class="small-btn" type="button" id="reuseExplanation">Reuse</button>
@@ -666,7 +666,7 @@
         </div>
         <div class="panel-body">
           <div class="success-banner" id="successBanner">
-            All required return items are resolved. This record is ready to go back to Governance.
+            All required return items are resolved. Quincy can now prepare the updated package for governance resubmission.
           </div>
 
           <div class="summary-grid">
@@ -756,7 +756,7 @@ Published versions of this Policy and associated approval evidence must be retai
         <div class="panel-header">
           <div>
             <p class="eyebrow">Resubmit</p>
-            <h3 class="panel-title">Return package</h3>
+            <h3 class="panel-title">Resubmission package</h3>
           </div>
         </div>
         <div class="panel-body">
@@ -764,7 +764,7 @@ Published versions of this Policy and associated approval evidence must be retai
             <div class="card-label">What will go back</div>
             <div class="checklist">
               <div class="check-item"><strong>Prior clean draft</strong><span class="check-status ok">Attached</span></div>
-              <div class="check-item"><strong>Updated redline</strong><span class="check-status ok" id="redlinePkg">Attached</span></div>
+              <div class="check-item"><strong>Verified Google Doc link confirmed</strong><span class="check-status ok" id="redlinePkg">Attached</span></div>
               <div class="check-item"><strong>Governance response note</strong><span class="check-status ok" id="notePkg">Attached</span></div>
               <div class="check-item"><strong>Resolved return items</strong><span class="check-status warn" id="resolvedPkg">Pending</span></div>
             </div>
@@ -774,7 +774,7 @@ Published versions of this Policy and associated approval evidence must be retai
             <div class="card-label">Owner shortcuts</div>
             <div class="footer-actions">
               <button class="secondary-btn" id="applyAllFixes">Apply all suggested fixes</button>
-              <button class="ghost-btn" id="replaceRedline">Replace redline file</button>
+              <button class="ghost-btn" id="replaceRedline">Refresh Google Doc link</button>
               <button class="ghost-btn" id="saveDraft">Save draft</button>
             </div>
           </div>
@@ -788,8 +788,8 @@ Published versions of this Policy and associated approval evidence must be retai
           </div>
 
           <div class="footer-actions">
-            <button class="primary-btn" id="resubmitBtn" disabled>Resubmit to Governance</button>
-            <div class="subtle" id="submitHint">Fix the returned items, then resubmit without rebuilding the full package.</div>
+            <button class="primary-btn" id="resubmitBtn" disabled>Export resubmission package</button>
+            <div class="subtle" id="submitHint">Fix the returned items, then let Quincy prepare the updated package without rebuilding everything.</div>
           </div>
         </div>
       </aside>
@@ -798,8 +798,8 @@ Published versions of this Policy and associated approval evidence must be retai
 
   <dialog id="submitDialog">
     <div class="modal">
-      <h3>Resubmit to Governance?</h3>
-      <div>The prior package will be reused, and only the returned items plus your response note will be added to the resubmission.</div>
+      <h3>Export updated Quincy package?</h3>
+      <div>The prior package will be reused, and only the returned items plus your response note will be added around the same verified Google Doc link.</div>
       <ul id="modalSummary"></ul>
       <div class="modal-actions">
         <button class="ghost-btn" id="cancelSubmit">Cancel</button>
@@ -869,9 +869,9 @@ Published versions of this Policy and associated approval evidence must be retai
       document.getElementById("replaceRedline").addEventListener("click", () => {
         document.getElementById("redlinePkg").textContent = "Updated";
         document.getElementById("redlinePkg").className = "check-status ok";
-        logActivity("Replaced the preserved redline file.");
+        logActivity("Refreshed the preserved verified Google Doc link.");
       });
-      document.getElementById("saveDraft").addEventListener("click", () => logActivity("Saved returned-record updates as draft."));
+      document.getElementById("saveDraft").addEventListener("click", () => logActivity("Saved returned-package updates in Quincy."));
       document.getElementById("jumpToFixes").addEventListener("click", () => {
         document.getElementById("findingList").scrollIntoView({ behavior: "smooth", block: "start" });
       });
@@ -889,9 +889,9 @@ Published versions of this Policy and associated approval evidence must be retai
       const open = getOpenFixes();
       els.modalSummary.innerHTML = `
         <li>Open required fixes: ${open}</li>
-        <li>Preserved clean draft and prior package stay attached.</li>
-        <li>Updated response note will be included in the resubmission.</li>
-        <li>Expected next stage: Governance QC review.</li>
+        <li>Preserved clean draft, verified Google Doc link, and prior Quincy package stay attached.</li>
+        <li>Updated response note will be included in the resubmission package.</li>
+        <li>Expected next step: attach the updated package in the governance workflow.</li>
       `;
       els.submitDialog.showModal();
     }
@@ -899,7 +899,7 @@ Published versions of this Policy and associated approval evidence must be retai
     function confirmResubmit() {
       state.submitted = true;
       els.submitDialog.close();
-      logActivity("Resubmitted to Governance.");
+      logActivity("Updated Quincy package exported for governance resubmission.");
       updateUI();
     }
 
@@ -931,7 +931,7 @@ Published versions of this Policy and associated approval evidence must be retai
       els.resubmitBtn.disabled = !ready;
 
       if (state.submitted) {
-        els.statusChipMain.textContent = "Resubmitted to Governance";
+        els.statusChipMain.textContent = "Package exported";
         els.statusChipMain.className = "chip ok";
         els.statusChipSecondary.textContent = "Waiting on Governance";
         els.statusChipSecondary.className = "chip warn";
@@ -939,18 +939,18 @@ Published versions of this Policy and associated approval evidence must be retai
         els.successBanner.style.display = "block";
         els.resubmitBtn.disabled = true;
       } else if (ready) {
-        els.statusChipMain.textContent = "Ready to resubmit";
+        els.statusChipMain.textContent = "Ready to export";
         els.statusChipMain.className = "chip ok";
         els.statusChipSecondary.textContent = "All returned items fixed";
         els.statusChipSecondary.className = "chip ok";
-        els.submitHint.textContent = "You can send this directly back to Governance.";
+        els.submitHint.textContent = "You can export this package and attach it for governance review.";
         els.successBanner.style.display = "block";
       } else {
         els.statusChipMain.textContent = "Returned by Governance";
         els.statusChipMain.className = "chip danger";
         els.statusChipSecondary.textContent = `${open} required fixes open`;
         els.statusChipSecondary.className = "chip warn";
-        els.submitHint.textContent = "Fix the returned items, then resubmit without rebuilding the full package.";
+        els.submitHint.textContent = "Fix the returned items, then let Quincy prepare the updated package without rebuilding everything.";
         els.successBanner.style.display = "none";
       }
     }

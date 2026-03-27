@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document Owner Annual Refresh Mockup</title>
+  <title>Quincy Annual Refresh Mockup</title>
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
@@ -613,7 +613,7 @@
     <div class="topbar">
       <div>
         <p class="eyebrow">Clickable HTML Mockup</p>
-        <h1>Document Owner Annual Refresh</h1>
+        <h1>Quincy</h1>
       </div>
       <div class="topbar-actions">
         <button class="ghost-btn" id="resetDemo">Reset demo</button>
@@ -623,15 +623,15 @@
     <section class="notification">
       <div>
         <strong>Annual review due in 14 days</strong>
-        <div>LogicGate has assigned this refresh to the Document Owner for pre-submission Policy on Policies QC.</div>
+        <div>Open the verified editable Google Doc from LogicGate, make your proposed edits there, then use Quincy to run Policy on Policies QC and prepare submission artifacts.</div>
       </div>
-      <button class="secondary-btn" id="focusRefresh">Open annual refresh</button>
+      <button class="secondary-btn" id="focusRefresh">Open Quincy workspace</button>
     </section>
 
     <section class="hero">
       <div class="hero-top">
         <div>
-          <p class="eyebrow">LogicGate Record</p>
+          <p class="eyebrow">Source LogicGate Record</p>
           <h2 class="hero-title">Third-Party Compliance Oversight Policy</h2>
           <div class="subtle">POL-001245 · Policy · Compliance Governance · Owner: Global Compliance Policy Lead · Delegate: Third-Party Risk Program Manager</div>
         </div>
@@ -664,10 +664,10 @@
         </div>
       </div>
       <div class="flow-strip">
-        <div class="step-pill">1. Upload drafted changes</div>
-        <div class="step-pill">2. Run PoP QC check</div>
+        <div class="step-pill">1. Confirm Google Doc draft</div>
+        <div class="step-pill">2. Run Quincy QC</div>
         <div class="step-pill">3. Resolve findings fast</div>
-        <div class="step-pill">4. Submit to Governance queue</div>
+        <div class="step-pill">4. Export submission package</div>
       </div>
     </section>
 
@@ -718,24 +718,24 @@
           </div>
 
           <div class="card">
-            <div class="card-label">Upload review package</div>
+            <div class="card-label">Working draft and evidence</div>
             <div class="upload-grid">
               <div class="upload-box" data-upload="clean">
-                <div><strong>Clean draft</strong></div>
+                <div><strong>Reference clean draft</strong></div>
                 <div class="upload-row">
                   <span class="upload-status" id="cleanStatus">Not uploaded</span>
                   <button class="small-btn" type="button">Upload sample</button>
                 </div>
               </div>
               <div class="upload-box" data-upload="redline">
-                <div><strong>Redline</strong></div>
+                <div><strong>Verified editable Google Doc</strong></div>
                 <div class="upload-row">
-                  <span class="upload-status" id="redlineStatus">Not uploaded</span>
-                  <button class="small-btn" type="button">Upload sample</button>
+                  <span class="upload-status" id="redlineStatus">Not linked</span>
+                  <button class="small-btn" type="button">Attach sample link</button>
                 </div>
               </div>
               <div class="upload-box" data-upload="change-summary">
-                <div><strong>Change summary</strong> <span class="subtle">(optional for rewrites)</span></div>
+                <div><strong>Supporting change notes</strong> <span class="subtle">(optional for rewrites)</span></div>
                 <div class="upload-row">
                   <span class="upload-status" id="changeSummaryFileStatus">Optional</span>
                   <button class="small-btn" type="button">Upload sample</button>
@@ -754,25 +754,25 @@
           <div class="card">
             <div class="card-label">Time saver</div>
             <div class="side-note">
-              LogicGate already knows the owner, delegate, tier, domain, due date, related documents, and prior approval route. This screen asks only for the delta.
+              LogicGate already knows the owner, delegate, tier, domain, due date, related documents, and prior approval route. Quincy asks only for the delta and reuses the same verified Google Doc as the working redline.
             </div>
           </div>
 
-          <button class="primary-btn" id="runQcBtn">Run annual refresh QC</button>
+          <button class="primary-btn" id="runQcBtn">Run Quincy QC</button>
         </div>
       </section>
 
       <section class="panel" id="centerPanel">
         <div class="panel-header">
           <div>
-            <p class="eyebrow">Agent Output</p>
+            <p class="eyebrow">Quincy Output</p>
             <h3 class="panel-title">QC results and recommended enhancements</h3>
           </div>
           <button class="ghost-btn" id="rerunBtn" type="button">Re-run QC</button>
         </div>
         <div class="panel-body">
           <div class="submitted-banner" id="submittedBanner">
-            Submitted to Governance. This record is now read-only for the owner until Governance returns it.
+            Submission package prepared. Keep using the same verified Google Doc as the working redline, and attach Quincy’s change summary and QC audit trail in the governance workflow.
           </div>
 
           <div class="summary-grid">
@@ -813,7 +813,7 @@
                 <div class="check-item"><strong>Required sections present</strong><span class="check-status ok">Complete</span></div>
                 <div class="check-item"><strong>Related documents complete</strong><span class="check-status danger" data-check="related">Needs fix</span></div>
                 <div class="check-item"><strong>Retention language complete</strong><span class="check-status danger" data-check="retention">Needs fix</span></div>
-                <div class="check-item"><strong>Redline or change summary attached</strong><span class="check-status ok" data-check="evidence">Complete</span></div>
+                <div class="check-item"><strong>Verified Google Doc or change summary attached</strong><span class="check-status ok" data-check="evidence">Complete</span></div>
               </div>
             </div>
           </div>
@@ -966,8 +966,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
       <aside class="panel" id="rightPanel">
         <div class="panel-header">
           <div>
-            <p class="eyebrow">Ready to Submit</p>
-            <h3 class="panel-title">Package handoff</h3>
+            <p class="eyebrow">Ready to Export</p>
+            <h3 class="panel-title">Submission package</h3>
           </div>
         </div>
         <div class="panel-body">
@@ -988,12 +988,12 @@ Confirm the entity list with the Owner and update the Scope section to match all
           </div>
 
           <div class="card">
-            <div class="card-label">What gets sent to Governance</div>
+            <div class="card-label">What Quincy prepares</div>
             <div class="checklist">
-              <div class="check-item"><strong>Clean draft</strong><span class="check-status" id="pkgClean">Missing</span></div>
-              <div class="check-item"><strong>Redline or change summary</strong><span class="check-status" id="pkgRedline">Missing</span></div>
-              <div class="check-item"><strong>Owner change explanation</strong><span class="check-status" id="pkgExplanation">Missing</span></div>
-              <div class="check-item"><strong>QC summary</strong><span class="check-status" id="pkgQc">Not generated</span></div>
+              <div class="check-item"><strong>Reference clean draft</strong><span class="check-status" id="pkgClean">Missing</span></div>
+              <div class="check-item"><strong>Verified Google Doc or change summary</strong><span class="check-status" id="pkgRedline">Missing</span></div>
+              <div class="check-item"><strong>Proposed change summary</strong><span class="check-status" id="pkgExplanation">Missing</span></div>
+              <div class="check-item"><strong>QC audit trail</strong><span class="check-status" id="pkgQc">Not generated</span></div>
             </div>
           </div>
 
@@ -1009,14 +1009,14 @@ Confirm the entity list with the Owner and update the Scope section to match all
           <div class="card">
             <div class="card-label">Activity log</div>
             <div class="activity" id="activityLog">
-              <div class="activity-item">Waiting for owner to start annual refresh.</div>
+              <div class="activity-item">Waiting for the proposer to open Quincy and review the verified Google Doc draft.</div>
             </div>
           </div>
 
           <div class="footer-actions">
             <button class="ghost-btn" id="saveDraftBtn">Save draft</button>
-            <button class="primary-btn" id="submitBtn" disabled>Submit to Governance queue</button>
-            <div class="subtle" id="submitHint">Resolve required fixes before submit becomes available.</div>
+            <button class="primary-btn" id="submitBtn" disabled>Export submission package</button>
+            <div class="subtle" id="submitHint">Resolve required fixes before Quincy can prepare the submission package.</div>
           </div>
         </div>
       </aside>
@@ -1025,8 +1025,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
 
   <dialog id="submitDialog">
     <div class="modal">
-      <h3>Submit annual refresh?</h3>
-      <div>This will hand the package back to the Governance queue for Tollgate 3 QC review.</div>
+      <h3>Export Quincy package?</h3>
+      <div>This will prepare the materials needed for governance submission around the same verified Google Doc redline.</div>
       <ul id="modalSummary"></ul>
       <div class="modal-actions">
         <button class="ghost-btn" id="cancelSubmit">Cancel</button>
@@ -1169,7 +1169,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
         updateUploadLabels();
         updateUI();
       });
-      elements.saveDraftBtn.addEventListener("click", () => logActivity("Draft saved to LogicGate."));
+      elements.saveDraftBtn.addEventListener("click", () => logActivity("Draft progress saved in Quincy."));
       elements.submitBtn.addEventListener("click", openSubmitModal);
       document.getElementById("cancelSubmit").addEventListener("click", () => elements.submitDialog.close());
       document.getElementById("confirmSubmit").addEventListener("click", confirmSubmit);
@@ -1204,11 +1204,11 @@ Confirm the entity list with the Owner and update the Scope section to match all
 
     function runQc() {
       if (!canRunQc()) {
-        logActivity("QC could not run yet. Refresh type, change summary, clean draft, and redline are required.");
+        logActivity("QC could not run yet. Refresh type, change summary, clean draft, and the verified Google Doc link are required.");
         return;
       }
       state.qcRun = true;
-      logActivity("Annual refresh QC completed.");
+      logActivity("Quincy QC completed.");
       updateUI();
     }
 
@@ -1218,8 +1218,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
       elements.modalSummary.innerHTML = `
         <li>Required fixes open: ${mustOpen}</li>
         <li>Recommended improvements still open: ${recoOpen}</li>
-        <li>Package includes clean draft, redline or change summary, owner explanation, and QC summary.</li>
-        <li>Expected next stage: Governance QC queue.</li>
+        <li>Package includes the verified Google Doc reference, change summary, owner explanation, and QC audit trail.</li>
+        <li>Expected next step: attach these materials in the governance workflow.</li>
       `;
       elements.submitDialog.showModal();
     }
@@ -1227,7 +1227,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
     function confirmSubmit() {
       state.submitted = true;
       elements.submitDialog.close();
-      logActivity("Submitted to Governance queue.");
+      logActivity("Quincy package exported for governance submission.");
       updateUI();
     }
 
@@ -1241,7 +1241,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
 
     function updateUploadLabels() {
       document.getElementById("cleanStatus").textContent = state.uploads.clean ? "Uploaded: policy_clean_v3.docx" : "Not uploaded";
-      document.getElementById("redlineStatus").textContent = state.uploads.redline ? "Uploaded: policy_redline_v3.docx" : "Not uploaded";
+      document.getElementById("redlineStatus").textContent = state.uploads.redline ? "Linked: Verified Google Doc captured" : "Not linked";
       document.getElementById("changeSummaryFileStatus").textContent = state.uploads["change-summary"] ? "Uploaded: annual_change_summary.pdf" : "Optional";
       document.getElementById("evidenceStatus").textContent = state.uploads["legal-evidence"] ? "Uploaded: review_evidence.zip" : "Optional";
     }
@@ -1302,37 +1302,37 @@ Confirm the entity list with the Owner and update the Scope section to match all
       elements.submitBtn.disabled = !ready || state.submitted;
 
       if (state.submitted) {
-        elements.statusText.textContent = "Submitted to Governance";
-        elements.statusBadge.textContent = "Submitted";
+        elements.statusText.textContent = "Package exported";
+        elements.statusBadge.textContent = "Exported";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Submitted";
+        elements.statusChipSecondary.textContent = "Package exported";
         elements.statusChipSecondary.className = "chip ok";
-        elements.statusChipMain.textContent = "Annual refresh completed";
+        elements.statusChipMain.textContent = "Quincy package ready";
         elements.statusChipMain.className = "chip ok";
         elements.submitHint.textContent = "Governance now owns the next step.";
         elements.submittedBanner.style.display = "block";
         elements.leftPanel.classList.add("read-only");
       } else if (ready) {
-        elements.statusText.textContent = "Ready for submission";
+        elements.statusText.textContent = "Ready to export";
         elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Ready for submission";
+        elements.statusChipSecondary.textContent = "Ready to export";
         elements.statusChipSecondary.className = "chip ok";
-        elements.submitHint.textContent = "Required fixes are cleared. You can submit to Governance.";
+        elements.submitHint.textContent = "Required fixes are cleared. Quincy can now prepare the submission package.";
       } else if (state.qcRun) {
         elements.statusText.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
         elements.statusBadge.textContent = mustOpen > 0 ? "Updates needed" : "QC complete";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
         elements.statusChipSecondary.className = mustOpen > 0 ? "chip danger" : "chip warn";
-        elements.submitHint.textContent = mustOpen > 0 ? "Resolve required fixes before submit becomes available." : "Add any final edits, then submit.";
+        elements.submitHint.textContent = mustOpen > 0 ? "Resolve required fixes before package export becomes available." : "Add any final edits, then export the package.";
       } else if (canRunQc()) {
         elements.statusText.textContent = "Files uploaded";
         elements.statusBadge.textContent = "Ready to run QC";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Files uploaded";
         elements.statusChipSecondary.className = "chip warn";
-        elements.submitHint.textContent = "Run annual refresh QC to see required fixes and recommendations.";
+        elements.submitHint.textContent = "Run Quincy QC to see required fixes and recommendations.";
       } else if (state.refreshType) {
         elements.statusText.textContent = "Refresh type captured";
         elements.statusBadge.textContent = "In progress";
@@ -1371,8 +1371,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
 
     function humanUploadName(kind) {
       const map = {
-        clean: "Clean draft",
-        redline: "Redline",
+        clean: "Reference clean draft",
+        redline: "Verified editable Google Doc",
         "change-summary": "Change summary",
         "legal-evidence": "Supporting evidence"
       };

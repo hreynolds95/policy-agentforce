@@ -1,17 +1,17 @@
 # Policy Agentforce
 
-Low-fidelity policy lifecycle prototypes, wireframes, and clickable mockups for a LogicGate-centered policy operations experience.
+Low-fidelity policy lifecycle prototypes, wireframes, and clickable Quincy mockups for a Block policy operations experience.
 
 This repository currently focuses on:
 
-- a `Document Owner` annual refresh and pre-submission QC experience
+- `Quincy`, a standalone QC assistant for proposed Policy and Standard changes
 - a `Compliance Governance / Policy Team` workflow model
 - subagent prototypes aligned to Block's `Compliance Policy on Policies`
 
 ## Start here
 
-- [Open the clickable annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
-- [Open the Governance return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
+- [Open the Quincy annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
+- [Open the Quincy return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
 - [Open the GitHub Pages landing page](./index.html)
 - [View the owner annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
@@ -20,14 +20,14 @@ This repository currently focuses on:
 ### `mockups/`
 
 - [`document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
-  Standalone clickable HTML prototype for the Document Owner annual refresh flow
+  Standalone clickable HTML prototype for Quincy’s annual refresh and proposed-change QC flow
 - [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
-  Standalone clickable HTML prototype for the owner experience after Governance returns the record for fixes
+  Standalone clickable HTML prototype for Quincy after Governance returns the package for fixes
 
 ### `wireframes/`
 
 - [`document_owner_qc_assistant_wireframe.svg`](./wireframes/document_owner_qc_assistant_wireframe.svg)
-  Focused pre-submission QC assistant screen
+  Focused Quincy pre-submission QC assistant screen
 - [`document_owner_annual_refresh_user_story.md`](./wireframes/document_owner_annual_refresh_user_story.md)
   Detailed step-by-step owner interaction model
 - [`document_owner_wireframe.svg`](./wireframes/document_owner_wireframe.svg)
@@ -48,16 +48,16 @@ This repository currently focuses on:
 
 ## Current experience concept
 
-The current owner-side concept is intentionally narrow:
+The current Quincy concept is intentionally narrow:
 
-1. LogicGate notifies the owner that annual refresh is due
-2. The owner opens a pre-filled annual refresh page
-3. The owner uploads draft changes and explains the delta
-4. An agent runs Policy on Policies quality checks
+1. A proposer or document owner opens the Google Doc referenced in LogicGate’s `Verified Link to Editable Document (In Progress Version)` field
+2. They draft or redline changes in that same Google Doc
+3. They bring the draft into Quincy and explain the delta
+4. Quincy runs Policy on Policies quality checks
 5. The owner resolves `Must fix` items and optionally accepts recommended enhancements
-6. The owner submits the package back into the Governance queue
+6. Quincy prepares the supporting submission artifacts: a change summary and a one-page QC audit trail
 
-This avoids making owners work through a full governance workflow while still preserving Policy Team standards.
+This avoids making owners work through a full governance workflow while still preserving Policy Team standards and keeping the verified Google Doc as the authoritative working draft.
 
 ## Publishing
 
@@ -72,5 +72,5 @@ Once GitHub Pages is enabled from `main` and `/(root)`, the site should publish 
 
 ## Next build ideas
 
-- turn the owner mockup into a LogicGate field and automation spec
+- turn Quincy into a LogicGate-connected intake and packaging spec
 - add a governance-side clickable prototype
