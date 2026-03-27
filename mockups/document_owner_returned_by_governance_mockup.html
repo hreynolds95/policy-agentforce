@@ -14,11 +14,11 @@
       --muted: #616161;
       --accent: #b8ff2c;
       --accent-soft: #efffcb;
-      --warn: #7cc700;
-      --warn-soft: #efffcb;
-      --danger: #0a0a0a;
-      --danger-soft: #f1f1f1;
-      --ok: #7cc700;
+      --warn: #c98300;
+      --warn-soft: #fff1c7;
+      --danger: #d63a2f;
+      --danger-soft: #ffe2de;
+      --ok: #70b300;
       --ok-soft: #efffcb;
       --shadow: 0 20px 46px rgba(0, 0, 0, 0.26);
     }
@@ -156,19 +156,19 @@
 
     .chip.warn {
       background: var(--warn-soft);
-      color: #050505;
-      border-color: #b8ff2c;
+      color: #6d4700;
+      border-color: #efc86c;
     }
 
     .chip.danger {
       background: var(--danger-soft);
-      color: #050505;
-      border-color: #b8ff2c;
+      color: var(--danger);
+      border-color: #f0a39b;
     }
 
     .chip.ok {
       background: var(--ok-soft);
-      color: #050505;
+      color: #335900;
       border-color: #b8ff2c;
     }
 
@@ -309,15 +309,15 @@
     }
 
     .badge.must {
-      color: #050505;
-      border-color: #b8ff2c;
-      background: var(--warn-soft);
+      color: var(--danger);
+      border-color: #f0a39b;
+      background: var(--danger-soft);
     }
 
     .badge.returned {
-      color: #050505;
-      border-color: #b8ff2c;
-      background: var(--accent-soft);
+      color: var(--danger);
+      border-color: #f0a39b;
+      background: var(--danger-soft);
     }
 
     .summary-grid {
@@ -416,7 +416,8 @@
     }
 
     .check-status.ok { color: var(--ok); }
-    .check-status.warn { color: #6aa800; }
+    .check-status.warn { color: var(--warn); }
+    .check-status.danger { color: var(--danger); }
 
     .mini-stat {
       display: flex;
@@ -432,6 +433,7 @@
     }
 
     .mini-stat-value.warn { color: var(--warn); }
+    .mini-stat-value.danger { color: var(--danger); }
     .mini-stat-value.ok { color: var(--ok); }
 
     .activity {
@@ -507,7 +509,7 @@
       background: var(--ok-soft);
       border: 1px solid #b8ff2c;
       border-radius: 16px;
-      color: #050505;
+      color: #335900;
       padding: 12px 14px;
       font-size: 14px;
     }
@@ -672,11 +674,11 @@
               <div class="summary-grid">
                 <div class="mini-stat">
                   <div><div class="card-label">Required fixes open</div></div>
-                  <div class="mini-stat-value warn" id="mustCount">2</div>
+                  <div class="mini-stat-value danger" id="mustCount">2</div>
                 </div>
                 <div class="mini-stat">
                   <div><div class="card-label">Package complete</div></div>
-                  <div class="mini-stat-value warn" id="packageStatus">No</div>
+                  <div class="mini-stat-value danger" id="packageStatus">No</div>
                 </div>
                 <div class="mini-stat">
                   <div><div class="card-label">Previously accepted improvements</div></div>
@@ -693,8 +695,8 @@
               <div class="card-label">Checklist re-check</div>
               <div class="checklist">
                 <div class="check-item"><strong>Prior package preserved</strong><span class="check-status ok">Complete</span></div>
-                <div class="check-item"><strong>Related documents complete</strong><span class="check-status warn" id="relatedCheck">Needs fix</span></div>
-                <div class="check-item"><strong>Retention language complete</strong><span class="check-status warn" id="retentionCheck">Needs fix</span></div>
+                <div class="check-item"><strong>Related documents complete</strong><span class="check-status danger" id="relatedCheck">Needs fix</span></div>
+                <div class="check-item"><strong>Retention language complete</strong><span class="check-status danger" id="retentionCheck">Needs fix</span></div>
                 <div class="check-item"><strong>Owner response note added</strong><span class="check-status ok" id="responseCheck">Complete</span></div>
               </div>
             </div>
@@ -911,16 +913,18 @@ Published versions of this Policy and associated approval evidence must be retai
 
       els.mustCount.textContent = open;
       els.packageStatus.textContent = ready || state.submitted ? "Yes" : "No";
-      els.packageStatus.className = "mini-stat-value " + ((ready || state.submitted) ? "ok" : "warn");
+      els.packageStatus.className = "mini-stat-value " + ((ready || state.submitted) ? "ok" : "danger");
       els.readyScore.textContent = computeScore(open, notePresent) + "%";
+      els.mustCount.className = "mini-stat-value " + (open === 0 ? "ok" : "danger");
+      els.readyScore.className = "mini-stat-value " + ((ready || state.submitted) ? "ok" : "warn");
 
       els.relatedCheck.textContent = state.fixes[0].resolved ? "Complete" : "Needs fix";
-      els.relatedCheck.className = "check-status " + (state.fixes[0].resolved ? "ok" : "warn");
+      els.relatedCheck.className = "check-status " + (state.fixes[0].resolved ? "ok" : "danger");
       els.retentionCheck.textContent = state.fixes[1].resolved ? "Complete" : "Needs fix";
-      els.retentionCheck.className = "check-status " + (state.fixes[1].resolved ? "ok" : "warn");
+      els.retentionCheck.className = "check-status " + (state.fixes[1].resolved ? "ok" : "danger");
       els.resolvedPkg.textContent = open === 0 ? "Ready" : "Pending";
       els.resolvedPkg.className = "check-status " + (open === 0 ? "ok" : "warn");
-      els.responseCheck.className = "check-status " + (notePresent ? "ok" : "warn");
+      els.responseCheck.className = "check-status " + (notePresent ? "ok" : "danger");
       els.responseCheck.textContent = notePresent ? "Complete" : "Missing";
 
       els.resubmitBtn.disabled = !ready;
@@ -929,7 +933,7 @@ Published versions of this Policy and associated approval evidence must be retai
         els.statusChipMain.textContent = "Resubmitted to Governance";
         els.statusChipMain.className = "chip ok";
         els.statusChipSecondary.textContent = "Waiting on Governance";
-        els.statusChipSecondary.className = "chip";
+        els.statusChipSecondary.className = "chip warn";
         els.submitHint.textContent = "Governance now owns the next step.";
         els.successBanner.style.display = "block";
         els.resubmitBtn.disabled = true;

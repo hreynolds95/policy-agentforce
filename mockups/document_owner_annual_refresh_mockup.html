@@ -14,11 +14,11 @@
       --line: #252525;
       --accent: #b8ff2c;
       --accent-soft: #efffcb;
-      --warn: #7cc700;
-      --warn-soft: #efffcb;
-      --danger: #0a0a0a;
-      --danger-soft: #f1f1f1;
-      --ok: #7cc700;
+      --warn: #c98300;
+      --warn-soft: #fff1c7;
+      --danger: #d63a2f;
+      --danger-soft: #ffe2de;
+      --ok: #70b300;
       --ok-soft: #efffcb;
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
       --radius: 18px;
@@ -191,13 +191,19 @@
 
     .chip.warn {
       background: var(--warn-soft);
-      color: #050505;
-      border-color: #b8ff2c;
+      color: #6d4700;
+      border-color: #efc86c;
+    }
+
+    .chip.danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #f0a39b;
     }
 
     .chip.ok {
       background: var(--ok-soft);
-      color: #050505;
+      color: #335900;
       border-color: #b8ff2c;
     }
 
@@ -373,9 +379,9 @@
     }
 
     .badge.must {
-      border-color: #b8ff2c;
-      color: #050505;
-      background: var(--warn-soft);
+      border-color: #f0a39b;
+      color: var(--danger);
+      background: var(--danger-soft);
     }
 
     .badge.reco {
@@ -455,7 +461,11 @@
     }
 
     .check-status.warn {
-      color: #6aa800;
+      color: var(--warn);
+    }
+
+    .check-status.danger {
+      color: var(--danger);
     }
 
     .side-note {
@@ -483,6 +493,7 @@
     }
 
     .mini-stat-value.warn { color: var(--warn); }
+    .mini-stat-value.danger { color: var(--danger); }
     .mini-stat-value.ok { color: var(--ok); }
 
     .activity {
@@ -567,7 +578,7 @@
       padding: 12px 16px;
       border-radius: 16px;
       background: var(--ok-soft);
-      color: #050505;
+      color: #335900;
       border: 1px solid #b8ff2c;
       margin-bottom: 12px;
       font-size: 14px;
@@ -771,7 +782,7 @@
                   <div>
                     <div class="card-label">Required fixes open</div>
                   </div>
-                  <div class="mini-stat-value warn" id="mustCount">2</div>
+                  <div class="mini-stat-value danger" id="mustCount">2</div>
                 </div>
                 <div class="mini-stat">
                   <div>
@@ -783,7 +794,7 @@
                   <div>
                     <div class="card-label">Package complete</div>
                   </div>
-                  <div class="mini-stat-value warn" id="packageStatus">No</div>
+                  <div class="mini-stat-value danger" id="packageStatus">No</div>
                 </div>
                 <div class="mini-stat">
                   <div>
@@ -799,8 +810,8 @@
               <div class="checklist" id="checklist">
                 <div class="check-item"><strong>Approved template used</strong><span class="check-status ok">Complete</span></div>
                 <div class="check-item"><strong>Required sections present</strong><span class="check-status ok">Complete</span></div>
-                <div class="check-item"><strong>Related documents complete</strong><span class="check-status warn" data-check="related">Needs fix</span></div>
-                <div class="check-item"><strong>Retention language complete</strong><span class="check-status warn" data-check="retention">Needs fix</span></div>
+                <div class="check-item"><strong>Related documents complete</strong><span class="check-status danger" data-check="related">Needs fix</span></div>
+                <div class="check-item"><strong>Retention language complete</strong><span class="check-status danger" data-check="retention">Needs fix</span></div>
                 <div class="check-item"><strong>Redline or change summary attached</strong><span class="check-status ok" data-check="evidence">Complete</span></div>
               </div>
             </div>
@@ -1247,12 +1258,12 @@ Confirm the entity list with the Owner and update the Scope section to match all
       const retention = document.querySelector('[data-check="retention"]');
       const evidence = document.querySelector('[data-check="evidence"]');
       related.textContent = state.findings.find(f => f.checkTarget === "related").resolved ? "Complete" : "Needs fix";
-      related.className = "check-status " + (state.findings.find(f => f.checkTarget === "related").resolved ? "ok" : "warn");
+      related.className = "check-status " + (state.findings.find(f => f.checkTarget === "related").resolved ? "ok" : "danger");
       retention.textContent = state.findings.find(f => f.checkTarget === "retention").resolved ? "Complete" : "Needs fix";
-      retention.className = "check-status " + (state.findings.find(f => f.checkTarget === "retention").resolved ? "ok" : "warn");
+      retention.className = "check-status " + (state.findings.find(f => f.checkTarget === "retention").resolved ? "ok" : "danger");
       const evidenceOk = state.uploads.redline || state.uploads["change-summary"];
       evidence.textContent = evidenceOk ? "Complete" : "Missing";
-      evidence.className = "check-status " + (evidenceOk ? "ok" : "warn");
+      evidence.className = "check-status " + (evidenceOk ? "ok" : "danger");
     }
 
     function updatePackage() {
@@ -1260,12 +1271,12 @@ Confirm the entity list with the Owner and update the Scope section to match all
       setPackageLine(elements.pkgRedline, state.uploads.redline || state.uploads["change-summary"]);
       setPackageLine(elements.pkgExplanation, elements.changeSummary.value.trim().length > 0);
       elements.pkgQc.textContent = state.qcRun ? "Generated" : "Not generated";
-      elements.pkgQc.className = "check-status " + (state.qcRun ? "ok" : "");
+      elements.pkgQc.className = "check-status " + (state.qcRun ? "ok" : "danger");
     }
 
     function setPackageLine(el, ok) {
       el.textContent = ok ? "Included" : "Missing";
-      el.className = "check-status " + (ok ? "ok" : "");
+      el.className = "check-status " + (ok ? "ok" : "danger");
     }
 
     function updateUI() {
@@ -1282,7 +1293,10 @@ Confirm the entity list with the Owner and update the Scope section to match all
       elements.mustCount.textContent = state.qcRun ? mustOpen : "—";
       elements.recoCount.textContent = state.qcRun ? recoOpen : "—";
       elements.packageStatus.textContent = packageComplete ? "Yes" : "No";
-      elements.packageStatus.className = "mini-stat-value " + (packageComplete ? "ok" : "warn");
+      elements.packageStatus.className = "mini-stat-value " + (packageComplete ? "ok" : "danger");
+      elements.mustCount.className = "mini-stat-value " + (state.qcRun ? (mustOpen === 0 ? "ok" : "danger") : "danger");
+      elements.recoCount.className = "mini-stat-value " + (state.qcRun ? (recoOpen === 0 ? "ok" : "warn") : "warn");
+      elements.readyScore.className = "mini-stat-value " + (ready ? "ok" : (state.qcRun ? "warn" : "danger"));
       elements.readyScore.textContent = computeReadyScore(packageComplete, mustOpen, recoOpen);
       elements.submitBtn.disabled = !ready || state.submitted;
 
@@ -1309,27 +1323,27 @@ Confirm the entity list with the Owner and update the Scope section to match all
         elements.statusBadge.textContent = mustOpen > 0 ? "Updates needed" : "QC complete";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
-        elements.statusChipSecondary.className = "chip";
+        elements.statusChipSecondary.className = mustOpen > 0 ? "chip danger" : "chip warn";
         elements.submitHint.textContent = mustOpen > 0 ? "Resolve required fixes before submit becomes available." : "Add any final edits, then submit.";
       } else if (canRunQc()) {
         elements.statusText.textContent = "Files uploaded";
         elements.statusBadge.textContent = "Ready to run QC";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Files uploaded";
-        elements.statusChipSecondary.className = "chip";
+        elements.statusChipSecondary.className = "chip warn";
         elements.submitHint.textContent = "Run annual refresh QC to see required fixes and recommendations.";
       } else if (state.refreshType) {
         elements.statusText.textContent = "Refresh type captured";
         elements.statusBadge.textContent = "In progress";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Refresh type captured";
-        elements.statusChipSecondary.className = "chip";
+        elements.statusChipSecondary.className = "chip warn";
       } else {
         elements.statusText.textContent = "Draft check not started";
         elements.statusBadge.textContent = "Open";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Draft check not started";
-        elements.statusChipSecondary.className = "chip";
+        elements.statusChipSecondary.className = "chip danger";
       }
     }
 
