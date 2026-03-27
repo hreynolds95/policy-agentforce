@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Policy Agentforce</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --panel: rgba(255, 252, 245, 0.88);
+      --line: #d8cfbe;
+      --ink: #1f2b25;
+      --muted: #5e675f;
+      --accent: #0d6a5d;
+      --accent-soft: #d9efe7;
+      --shadow: 0 22px 50px rgba(28, 31, 27, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff6df 0, transparent 24%),
+        linear-gradient(180deg, #fcf8ef 0%, var(--bg) 100%);
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 36px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: 54px;
+      line-height: 1.02;
+      margin: 0 0 16px;
+      max-width: 760px;
+    }
+
+    .lede {
+      font-size: 20px;
+      line-height: 1.55;
+      max-width: 780px;
+      color: #334039;
+      margin-bottom: 28px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 20px;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: white;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+
+    .btn.secondary {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: #9ccfbe;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(29, 34, 30, 0.08);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 28px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.7;
+      font-size: 17px;
+      color: #334039;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .link-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px 18px;
+    }
+
+    .link-card strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .link-card span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 0 4px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 42px;
+      }
+
+      .hero {
+        padding: 28px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <p class="eyebrow">Policy Agentforce</p>
+      <h1>Policy lifecycle prototypes and clickable owner experience</h1>
+      <div class="lede">
+        This repo contains low-fidelity policy lifecycle wireframes, Block-aligned subagent prototypes, and a clickable annual refresh mockup for Document Owners working inside LogicGate.
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open clickable mockup</a>
+        <a class="btn secondary" href="./wireframes/document_owner_qc_assistant_wireframe.svg">Open QC wireframe</a>
+        <a class="btn" href="https://github.com/hreynolds95/policy-agentforce">View repository</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h2>What’s in here</h2>
+        <ul>
+          <li>Document Owner and Governance Team wireframes</li>
+          <li>Document Owner annual refresh user journey</li>
+          <li>Subagent prototype specs for policy lifecycle support</li>
+          <li>Workflow state model aligned to the Block Policy on Policies</li>
+          <li>A standalone HTML mockup you can share and review without a build step</li>
+        </ul>
+      </div>
+
+      <div class="panel">
+        <h2>Open artifacts</h2>
+        <div class="link-list">
+          <a class="link-card" href="./mockups/document_owner_annual_refresh_mockup.html">
+            <strong>Annual Refresh Mockup</strong>
+            <span>Interactive owner-side pre-submission QC flow</span>
+          </a>
+          <a class="link-card" href="./wireframes/document_owner_annual_refresh_user_story.md">
+            <strong>Annual Refresh User Story</strong>
+            <span>Screen states, statuses, and owner interactions</span>
+          </a>
+          <a class="link-card" href="./prototypes/README.md">
+            <strong>Subagent Prototype Pack</strong>
+            <span>Top-level agents, subagents, and lifecycle model</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Best published with GitHub Pages from the <code>main</code> branch root.
+    </div>
+  </div>
+</body>
+</html>
