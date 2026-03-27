@@ -4,26 +4,27 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Policy Agentforce</title>
+  <link rel="stylesheet" href="./assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: #050505;
-      --panel: rgba(255, 255, 255, 0.97);
-      --line: #242424;
-      --ink: #0a0a0a;
-      --muted: #5f5f5f;
-      --accent: #b8ff2c;
-      --accent-soft: #efffcb;
-      --shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+      --bg: var(--color-background-inverse);
+      --panel: rgba(255, 255, 255, 0.98);
+      --line: var(--color-border-primary);
+      --ink: var(--color-text-primary);
+      --muted: var(--color-text-secondary);
+      --accent: var(--color-accent);
+      --accent-soft: var(--color-background-secondary);
+      --shadow: var(--shadow-lg);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      color: white;
+      color: var(--color-text-inverse);
       background:
-        radial-gradient(circle at top left, rgba(184, 255, 44, 0.18) 0, transparent 24%),
-        linear-gradient(180deg, #0b0b0b 0%, var(--bg) 100%);
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 24%),
+        linear-gradient(180deg, #111 0%, var(--bg) 100%);
     }
 
     .wrap {
@@ -86,14 +87,14 @@
 
     .btn.primary {
       background: var(--accent);
-      border-color: #9ddd19;
-      color: #050505;
+      border-color: var(--accent);
+      color: var(--color-accent-foreground);
     }
 
     .btn.secondary {
       background: var(--accent-soft);
-      color: #050505;
-      border-color: #b8ff2c;
+      color: var(--ink);
+      border-color: var(--line);
     }
 
     .btn:hover {
@@ -158,14 +159,14 @@
 
     .footer {
       font-size: 14px;
-      color: #d8d8d8;
+      color: var(--color-neutral-200);
       padding: 0 4px;
     }
 
     code {
-      background: rgba(184, 255, 44, 0.16);
+      background: rgba(255, 255, 255, 0.1);
       color: white;
-      border: 1px solid rgba(184, 255, 44, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.18);
       border-radius: 8px;
       padding: 2px 6px;
     }

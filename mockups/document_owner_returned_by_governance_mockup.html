@@ -4,33 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document Owner Returned by Governance Mockup</title>
+  <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: #050505;
-      --panel: rgba(255, 255, 255, 0.97);
-      --panel-2: #f6f6f6;
-      --line: #252525;
-      --ink: #090909;
-      --muted: #616161;
-      --accent: #b8ff2c;
-      --accent-soft: #efffcb;
-      --warn: #c98300;
-      --warn-soft: #fff1c7;
-      --danger: #d63a2f;
-      --danger-soft: #ffe2de;
-      --ok: #70b300;
-      --ok-soft: #efffcb;
-      --shadow: 0 20px 46px rgba(0, 0, 0, 0.26);
+      --bg: var(--color-background-inverse);
+      --panel: rgba(255, 255, 255, 0.98);
+      --panel-2: var(--color-background-secondary);
+      --line: var(--color-border-primary);
+      --ink: var(--color-text-primary);
+      --muted: var(--color-text-secondary);
+      --accent: var(--color-accent);
+      --accent-soft: var(--color-background-secondary);
+      --warn: var(--color-text-warning);
+      --warn-soft: #fff4d5;
+      --danger: var(--color-text-danger);
+      --danger-soft: #ffe4e1;
+      --ok: var(--color-text-success);
+      --ok-soft: #eef7ea;
+      --shadow: var(--shadow-lg);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      color: white;
+      color: var(--color-text-inverse);
       background:
-        radial-gradient(circle at top left, rgba(184, 255, 44, 0.18) 0, transparent 22%),
-        linear-gradient(180deg, #0a0a0a 0%, var(--bg) 100%);
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 22%),
+        linear-gradient(180deg, #111 0%, var(--bg) 100%);
     }
 
     button, input, textarea { font: inherit; }
@@ -75,14 +76,14 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #050505;
-      border-color: #9ddd19;
+      color: var(--color-accent-foreground);
+      border-color: var(--accent);
     }
 
     .secondary-btn {
       background: var(--accent-soft);
-      color: #050505;
-      border-color: #b8ff2c;
+      color: var(--ink);
+      border-color: var(--line);
     }
 
     .small-btn {
@@ -96,8 +97,8 @@
     }
 
     .banner {
-      background: linear-gradient(135deg, rgba(184, 255, 44, 0.2) 0%, rgba(255, 255, 255, 0.06) 100%);
-      border: 1px solid rgba(184, 255, 44, 0.45);
+      background: linear-gradient(135deg, rgba(249, 75, 75, 0.14) 0%, rgba(255, 255, 255, 0.04) 100%);
+      border: 1px solid rgba(249, 75, 75, 0.32);
       border-radius: 24px;
       padding: 18px 20px;
       display: flex;
@@ -156,20 +157,20 @@
 
     .chip.warn {
       background: var(--warn-soft);
-      color: #6d4700;
-      border-color: #efc86c;
+      color: #7b5200;
+      border-color: var(--color-border-warning);
     }
 
     .chip.danger {
       background: var(--danger-soft);
       color: var(--danger);
-      border-color: #f0a39b;
+      border-color: var(--color-border-danger);
     }
 
     .chip.ok {
       background: var(--ok-soft);
-      color: #335900;
-      border-color: #b8ff2c;
+      color: #4f7a43;
+      border-color: var(--color-border-success);
     }
 
     .meta-grid {
@@ -310,13 +311,13 @@
 
     .badge.must {
       color: var(--danger);
-      border-color: #f0a39b;
+      border-color: var(--color-border-danger);
       background: var(--danger-soft);
     }
 
     .badge.returned {
       color: var(--danger);
-      border-color: #f0a39b;
+      border-color: var(--color-border-danger);
       background: var(--danger-soft);
     }
 
@@ -333,7 +334,7 @@
 
     .finding {
       background: white;
-      border: 1px solid #b8ff2c;
+      border: 1px solid var(--color-border-danger);
       border-radius: 18px;
       overflow: hidden;
     }
@@ -507,7 +508,7 @@
     .success-banner {
       display: none;
       background: var(--ok-soft);
-      border: 1px solid #b8ff2c;
+      border: 1px solid var(--color-border-success);
       border-radius: 16px;
       color: #335900;
       padding: 12px 14px;

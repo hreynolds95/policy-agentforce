@@ -1,0 +1,125 @@
+/*
+  Browser-safe Block theme bridge for static HTML mockups.
+
+  Source of truth:
+  - assets/official/main.css
+  - assets/official/theme-custom.css
+
+  The original files use Tailwind-specific directives such as @theme and @apply,
+  so this stylesheet extracts the browser-usable parts we need for standalone
+  GitHub Pages mockups:
+  - Cash Sans font-face declarations
+  - Block semantic color tokens
+  - Radius and shadow tokens
+*/
+
+@font-face {
+  font-family: "Cash Sans";
+  src: url(https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Regular.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cash Sans";
+  src: url(https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Medium.woff2) format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Cash Sans";
+  src: url(https://cash-f.squarecdn.com/static/fonts/cashsans/woff2/CashSans-Bold.woff2) format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root {
+  --font-sans: "Cash Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-neutral-50: #f4f6f7;
+  --color-neutral-100: #e3e6ea;
+  --color-neutral-200: #cbd1d6;
+  --color-neutral-300: #a7b0b9;
+  --color-neutral-400: #878787;
+  --color-neutral-500: #606c7a;
+  --color-neutral-600: #525b68;
+  --color-neutral-700: #474e57;
+  --color-neutral-800: #3f434b;
+  --color-neutral-900: #32353b;
+  --color-neutral-950: #22252a;
+  --color-red-100: #ff6b6b;
+  --color-red-200: #f94b4b;
+  --color-blue-100: #7cacff;
+  --color-blue-200: #5c98f9;
+  --color-green-100: #a3d795;
+  --color-green-200: #91cb80;
+  --color-yellow-100: #ffd966;
+  --color-yellow-200: #fbcd44;
+
+  --border-radius-xs: 2px;
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-full: 9999px;
+
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f4f6f7;
+  --color-background-tertiary: #e3e6ea;
+  --color-background-inverse: #000000;
+  --color-background-ghost: transparent;
+  --color-background-info: #5c98f9;
+  --color-background-danger: #f94b4b;
+  --color-background-success: #91cb80;
+  --color-background-warning: #fbcd44;
+  --color-background-disabled: #e3e6ea;
+
+  --color-text-primary: #3f434b;
+  --color-text-secondary: #878787;
+  --color-text-tertiary: #a7b0b9;
+  --color-text-inverse: #ffffff;
+  --color-text-ghost: #878787;
+  --color-text-info: #5c98f9;
+  --color-text-danger: #f94b4b;
+  --color-text-success: #91cb80;
+  --color-text-warning: #fbcd44;
+  --color-text-disabled: #cbd1d6;
+
+  --color-border-primary: #e3e6ea;
+  --color-border-secondary: #e3e6ea;
+  --color-border-tertiary: #cbd1d6;
+  --color-border-inverse: #000000;
+  --color-border-ghost: transparent;
+  --color-border-info: #5c98f9;
+  --color-border-danger: #f94b4b;
+  --color-border-success: #91cb80;
+  --color-border-warning: #fbcd44;
+  --color-border-disabled: #e3e6ea;
+
+  --color-ring-primary: #e3e6ea;
+  --color-ring-secondary: #cbd1d6;
+  --color-ring-inverse: #ffffff;
+  --color-ring-info: #5c98f9;
+  --color-ring-danger: #f94b4b;
+  --color-ring-success: #91cb80;
+  --color-ring-warning: #fbcd44;
+
+  /* Block default accent is intentionally neutral */
+  --color-accent: #3f434b;
+  --color-accent-foreground: #ffffff;
+
+  --shadow-hairline: 0 0 0 1px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
