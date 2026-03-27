@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quincy Annual Refresh Mockup</title>
+  <title>quincy annual refresh mockup</title>
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
@@ -617,7 +617,7 @@
     <div class="topbar">
       <div>
         <p class="eyebrow">Clickable HTML Mockup</p>
-        <h1>Quincy</h1>
+        <h1>quincy</h1>
       </div>
       <div class="topbar-actions">
         <button class="ghost-btn" id="resetDemo">Reset demo</button>
@@ -627,9 +627,9 @@
     <section class="notification">
       <div>
         <strong>Annual review due in 14 days</strong>
-        <div>Open the verified editable Google Doc from LogicGate, make your proposed edits there, then use Quincy to run Policy on Policies QC and prepare submission artifacts.</div>
+        <div>Open the verified editable Google Doc from LogicGate, make your proposed edits there, then use quincy to run Policy on Policies QC and prepare submission artifacts.</div>
       </div>
-      <button class="secondary-btn" id="focusRefresh">Open Quincy workspace</button>
+      <button class="secondary-btn" id="focusRefresh">Open quincy workspace</button>
     </section>
 
     <section class="hero">
@@ -669,7 +669,7 @@
       </div>
       <div class="flow-strip">
         <div class="step-pill">1. Confirm Google Doc draft</div>
-        <div class="step-pill">2. Run Quincy QC</div>
+        <div class="step-pill">2. Run quincy QC</div>
         <div class="step-pill">3. Resolve findings fast</div>
         <div class="step-pill">4. Export submission package</div>
       </div>
@@ -758,25 +758,25 @@
           <div class="card">
             <div class="card-label">Time saver</div>
             <div class="side-note">
-              LogicGate already knows the owner, delegate, tier, domain, due date, related documents, and prior approval route. Quincy asks only for the delta and reuses the same verified Google Doc as the working redline.
+              LogicGate already knows the owner, delegate, tier, domain, due date, related documents, and prior approval route. quincy asks only for the delta and reuses the same verified Google Doc as the working redline.
             </div>
           </div>
 
-          <button class="primary-btn" id="runQcBtn">Run Quincy QC</button>
+          <button class="primary-btn" id="runQcBtn">Run quincy QC</button>
         </div>
       </section>
 
       <section class="panel" id="centerPanel">
         <div class="panel-header">
           <div>
-            <p class="eyebrow">Quincy Output</p>
+            <p class="eyebrow">quincy Output</p>
             <h3 class="panel-title">QC results and recommended enhancements</h3>
           </div>
           <button class="ghost-btn" id="rerunBtn" type="button">Re-run QC</button>
         </div>
         <div class="panel-body">
           <div class="submitted-banner" id="submittedBanner">
-            Submission package prepared. Keep using the same verified Google Doc as the working redline, and attach Quincy’s change summary and QC audit trail in the governance workflow.
+            Submission package prepared. Keep using the same verified Google Doc as the working redline, and attach quincy's change summary and QC audit trail in the governance workflow.
           </div>
 
           <div class="summary-grid">
@@ -992,7 +992,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
           </div>
 
           <div class="card">
-            <div class="card-label">What Quincy prepares</div>
+            <div class="card-label">What quincy prepares</div>
             <div class="checklist">
               <div class="check-item"><strong>Reference clean draft</strong><span class="check-status" id="pkgClean">Missing</span></div>
               <div class="check-item"><strong>Verified Google Doc or change summary</strong><span class="check-status" id="pkgRedline">Missing</span></div>
@@ -1013,14 +1013,14 @@ Confirm the entity list with the Owner and update the Scope section to match all
           <div class="card">
             <div class="card-label">Activity log</div>
             <div class="activity" id="activityLog">
-              <div class="activity-item">Waiting for the proposer to open Quincy and review the verified Google Doc draft.</div>
+              <div class="activity-item">Waiting for the proposer to open quincy and review the verified Google Doc draft.</div>
             </div>
           </div>
 
           <div class="footer-actions">
             <button class="ghost-btn" id="saveDraftBtn">Save draft</button>
             <button class="primary-btn" id="submitBtn" disabled>Export submission package</button>
-            <div class="subtle" id="submitHint">Resolve required fixes before Quincy can prepare the submission package.</div>
+            <div class="subtle" id="submitHint">Resolve required fixes before quincy can prepare the submission package.</div>
           </div>
         </div>
       </aside>
@@ -1029,7 +1029,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
 
   <dialog id="submitDialog">
     <div class="modal">
-      <h3>Export Quincy package?</h3>
+      <h3>Export quincy package?</h3>
       <div>This will prepare the materials needed for governance submission around the same verified Google Doc redline.</div>
       <ul id="modalSummary"></ul>
       <div class="modal-actions">
@@ -1173,7 +1173,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
         updateUploadLabels();
         updateUI();
       });
-      elements.saveDraftBtn.addEventListener("click", () => logActivity("Draft progress saved in Quincy."));
+      elements.saveDraftBtn.addEventListener("click", () => logActivity("Draft progress saved in quincy."));
       elements.submitBtn.addEventListener("click", openSubmitModal);
       document.getElementById("cancelSubmit").addEventListener("click", () => elements.submitDialog.close());
       document.getElementById("confirmSubmit").addEventListener("click", confirmSubmit);
@@ -1212,7 +1212,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
         return;
       }
       state.qcRun = true;
-      logActivity("Quincy QC completed.");
+      logActivity("quincy QC completed.");
       updateUI();
     }
 
@@ -1231,7 +1231,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
     function confirmSubmit() {
       state.submitted = true;
       elements.submitDialog.close();
-      logActivity("Quincy package exported for governance submission.");
+      logActivity("quincy package exported for governance submission.");
       updateUI();
     }
 
@@ -1311,7 +1311,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Package exported";
         elements.statusChipSecondary.className = "chip ok";
-        elements.statusChipMain.textContent = "Quincy package ready";
+        elements.statusChipMain.textContent = "quincy package ready";
         elements.statusChipMain.className = "chip ok";
         elements.submitHint.textContent = "Governance now owns the next step.";
         elements.submittedBanner.style.display = "block";
@@ -1322,7 +1322,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Ready to export";
         elements.statusChipSecondary.className = "chip ok";
-        elements.submitHint.textContent = "Required fixes are cleared. Quincy can now prepare the submission package.";
+        elements.submitHint.textContent = "Required fixes are cleared. quincy can now prepare the submission package.";
       } else if (state.qcRun) {
         elements.statusText.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
         elements.statusBadge.textContent = mustOpen > 0 ? "Updates needed" : "QC complete";
@@ -1336,7 +1336,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Files uploaded";
         elements.statusChipSecondary.className = "chip warn";
-        elements.submitHint.textContent = "Run Quincy QC to see required fixes and recommendations.";
+        elements.submitHint.textContent = "Run quincy QC to see required fixes and recommendations.";
       } else if (state.refreshType) {
         elements.statusText.textContent = "Refresh type captured";
         elements.statusBadge.textContent = "In progress";

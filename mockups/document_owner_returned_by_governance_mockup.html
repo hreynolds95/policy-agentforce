@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quincy Returned-State Mockup</title>
+  <title>quincy returned-state mockup</title>
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
@@ -536,7 +536,7 @@
     <div class="topbar">
       <div>
         <p class="eyebrow">Clickable HTML Mockup</p>
-        <h1>Quincy</h1>
+        <h1>quincy</h1>
       </div>
       <button class="ghost-btn" id="resetDemo">Reset demo</button>
     </div>
@@ -544,9 +544,9 @@
     <section class="banner">
       <div>
         <strong>Returned by Governance for owner updates</strong>
-        <div>Governance completed review and returned the package with two required updates. Quincy preserves the verified Google Doc, prior summary, and accepted improvements so the owner only fixes what changed.</div>
+        <div>Governance completed review and returned the package with two required updates. quincy preserves the verified Google Doc, prior summary, and accepted improvements so the owner only fixes what changed.</div>
       </div>
-      <button class="secondary-btn" id="jumpToFixes">Resume in Quincy</button>
+      <button class="secondary-btn" id="jumpToFixes">Resume in quincy</button>
     </section>
 
     <section class="hero">
@@ -572,7 +572,7 @@
           <div class="meta-value">Tollgate 3 QC review</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Prior Quincy package</div>
+          <div class="meta-label">Prior quincy package</div>
           <div class="meta-value">Google Doc link + change summary + QC audit trail preserved</div>
         </div>
         <div class="meta-card">
@@ -670,7 +670,7 @@
         </div>
         <div class="panel-body">
           <div class="success-banner" id="successBanner">
-            All required return items are resolved. Quincy can now prepare the updated package for governance resubmission.
+            All required return items are resolved. quincy can now prepare the updated package for governance resubmission.
           </div>
 
           <div class="summary-grid">
@@ -793,7 +793,7 @@ Published versions of this Policy and associated approval evidence must be retai
 
           <div class="footer-actions">
             <button class="primary-btn" id="resubmitBtn" disabled>Export resubmission package</button>
-            <div class="subtle" id="submitHint">Fix the returned items, then let Quincy prepare the updated package without rebuilding everything.</div>
+            <div class="subtle" id="submitHint">Fix the returned items, then let quincy prepare the updated package without rebuilding everything.</div>
           </div>
         </div>
       </aside>
@@ -802,7 +802,7 @@ Published versions of this Policy and associated approval evidence must be retai
 
   <dialog id="submitDialog">
     <div class="modal">
-      <h3>Export updated Quincy package?</h3>
+      <h3>Export updated quincy package?</h3>
       <div>The prior package will be reused, and only the returned items plus your response note will be added around the same verified Google Doc link.</div>
       <ul id="modalSummary"></ul>
       <div class="modal-actions">
@@ -875,7 +875,7 @@ Published versions of this Policy and associated approval evidence must be retai
         document.getElementById("redlinePkg").className = "check-status ok";
         logActivity("Refreshed the preserved verified Google Doc link.");
       });
-      document.getElementById("saveDraft").addEventListener("click", () => logActivity("Saved returned-package updates in Quincy."));
+      document.getElementById("saveDraft").addEventListener("click", () => logActivity("Saved returned-package updates in quincy."));
       document.getElementById("jumpToFixes").addEventListener("click", () => {
         document.getElementById("findingList").scrollIntoView({ behavior: "smooth", block: "start" });
       });
@@ -893,7 +893,7 @@ Published versions of this Policy and associated approval evidence must be retai
       const open = getOpenFixes();
       els.modalSummary.innerHTML = `
         <li>Open required fixes: ${open}</li>
-        <li>Preserved clean draft, verified Google Doc link, and prior Quincy package stay attached.</li>
+        <li>Preserved clean draft, verified Google Doc link, and prior quincy package stay attached.</li>
         <li>Updated response note will be included in the resubmission package.</li>
         <li>Expected next step: attach the updated package in the governance workflow.</li>
       `;
@@ -903,7 +903,7 @@ Published versions of this Policy and associated approval evidence must be retai
     function confirmResubmit() {
       state.submitted = true;
       els.submitDialog.close();
-      logActivity("Updated Quincy package exported for governance resubmission.");
+      logActivity("Updated quincy package exported for governance resubmission.");
       updateUI();
     }
 
@@ -954,7 +954,7 @@ Published versions of this Policy and associated approval evidence must be retai
         els.statusChipMain.className = "chip danger";
         els.statusChipSecondary.textContent = `${open} required fixes open`;
         els.statusChipSecondary.className = "chip warn";
-        els.submitHint.textContent = "Fix the returned items, then let Quincy prepare the updated package without rebuilding everything.";
+        els.submitHint.textContent = "Fix the returned items, then let quincy prepare the updated package without rebuilding everything.";
         els.successBanner.style.display = "none";
       }
     }
