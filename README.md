@@ -8,6 +8,20 @@ This repository currently focuses on:
 - a `Compliance Governance / Policy Team` workflow model
 - subagent prototypes aligned to Block's `Compliance Policy on Policies`
 
+## What quincy does
+
+The webpage should be positioned as a pre-submission QC layer that sits between the in-progress Google Doc and the formal LogicGate workflow.
+
+In this model, LogicGate remains the system of record for the compliance process, but the actual drafting still begins in the static Google Doc referenced in the LogicGate field `Verified Link to Editable Document (In Progress Version)`. That Google Doc is the working draft where document owners and submitters make redlined edits over time.
+
+quincy is a standalone Policy QC Assistant that helps Block employees review proposed changes to Compliance Policies and Standards against the Policy on Policies checklist using the existing in-progress Google Doc from LogicGate, then generates a change summary and one-page QC audit trail for submission.
+
+The QC Assistant evaluates the proposed changes against the Policy on Policies tollgate checklist, identifies required fixes and recommended enhancements, and generates a submission package consisting of:
+
+- the existing verified Google Doc link as the authoritative working draft
+- a summary of the proposed changes
+- a one-page QC audit trail showing checklist completion and supporting evidence
+
 ## Start here
 
 - [Open the quincy annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
@@ -50,12 +64,13 @@ This repository currently focuses on:
 
 The current quincy concept is intentionally narrow:
 
-1. A proposer or document owner opens the Google Doc referenced in LogicGate’s `Verified Link to Editable Document (In Progress Version)` field
-2. They draft or redline changes in that same Google Doc
-3. They bring the draft into quincy and explain the delta
-4. quincy runs Policy on Policies quality checks
-5. The owner resolves `Must fix` items and optionally accepts recommended enhancements
-6. quincy prepares the supporting submission artifacts: a change summary and a one-page QC audit trail
+1. A proposer or document owner opens the Google Doc referenced in LogicGate’s `Verified Link to Editable Document (In Progress Version)` field.
+2. They draft or redline changes in that same Google Doc over time.
+3. They bring the draft into quincy and explain the delta.
+4. quincy runs the Policy on Policies tollgate quality checks.
+5. quincy identifies required fixes and recommended enhancements.
+6. The owner resolves `Must fix` items and optionally accepts recommended enhancements.
+7. quincy prepares the supporting submission artifacts: a change summary and a one-page QC audit trail.
 
 This avoids making owners work through a full governance workflow while still preserving Policy Team standards and keeping the verified Google Doc as the authoritative working draft.
 
