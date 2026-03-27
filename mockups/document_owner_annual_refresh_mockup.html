@@ -28,7 +28,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--font-sans);
       background:
         radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 24%),
         linear-gradient(180deg, #111 0%, var(--bg) 100%);
@@ -62,9 +62,11 @@
     }
 
     h1 {
-      font-size: 34px;
-      line-height: 1.1;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
       margin: 0;
+      font-weight: 700;
     }
 
     .topbar-actions {
@@ -120,7 +122,7 @@
 
     .notification strong {
       display: block;
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 4px;
       color: white;
     }
@@ -144,8 +146,9 @@
     }
 
     .hero-title {
-      font-size: 28px;
-      line-height: 1.15;
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
       margin: 0 0 8px;
     }
 
@@ -171,7 +174,7 @@
     }
 
     .meta-value {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.35;
     }
 
@@ -220,7 +223,7 @@
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: 12px 14px;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .layout {
@@ -250,8 +253,9 @@
 
     .panel-title {
       margin: 0;
-      font-size: 22px;
+      font-size: 20px;
       line-height: 1.2;
+      letter-spacing: -0.01em;
     }
 
     .panel-body {
@@ -364,7 +368,7 @@
     }
 
     .finding-title {
-      font-size: 18px;
+      font-size: 16px;
       margin: 0;
     }
 
@@ -391,7 +395,7 @@
 
     .finding-body {
       padding: 0 16px 16px;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.45;
     }
 
@@ -488,7 +492,7 @@
     }
 
     .mini-stat-value {
-      font-size: 26px;
+      font-size: 22px;
       line-height: 1;
       font-weight: 700;
     }
@@ -558,7 +562,7 @@
 
     .modal h3 {
       margin: 0 0 8px;
-      font-size: 26px;
+      font-size: 22px;
     }
 
     .modal ul {

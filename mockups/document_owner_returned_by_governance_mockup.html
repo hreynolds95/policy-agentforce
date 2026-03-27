@@ -27,7 +27,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: var(--font-sans);
       color: var(--color-text-inverse);
       background:
         radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 22%),
@@ -60,8 +60,10 @@
 
     h1 {
       margin: 0;
-      font-size: 34px;
-      line-height: 1.08;
+      font-size: 28px;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      font-weight: 700;
     }
 
     .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
@@ -111,7 +113,7 @@
 
     .banner strong {
       display: block;
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 4px;
       color: white;
     }
@@ -135,8 +137,9 @@
     }
 
     .hero-title {
-      font-size: 28px;
-      line-height: 1.12;
+      font-size: 24px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
       margin: 0 0 8px;
     }
 
@@ -195,7 +198,7 @@
     }
 
     .meta-value {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.35;
     }
 
@@ -226,8 +229,9 @@
 
     .panel-title {
       margin: 0;
-      font-size: 22px;
+      font-size: 20px;
       line-height: 1.2;
+      letter-spacing: -0.01em;
     }
 
     .panel-body {
@@ -354,7 +358,7 @@
 
     .finding-title {
       margin: 0;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .finding.resolved .finding-title {
@@ -363,7 +367,7 @@
 
     .finding-body {
       padding: 0 16px 16px;
-      font-size: 15px;
+      font-size: 14px;
       line-height: 1.45;
     }
 
@@ -428,7 +432,7 @@
     }
 
     .mini-stat-value {
-      font-size: 26px;
+      font-size: 22px;
       font-weight: 700;
       line-height: 1;
     }
@@ -489,7 +493,7 @@
 
     .modal h3 {
       margin: 0 0 8px;
-      font-size: 26px;
+      font-size: 22px;
     }
 
     .modal ul {
