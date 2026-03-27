@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document Owner Returned by Governance Mockup</title>
+  <style>
+    :root {
+      --bg: #f4f0e8;
+      --panel: rgba(255, 252, 246, 0.9);
+      --panel-2: #f8f3ea;
+      --line: #d1c8b8;
+      --ink: #1d2922;
+      --muted: #606961;
+      --accent: #0d6a5d;
+      --accent-soft: #d7eee7;
+      --warn: #b4602f;
+      --warn-soft: #fbe6d8;
+      --danger: #a13d39;
+      --danger-soft: #f7dfdc;
+      --ok: #2f6e42;
+      --ok-soft: #def0e2;
+      --shadow: 0 20px 46px rgba(28, 30, 27, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #fff6de 0, transparent 22%),
+        linear-gradient(180deg, #faf6ef 0%, var(--bg) 100%);
+    }
+
+    button, input, textarea { font: inherit; }
+
+    .page {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.08;
+    }
+
+    .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .secondary-btn {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-color: #a2d1c5;
+    }
+
+    .small-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .ghost-btn:hover, .primary-btn:hover, .secondary-btn:hover, .small-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(26, 31, 27, 0.08);
+    }
+
+    .banner {
+      background: linear-gradient(135deg, #fff1ea 0%, #f9dfdb 100%);
+      border: 1px solid #e7b8af;
+      border-radius: 24px;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .banner strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 4px;
+      color: var(--danger);
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+      line-height: 1.12;
+      margin: 0 0 8px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 10px 14px;
+      background: white;
+      font-size: 14px;
+    }
+
+    .chip.warn {
+      background: var(--warn-soft);
+      color: var(--warn);
+      border-color: #edbe9c;
+    }
+
+    .chip.danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: #e1aca8;
+    }
+
+    .chip.ok {
+      background: var(--ok-soft);
+      color: var(--ok);
+      border-color: #afd1b8;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .meta-card, .mini-stat {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .meta-label, .card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 15px;
+      line-height: 1.35;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 370px minmax(0, 1fr) 320px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #e4ddcf;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .panel-body {
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid #d5cebf;
+      padding: 12px 14px;
+      background: white;
+      color: var(--ink);
+    }
+
+    .upload-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .upload-box {
+      background: white;
+      border: 1.5px dashed #b9b09e;
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .upload-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .upload-status {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      background: white;
+      border: 1px solid #ddd5c7;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .badge.must {
+      color: var(--warn);
+      border-color: #e2ab91;
+      background: var(--warn-soft);
+    }
+
+    .badge.returned {
+      color: var(--danger);
+      border-color: #dfb0ad;
+      background: var(--danger-soft);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .finding-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .finding {
+      background: white;
+      border: 1px solid #e0a68f;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .finding.resolved {
+      opacity: 0.64;
+    }
+
+    .finding-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px 10px;
+      background: linear-gradient(180deg, #fff6f0 0%, #fff 100%);
+    }
+
+    .finding-title {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .finding.resolved .finding-title {
+      text-decoration: line-through;
+    }
+
+    .finding-body {
+      padding: 0 16px 16px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .finding-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .suggested-text {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8f4eb;
+      border: 1px dashed #c6bcac;
+      display: none;
+      white-space: pre-line;
+      font-size: 14px;
+    }
+
+    .finding.show-text .suggested-text {
+      display: block;
+    }
+
+    .resolved-note {
+      display: none;
+      margin-top: 12px;
+      color: var(--ok);
+      font-size: 13px;
+    }
+
+    .finding.resolved .resolved-note {
+      display: block;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid #ddd5c8;
+      font-size: 14px;
+    }
+
+    .check-status.ok { color: var(--ok); }
+    .check-status.warn { color: var(--warn); }
+
+    .mini-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .mini-stat-value {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .mini-stat-value.warn { color: var(--warn); }
+    .mini-stat-value.ok { color: var(--ok); }
+
+    .activity {
+      display: grid;
+      gap: 10px;
+    }
+
+    .activity-item {
+      padding-left: 14px;
+      border-left: 2px solid #ddd4c6;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .footer-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .primary-btn[disabled] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .subtle {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    dialog {
+      border: none;
+      border-radius: 24px;
+      width: min(560px, calc(100vw - 40px));
+      padding: 0;
+      box-shadow: 0 24px 70px rgba(26, 29, 25, 0.22);
+    }
+
+    dialog::backdrop {
+      background: rgba(23, 26, 22, 0.42);
+      backdrop-filter: blur(3px);
+    }
+
+    .modal {
+      padding: 24px;
+      background: var(--panel);
+    }
+
+    .modal h3 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .modal ul {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      line-height: 1.6;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .success-banner {
+      display: none;
+      background: var(--ok-soft);
+      border: 1px solid #abd0b2;
+      border-radius: 16px;
+      color: var(--ok);
+      padding: 12px 14px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .meta-grid,
+      .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Clickable HTML Mockup</p>
+        <h1>Returned by Governance</h1>
+      </div>
+      <button class="ghost-btn" id="resetDemo">Reset demo</button>
+    </div>
+
+    <section class="banner">
+      <div>
+        <strong>Returned by Governance for owner updates</strong>
+        <div>Governance completed Tollgate 3 review and returned the record with two required updates. Prior uploads and accepted improvements were preserved.</div>
+      </div>
+      <button class="secondary-btn" id="jumpToFixes">Resume fixes</button>
+    </section>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">LogicGate Record</p>
+          <h2 class="hero-title">Third-Party Compliance Oversight Policy</h2>
+          <div class="subtle">POL-001245 · Policy · Compliance Governance · Owner: Global Compliance Policy Lead · Delegate: Third-Party Risk Program Manager</div>
+        </div>
+        <div class="chips">
+          <span class="chip">Tier 2</span>
+          <span class="chip danger" id="statusChipMain">Returned by Governance</span>
+          <span class="chip warn" id="statusChipSecondary">2 required fixes open</span>
+        </div>
+      </div>
+      <div class="meta-grid">
+        <div class="meta-card">
+          <div class="meta-label">Governance return date</div>
+          <div class="meta-value">March 27, 2026</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Expected next stage</div>
+          <div class="meta-value">Tollgate 3 QC review</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Prior owner package</div>
+          <div class="meta-value">Clean draft + redline + QC summary preserved</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Accepted enhancements already saved</div>
+          <div class="meta-value">3 recommendations</div>
+        </div>
+        <div class="meta-card">
+          <div class="meta-label">Due back to Governance</div>
+          <div class="meta-value">April 2, 2026</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="panel" id="leftPanel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Governance Feedback</p>
+            <h3 class="panel-title">What came back?</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="card">
+            <div class="card-label">Return summary</div>
+            <div class="list">
+              <div class="list-item">
+                <div>
+                  Governance requested explicit reference to one linked Standard in the Related Documentation section.
+                </div>
+                <span class="badge returned">Required</span>
+              </div>
+              <div class="list-item">
+                <div>
+                  Governance requested more specific record retention language aligned to the Policy on Policies.
+                </div>
+                <span class="badge returned">Required</span>
+              </div>
+              <div class="list-item">
+                <div>
+                  Previously accepted plain-language improvements were preserved and do not need to be redone.
+                </div>
+                <span class="badge">Preserved</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Preserved package</div>
+            <div class="upload-grid">
+              <div class="upload-box">
+                <div><strong>Clean draft</strong></div>
+                <div class="upload-row">
+                  <span class="upload-status">policy_clean_v3.docx preserved</span>
+                  <button class="small-btn" type="button" data-upload="clean">Replace</button>
+                </div>
+              </div>
+              <div class="upload-box">
+                <div><strong>Redline</strong></div>
+                <div class="upload-row">
+                  <span class="upload-status">policy_redline_v3.docx preserved</span>
+                  <button class="small-btn" type="button" data-upload="redline">Replace</button>
+                </div>
+              </div>
+              <div class="upload-box">
+                <div><strong>Owner explanation</strong></div>
+                <div class="upload-row">
+                  <span class="upload-status">Preserved from prior submission</span>
+                  <button class="small-btn" type="button" id="reuseExplanation">Reuse</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Owner update note back to Governance</div>
+            <textarea class="textarea" id="returnNote">Updated the Related Documentation section to include the Vendor Due Diligence Standard and revised the Record Retention language to reference the Data Classification and Handling Policy.</textarea>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Fast path</div>
+            <div class="subtle">
+              Owners should only fix what Governance returned. Everything else from the prior package remains attached unless the owner chooses to replace it.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Fix and Resubmit</p>
+            <h3 class="panel-title">Returned findings</h3>
+          </div>
+          <button class="ghost-btn" id="toggleSuggestedText">Show suggested text</button>
+        </div>
+        <div class="panel-body">
+          <div class="success-banner" id="successBanner">
+            All required return items are resolved. This record is ready to go back to Governance.
+          </div>
+
+          <div class="summary-grid">
+            <div class="card">
+              <div class="card-label">Resubmission readiness</div>
+              <div class="summary-grid">
+                <div class="mini-stat">
+                  <div><div class="card-label">Required fixes open</div></div>
+                  <div class="mini-stat-value warn" id="mustCount">2</div>
+                </div>
+                <div class="mini-stat">
+                  <div><div class="card-label">Package complete</div></div>
+                  <div class="mini-stat-value warn" id="packageStatus">No</div>
+                </div>
+                <div class="mini-stat">
+                  <div><div class="card-label">Previously accepted improvements</div></div>
+                  <div class="mini-stat-value ok">3</div>
+                </div>
+                <div class="mini-stat">
+                  <div><div class="card-label">Ready score</div></div>
+                  <div class="mini-stat-value" id="readyScore">62%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-label">Checklist re-check</div>
+              <div class="checklist">
+                <div class="check-item"><strong>Prior package preserved</strong><span class="check-status ok">Complete</span></div>
+                <div class="check-item"><strong>Related documents complete</strong><span class="check-status warn" id="relatedCheck">Needs fix</span></div>
+                <div class="check-item"><strong>Retention language complete</strong><span class="check-status warn" id="retentionCheck">Needs fix</span></div>
+                <div class="check-item"><strong>Owner response note added</strong><span class="check-status ok" id="responseCheck">Complete</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="finding-list" id="findingList">
+            <article class="finding" data-kind="must" data-id="1">
+              <div class="finding-head">
+                <div>
+                  <span class="badge must">Must fix</span>
+                  <h4 class="finding-title">Add linked Standard to Related Documentation</h4>
+                </div>
+                <span class="badge returned">Returned by Governance</span>
+              </div>
+              <div class="finding-body">
+                Governance noted that the record already links one overlapping Standard, but the uploaded draft does not list it in the Related Documentation section.
+                <div class="suggested-text">Suggested text:
+Related Documentation
+- Vendor Due Diligence Standard
+
+This Policy should be read in conjunction with the Vendor Due Diligence Standard where applicable.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Resolved in the mockup and ready for resubmission.</div>
+              </div>
+            </article>
+
+            <article class="finding" data-kind="must" data-id="2">
+              <div class="finding-head">
+                <div>
+                  <span class="badge must">Must fix</span>
+                  <h4 class="finding-title">Strengthen Record Retention language</h4>
+                </div>
+                <span class="badge returned">Returned by Governance</span>
+              </div>
+              <div class="finding-body">
+                Governance requested that the retention clause be explicit enough to satisfy the Policy on Policies checklist and align to the Block retention standard.
+                <div class="suggested-text">Suggested text:
+Published versions of this Policy and associated approval evidence must be retained in accordance with the Data Classification and Handling Policy or any longer applicable legal or regulatory retention requirement.</div>
+                <div class="finding-actions">
+                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+                </div>
+                <div class="resolved-note">Resolved in the mockup and ready for resubmission.</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Resubmit</p>
+            <h3 class="panel-title">Return package</h3>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="card">
+            <div class="card-label">What will go back</div>
+            <div class="checklist">
+              <div class="check-item"><strong>Prior clean draft</strong><span class="check-status ok">Attached</span></div>
+              <div class="check-item"><strong>Updated redline</strong><span class="check-status ok" id="redlinePkg">Attached</span></div>
+              <div class="check-item"><strong>Governance response note</strong><span class="check-status ok" id="notePkg">Attached</span></div>
+              <div class="check-item"><strong>Resolved return items</strong><span class="check-status warn" id="resolvedPkg">Pending</span></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Owner shortcuts</div>
+            <div class="footer-actions">
+              <button class="secondary-btn" id="applyAllFixes">Apply all suggested fixes</button>
+              <button class="ghost-btn" id="replaceRedline">Replace redline file</button>
+              <button class="ghost-btn" id="saveDraft">Save draft</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Activity log</div>
+            <div class="activity" id="activityLog">
+              <div class="activity-item">Governance returned the record with two required fixes.</div>
+              <div class="activity-item">Prior uploads and accepted recommendations were preserved.</div>
+            </div>
+          </div>
+
+          <div class="footer-actions">
+            <button class="primary-btn" id="resubmitBtn" disabled>Resubmit to Governance</button>
+            <div class="subtle" id="submitHint">Fix the returned items, then resubmit without rebuilding the full package.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <dialog id="submitDialog">
+    <div class="modal">
+      <h3>Resubmit to Governance?</h3>
+      <div>The prior package will be reused, and only the returned items plus your response note will be added to the resubmission.</div>
+      <ul id="modalSummary"></ul>
+      <div class="modal-actions">
+        <button class="ghost-btn" id="cancelSubmit">Cancel</button>
+        <button class="primary-btn" id="confirmSubmit">Confirm resubmission</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const state = {
+      submitted: false,
+      fixes: [
+        { id: 1, resolved: false, title: "Add linked Standard to Related Documentation" },
+        { id: 2, resolved: false, title: "Strengthen Record Retention language" }
+      ]
+    };
+
+    const els = {
+      mustCount: document.getElementById("mustCount"),
+      packageStatus: document.getElementById("packageStatus"),
+      readyScore: document.getElementById("readyScore"),
+      relatedCheck: document.getElementById("relatedCheck"),
+      retentionCheck: document.getElementById("retentionCheck"),
+      resolvedPkg: document.getElementById("resolvedPkg"),
+      statusChipMain: document.getElementById("statusChipMain"),
+      statusChipSecondary: document.getElementById("statusChipSecondary"),
+      submitHint: document.getElementById("submitHint"),
+      resubmitBtn: document.getElementById("resubmitBtn"),
+      activityLog: document.getElementById("activityLog"),
+      successBanner: document.getElementById("successBanner"),
+      submitDialog: document.getElementById("submitDialog"),
+      modalSummary: document.getElementById("modalSummary"),
+      returnNote: document.getElementById("returnNote")
+    };
+
+    function init() {
+      bindFindingActions();
+      bindButtons();
+      updateUI();
+    }
+
+    function bindFindingActions() {
+      document.querySelectorAll(".resolve-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const card = btn.closest(".finding");
+          const id = Number(card.dataset.id);
+          const fix = state.fixes.find(f => f.id === id);
+          if (fix.resolved) return;
+          fix.resolved = true;
+          card.classList.add("resolved");
+          logActivity(`Resolved returned item: "${fix.title}" via ${btn.dataset.action}.`);
+          updateUI();
+        });
+      });
+    }
+
+    function bindButtons() {
+      document.getElementById("toggleSuggestedText").addEventListener("click", () => {
+        document.querySelectorAll(".finding").forEach(f => f.classList.toggle("show-text"));
+      });
+      document.getElementById("applyAllFixes").addEventListener("click", () => {
+        state.fixes.forEach(f => f.resolved = true);
+        document.querySelectorAll(".finding").forEach(f => f.classList.add("resolved"));
+        logActivity("Applied all suggested fixes to returned items.");
+        updateUI();
+      });
+      document.getElementById("replaceRedline").addEventListener("click", () => {
+        document.getElementById("redlinePkg").textContent = "Updated";
+        document.getElementById("redlinePkg").className = "check-status ok";
+        logActivity("Replaced the preserved redline file.");
+      });
+      document.getElementById("saveDraft").addEventListener("click", () => logActivity("Saved returned-record updates as draft."));
+      document.getElementById("jumpToFixes").addEventListener("click", () => {
+        document.getElementById("findingList").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      document.getElementById("reuseExplanation").addEventListener("click", () => {
+        logActivity("Reused the prior owner explanation and updated the response note.");
+      });
+      document.getElementById("resetDemo").addEventListener("click", () => window.location.reload());
+      els.resubmitBtn.addEventListener("click", openModal);
+      document.getElementById("cancelSubmit").addEventListener("click", () => els.submitDialog.close());
+      document.getElementById("confirmSubmit").addEventListener("click", confirmResubmit);
+      els.returnNote.addEventListener("input", updateUI);
+    }
+
+    function openModal() {
+      const open = getOpenFixes();
+      els.modalSummary.innerHTML = `
+        <li>Open required fixes: ${open}</li>
+        <li>Preserved clean draft and prior package stay attached.</li>
+        <li>Updated response note will be included in the resubmission.</li>
+        <li>Expected next stage: Governance QC review.</li>
+      `;
+      els.submitDialog.showModal();
+    }
+
+    function confirmResubmit() {
+      state.submitted = true;
+      els.submitDialog.close();
+      logActivity("Resubmitted to Governance.");
+      updateUI();
+    }
+
+    function getOpenFixes() {
+      return state.fixes.filter(f => !f.resolved).length;
+    }
+
+    function updateUI() {
+      const open = getOpenFixes();
+      const notePresent = els.returnNote.value.trim().length > 0;
+      const ready = open === 0 && notePresent && !state.submitted;
+
+      els.mustCount.textContent = open;
+      els.packageStatus.textContent = ready || state.submitted ? "Yes" : "No";
+      els.packageStatus.className = "mini-stat-value " + ((ready || state.submitted) ? "ok" : "warn");
+      els.readyScore.textContent = computeScore(open, notePresent) + "%";
+
+      els.relatedCheck.textContent = state.fixes[0].resolved ? "Complete" : "Needs fix";
+      els.relatedCheck.className = "check-status " + (state.fixes[0].resolved ? "ok" : "warn");
+      els.retentionCheck.textContent = state.fixes[1].resolved ? "Complete" : "Needs fix";
+      els.retentionCheck.className = "check-status " + (state.fixes[1].resolved ? "ok" : "warn");
+      els.resolvedPkg.textContent = open === 0 ? "Ready" : "Pending";
+      els.resolvedPkg.className = "check-status " + (open === 0 ? "ok" : "warn");
+      els.responseCheck.className = "check-status " + (notePresent ? "ok" : "warn");
+      els.responseCheck.textContent = notePresent ? "Complete" : "Missing";
+
+      els.resubmitBtn.disabled = !ready;
+
+      if (state.submitted) {
+        els.statusChipMain.textContent = "Resubmitted to Governance";
+        els.statusChipMain.className = "chip ok";
+        els.statusChipSecondary.textContent = "Waiting on Governance";
+        els.statusChipSecondary.className = "chip";
+        els.submitHint.textContent = "Governance now owns the next step.";
+        els.successBanner.style.display = "block";
+        els.resubmitBtn.disabled = true;
+      } else if (ready) {
+        els.statusChipMain.textContent = "Ready to resubmit";
+        els.statusChipMain.className = "chip ok";
+        els.statusChipSecondary.textContent = "All returned items fixed";
+        els.statusChipSecondary.className = "chip ok";
+        els.submitHint.textContent = "You can send this directly back to Governance.";
+        els.successBanner.style.display = "block";
+      } else {
+        els.statusChipMain.textContent = "Returned by Governance";
+        els.statusChipMain.className = "chip danger";
+        els.statusChipSecondary.textContent = `${open} required fixes open`;
+        els.statusChipSecondary.className = "chip warn";
+        els.submitHint.textContent = "Fix the returned items, then resubmit without rebuilding the full package.";
+        els.successBanner.style.display = "none";
+      }
+    }
+
+    function computeScore(open, notePresent) {
+      let score = 72;
+      score -= open * 18;
+      if (notePresent) score += 8;
+      return Math.max(0, Math.min(100, score));
+    }
+
+    function logActivity(text) {
+      const entry = document.createElement("div");
+      entry.className = "activity-item";
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      entry.textContent = `${hh}:${mm} ${text}`;
+      els.activityLog.prepend(entry);
+    }
+
+    init();
+  </script>
+</body>
+</html>

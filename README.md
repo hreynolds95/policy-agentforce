@@ -11,6 +11,7 @@ This repository currently focuses on:
 ## Start here
 
 - [Open the clickable annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
+- [Open the Governance return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
 - [Open the GitHub Pages landing page](./index.html)
 - [View the owner annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
@@ -20,6 +21,8 @@ This repository currently focuses on:
 
 - [`document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
   Standalone clickable HTML prototype for the Document Owner annual refresh flow
+- [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
+  Standalone clickable HTML prototype for the owner experience after Governance returns the record for fixes
 
 ### `wireframes/`
 
@@ -69,6 +72,5 @@ Once GitHub Pages is enabled from `main` and `/(root)`, the site should publish 
 
 ## Next build ideas
 
-- add a Governance return-to-owner clickable mockup
 - turn the owner mockup into a LogicGate field and automation spec
 - add a governance-side clickable prototype
