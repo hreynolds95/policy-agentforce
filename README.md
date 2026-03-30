@@ -105,7 +105,15 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Set environment variables:
+Create a local env file:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and fill in your real credentials and paths.
+
+If you prefer manual exports instead, use:
 
 ```bash
 export SF_ACCOUNT="SQUARE"
@@ -143,13 +151,20 @@ python3 scripts/query_policy_bot.py "What policy governs third-party due diligen
 3. Run the local web chat UI:
 
 ```bash
-python3 scripts/policy_bot_web.py
+./scripts/run_policy_bot.sh
 ```
 
 Then open:
 
 ```text
 http://127.0.0.1:8080
+```
+
+If you prefer to launch manually instead of using the helper script:
+
+```bash
+source .venv/bin/activate
+python3 scripts/policy_bot_web.py
 ```
 
 Recommended test order:
