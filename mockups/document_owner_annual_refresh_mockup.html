@@ -175,6 +175,21 @@
       margin-bottom: 6px;
     }
 
+    .required-marker {
+      color: var(--danger);
+      font-weight: 700;
+      margin-left: 2px;
+    }
+
+    .field-hint {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: normal;
+      margin-left: 6px;
+    }
+
     .meta-value {
       font-size: 14px;
       line-height: 1.35;
@@ -807,11 +822,12 @@
           <div>
             <p class="eyebrow">Owner Input</p>
             <h3 class="panel-title">What changed this year?</h3>
+            <p style="font-size:11px; color:var(--muted); margin-top:4px;"><span class="required-marker">*</span> Required before running QC</p>
           </div>
         </div>
         <div class="panel-body">
           <div class="card">
-            <div class="card-label">Refresh type</div>
+            <div class="card-label">Refresh type<span class="required-marker">*</span></div>
             <div class="radio-list" id="refreshTypeList">
               <label class="option">
                 <input type="radio" name="refreshType" value="no-change" />
@@ -829,7 +845,7 @@
           </div>
 
           <div class="card">
-            <div class="card-label">Owner change summary</div>
+            <div class="card-label">Owner change summary<span class="required-marker">*</span></div>
             <textarea class="textarea" id="changeSummary" placeholder="Example: Updated scope to include one new business line and revised retention language."></textarea>
             <div class="check-list" style="margin-top: 14px;">
               <label class="option">
@@ -848,17 +864,17 @@
           </div>
 
           <div class="card">
-            <div class="card-label">Working draft and evidence</div>
+            <div class="card-label">Working draft and evidence<span class="required-marker">*</span><span class="field-hint">at least one draft required</span></div>
             <div class="upload-grid">
               <div class="upload-box" data-upload="clean">
-                <div><strong>Reference clean draft</strong></div>
+                <div><strong>Reference clean draft</strong> <span class="required-marker">*</span></div>
                 <div class="upload-row">
                   <span class="upload-status" id="cleanStatus">Not uploaded</span>
                   <button class="small-btn" type="button">Upload sample</button>
                 </div>
               </div>
               <div class="upload-box" data-upload="redline">
-                <div><strong>Verified editable Google Doc</strong></div>
+                <div><strong>Verified editable Google Doc</strong> <span class="required-marker">*</span></div>
                 <div class="upload-row">
                   <span class="upload-status" id="redlineStatus">Not linked</span>
                   <button class="small-btn" type="button">Attach sample link</button>
