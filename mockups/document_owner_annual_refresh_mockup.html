@@ -229,19 +229,79 @@
     }
 
     .flow-strip {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
+      display: flex;
+      align-items: stretch;
       margin-top: 18px;
+      gap: 0;
     }
 
-    .step-pill {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 12px 14px;
+    .step-arrow {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 12px 16px 12px 28px;
       font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      background: #f5f5f5;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%);
+      transition: background 0.25s, color 0.25s;
     }
+
+    .step-arrow:first-child {
+      padding-left: 16px;
+      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
+      border-radius: 8px 0 0 8px;
+    }
+
+    .step-arrow:last-child {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .step-arrow .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      margin-right: 8px;
+      flex-shrink: 0;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .step-arrow.active {
+      background: var(--ink);
+      color: #fff;
+    }
+
+    .step-arrow.active .step-num {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .step-arrow.done {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    .step-arrow.done .step-num {
+      background: #2e7d32;
+      color: #fff;
+    }
+
+    .step-arrow.done .step-num::after {
+      content: "✓";
+      font-size: 12px;
+    }
+
+    .step-arrow.done .step-num span { display: none; }
 
     .layout {
       display: grid;
@@ -808,11 +868,19 @@
           <div class="meta-value">None recorded</div>
         </div>
       </div>
-      <div class="flow-strip">
-        <div class="step-pill">1. Confirm Google Doc draft</div>
-        <div class="step-pill">2. Run quincy QC</div>
-        <div class="step-pill">3. Resolve findings fast</div>
-        <div class="step-pill">4. Export submission package</div>
+      <div class="flow-strip" id="flowStrip">
+        <div class="step-arrow active" data-step="1">
+          <span class="step-num"><span>1</span></span> Confirm Google Doc draft
+        </div>
+        <div class="step-arrow" data-step="2">
+          <span class="step-num"><span>2</span></span> Run quincy QC
+        </div>
+        <div class="step-arrow" data-step="3">
+          <span class="step-num"><span>3</span></span> Resolve findings fast
+        </div>
+        <div class="step-arrow" data-step="4">
+          <span class="step-num"><span>4</span></span> Export submission package
+        </div>
       </div>
     </section>
 
@@ -1567,6 +1635,21 @@
         elements.statusChipSecondary.textContent = "Draft check not started";
         elements.statusChipSecondary.className = "chip danger";
       }
+
+      // ── Flow strip progression ──
+      const hasDoc = state.uploads.clean || state.uploads.redline;
+      const qcDone = state.qcRun;
+      const allResolved = qcDone && mustOpen === 0;
+      const exported = state.submitted;
+
+      const currentStep = exported ? 5 : allResolved ? 4 : qcDone ? 3 : hasDoc ? 2 : 1;
+
+      document.querySelectorAll(".step-arrow").forEach(el => {
+        const s = parseInt(el.getAttribute("data-step"));
+        el.classList.remove("active", "done");
+        if (s < currentStep) el.classList.add("done");
+        else if (s === currentStep) el.classList.add("active");
+      });
     }
 
     // ── Helpers ──────────────────────────────────────────────────────
