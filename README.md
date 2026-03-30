@@ -60,6 +60,20 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 - [`example_payloads.json`](./prototypes/example_payloads.json)
   Example request and handoff payloads
 
+### `scripts/`
+
+- [`ingest_policy_pdfs.py`](./scripts/ingest_policy_pdfs.py)
+  Downloads published PDFs from Google Drive, extracts text, and writes chunks into Snowflake
+- [`query_policy_bot.py`](./scripts/query_policy_bot.py)
+  CLI query tool for grounded policy answers with citations
+- [`policy_bot_web.py`](./scripts/policy_bot_web.py)
+  Lightweight local web server for the policy bot chat UI
+
+### `ui/`
+
+- [`policy_bot_chat.html`](./ui/policy_bot_chat.html)
+  Local browser chat interface for querying active Policies and Standards
+
 ## Current experience concept
 
 The current quincy concept is intentionally narrow:
@@ -73,6 +87,78 @@ The current quincy concept is intentionally narrow:
 7. quincy prepares the supporting submission artifacts: a change summary and a one-page QC audit trail.
 
 This avoids making owners work through a full governance workflow while still preserving Policy Team standards and keeping the verified Google Doc as the authoritative working draft.
+
+## Policy bot setup
+
+The policy bot uses:
+
+- `LOGICGATE_SF.PUBLIC.POLICY_DASHBOARD` as the filtered LogicGate source
+- `LOGICGATE_SF.POLICY_BOT.DOCUMENTS` as the active document registry
+- `LOGICGATE_SF.POLICY_BOT.DOCUMENT_CHUNKS` as the searchable content table
+- Google Drive published PDFs as the content source
+
+Install dependencies:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Set environment variables:
+
+```bash
+export SF_ACCOUNT="SQUARE"
+export SF_USER="YOUR_USER"
+export SF_PASSWORD="YOUR_PASSWORD"
+export SF_WAREHOUSE="YOUR_WAREHOUSE"
+export SF_DATABASE="LOGICGATE_SF"
+export SF_SCHEMA="POLICY_BOT"
+export GOOGLE_APPLICATION_CREDENTIALS="/absolute/path/to/service-account.json"
+```
+
+Optional for LLM synthesis in the query layer and web UI:
+
+```bash
+export OPENAI_API_KEY="YOUR_KEY"
+```
+
+## Policy bot workflow
+
+1. Ingest active published PDFs into the chunk table:
+
+```bash
+python3 scripts/ingest_policy_pdfs.py --limit 3 --dry-run
+python3 scripts/ingest_policy_pdfs.py --limit 3
+```
+
+2. Query the chunked corpus from the command line:
+
+```bash
+python3 scripts/query_policy_bot.py "What policy governs third-party due diligence?"
+python3 scripts/query_policy_bot.py "What is the record retention requirement?" --document-type Policy
+python3 scripts/query_policy_bot.py "What policy governs third-party due diligence?" --use-llm
+```
+
+3. Run the local web chat UI:
+
+```bash
+python3 scripts/policy_bot_web.py
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8080
+```
+
+Recommended test order:
+
+- run ingestion on 1-3 documents first
+- validate `DOCUMENT_CHUNKS` in Snowflake
+- test CLI retrieval without `--use-llm`
+- compare the same query with `--use-llm`
+- then use the web UI for a more realistic employee experience
 
 ## Publishing
 
