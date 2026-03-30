@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>quincy annual refresh mockup</title>
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
+  <script src="../assets/js/qc-checklist-config.js"></script>
+  <script src="../assets/js/qc-engine.js"></script>
   <style>
     :root {
       --bg: var(--color-background-inverse);
@@ -597,6 +599,123 @@
       pointer-events: none;
     }
 
+    .badge.needs-review {
+      color: var(--warn);
+      border-color: var(--color-border-warning);
+      background: var(--warn-soft);
+    }
+
+    .qc-loading {
+      display: none;
+      text-align: center;
+      padding: 28px 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .qc-loading.active {
+      display: block;
+    }
+
+    .qc-loading .spinner {
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      border: 2.5px solid var(--line);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .qc-loading .check-progress {
+      margin-top: 14px;
+      display: grid;
+      gap: 6px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .qc-loading .check-progress .step {
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: white;
+      border: 1px solid var(--line);
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+    }
+
+    .qc-loading .check-progress .step.done {
+      opacity: 1;
+      border-color: #b8ff2c;
+      background: var(--ok-soft);
+    }
+
+    .readiness-breakdown {
+      display: none;
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .readiness-breakdown.visible {
+      display: block;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid #eee8db;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: none;
+    }
+
+    .breakdown-bar {
+      width: 60px;
+      height: 6px;
+      border-radius: 3px;
+      background: #e8e2d6;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .breakdown-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--ok);
+      transition: width 0.4s ease;
+    }
+
+    .breakdown-fill.partial {
+      background: var(--warn);
+    }
+
+    .breakdown-fill.zero {
+      background: var(--danger);
+    }
+
+    .context-signal {
+      font-size: 12px;
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(92, 152, 249, 0.1);
+      color: var(--color-text-info);
+      border: 1px solid rgba(92, 152, 249, 0.25);
+      margin-left: 8px;
+    }
+
     @media (max-width: 1200px) {
       .layout {
         grid-template-columns: 1fr;
@@ -811,13 +930,9 @@
             </div>
 
             <div class="card">
-              <div class="card-label">Checklist summary</div>
+              <div class="card-label">Checklist summary <span class="subtle">(Policy on Policies)</span></div>
               <div class="checklist" id="checklist">
-                <div class="check-item"><strong>Approved template used</strong><span class="check-status ok">Complete</span></div>
-                <div class="check-item"><strong>Required sections present</strong><span class="check-status ok">Complete</span></div>
-                <div class="check-item"><strong>Related documents complete</strong><span class="check-status danger" data-check="related">Needs fix</span></div>
-                <div class="check-item"><strong>Retention language complete</strong><span class="check-status danger" data-check="retention">Needs fix</span></div>
-                <div class="check-item"><strong>Verified Google Doc or change summary attached</strong><span class="check-status ok" data-check="evidence">Complete</span></div>
+                <!-- Dynamically rendered by renderChecklist() -->
               </div>
             </div>
           </div>
@@ -837,132 +952,15 @@
             </div>
           </div>
 
+          <div class="qc-loading" id="qcLoading">
+            <div><span class="spinner"></span> quincy is checking against the Policy on Policies…</div>
+            <div class="check-progress" id="checkProgress">
+              <!-- Steps rendered dynamically during QC animation -->
+            </div>
+          </div>
+
           <div class="finding-list" id="findingList">
-            <article class="finding must" data-kind="must" data-check-target="related">
-              <div class="finding-head">
-                <div>
-                  <span class="badge must">Must fix</span>
-                  <h4 class="finding-title">Related Documents section is incomplete</h4>
-                </div>
-                <span class="badge">Appendix A / Appendix C</span>
-              </div>
-              <div class="finding-body">
-                The uploaded draft does not list a linked Standard even though the LogicGate record already shows one overlapping related document.
-                <div class="suggested-text">Suggested enhancement:
-Add "Vendor Due Diligence Standard" to the Related Documentation section and note that it should be read in conjunction with this Policy.</div>
-                <div class="finding-actions">
-                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
-                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
-                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
-                </div>
-                <div class="resolved-note">Resolved in the mockup. The finding now counts as cleared.</div>
-              </div>
-            </article>
-
-            <article class="finding must" data-kind="must" data-check-target="retention">
-              <div class="finding-head">
-                <div>
-                  <span class="badge must">Must fix</span>
-                  <h4 class="finding-title">Record Retention section is missing detail</h4>
-                </div>
-                <span class="badge">Appendix A</span>
-              </div>
-              <div class="finding-body">
-                The draft includes a retention heading, but the language is too generic to satisfy the Policy on Policies quality check.
-                <div class="suggested-text">Suggested enhancement:
-Expand the Record Retention section to reference the Data Classification and Handling Policy and any longer applicable regulatory retention standard.</div>
-                <div class="finding-actions">
-                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
-                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
-                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
-                </div>
-                <div class="resolved-note">Resolved in the mockup. The finding now counts as cleared.</div>
-              </div>
-            </article>
-
-            <article class="finding reco">
-              <div class="finding-head">
-                <div>
-                  <span class="badge reco">Recommended</span>
-                  <h4 class="finding-title">Simplify one section into plainer business language</h4>
-                </div>
-                <span class="badge">Style guidance</span>
-              </div>
-              <div class="finding-body">
-                One paragraph reads like implementation guidance rather than a high-level policy statement.
-                <div class="suggested-text">Suggested enhancement:
-Replace detailed execution steps with a principle-based policy requirement and move operational specifics to a Standard or Procedure.</div>
-                <div class="finding-actions">
-                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
-                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
-                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
-                </div>
-                <div class="resolved-note">Marked handled for the demo.</div>
-              </div>
-            </article>
-
-            <article class="finding reco">
-              <div class="finding-head">
-                <div>
-                  <span class="badge reco">Recommended</span>
-                  <h4 class="finding-title">Remove procedural wording from requirements section</h4>
-                </div>
-                <span class="badge">Document hierarchy</span>
-              </div>
-              <div class="finding-body">
-                The draft contains prescriptive workflow language that likely belongs in a Standard or Procedure, not the Policy itself.
-                <div class="suggested-text">Suggested enhancement:
-Reframe the clause as a required outcome and move process steps to the supporting Standard.</div>
-                <div class="finding-actions">
-                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
-                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
-                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
-                </div>
-                <div class="resolved-note">Marked handled for the demo.</div>
-              </div>
-            </article>
-
-            <article class="finding reco">
-              <div class="finding-head">
-                <div>
-                  <span class="badge reco">Recommended</span>
-                  <h4 class="finding-title">Align glossary term with approved definitions</h4>
-                </div>
-                <span class="badge">Definitions glossary</span>
-              </div>
-              <div class="finding-body">
-                One defined term differs slightly from the standard glossary used across compliance documents.
-                <div class="suggested-text">Suggested enhancement:
-Use the glossary-approved definition and capitalization for the relevant defined term.</div>
-                <div class="finding-actions">
-                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
-                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
-                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
-                </div>
-                <div class="resolved-note">Marked handled for the demo.</div>
-              </div>
-            </article>
-
-            <article class="finding reco">
-              <div class="finding-head">
-                <div>
-                  <span class="badge reco">Recommended</span>
-                  <h4 class="finding-title">Add one missing entity to the Scope section</h4>
-                </div>
-                <span class="badge">Scope accuracy</span>
-              </div>
-              <div class="finding-body">
-                The current scope list may not include all business lines indicated in the owner summary.
-                <div class="suggested-text">Suggested enhancement:
-Confirm the entity list with the Owner and update the Scope section to match all in-scope entities.</div>
-                <div class="finding-actions">
-                  <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
-                  <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
-                  <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
-                </div>
-                <div class="resolved-note">Marked handled for the demo.</div>
-              </div>
-            </article>
+            <!-- Dynamically rendered by renderFindings() -->
           </div>
         </div>
       </section>
@@ -988,6 +986,10 @@ Confirm the entity list with the Owner and update the Scope section to match all
                 <div class="card-label">Ready score</div>
               </div>
               <div class="mini-stat-value" id="readyScore">0%</div>
+            </div>
+            <button class="small-btn" id="toggleBreakdown" style="width:100%;margin-top:4px;">Show score breakdown</button>
+            <div class="readiness-breakdown" id="readinessBreakdown">
+              <!-- Rendered dynamically by renderBreakdown() -->
             </div>
           </div>
 
@@ -1040,6 +1042,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
   </dialog>
 
   <script>
+    // ── State ───────────────────────────────────────────────────────
     const state = {
       refreshType: "",
       uploads: {
@@ -1050,18 +1053,13 @@ Confirm the entity list with the Owner and update the Scope section to match all
       },
       qcRun: false,
       submitted: false,
-      findings: []
+      findings: [],          // populated by QC engine
+      checklist: [],         // populated by QC engine
+      readiness: null,       // populated by QC engine
+      showSuggestedText: false,
     };
 
-    const defaultFindings = [
-      { id: 1, kind: "must", title: "Related Documents section is incomplete", resolved: false, checkTarget: "related" },
-      { id: 2, kind: "must", title: "Record Retention section is missing detail", resolved: false, checkTarget: "retention" },
-      { id: 3, kind: "reco", title: "Simplify one section into plainer business language", resolved: false },
-      { id: 4, kind: "reco", title: "Remove procedural wording from requirements section", resolved: false },
-      { id: 5, kind: "reco", title: "Align glossary term with approved definitions", resolved: false },
-      { id: 6, kind: "reco", title: "Add one missing entity to the Scope section", resolved: false }
-    ];
-
+    // ── Element cache ───────────────────────────────────────────────
     const elements = {
       runQcBtn: document.getElementById("runQcBtn"),
       rerunBtn: document.getElementById("rerunBtn"),
@@ -1077,6 +1075,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
       mustCount: document.getElementById("mustCount"),
       recoCount: document.getElementById("recoCount"),
       packageStatus: document.getElementById("packageStatus"),
+      nextStage: document.getElementById("nextStage"),
       readyScore: document.getElementById("readyScore"),
       statusText: document.getElementById("statusText"),
       statusBadge: document.getElementById("statusBadge"),
@@ -1092,24 +1091,44 @@ Confirm the entity list with the Owner and update the Scope section to match all
       submitDialog: document.getElementById("submitDialog"),
       modalSummary: document.getElementById("modalSummary"),
       submittedBanner: document.getElementById("submittedBanner"),
-      leftPanel: document.getElementById("leftPanel")
+      leftPanel: document.getElementById("leftPanel"),
+      checklist: document.getElementById("checklist"),
+      qcLoading: document.getElementById("qcLoading"),
+      checkProgress: document.getElementById("checkProgress"),
+      readinessBreakdown: document.getElementById("readinessBreakdown"),
+      toggleBreakdown: document.getElementById("toggleBreakdown"),
     };
 
+    // ── Build context snapshot for the QC engine ────────────────────
+    function buildContext() {
+      return {
+        refreshType: state.refreshType,
+        changeSummary: elements.changeSummary.value,
+        uploads: { ...state.uploads },
+        checkboxes: {
+          needsLegal: document.getElementById("needsLegal").checked,
+          needsRelatedDocs: document.getElementById("needsRelatedDocs").checked,
+          needsRetention: document.getElementById("needsRetention").checked,
+        },
+      };
+    }
+
+    // ── Initialise ──────────────────────────────────────────────────
     function init() {
-      state.findings = defaultFindings.map(f => ({ ...f }));
       bindRefreshOptions();
       bindUploads();
-      bindFindingActions();
       bindFilters();
       bindButtons();
+      renderChecklist([]);   // empty until QC runs
       updateUI();
     }
 
+    // ── Bindings ────────────────────────────────────────────────────
     function bindRefreshOptions() {
       document.querySelectorAll('input[name="refreshType"]').forEach(input => {
         input.addEventListener("change", () => {
           state.refreshType = input.value;
-          document.querySelectorAll("#refreshTypeList .option").forEach(label => label.classList.remove("active"));
+          document.querySelectorAll("#refreshTypeList .option").forEach(l => l.classList.remove("active"));
           input.closest(".option").classList.add("active");
           logActivity(`Refresh type captured: ${humanRefreshType(input.value)}.`);
           updateUI();
@@ -1123,23 +1142,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
         const btn = box.querySelector("button");
         btn.addEventListener("click", () => {
           state.uploads[kind] = !state.uploads[kind];
-          const label = state.uploads[kind] ? "uploaded" : "removed";
-          logActivity(`${humanUploadName(kind)} ${label}.`);
+          logActivity(`${humanUploadName(kind)} ${state.uploads[kind] ? "uploaded" : "removed"}.`);
           updateUploadLabels();
-          updateUI();
-        });
-      });
-    }
-
-    function bindFindingActions() {
-      document.querySelectorAll(".resolve-btn").forEach((btn, index) => {
-        btn.addEventListener("click", () => {
-          const findingEl = btn.closest(".finding");
-          const findingIndex = Array.from(document.querySelectorAll(".finding")).indexOf(findingEl);
-          if (state.findings[findingIndex].resolved) return;
-          state.findings[findingIndex].resolved = true;
-          const action = btn.dataset.action;
-          logActivity(`Handled finding: "${state.findings[findingIndex].title}" via ${action}.`);
           updateUI();
         });
       });
@@ -1151,12 +1155,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
           const filter = btn.dataset.filter;
           document.querySelectorAll(".filter-btn").forEach(b => b.style.background = "white");
           btn.style.background = "var(--accent-soft)";
-          document.querySelectorAll(".finding").forEach(finding => {
-            if (filter === "all") {
-              finding.style.display = "";
-            } else {
-              finding.style.display = finding.dataset.kind === filter ? "" : "none";
-            }
+          document.querySelectorAll(".finding").forEach(f => {
+            f.style.display = (filter === "all" || f.dataset.kind === filter) ? "" : "none";
           });
         });
       });
@@ -1177,13 +1177,198 @@ Confirm the entity list with the Owner and update the Scope section to match all
       elements.submitBtn.addEventListener("click", openSubmitModal);
       document.getElementById("cancelSubmit").addEventListener("click", () => elements.submitDialog.close());
       document.getElementById("confirmSubmit").addEventListener("click", confirmSubmit);
-      elements.resetDemo.addEventListener("click", resetDemo);
+      elements.resetDemo.addEventListener("click", () => window.location.reload());
       elements.focusRefresh.addEventListener("click", () => {
         document.querySelector(".layout").scrollIntoView({ behavior: "smooth", block: "start" });
       });
-      elements.toggleSuggestedText.addEventListener("click", toggleSuggestedText);
+      elements.toggleSuggestedText.addEventListener("click", () => {
+        state.showSuggestedText = !state.showSuggestedText;
+        document.querySelectorAll(".finding").forEach(c => c.classList.toggle("show-text", state.showSuggestedText));
+        elements.toggleSuggestedText.textContent = state.showSuggestedText ? "Hide suggested text" : "Show suggested text";
+      });
+      elements.toggleBreakdown.addEventListener("click", () => {
+        const bd = elements.readinessBreakdown;
+        bd.classList.toggle("visible");
+        elements.toggleBreakdown.textContent = bd.classList.contains("visible") ? "Hide score breakdown" : "Show score breakdown";
+      });
     }
 
+    // ── QC Run (with animated loading) ──────────────────────────────
+    function runQc() {
+      if (!canRunQc()) {
+        logActivity("QC could not run yet. Provide refresh type, change summary, clean draft, and a verified Google Doc link or change summary.");
+        return;
+      }
+
+      // Show loading animation
+      elements.qcLoading.classList.add("active");
+      elements.findingList.innerHTML = "";
+
+      // Build progress steps from checklist config
+      const steps = QC_CHECKLIST.map(item => ({
+        id: item.id,
+        label: `Checking: ${item.label} (Appendix ${item.appendix})`,
+      }));
+      elements.checkProgress.innerHTML = steps.map(s =>
+        `<div class="step" data-step="${s.id}">${s.label}</div>`
+      ).join("");
+
+      // Animate steps one by one, then reveal results
+      let delay = 0;
+      const stepEls = elements.checkProgress.querySelectorAll(".step");
+      stepEls.forEach((el, i) => {
+        delay += 180 + Math.random() * 120;
+        setTimeout(() => el.classList.add("done"), delay);
+      });
+
+      // After all steps complete, run the real engine
+      setTimeout(() => {
+        const ctx = buildContext();
+        const result = QCEngine.evaluate(ctx);
+
+        state.qcRun = true;
+        state.findings = result.findings;
+        state.checklist = result.checklist;
+        state.readiness = QCEngine.computeReadiness(ctx, result.checklist, result.findings);
+
+        // Log what the engine found
+        const mustCount = result.findings.filter(f => f.kind === "must").length;
+        const recoCount = result.findings.filter(f => f.kind === "reco").length;
+        logActivity(`quincy QC completed: ${mustCount} required fix${mustCount !== 1 ? "es" : ""}, ${recoCount} recommendation${recoCount !== 1 ? "s" : ""}.`);
+
+        // Log context-aware signals that fired
+        const contextSignals = result.findings.filter(f =>
+          QC_CONTEXT_RULES.some(r => r.id === f.id)
+        );
+        if (contextSignals.length > 0) {
+          logActivity(`Context signals: ${contextSignals.map(s => s.title).join("; ")}.`);
+        }
+
+        // Hide loading, render results
+        elements.qcLoading.classList.remove("active");
+        renderFindings();
+        renderChecklist(QCEngine.getChecklistSummary(result.checklist));
+        renderBreakdown();
+        updateUI();
+      }, delay + 400);
+    }
+
+    // ── Render: Findings ────────────────────────────────────────────
+    function renderFindings() {
+      elements.findingList.innerHTML = "";
+
+      state.findings.forEach((finding, index) => {
+        const isContext = QC_CONTEXT_RULES.some(r => r.id === finding.id);
+        const article = document.createElement("article");
+        article.className = `finding ${finding.kind}${finding.resolved ? " resolved" : ""}${state.showSuggestedText ? " show-text" : ""}`;
+        article.dataset.kind = finding.kind;
+        article.dataset.findingIndex = index;
+
+        article.innerHTML = `
+          <div class="finding-head">
+            <div>
+              <span class="badge ${finding.kind}">${finding.kind === "must" ? "Must fix" : "Recommended"}</span>
+              ${isContext ? '<span class="context-signal">Context signal</span>' : ""}
+              <h4 class="finding-title">${escHtml(finding.title)}</h4>
+            </div>
+            <span class="badge">${finding.appendix ? "Appendix " + escHtml(finding.appendix) : ""}</span>
+          </div>
+          <div class="finding-body">
+            ${escHtml(finding.body)}
+            ${finding.suggestedFix ? `<div class="suggested-text">Suggested enhancement:\n${escHtml(finding.suggestedFix)}</div>` : ""}
+            <div class="finding-actions">
+              <button class="secondary-btn resolve-btn" data-action="accept">Accept suggestion</button>
+              <button class="ghost-btn resolve-btn" data-action="edit">Edit myself</button>
+              <button class="ghost-btn resolve-btn" data-action="dismiss">Dismiss with note</button>
+            </div>
+            <div class="resolved-note">Resolved. The finding now counts as cleared.</div>
+          </div>
+        `;
+
+        // Bind resolution buttons
+        article.querySelectorAll(".resolve-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (state.findings[index].resolved) return;
+            state.findings[index].resolved = true;
+            article.classList.add("resolved");
+            logActivity(`Handled finding: "${finding.title}" via ${btn.dataset.action}.`);
+
+            // Re-evaluate readiness with updated findings
+            const ctx = buildContext();
+            state.readiness = QCEngine.computeReadiness(ctx, state.checklist, state.findings);
+            renderBreakdown();
+            updateUI();
+          });
+        });
+
+        elements.findingList.appendChild(article);
+      });
+    }
+
+    // ── Render: Checklist ───────────────────────────────────────────
+    function renderChecklist(summary) {
+      const container = elements.checklist;
+
+      if (!summary || summary.length === 0) {
+        container.innerHTML = '<div class="subtle" style="padding:8px 0;">Run quincy QC to see the Policy on Policies checklist results.</div>';
+        return;
+      }
+
+      container.innerHTML = summary.map(item => {
+        let statusText, statusClass;
+        if (item.status === "pass") {
+          // Check if a linked finding was resolved
+          const linkedFinding = state.findings.find(f => f.checkTarget === item.id);
+          if (linkedFinding && !linkedFinding.resolved && item.status !== "pass") {
+            statusText = "Needs fix";
+            statusClass = "danger";
+          } else {
+            statusText = "Complete";
+            statusClass = "ok";
+          }
+        } else if (item.status === "fail") {
+          // Check if the linked finding has been resolved
+          const linkedFinding = state.findings.find(f => f.checkTarget === item.id);
+          if (linkedFinding && linkedFinding.resolved) {
+            statusText = "Resolved";
+            statusClass = "ok";
+          } else {
+            statusText = "Needs fix";
+            statusClass = "danger";
+          }
+        } else {
+          statusText = "Review";
+          statusClass = "warn";
+        }
+
+        return `<div class="check-item">
+          <strong>${escHtml(item.label)}</strong>
+          <span class="check-status ${statusClass}" data-check-id="${item.id}">${statusText} <span class="subtle">(${item.appendix})</span></span>
+        </div>`;
+      }).join("");
+    }
+
+    // ── Render: Readiness breakdown ─────────────────────────────────
+    function renderBreakdown() {
+      if (!state.readiness) {
+        elements.readinessBreakdown.innerHTML = "";
+        return;
+      }
+
+      elements.readinessBreakdown.innerHTML = state.readiness.breakdown.map(row => {
+        const pct = row.max > 0 ? Math.round((row.earned / row.max) * 100) : 0;
+        const fillClass = pct === 100 ? "" : (pct > 0 ? "partial" : "zero");
+        return `<div class="breakdown-row">
+          <span>${escHtml(row.label)}</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="breakdown-bar"><div class="breakdown-fill ${fillClass}" style="width:${pct}%"></div></div>
+            <span class="subtle">${row.earned}/${row.max}</span>
+          </div>
+        </div>`;
+      }).join("");
+    }
+
+    // ── Fill demo data ──────────────────────────────────────────────
     function fillDemoData() {
       if (!state.refreshType) {
         const updated = document.querySelector('input[value="updated"]');
@@ -1191,6 +1376,8 @@ Confirm the entity list with the Owner and update the Scope section to match all
         updated.dispatchEvent(new Event("change"));
       }
       elements.changeSummary.value = "Updated scope to include one new business line, added a linked Standard reference, and refreshed retention language for annual review.";
+      document.getElementById("needsRelatedDocs").checked = true;
+      document.getElementById("needsRetention").checked = true;
       state.uploads.clean = true;
       state.uploads.redline = true;
       logActivity("Owner summary auto-filled for demo.");
@@ -1198,30 +1385,37 @@ Confirm the entity list with the Owner and update the Scope section to match all
       updateUI();
     }
 
+    // ── Bulk accept recommended ─────────────────────────────────────
     function acceptAllRecommended() {
-      state.findings.forEach(finding => {
-        if (finding.kind === "reco") finding.resolved = true;
+      let count = 0;
+      state.findings.forEach(f => {
+        if (f.kind === "reco" && !f.resolved) {
+          f.resolved = true;
+          count++;
+        }
       });
-      logActivity("All recommended improvements accepted.");
-      updateUI();
-    }
+      logActivity(`Accepted ${count} recommended improvement${count !== 1 ? "s" : ""}.`);
 
-    function runQc() {
-      if (!canRunQc()) {
-        logActivity("QC could not run yet. Refresh type, change summary, clean draft, and the verified Google Doc link are required.");
-        return;
+      // Re-render findings to show resolved state
+      renderFindings();
+
+      // Re-evaluate readiness
+      if (state.qcRun) {
+        const ctx = buildContext();
+        state.readiness = QCEngine.computeReadiness(ctx, state.checklist, state.findings);
+        renderBreakdown();
       }
-      state.qcRun = true;
-      logActivity("quincy QC completed.");
       updateUI();
     }
 
+    // ── Submit modal ────────────────────────────────────────────────
     function openSubmitModal() {
       const mustOpen = getOpenCount("must");
       const recoOpen = getOpenCount("reco");
       elements.modalSummary.innerHTML = `
         <li>Required fixes open: ${mustOpen}</li>
         <li>Recommended improvements still open: ${recoOpen}</li>
+        <li>Ready score: ${state.readiness ? state.readiness.score + "%" : "—"}</li>
         <li>Package includes the verified Google Doc reference, change summary, owner explanation, and QC audit trail.</li>
         <li>Expected next step: attach these materials in the governance workflow.</li>
       `;
@@ -1235,14 +1429,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
       updateUI();
     }
 
-    function resetDemo() {
-      window.location.reload();
-    }
-
-    function toggleSuggestedText() {
-      document.querySelectorAll(".finding").forEach(card => card.classList.toggle("show-text"));
-    }
-
+    // ── Upload labels ───────────────────────────────────────────────
     function updateUploadLabels() {
       document.getElementById("cleanStatus").textContent = state.uploads.clean ? "Uploaded: policy_clean_v3.docx" : "Not uploaded";
       document.getElementById("redlineStatus").textContent = state.uploads.redline ? "Linked: Verified Google Doc captured" : "Not linked";
@@ -1250,27 +1437,7 @@ Confirm the entity list with the Owner and update the Scope section to match all
       document.getElementById("evidenceStatus").textContent = state.uploads["legal-evidence"] ? "Uploaded: review_evidence.zip" : "Optional";
     }
 
-    function updateFindings() {
-      const findingEls = document.querySelectorAll(".finding");
-      findingEls.forEach((el, i) => {
-        const resolved = state.findings[i].resolved;
-        el.classList.toggle("resolved", resolved);
-      });
-    }
-
-    function updateChecklist() {
-      const related = document.querySelector('[data-check="related"]');
-      const retention = document.querySelector('[data-check="retention"]');
-      const evidence = document.querySelector('[data-check="evidence"]');
-      related.textContent = state.findings.find(f => f.checkTarget === "related").resolved ? "Complete" : "Needs fix";
-      related.className = "check-status " + (state.findings.find(f => f.checkTarget === "related").resolved ? "ok" : "danger");
-      retention.textContent = state.findings.find(f => f.checkTarget === "retention").resolved ? "Complete" : "Needs fix";
-      retention.className = "check-status " + (state.findings.find(f => f.checkTarget === "retention").resolved ? "ok" : "danger");
-      const evidenceOk = state.uploads.redline || state.uploads["change-summary"];
-      evidence.textContent = evidenceOk ? "Complete" : "Missing";
-      evidence.className = "check-status " + (evidenceOk ? "ok" : "danger");
-    }
-
+    // ── Package panel ───────────────────────────────────────────────
     function updatePackage() {
       setPackageLine(elements.pkgClean, state.uploads.clean);
       setPackageLine(elements.pkgRedline, state.uploads.redline || state.uploads["change-summary"]);
@@ -1284,27 +1451,54 @@ Confirm the entity list with the Owner and update the Scope section to match all
       el.className = "check-status " + (ok ? "ok" : "danger");
     }
 
+    // ── Master UI update ────────────────────────────────────────────
     function updateUI() {
       updateUploadLabels();
-      updateFindings();
-      updateChecklist();
       updatePackage();
+
+      // Re-render checklist with current finding resolution state
+      if (state.qcRun && state.checklist.length > 0) {
+        renderChecklist(QCEngine.getChecklistSummary(state.checklist));
+      }
 
       const mustOpen = getOpenCount("must");
       const recoOpen = getOpenCount("reco");
-      const packageComplete = state.uploads.clean && (state.uploads.redline || state.uploads["change-summary"]) && elements.changeSummary.value.trim().length > 0 && state.qcRun;
+      const packageComplete = state.uploads.clean
+        && (state.uploads.redline || state.uploads["change-summary"])
+        && elements.changeSummary.value.trim().length > 0
+        && state.qcRun;
       const ready = state.qcRun && mustOpen === 0 && packageComplete;
 
+      // Counts
       elements.mustCount.textContent = state.qcRun ? mustOpen : "—";
       elements.recoCount.textContent = state.qcRun ? recoOpen : "—";
       elements.packageStatus.textContent = packageComplete ? "Yes" : "No";
       elements.packageStatus.className = "mini-stat-value " + (packageComplete ? "ok" : "danger");
       elements.mustCount.className = "mini-stat-value " + (state.qcRun ? (mustOpen === 0 ? "ok" : "danger") : "danger");
       elements.recoCount.className = "mini-stat-value " + (state.qcRun ? (recoOpen === 0 ? "ok" : "warn") : "warn");
-      elements.readyScore.className = "mini-stat-value " + (ready ? "ok" : (state.qcRun ? "warn" : "danger"));
-      elements.readyScore.textContent = computeReadyScore(packageComplete, mustOpen, recoOpen);
+
+      // Ready score — use engine
+      if (state.qcRun && state.readiness) {
+        elements.readyScore.textContent = state.readiness.score + "%";
+        elements.readyScore.className = "mini-stat-value " + (ready ? "ok" : "warn");
+      } else {
+        elements.readyScore.textContent = "0%";
+        elements.readyScore.className = "mini-stat-value danger";
+      }
+
+      // Submit button
       elements.submitBtn.disabled = !ready || state.submitted;
 
+      // Material change: adjust expected next stage
+      if (state.refreshType === "material") {
+        elements.nextStage.textContent = "Governance QC → Approval routing";
+        elements.nextStage.style.fontSize = "16px";
+      } else {
+        elements.nextStage.textContent = "Governance QC queue";
+        elements.nextStage.style.fontSize = "18px";
+      }
+
+      // Status chips and text
       if (state.submitted) {
         elements.statusText.textContent = "Package exported";
         elements.statusBadge.textContent = "Exported";
@@ -1329,7 +1523,9 @@ Confirm the entity list with the Owner and update the Scope section to match all
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
         elements.statusChipSecondary.className = mustOpen > 0 ? "chip danger" : "chip warn";
-        elements.submitHint.textContent = mustOpen > 0 ? "Resolve required fixes before package export becomes available." : "Add any final edits, then export the package.";
+        elements.submitHint.textContent = mustOpen > 0
+          ? "Resolve required fixes before package export becomes available."
+          : "Add any final edits, then export the package.";
       } else if (canRunQc()) {
         elements.statusText.textContent = "Files uploaded";
         elements.statusBadge.textContent = "Ready to run QC";
@@ -1352,44 +1548,32 @@ Confirm the entity list with the Owner and update the Scope section to match all
       }
     }
 
+    // ── Helpers ──────────────────────────────────────────────────────
     function canRunQc() {
-      return Boolean(state.refreshType && elements.changeSummary.value.trim() && state.uploads.clean && (state.uploads.redline || state.uploads["change-summary"]));
+      return Boolean(
+        state.refreshType
+        && elements.changeSummary.value.trim()
+        && state.uploads.clean
+        && (state.uploads.redline || state.uploads["change-summary"])
+      );
     }
 
     function getOpenCount(kind) {
       return state.findings.filter(f => f.kind === kind && !f.resolved).length;
     }
 
-    function computeReadyScore(packageComplete, mustOpen, recoOpen) {
-      if (!state.qcRun) return "0%";
-      let score = 58;
-      if (state.uploads.clean) score += 8;
-      if (state.uploads.redline || state.uploads["change-summary"]) score += 8;
-      if (elements.changeSummary.value.trim()) score += 6;
-      score -= mustOpen * 12;
-      score -= recoOpen * 3;
-      if (packageComplete) score += 10;
-      score = Math.max(0, Math.min(100, score));
-      return score + "%";
-    }
-
     function humanUploadName(kind) {
-      const map = {
-        clean: "Reference clean draft",
-        redline: "Verified editable Google Doc",
-        "change-summary": "Change summary",
-        "legal-evidence": "Supporting evidence"
-      };
-      return map[kind];
+      return { clean: "Reference clean draft", redline: "Verified editable Google Doc", "change-summary": "Change summary", "legal-evidence": "Supporting evidence" }[kind];
     }
 
     function humanRefreshType(value) {
-      const map = {
-        "no-change": "No substantive changes",
-        updated: "Updated content",
-        material: "Potential material change"
-      };
-      return map[value] || value;
+      return { "no-change": "No substantive changes", updated: "Updated content", material: "Potential material change" }[value] || value;
+    }
+
+    function escHtml(str) {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
     }
 
     function logActivity(text) {
