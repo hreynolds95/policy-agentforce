@@ -503,6 +503,13 @@
     .mini-stat-value.danger { color: var(--danger); }
     .mini-stat-value.ok { color: var(--ok); }
 
+    .mini-stat-value.next-stage-value {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
     .activity {
       display: grid;
       gap: 10px;
@@ -924,7 +931,7 @@
                   <div>
                     <div class="card-label">Expected next stage</div>
                   </div>
-                  <div class="mini-stat-value" style="font-size:18px;" id="nextStage">Governance QC queue</div>
+                  <div class="mini-stat-value next-stage-value" id="nextStage">Governance QC queue</div>
                 </div>
               </div>
             </div>
@@ -1492,10 +1499,8 @@
       // Material change: adjust expected next stage
       if (state.refreshType === "material") {
         elements.nextStage.textContent = "Governance QC → Approval routing";
-        elements.nextStage.style.fontSize = "16px";
       } else {
         elements.nextStage.textContent = "Governance QC queue";
-        elements.nextStage.style.fontSize = "18px";
       }
 
       // Status chips and text
