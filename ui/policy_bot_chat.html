@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quincy policy bot</title>
+  <link rel="stylesheet" href="/assets/styles/block-theme-static.css" />
+  <style>
+    :root {
+      --bg: var(--color-background-inverse);
+      --panel: rgba(255, 255, 255, 0.98);
+      --panel-2: var(--color-background-secondary);
+      --line: var(--color-border-primary);
+      --ink: var(--color-text-primary);
+      --muted: var(--color-text-secondary);
+      --accent: var(--color-accent);
+      --accent-soft: var(--color-background-secondary);
+      --ok: #b8ff2c;
+      --ok-soft: #efffcb;
+      --warn: var(--color-text-warning);
+      --danger: var(--color-text-danger);
+      --shadow: var(--shadow-lg);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--color-text-inverse);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 24%),
+        linear-gradient(180deg, #111 0%, var(--bg) 100%);
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .ghost-btn, .primary-btn, .secondary-btn, .chip-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      text-decoration: none;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: var(--color-accent-foreground);
+      border-color: var(--accent);
+    }
+
+    .secondary-btn {
+      background: var(--accent-soft);
+    }
+
+    .ghost-btn:hover, .primary-btn:hover, .secondary-btn:hover, .chip-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(26, 31, 27, 0.08);
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hero-copy {
+      max-width: 860px;
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #e4ddcf;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-body {
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .field, .textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #d5cebf;
+      background: white;
+      color: var(--ink);
+      padding: 12px 14px;
+    }
+
+    .textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .filter-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .sample-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .chip-btn {
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: white;
+    }
+
+    .status-banner {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+
+    .status-banner.ok {
+      display: block;
+      background: var(--ok-soft);
+      color: #050505;
+      border: 1px solid #b8ff2c;
+    }
+
+    .status-banner.error {
+      display: block;
+      background: #ffe8e6;
+      color: var(--danger);
+      border: 1px solid var(--color-border-danger);
+    }
+
+    .answer {
+      font-size: 15px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .meta-strip {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      background: white;
+      font-size: 13px;
+    }
+
+    .chip.ok {
+      background: var(--ok-soft);
+      border-color: #b8ff2c;
+      color: #050505;
+    }
+
+    .chip.warn {
+      background: #fff4d5;
+      border-color: var(--color-border-warning);
+      color: #7b5200;
+    }
+
+    .citation-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .citation {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .citation-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .citation-meta {
+      display: grid;
+      gap: 4px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .citation-excerpt {
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .link-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .link-row a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid #cfc7b8;
+      font-size: 13px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1120px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Internal Policy Chat</p>
+        <h1>quincy policy bot</h1>
+      </div>
+      <button class="ghost-btn" id="clearBtn">Clear</button>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">How It Works</p>
+      <div class="hero-copy">
+        Ask questions about active Compliance Policies and Standards. The bot retrieves text from approved PDFs indexed from Google Drive, filters against active compliance documents from LogicGate metadata in Snowflake, and returns a grounded answer with citations.
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-header">
+          <p class="eyebrow">Ask</p>
+          <h2 class="panel-title">Question and filters</h2>
+        </div>
+        <div class="panel-body">
+          <div class="card">
+            <div class="card-label">Question</div>
+            <textarea id="questionInput" class="textarea" placeholder="Example: What policy governs third-party due diligence?"></textarea>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Filters</div>
+            <div class="filter-grid">
+              <div>
+                <div class="card-label">Document type</div>
+                <select id="documentType" class="field">
+                  <option value="">All active documents</option>
+                  <option value="Policy">Policy</option>
+                  <option value="Standard">Standard</option>
+                </select>
+              </div>
+              <div>
+                <div class="card-label">Domain</div>
+                <input id="domainInput" class="field" type="text" placeholder="Optional domain filter" />
+              </div>
+              <div>
+                <div class="card-label">Top matches</div>
+                <select id="topK" class="field">
+                  <option value="3">3</option>
+                  <option value="5" selected>5</option>
+                  <option value="8">8</option>
+                </select>
+              </div>
+              <label class="toggle">
+                <input id="useLlm" type="checkbox" />
+                <span>Use LLM synthesis on retrieved excerpts</span>
+              </label>
+              <div>
+                <div class="card-label">Model</div>
+                <input id="modelInput" class="field" type="text" value="gpt-5-mini" />
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Sample prompts</div>
+            <div class="sample-list">
+              <button class="chip-btn" data-question="What policy governs third-party due diligence?">What policy governs third-party due diligence?</button>
+              <button class="chip-btn" data-question="What is the record retention requirement?">What is the record retention requirement?</button>
+              <button class="chip-btn" data-question="Which standard applies to compliance investigations?">Which standard applies to compliance investigations?</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <button id="askBtn" class="primary-btn">Ask quincy</button>
+            <button id="jsonBtn" class="secondary-btn">Show raw JSON</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="panel-header">
+          <p class="eyebrow">Response</p>
+          <h2 class="panel-title">Grounded answer and citations</h2>
+        </div>
+        <div class="panel-body">
+          <div id="statusBanner" class="status-banner ok">Ready.</div>
+
+          <div class="card">
+            <div class="card-label">Answer</div>
+            <div id="answerText" class="answer">Ask a question to see a grounded answer here.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Query metadata</div>
+            <div class="meta-strip">
+              <span id="confidenceChip" class="chip">Confidence: n/a</span>
+              <span id="filtersChip" class="chip">Filters: none</span>
+              <span id="citationsChip" class="chip">Citations: 0</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Citations</div>
+            <div id="citationList" class="citation-list">
+              <div class="muted">Citations will appear here after your first query.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Raw payload</div>
+            <pre id="jsonOutput" class="muted" style="white-space: pre-wrap; margin: 0;">No response yet.</pre>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const els = {
+      questionInput: document.getElementById("questionInput"),
+      documentType: document.getElementById("documentType"),
+      domainInput: document.getElementById("domainInput"),
+      topK: document.getElementById("topK"),
+      useLlm: document.getElementById("useLlm"),
+      modelInput: document.getElementById("modelInput"),
+      askBtn: document.getElementById("askBtn"),
+      jsonBtn: document.getElementById("jsonBtn"),
+      clearBtn: document.getElementById("clearBtn"),
+      answerText: document.getElementById("answerText"),
+      confidenceChip: document.getElementById("confidenceChip"),
+      filtersChip: document.getElementById("filtersChip"),
+      citationsChip: document.getElementById("citationsChip"),
+      citationList: document.getElementById("citationList"),
+      statusBanner: document.getElementById("statusBanner"),
+      jsonOutput: document.getElementById("jsonOutput")
+    };
+
+    let lastPayload = null;
+
+    function setStatus(message, kind = "ok") {
+      els.statusBanner.textContent = message;
+      els.statusBanner.className = `status-banner ${kind}`;
+    }
+
+    function buildRequest() {
+      return {
+        question: els.questionInput.value.trim(),
+        document_type: els.documentType.value || null,
+        domain: els.domainInput.value.trim() || null,
+        top_k: Number(els.topK.value),
+        use_llm: els.useLlm.checked,
+        model: els.modelInput.value.trim() || "gpt-5-mini",
+        no_log: false
+      };
+    }
+
+    async function askQuestion(showJsonOnly = false) {
+      const payload = buildRequest();
+      if (!payload.question) {
+        setStatus("Add a question first.", "error");
+        return;
+      }
+
+      setStatus("Searching active policy content...", "ok");
+      els.askBtn.disabled = true;
+      els.jsonBtn.disabled = true;
+
+      try {
+        const response = await fetch("/api/query", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Request failed.");
+        }
+
+        lastPayload = data;
+        renderPayload(data, showJsonOnly);
+        setStatus("Answer ready.", "ok");
+      } catch (error) {
+        setStatus(error.message || "Something went wrong.", "error");
+      } finally {
+        els.askBtn.disabled = false;
+        els.jsonBtn.disabled = false;
+      }
+    }
+
+    function renderPayload(payload, showJsonOnly = false) {
+      els.answerText.textContent = payload.answer || "No answer returned.";
+      els.confidenceChip.textContent = `Confidence: ${payload.confidence || "n/a"}`;
+      const filters = payload.applied_filters || {};
+      const filterParts = [];
+      if (filters.document_type) filterParts.push(filters.document_type);
+      if (filters.domain) filterParts.push(filters.domain);
+      if (filters.use_llm) filterParts.push(`LLM: ${filters.model}`);
+      els.filtersChip.textContent = `Filters: ${filterParts.length ? filterParts.join(" · ") : "none"}`;
+      els.citationsChip.textContent = `Citations: ${(payload.citations || []).length}`;
+
+      renderCitations(payload.citations || []);
+      els.jsonOutput.textContent = JSON.stringify(payload, null, 2);
+
+      if (showJsonOnly) {
+        els.answerText.textContent = "Raw JSON shown below.";
+      }
+    }
+
+    function renderCitations(citations) {
+      if (!citations.length) {
+        els.citationList.innerHTML = '<div class="muted">No citations returned for this query.</div>';
+        return;
+      }
+
+      els.citationList.innerHTML = citations.map((citation, index) => {
+        const section = citation.section_heading ? `Section: ${escapeHtml(citation.section_heading)}` : "Section: unavailable";
+        const page = citation.page_number != null ? `Page: ${citation.page_number}` : "Page: unavailable";
+        const excerpt = escapeHtml(summarize(citation.chunk_text || ""));
+        const pdfLink = citation.pdf_url ? `<a href="${citation.pdf_url}" target="_blank" rel="noreferrer">Open PDF</a>` : "";
+        const recordText = citation.logicgate_record_id ? `LogicGate record: ${escapeHtml(citation.logicgate_record_id)}` : "LogicGate record unavailable";
+
+        return `
+          <article class="citation">
+            <div class="citation-title">${index + 1}. ${escapeHtml(citation.document_title || "Untitled document")}</div>
+            <div class="citation-meta">
+              <div>Type: ${escapeHtml(citation.document_type_label || "Unknown")}</div>
+              <div>${section}</div>
+              <div>${page}</div>
+              <div>Publication date: ${escapeHtml(citation.publication_date || "Unknown")}</div>
+              <div>${recordText}</div>
+            </div>
+            <div class="citation-excerpt">${excerpt}</div>
+            <div class="link-row">${pdfLink}</div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function summarize(text) {
+      const normalized = text.replace(/\s+/g, " ").trim();
+      if (normalized.length <= 240) return normalized;
+      return `${normalized.slice(0, 239).trim()}…`;
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.querySelectorAll("[data-question]").forEach((button) => {
+      button.addEventListener("click", () => {
+        els.questionInput.value = button.dataset.question;
+      });
+    });
+
+    els.askBtn.addEventListener("click", () => askQuestion(false));
+    els.jsonBtn.addEventListener("click", () => askQuestion(true));
+    els.clearBtn.addEventListener("click", () => {
+      els.questionInput.value = "";
+      els.domainInput.value = "";
+      els.documentType.value = "";
+      els.topK.value = "5";
+      els.useLlm.checked = false;
+      els.modelInput.value = "gpt-5-mini";
+      els.answerText.textContent = "Ask a question to see a grounded answer here.";
+      els.confidenceChip.textContent = "Confidence: n/a";
+      els.filtersChip.textContent = "Filters: none";
+      els.citationsChip.textContent = "Citations: 0";
+      els.citationList.innerHTML = '<div class="muted">Citations will appear here after your first query.</div>';
+      els.jsonOutput.textContent = "No response yet.";
+      setStatus("Ready.", "ok");
+      lastPayload = null;
+    });
+
+    els.questionInput.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+        askQuestion(false);
+      }
+    });
+  </script>
+</body>
+</html>
