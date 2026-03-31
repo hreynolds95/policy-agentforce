@@ -2,4 +2,5 @@ snowflake-connector-python
 google-api-python-client
 google-auth
 pdfplumber
+anthropic
 openai

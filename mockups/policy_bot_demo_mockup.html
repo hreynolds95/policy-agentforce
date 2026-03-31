@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>quincy policy bot</title>
-  <link rel="stylesheet" href="/assets/styles/block-theme-static.css" />
+  <title>quincy policy bot demo</title>
+  <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
       --bg: #050505;
@@ -17,7 +17,6 @@
       --accent-soft: #141414;
       --ok: #b8ff2c;
       --ok-soft: #efffcb;
-      --warn: var(--color-text-warning);
       --danger: var(--color-text-danger);
       --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
     }
@@ -33,7 +32,7 @@
         var(--bg);
     }
 
-    button, input, select, textarea { font: inherit; }
+    button, input, textarea, select { font: inherit; }
 
     .page {
       max-width: 1440px;
@@ -86,24 +85,26 @@
       background: var(--accent-soft);
     }
 
-    .ghost-btn:hover, .primary-btn:hover, .secondary-btn:hover, .chip-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(26, 31, 27, 0.08);
+    .hero, .panel, .card, .citation, .history-item, .chip-btn {
+      background: var(--panel);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
     }
 
     .hero {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
       padding: 22px 24px;
-      box-shadow: var(--shadow);
-      color: var(--ink);
       margin-bottom: 18px;
     }
 
     .hero-copy {
       max-width: 860px;
-      color: var(--ink);
       line-height: 1.55;
       font-size: 15px;
     }
@@ -116,17 +117,12 @@
     }
 
     .panel {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      color: var(--ink);
       overflow: hidden;
     }
 
     .panel-header {
       padding: 18px 20px 14px;
-      border-bottom: 1px solid #e4ddcf;
+      border-bottom: 1px solid var(--line);
     }
 
     .panel-title {
@@ -143,31 +139,9 @@
     }
 
     .card {
-      background: var(--panel-2);
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 16px;
-    }
-
-    .ghost-btn, .secondary-btn, .chip-btn, .chip, .hero, .panel, .card,
-    .field, .textarea, .citation {
-      background: var(--panel);
-      color: var(--ink);
-      border-color: var(--line);
-      box-shadow: none;
-    }
-
-    .primary-btn {
-      background: var(--accent);
-      color: #0a0a0a;
-      border-color: transparent;
-    }
-
-    input, textarea, select {
-      background: #0f0f0f;
-      color: var(--ink);
-      border: 1px solid var(--line);
-      border-radius: 4px;
     }
 
     .card-label {
@@ -192,16 +166,16 @@
       resize: vertical;
     }
 
-    .filter-grid {
+    .filter-grid, .history-list, .citation-list {
       display: grid;
       gap: 12px;
     }
 
-    .row {
+    .row, .meta-strip, .link-row {
       display: flex;
       gap: 10px;
-      align-items: center;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .toggle {
@@ -211,79 +185,35 @@
       font-size: 14px;
     }
 
-    .sample-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .history-list {
-      display: grid;
-      gap: 8px;
-    }
-
     .history-item {
       display: grid;
       gap: 6px;
       padding: 10px 12px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #101010;
       cursor: pointer;
     }
 
-    .history-item.active {
+    .history-item.active,
+    .citation.active {
       border-color: rgba(255, 255, 255, 0.28);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
     }
 
-    .history-question {
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    .history-meta {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .chip-btn {
-      text-align: left;
-      padding: 10px 12px;
-      font-size: 14px;
-      background: #101010;
-    }
-
     .status-banner {
-      display: none;
+      display: block;
       padding: 12px 14px;
       border-radius: 16px;
       font-size: 14px;
-    }
-
-    .status-banner.ok {
-      display: block;
       background: var(--ok-soft);
       color: #050505;
       border: 1px solid #b8ff2c;
-    }
-
-    .status-banner.error {
-      display: block;
-      background: #ffe8e6;
-      color: var(--danger);
-      border: 1px solid var(--color-border-danger);
     }
 
     .answer {
       font-size: 15px;
       line-height: 1.6;
       white-space: pre-wrap;
-    }
-
-    .meta-strip {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
     }
 
     .chip {
@@ -300,27 +230,10 @@
       color: #050505;
     }
 
-    .chip.warn {
-      background: #fff4d5;
-      border-color: var(--color-border-warning);
-      color: #7b5200;
-    }
-
-    .citation-list {
-      display: grid;
-      gap: 12px;
-    }
-
     .citation {
-      background: #101010;
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: 14px;
-    }
-
-    .citation.active {
-      border-color: rgba(255, 255, 255, 0.26);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
     }
 
     .citation-title {
@@ -337,16 +250,10 @@
       margin-bottom: 10px;
     }
 
-    .citation-excerpt {
+    .citation-excerpt, .preview-excerpt {
       font-size: 14px;
-      line-height: 1.5;
-      color: var(--ink);
-      margin-bottom: 10px;
-    }
-
-    .source-preview {
-      display: grid;
-      gap: 10px;
+      line-height: 1.55;
+      white-space: pre-wrap;
     }
 
     .preview-shell {
@@ -361,25 +268,6 @@
       font-size: 15px;
       font-weight: 600;
       margin-bottom: 8px;
-    }
-
-    .preview-excerpt {
-      font-size: 14px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-    }
-
-    .link-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .link-row a {
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid #cfc7b8;
-      font-size: 13px;
     }
 
     .muted {
@@ -399,16 +287,19 @@
   <div class="page">
     <div class="topbar">
       <div>
-        <p class="eyebrow">Internal Policy Chat</p>
+        <p class="eyebrow">Static Demo Mockup</p>
         <h1>quincy policy bot</h1>
       </div>
-      <button class="ghost-btn" id="clearBtn">Clear</button>
+      <div class="row">
+        <a class="secondary-btn" href="../ui/policy_bot_chat.html">Open local app shell</a>
+        <button class="ghost-btn" id="clearBtn" type="button">Reset demo</button>
+      </div>
     </div>
 
     <section class="hero">
-      <p class="eyebrow">How It Works</p>
+      <p class="eyebrow">Demo Mode</p>
       <div class="hero-copy">
-        Ask questions about active Compliance Policies and Standards. The bot retrieves text from approved PDFs indexed from Google Drive, filters against active compliance documents from LogicGate metadata in Snowflake, and returns a grounded answer with citations.
+        This is a GitHub Pages-safe mockup of the employee policy chatbot. It simulates grounded answers, citations, and source previews using demo data so you can share the experience without Snowflake access, API keys, or a local server.
       </div>
     </section>
 
@@ -448,14 +339,14 @@
                 </select>
               </div>
               <label class="toggle">
-                <input id="useLlm" type="checkbox" />
+                <input id="useLlm" type="checkbox" checked />
                 <span>Use LLM synthesis on retrieved excerpts</span>
               </label>
               <div>
                 <div class="card-label">Provider</div>
                 <select id="providerInput" class="field">
-                  <option value="auto" selected>Auto-detect</option>
-                  <option value="anthropic">Anthropic</option>
+                  <option value="auto">Auto-detect</option>
+                  <option value="anthropic" selected>Anthropic</option>
                   <option value="openai">OpenAI</option>
                 </select>
               </div>
@@ -468,7 +359,7 @@
 
           <div class="card">
             <div class="card-label">Sample prompts</div>
-            <div class="sample-list">
+            <div class="filter-grid">
               <button class="chip-btn" data-question="What policy governs third-party due diligence?">What policy governs third-party due diligence?</button>
               <button class="chip-btn" data-question="What is the record retention requirement?">What is the record retention requirement?</button>
               <button class="chip-btn" data-question="Which standard applies to compliance investigations?">Which standard applies to compliance investigations?</button>
@@ -478,13 +369,13 @@
           <div class="card">
             <div class="card-label">Conversation history</div>
             <div id="historyList" class="history-list">
-              <div class="muted">Recent questions and grounded answers will appear here.</div>
+              <div class="muted">Demo questions will appear here as you test the flow.</div>
             </div>
           </div>
 
           <div class="row">
-            <button id="askBtn" class="primary-btn">Ask quincy</button>
-            <button id="jsonBtn" class="secondary-btn">Show raw JSON</button>
+            <button id="askBtn" class="primary-btn" type="button">Ask quincy</button>
+            <button id="jsonBtn" class="secondary-btn" type="button">Show raw JSON</button>
           </div>
         </div>
       </aside>
@@ -495,11 +386,11 @@
           <h2 class="panel-title">Grounded answer and citations</h2>
         </div>
         <div class="panel-body">
-          <div id="statusBanner" class="status-banner ok">Ready.</div>
+          <div id="statusBanner" class="status-banner">Demo ready.</div>
 
           <div class="card">
             <div class="card-label">Answer</div>
-            <div id="answerText" class="answer">Ask a question to see a grounded answer here.</div>
+            <div id="answerText" class="answer">Ask a demo question to see a grounded answer here.</div>
           </div>
 
           <div class="card">
@@ -514,20 +405,18 @@
           <div class="card">
             <div class="card-label">Citations</div>
             <div id="citationList" class="citation-list">
-              <div class="muted">Citations will appear here after your first query.</div>
+              <div class="muted">Demo citations will appear here after your first query.</div>
             </div>
           </div>
 
           <div class="card">
             <div class="card-label">Source preview</div>
-            <div class="source-preview">
-              <div class="meta-strip">
-                <span id="previewTitleChip" class="chip">Document: n/a</span>
-                <span id="previewSectionChip" class="chip">Section: n/a</span>
-              </div>
-              <div id="sourcePreview" class="preview-shell">
-                <div class="muted">Choose a citation to inspect the exact excerpt used in the answer.</div>
-              </div>
+            <div class="meta-strip">
+              <span id="previewTitleChip" class="chip">Document: n/a</span>
+              <span id="previewSectionChip" class="chip">Section: n/a</span>
+            </div>
+            <div id="sourcePreview" class="preview-shell">
+              <div class="muted">Choose a citation to inspect the exact excerpt used in the demo answer.</div>
             </div>
           </div>
 
@@ -541,6 +430,93 @@
   </div>
 
   <script>
+    const DEMO_RESPONSES = {
+      "what policy governs third-party due diligence?": {
+        answer: "The strongest match is the active Policy \"Third-Party Compliance Oversight Policy.\" Based on the retrieved excerpts, the policy assigns core due diligence expectations for third-party onboarding and oversight, while the linked Vendor Due Diligence Standard provides more detailed execution requirements. [1][2]",
+        confidence: "high",
+        citations: [
+          {
+            document_title: "Third-Party Compliance Oversight Policy",
+            document_type_label: "Policy",
+            publication_date: "2026-02-18",
+            logicgate_record_id: "POL-001245",
+            pdf_url: "https://drive.google.com/file/d/1czKlHFQxs6iCdT1bDxgNdnbuqGNK4xLh/view",
+            page_number: 4,
+            section_heading: "Third-party oversight requirements",
+            chunk_text: "The policy requires business teams to complete due diligence before onboarding third parties, maintain periodic oversight based on risk, and escalate material control concerns through the compliance governance process."
+          },
+          {
+            document_title: "Vendor Due Diligence Standard",
+            document_type_label: "Standard",
+            publication_date: "2026-02-18",
+            logicgate_record_id: "STD-000774",
+            pdf_url: "https://drive.google.com/file/d/1Co7opy_mta9hoz_oIxnrybiieH67MAJa/view",
+            page_number: 6,
+            section_heading: "Minimum diligence steps",
+            chunk_text: "The standard defines the minimum diligence artifacts, risk tiering expectations, and evidence retention requirements that support the third-party policy."
+          }
+        ]
+      },
+      "what is the record retention requirement?": {
+        answer: "The retrieved excerpts show that retention expectations are defined in both the governing Policy and supporting Standard. The policy requires retained evidence sufficient to demonstrate compliance, and the standard specifies the operational retention window applied to supporting records. [1][2]",
+        confidence: "medium",
+        citations: [
+          {
+            document_title: "Records Management Policy",
+            document_type_label: "Policy",
+            publication_date: "2026-02-18",
+            logicgate_record_id: "POL-000553",
+            pdf_url: "https://drive.google.com/file/d/1uXbMrhZC-r347TH2oK3ekPSfZJp3L07n/view",
+            page_number: 3,
+            section_heading: "Retention principle",
+            chunk_text: "Records must be retained for the period required by applicable law, regulation, and internal standard, and must remain available for audit, investigation, and regulatory review."
+          },
+          {
+            document_title: "Records Retention Standard",
+            document_type_label: "Standard",
+            publication_date: "2026-02-18",
+            logicgate_record_id: "STD-000551",
+            pdf_url: "https://drive.google.com/file/d/1RUtJ1UC-EEtdSFiR1rhVSGcklEzRLORf/view",
+            page_number: 5,
+            section_heading: "Retention schedule",
+            chunk_text: "Supporting compliance evidence must be maintained according to the approved retention schedule, including minimum retention windows, archive location, and destruction controls."
+          }
+        ]
+      },
+      "which standard applies to compliance investigations?": {
+        answer: "The most relevant active Standard is the \"Compliance Investigations Standard.\" The retrieved text indicates it governs intake, triage, documentation, and escalation handling for investigation matters, while the associated Policy sets the broader governance expectations. [1][2]",
+        confidence: "high",
+        citations: [
+          {
+            document_title: "Compliance Investigations Standard",
+            document_type_label: "Standard",
+            publication_date: "2026-02-18",
+            logicgate_record_id: "STD-001144",
+            pdf_url: "https://drive.google.com/file/d/1XFwdbO8OlP188tVPznnrPkRLE61QgwX8/view",
+            page_number: 2,
+            section_heading: "Scope and intake",
+            chunk_text: "This standard applies to compliance investigations involving potential violations of policy, standard, or regulatory obligations and defines intake, triage, case handling, and documentation expectations."
+          },
+          {
+            document_title: "Compliance Governance Policy",
+            document_type_label: "Policy",
+            publication_date: "2026-02-18",
+            logicgate_record_id: "POL-000311",
+            pdf_url: "https://drive.google.com/file/d/1QgpDdLZeQcS_tPJUw_xvqhosiyI2PHwJ/view",
+            page_number: 7,
+            section_heading: "Escalation and oversight",
+            chunk_text: "The policy requires investigation matters to be managed under approved standards and escalated through the appropriate governance path when severity thresholds are met."
+          }
+        ]
+      }
+    };
+
+    const DEFAULT_RESPONSE = {
+      answer: "This static demo only supports the seeded sample prompts. Try one of the sample questions to see how quincy would present a grounded answer with citations and source preview.",
+      confidence: "low",
+      citations: []
+    };
+
     const els = {
       questionInput: document.getElementById("questionInput"),
       documentType: document.getElementById("documentType"),
@@ -566,16 +542,10 @@
     };
 
     const state = {
-      lastPayload: null,
       history: [],
       activeHistoryId: null,
-      activeCitationIndex: null
+      lastPayload: null
     };
-
-    function setStatus(message, kind = "ok") {
-      els.statusBanner.textContent = message;
-      els.statusBanner.className = `status-banner ${kind}`;
-    }
 
     function buildRequest() {
       return {
@@ -585,100 +555,86 @@
         top_k: Number(els.topK.value),
         use_llm: els.useLlm.checked,
         provider: els.providerInput.value || "auto",
-        model: els.modelInput.value.trim() || "claude-3-5-sonnet-latest",
-        no_log: false
+        model: els.modelInput.value.trim() || "claude-3-5-sonnet-latest"
       };
     }
 
-    async function askQuestion(showJsonOnly = false) {
-      const payload = buildRequest();
-      if (!payload.question) {
-        setStatus("Add a question first.", "error");
+    function getDemoResponse(question) {
+      const key = question.trim().toLowerCase();
+      return DEMO_RESPONSES[key] || DEFAULT_RESPONSE;
+    }
+
+    function askQuestion(showJsonOnly = false) {
+      const request = buildRequest();
+      if (!request.question) {
+        setStatus("Add a question first.", false);
         return;
       }
 
-      setStatus("Searching active policy content...", "ok");
-      els.askBtn.disabled = true;
-      els.jsonBtn.disabled = true;
-
-      try {
-        const response = await fetch("/api/query", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error || "Request failed.");
+      const response = getDemoResponse(request.question);
+      const payload = {
+        question: request.question,
+        answer: response.answer,
+        confidence: response.confidence,
+        citations: response.citations,
+        applied_filters: {
+          document_type: request.document_type,
+          domain: request.domain,
+          top_k: request.top_k,
+          use_llm: request.use_llm,
+          provider: request.provider,
+          model: request.model,
+          demo_mode: true
         }
+      };
 
-        state.lastPayload = data;
-        saveHistoryEntry(payload, data);
-        renderPayload(data, showJsonOnly);
-        setStatus("Answer ready.", "ok");
-      } catch (error) {
-        setStatus(error.message || "Something went wrong.", "error");
-      } finally {
-        els.askBtn.disabled = false;
-        els.jsonBtn.disabled = false;
-      }
+      state.lastPayload = payload;
+      saveHistoryEntry(request, payload);
+      renderPayload(payload, showJsonOnly);
+      setStatus("Demo answer ready.", true);
     }
 
     function renderPayload(payload, showJsonOnly = false) {
-      els.answerText.textContent = payload.answer || "No answer returned.";
+      els.answerText.textContent = showJsonOnly ? "Raw JSON shown below." : (payload.answer || "No answer returned.");
       els.confidenceChip.textContent = `Confidence: ${payload.confidence || "n/a"}`;
       const filters = payload.applied_filters || {};
       const filterParts = [];
       if (filters.document_type) filterParts.push(filters.document_type);
       if (filters.domain) filterParts.push(filters.domain);
       if (filters.use_llm) filterParts.push(`LLM: ${filters.provider || "auto"} · ${filters.model}`);
+      if (filters.demo_mode) filterParts.push("Demo mode");
       els.filtersChip.textContent = `Filters: ${filterParts.length ? filterParts.join(" · ") : "none"}`;
       els.citationsChip.textContent = `Citations: ${(payload.citations || []).length}`;
-
-      renderCitations(payload.citations || []);
       els.jsonOutput.textContent = JSON.stringify(payload, null, 2);
+      renderCitations(payload.citations || []);
       renderHistory();
-
-      if (showJsonOnly) {
-        els.answerText.textContent = "Raw JSON shown below.";
-      }
     }
 
     function renderCitations(citations) {
       if (!citations.length) {
-        els.citationList.innerHTML = '<div class="muted">No citations returned for this query.</div>';
+        els.citationList.innerHTML = '<div class="muted">No demo citations are available for that prompt.</div>';
         renderSourcePreview(null, null);
         return;
       }
 
-      els.citationList.innerHTML = citations.map((citation, index) => {
-        const section = citation.section_heading ? `Section: ${escapeHtml(citation.section_heading)}` : "Section: unavailable";
-        const page = citation.page_number != null ? `Page: ${citation.page_number}` : "Page: unavailable";
-        const excerpt = escapeHtml(summarize(citation.chunk_text || ""));
-        const pdfLink = citation.pdf_url ? `<a href="${citation.pdf_url}" target="_blank" rel="noreferrer">Open PDF</a>` : "";
-        const recordText = citation.logicgate_record_id ? `LogicGate record: ${escapeHtml(citation.logicgate_record_id)}` : "LogicGate record unavailable";
+      els.citationList.innerHTML = citations.map((citation, index) => `
+        <article class="citation ${index === 0 ? "active" : ""}" data-citation-index="${index}">
+          <div class="citation-title">${index + 1}. ${escapeHtml(citation.document_title)}</div>
+          <div class="citation-meta">
+            <div>Type: ${escapeHtml(citation.document_type_label)}</div>
+            <div>Section: ${escapeHtml(citation.section_heading || "Unavailable")}</div>
+            <div>Page: ${citation.page_number ?? "n/a"}</div>
+            <div>Publication date: ${escapeHtml(citation.publication_date || "Unknown")}</div>
+            <div>LogicGate record: ${escapeHtml(citation.logicgate_record_id || "Unknown")}</div>
+          </div>
+          <div class="citation-excerpt">${escapeHtml(summarize(citation.chunk_text || ""))}</div>
+          <div class="link-row">
+            <button class="chip-btn" data-preview-index="${index}" type="button">Preview source</button>
+            <a class="chip-btn" href="${citation.pdf_url}" target="_blank" rel="noreferrer">Open PDF</a>
+          </div>
+        </article>
+      `).join("");
 
-        return `
-          <article class="citation" data-citation-index="${index}">
-            <div class="citation-title">${index + 1}. ${escapeHtml(citation.document_title || "Untitled document")}</div>
-            <div class="citation-meta">
-              <div>Type: ${escapeHtml(citation.document_type_label || "Unknown")}</div>
-              <div>${section}</div>
-              <div>${page}</div>
-              <div>Publication date: ${escapeHtml(citation.publication_date || "Unknown")}</div>
-              <div>${recordText}</div>
-            </div>
-            <div class="citation-excerpt">${excerpt}</div>
-            <div class="link-row">
-              <button class="chip-btn" data-preview-index="${index}">Preview source</button>
-              ${pdfLink}
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      state.activeCitationIndex = 0;
       renderSourcePreview(citations[0], 0);
     }
 
@@ -686,20 +642,19 @@
       if (!citation) {
         els.previewTitleChip.textContent = "Document: n/a";
         els.previewSectionChip.textContent = "Section: n/a";
-        els.sourcePreview.innerHTML = '<div class="muted">Choose a citation to inspect the exact excerpt used in the answer.</div>';
+        els.sourcePreview.innerHTML = '<div class="muted">Choose a citation to inspect the exact excerpt used in the demo answer.</div>';
         return;
       }
 
-      state.activeCitationIndex = index;
-      els.previewTitleChip.textContent = `Document: ${citation.document_title || "Untitled"}`;
+      els.previewTitleChip.textContent = `Document: ${citation.document_title}`;
       els.previewSectionChip.textContent = `Section: ${citation.section_heading || "Unavailable"}`;
       els.sourcePreview.innerHTML = `
-        <div class="preview-title">${escapeHtml(citation.document_title || "Untitled document")}</div>
-        <div class="muted">Page ${citation.page_number ?? "n/a"} · ${escapeHtml(citation.document_type_label || "Unknown")} · ${escapeHtml(citation.publication_date || "Unknown date")}</div>
-        <div class="preview-excerpt">${escapeHtml((citation.chunk_text || "").trim() || "No excerpt returned.")}</div>
+        <div class="preview-title">${escapeHtml(citation.document_title)}</div>
+        <div class="muted">Page ${citation.page_number ?? "n/a"} · ${escapeHtml(citation.document_type_label)} · ${escapeHtml(citation.publication_date || "Unknown date")}</div>
+        <div class="preview-excerpt">${escapeHtml(citation.chunk_text || "")}</div>
       `;
 
-      els.citationList.querySelectorAll("[data-citation-index]").forEach((card) => {
+      document.querySelectorAll("[data-citation-index]").forEach((card) => {
         card.classList.toggle("active", Number(card.dataset.citationIndex) === index);
       });
     }
@@ -709,11 +664,9 @@
         id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
         question: request.question,
         request,
-        filters: response.applied_filters || {},
         response,
         createdAt: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
       };
-
       state.history.unshift(entry);
       state.history = state.history.slice(0, 8);
       state.activeHistoryId = entry.id;
@@ -721,27 +674,29 @@
 
     function renderHistory() {
       if (!state.history.length) {
-        els.historyList.innerHTML = '<div class="muted">Recent questions and grounded answers will appear here.</div>';
+        els.historyList.innerHTML = '<div class="muted">Demo questions will appear here as you test the flow.</div>';
         return;
       }
 
-      els.historyList.innerHTML = state.history.map((entry) => {
-        const filterParts = [];
-        if (entry.filters.document_type) filterParts.push(entry.filters.document_type);
-        if (entry.filters.domain) filterParts.push(entry.filters.domain);
-        return `
-          <button class="history-item ${entry.id === state.activeHistoryId ? "active" : ""}" data-history-id="${entry.id}">
-            <div class="history-question">${escapeHtml(entry.question)}</div>
-            <div class="history-meta">${entry.createdAt} · ${escapeHtml(filterParts.join(" · ") || "All active documents")} · ${escapeHtml(entry.response.confidence || "n/a")} confidence</div>
-          </button>
-        `;
-      }).join("");
+      els.historyList.innerHTML = state.history.map((entry) => `
+        <button class="history-item ${entry.id === state.activeHistoryId ? "active" : ""}" data-history-id="${entry.id}" type="button">
+          <div>${escapeHtml(entry.question)}</div>
+          <div class="muted">${entry.createdAt} · ${escapeHtml(entry.response.confidence || "n/a")} confidence · demo</div>
+        </button>
+      `).join("");
+    }
+
+    function setStatus(message, ok = true) {
+      els.statusBanner.textContent = message;
+      els.statusBanner.style.background = ok ? "var(--ok-soft)" : "#ffe8e6";
+      els.statusBanner.style.borderColor = ok ? "#b8ff2c" : "var(--color-border-danger)";
+      els.statusBanner.style.color = ok ? "#050505" : "var(--danger)";
     }
 
     function summarize(text) {
       const normalized = text.replace(/\s+/g, " ").trim();
-      if (normalized.length <= 240) return normalized;
-      return `${normalized.slice(0, 239).trim()}…`;
+      if (normalized.length <= 220) return normalized;
+      return `${normalized.slice(0, 219).trim()}…`;
     }
 
     function escapeHtml(text) {
@@ -759,22 +714,37 @@
       });
     });
 
-    els.citationList.addEventListener("click", (event) => {
-      const previewButton = event.target.closest("[data-preview-index]");
-      if (!previewButton || !state.lastPayload) return;
-      const index = Number(previewButton.dataset.previewIndex);
-      renderSourcePreview((state.lastPayload.citations || [])[index], index);
+    els.askBtn.addEventListener("click", () => askQuestion(false));
+    els.jsonBtn.addEventListener("click", () => askQuestion(true));
+    els.clearBtn.addEventListener("click", () => {
+      els.questionInput.value = "";
+      els.documentType.value = "";
+      els.domainInput.value = "";
+      els.topK.value = "5";
+      els.useLlm.checked = true;
+      els.providerInput.value = "anthropic";
+      els.modelInput.value = "claude-3-5-sonnet-latest";
+      els.answerText.textContent = "Ask a demo question to see a grounded answer here.";
+      els.confidenceChip.textContent = "Confidence: n/a";
+      els.filtersChip.textContent = "Filters: none";
+      els.citationsChip.textContent = "Citations: 0";
+      els.citationList.innerHTML = '<div class="muted">Demo citations will appear here after your first query.</div>';
+      els.jsonOutput.textContent = "No response yet.";
+      renderSourcePreview(null, null);
+      state.activeHistoryId = null;
+      state.lastPayload = null;
+      setStatus("Demo ready.", true);
+      renderHistory();
     });
 
     els.historyList.addEventListener("click", (event) => {
       const item = event.target.closest("[data-history-id]");
       if (!item) return;
-      const entry = state.history.find((record) => record.id === item.dataset.historyId);
+      const entry = state.history.find((historyItem) => historyItem.id === item.dataset.historyId);
       if (!entry) return;
 
       state.activeHistoryId = entry.id;
-      state.lastPayload = entry.response;
-      els.questionInput.value = entry.question;
+      els.questionInput.value = entry.request.question;
       els.documentType.value = entry.request.document_type || "";
       els.domainInput.value = entry.request.domain || "";
       els.topK.value = String(entry.request.top_k || 5);
@@ -782,36 +752,14 @@
       els.providerInput.value = entry.request.provider || "auto";
       els.modelInput.value = entry.request.model || "claude-3-5-sonnet-latest";
       renderPayload(entry.response, false);
-      setStatus(`Loaded history item from ${entry.createdAt}.`, "ok");
+      setStatus(`Loaded demo history item from ${entry.createdAt}.`, true);
     });
 
-    els.askBtn.addEventListener("click", () => askQuestion(false));
-    els.jsonBtn.addEventListener("click", () => askQuestion(true));
-    els.clearBtn.addEventListener("click", () => {
-      els.questionInput.value = "";
-      els.domainInput.value = "";
-      els.documentType.value = "";
-      els.topK.value = "5";
-      els.useLlm.checked = false;
-      els.providerInput.value = "auto";
-      els.modelInput.value = "claude-3-5-sonnet-latest";
-      els.answerText.textContent = "Ask a question to see a grounded answer here.";
-      els.confidenceChip.textContent = "Confidence: n/a";
-      els.filtersChip.textContent = "Filters: none";
-      els.citationsChip.textContent = "Citations: 0";
-      els.citationList.innerHTML = '<div class="muted">Citations will appear here after your first query.</div>';
-      renderSourcePreview(null, null);
-      els.jsonOutput.textContent = "No response yet.";
-      setStatus("Ready.", "ok");
-      state.lastPayload = null;
-      state.activeHistoryId = null;
-      renderHistory();
-    });
-
-    els.questionInput.addEventListener("keydown", (event) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
-        askQuestion(false);
-      }
+    els.citationList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-preview-index]");
+      if (!button || !state.lastPayload) return;
+      const index = Number(button.dataset.previewIndex);
+      renderSourcePreview((state.lastPayload.citations || [])[index], index);
     });
   </script>
 </body>

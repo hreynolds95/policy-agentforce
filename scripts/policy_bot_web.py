@@ -67,7 +67,8 @@ class PolicyBotHandler(BaseHTTPRequestHandler):
                     domain=body.get("domain") or None,
                     top_k=int(body.get("top_k") or 5),
                     use_llm=bool(body.get("use_llm")),
-                    model=body.get("model") or "gpt-5-mini",
+                    provider=body.get("provider") or "auto",
+                    model=body.get("model") or "claude-3-5-sonnet-latest",
                     user_id=body.get("user_id") or "web-user",
                     no_log=bool(body.get("no_log")),
                 )

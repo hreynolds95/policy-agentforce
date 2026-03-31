@@ -27,6 +27,7 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 - [Open the quincy annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
 - [Open the quincy return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
 - [Open the governance team mockup](./mockups/governance_team_mockup.html)
+- [Open the static policy bot demo mockup](./mockups/policy_bot_demo_mockup.html)
 - [Open the GitHub Pages landing page](./index.html)
 - [View the owner annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
@@ -40,6 +41,8 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
   Standalone clickable HTML prototype for quincy after Governance returns the package for fixes
 - [`governance_team_mockup.html`](./mockups/governance_team_mockup.html)
   Standalone clickable HTML prototype for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
+- [`policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
+  Standalone GitHub Pages-safe chatbot demo with canned grounded answers and citations
 
 ### `wireframes/`
 
@@ -75,7 +78,7 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 ### `ui/`
 
 - [`policy_bot_chat.html`](./ui/policy_bot_chat.html)
-  Local browser chat interface for querying active Policies and Standards
+  Local browser chat interface for querying active Policies and Standards against Snowflake-backed retrieval
 
 ## Current experience concept
 
@@ -131,8 +134,12 @@ export GOOGLE_APPLICATION_CREDENTIALS="/absolute/path/to/service-account.json"
 Optional for LLM synthesis in the query layer and web UI:
 
 ```bash
+export LLM_PROVIDER="auto"
+export ANTHROPIC_API_KEY="YOUR_KEY"
 export OPENAI_API_KEY="YOUR_KEY"
 ```
+
+`LLM_PROVIDER=auto` will prefer Anthropic when `ANTHROPIC_API_KEY` is present and otherwise fall back to OpenAI.
 
 ## Policy bot workflow
 
@@ -149,6 +156,7 @@ python3 scripts/ingest_policy_pdfs.py --limit 3
 python3 scripts/query_policy_bot.py "What policy governs third-party due diligence?"
 python3 scripts/query_policy_bot.py "What is the record retention requirement?" --document-type Policy
 python3 scripts/query_policy_bot.py "What policy governs third-party due diligence?" --use-llm
+python3 scripts/query_policy_bot.py "What policy governs third-party due diligence?" --use-llm --provider anthropic --model claude-3-5-sonnet-latest
 ```
 
 3. Run the local web chat UI:
@@ -175,8 +183,12 @@ Recommended test order:
 - run ingestion on 1-3 documents first
 - validate `DOCUMENT_CHUNKS` in Snowflake
 - test CLI retrieval without `--use-llm`
-- compare the same query with `--use-llm`
+- compare the same query with `--use-llm` using Anthropic or OpenAI
 - then use the web UI for a more realistic employee experience
+
+For demos without a local server, use:
+
+- [`mockups/policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
 
 ## Publishing
 

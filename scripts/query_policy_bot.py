@@ -18,7 +18,8 @@ Expected environment variables:
 - SF_DATABASE=LOGICGATE_SF
 - SF_SCHEMA=POLICY_BOT
 - SF_ROLE (optional)
-- OPENAI_API_KEY (optional, required only with --use-llm)
+- OPENAI_API_KEY (optional, for OpenAI synthesis)
+- ANTHROPIC_API_KEY (optional, for Anthropic synthesis)
 """
 
 from __future__ import annotations
@@ -340,25 +341,22 @@ def build_context(matches: list[MatchRow], max_matches: int = 5) -> str:
     return "\n\n".join(context_parts)
 
 
-def generate_llm_answer(question: str, matches: list[MatchRow], model: str) -> tuple[str, str]:
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        raise RuntimeError("OPENAI_API_KEY is required when --use-llm is set.")
-
-    try:
-        from openai import OpenAI
-    except ImportError as exc:  # pragma: no cover - optional dependency
-        raise RuntimeError("The openai package is required for --use-llm. Install it with `pip install openai`.") from exc
-
-    if not matches:
-        return (
-            "I couldn’t find supporting text in the active policy and standard corpus for that question.",
-            "low",
+def get_llm_provider(requested_provider: str | None = None) -> str:
+    provider = (requested_provider or os.getenv("LLM_PROVIDER") or "auto").strip().lower()
+    if provider == "auto":
+        if os.getenv("ANTHROPIC_API_KEY"):
+            return "anthropic"
+        if os.getenv("OPENAI_API_KEY"):
+            return "openai"
+        raise RuntimeError(
+            "No LLM provider key was found. Set ANTHROPIC_API_KEY or OPENAI_API_KEY when --use-llm is enabled."
         )
+    if provider not in {"anthropic", "openai"}:
+        raise RuntimeError("Unsupported LLM provider. Use 'anthropic', 'openai', or 'auto'.")
+    return provider
 
-    client = OpenAI(api_key=api_key)
-    context = build_context(matches)
 
+def build_prompts(question: str, context: str) -> tuple[str, str]:
     system_prompt = (
         "You are a compliance policy assistant for Block employees.\n"
         "Answer only from the retrieved policy excerpts provided.\n"
@@ -374,6 +372,28 @@ def generate_llm_answer(question: str, matches: list[MatchRow], model: str) -> t
         "Write a concise answer using only the retrieved excerpts. "
         "If multiple documents apply, distinguish them clearly."
     )
+    return system_prompt, user_prompt
+
+
+def generate_openai_answer(question: str, matches: list[MatchRow], model: str) -> tuple[str, str]:
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise RuntimeError("OPENAI_API_KEY is required when the OpenAI provider is selected.")
+
+    try:
+        from openai import OpenAI
+    except ImportError as exc:  # pragma: no cover - optional dependency
+        raise RuntimeError("The openai package is required for OpenAI synthesis. Install it with `pip install openai`.") from exc
+
+    if not matches:
+        return (
+            "I couldn’t find supporting text in the active policy and standard corpus for that question.",
+            "low",
+        )
+
+    client = OpenAI(api_key=api_key)
+    context = build_context(matches)
+    system_prompt, user_prompt = build_prompts(question, context)
 
     response = client.responses.create(
         model=model,
@@ -390,6 +410,54 @@ def generate_llm_answer(question: str, matches: list[MatchRow], model: str) -> t
     top_score = matches[0].score if matches else 0
     confidence = "high" if top_score >= 16 else "medium"
     return answer.strip(), confidence
+
+
+def generate_anthropic_answer(question: str, matches: list[MatchRow], model: str) -> tuple[str, str]:
+    api_key = os.getenv("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise RuntimeError("ANTHROPIC_API_KEY is required when the Anthropic provider is selected.")
+
+    try:
+        from anthropic import Anthropic
+    except ImportError as exc:  # pragma: no cover - optional dependency
+        raise RuntimeError("The anthropic package is required for Anthropic synthesis. Install it with `pip install anthropic`.") from exc
+
+    if not matches:
+        return (
+            "I couldn’t find supporting text in the active policy and standard corpus for that question.",
+            "low",
+        )
+
+    client = Anthropic(api_key=api_key)
+    context = build_context(matches)
+    system_prompt, user_prompt = build_prompts(question, context)
+
+    response = client.messages.create(
+        model=model,
+        max_tokens=900,
+        system=system_prompt,
+        messages=[{"role": "user", "content": user_prompt}],
+    )
+
+    text_parts: list[str] = []
+    for block in getattr(response, "content", []):
+        if getattr(block, "type", None) == "text":
+            text_parts.append(getattr(block, "text", ""))
+
+    answer = "".join(text_parts).strip()
+    if not answer:
+        raise RuntimeError("The Anthropic response did not include text content.")
+
+    top_score = matches[0].score if matches else 0
+    confidence = "high" if top_score >= 16 else "medium"
+    return answer, confidence
+
+
+def generate_llm_answer(question: str, matches: list[MatchRow], model: str, provider: str | None = None) -> tuple[str, str]:
+    resolved_provider = get_llm_provider(provider)
+    if resolved_provider == "anthropic":
+        return generate_anthropic_answer(question, matches, model=model)
+    return generate_openai_answer(question, matches, model=model)
 
 
 def safe_label(document_type_label: str | None) -> str:
@@ -524,7 +592,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--user-id", type=str, default=os.getenv("USER", "local-user"))
     parser.add_argument("--use-llm", action="store_true", help="Use an LLM to synthesize the answer from retrieved excerpts.")
-    parser.add_argument("--model", type=str, default="gpt-5-mini", help="LLM model to use with --use-llm.")
+    parser.add_argument("--provider", choices=["auto", "anthropic", "openai"], default="auto", help="LLM provider to use with --use-llm.")
+    parser.add_argument("--model", type=str, default="claude-3-5-sonnet-latest", help="LLM model to use with --use-llm.")
     parser.add_argument("--json", action="store_true", help="Print JSON output instead of plain text.")
     parser.add_argument("--no-log", action="store_true", help="Skip writing to CHAT_LOGS.")
     return parser.parse_args()
@@ -547,7 +616,8 @@ def run_query(
     domain: str | None = None,
     top_k: int = 5,
     use_llm: bool = False,
-    model: str = "gpt-5-mini",
+    provider: str = "auto",
+    model: str = "claude-3-5-sonnet-latest",
     user_id: str = "local-user",
     no_log: bool = False,
 ) -> dict:
@@ -560,9 +630,11 @@ def run_query(
     )
 
     if use_llm:
-        answer, confidence = generate_llm_answer(question, matches, model=model)
+        resolved_provider = get_llm_provider(provider)
+        answer, confidence = generate_llm_answer(question, matches, model=model, provider=resolved_provider)
     else:
         answer, confidence = build_answer(question, matches)
+        resolved_provider = None
 
     payload = {
         "question": question,
@@ -575,6 +647,7 @@ def run_query(
             "top_k": top_k,
             "tokens": tokens,
             "use_llm": use_llm,
+            "provider": resolved_provider if use_llm else None,
             "model": model if use_llm else None,
         },
     }
@@ -606,6 +679,7 @@ def main() -> int:
             domain=args.domain,
             top_k=args.top_k,
             use_llm=args.use_llm,
+            provider=args.provider,
             model=args.model,
             user_id=args.user_id,
             no_log=args.no_log,
