@@ -7,24 +7,25 @@
   <link rel="stylesheet" href="./assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: var(--color-background-inverse);
-      --panel: rgba(255, 255, 255, 0.98);
-      --line: var(--color-border-primary);
-      --ink: var(--color-text-primary);
-      --muted: var(--color-text-secondary);
-      --accent: var(--color-accent);
-      --accent-soft: var(--color-background-secondary);
-      --shadow: var(--shadow-lg);
+      --bg: #050505;
+      --panel: rgba(22, 22, 22, 0.95);
+      --line: rgba(255, 255, 255, 0.16);
+      --ink: #f2f2f2;
+      --muted: #b7b7b7;
+      --accent: #f2f2f2;
+      --accent-soft: #141414;
+      --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: var(--font-sans);
-      color: var(--color-text-inverse);
+      color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 24%),
-        linear-gradient(180deg, #111 0%, var(--bg) 100%);
+        radial-gradient(circle at left bottom, #1a1a1a 0 210px, transparent 211px),
+        radial-gradient(circle at right top, #151515 0 190px, transparent 191px),
+        var(--bg);
     }
 
     .wrap {
@@ -36,7 +37,7 @@
     .hero {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 30px;
+      border-radius: 8px;
       padding: 36px;
       box-shadow: var(--shadow);
       margin-bottom: 20px;
@@ -57,13 +58,14 @@
       letter-spacing: -0.03em;
       margin: 0 0 16px;
       max-width: 760px;
+      color: var(--ink);
     }
 
     .lede {
       font-size: 17px;
       line-height: 1.5;
       max-width: 720px;
-      color: #222;
+      color: var(--muted);
       margin-bottom: 28px;
     }
 
@@ -82,14 +84,14 @@
       text-decoration: none;
       border: 1px solid var(--line);
       color: var(--ink);
-      background: white;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      background: #0f0f0f;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
 
     .btn.primary {
       background: var(--accent);
-      border-color: var(--accent);
-      color: var(--color-accent-foreground);
+      border-color: transparent;
+      color: #0a0a0a;
     }
 
     .btn.secondary {
@@ -100,7 +102,8 @@
 
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(29, 34, 30, 0.08);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.24);
     }
 
     .grid {
@@ -113,7 +116,7 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 8px;
       padding: 24px;
       box-shadow: var(--shadow);
       color: var(--ink);
@@ -130,7 +133,7 @@
       padding-left: 20px;
       line-height: 1.7;
       font-size: 16px;
-      color: #334039;
+      color: var(--muted);
     }
 
     .link-list {
@@ -142,10 +145,17 @@
       display: block;
       text-decoration: none;
       color: inherit;
-      background: white;
+      background: #101010;
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 8px;
       padding: 16px 18px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .link-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255, 255, 255, 0.24);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
     }
 
     .link-card strong {
@@ -161,14 +171,14 @@
 
     .footer {
       font-size: 14px;
-      color: var(--color-neutral-200);
+      color: var(--muted);
       padding: 0 4px;
     }
 
     code {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #0f0f0f;
+      color: var(--ink);
+      border: 1px solid var(--line);
       border-radius: 8px;
       padding: 2px 6px;
     }

@@ -7,29 +7,30 @@
   <link rel="stylesheet" href="/assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: var(--color-background-inverse);
-      --panel: rgba(255, 255, 255, 0.98);
-      --panel-2: var(--color-background-secondary);
-      --line: var(--color-border-primary);
-      --ink: var(--color-text-primary);
-      --muted: var(--color-text-secondary);
-      --accent: var(--color-accent);
-      --accent-soft: var(--color-background-secondary);
+      --bg: #050505;
+      --panel: rgba(22, 22, 22, 0.95);
+      --panel-2: rgba(15, 15, 15, 0.96);
+      --line: rgba(255, 255, 255, 0.16);
+      --ink: #f2f2f2;
+      --muted: #b7b7b7;
+      --accent: #f2f2f2;
+      --accent-soft: #141414;
       --ok: #b8ff2c;
       --ok-soft: #efffcb;
       --warn: var(--color-text-warning);
       --danger: var(--color-text-danger);
-      --shadow: var(--shadow-lg);
+      --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
     }
 
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: var(--font-sans);
-      color: var(--color-text-inverse);
+      color: var(--ink);
       background:
-        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 24%),
-        linear-gradient(180deg, #111 0%, var(--bg) 100%);
+        radial-gradient(circle at left bottom, #1a1a1a 0 210px, transparent 211px),
+        radial-gradient(circle at right top, #151515 0 190px, transparent 191px),
+        var(--bg);
     }
 
     button, input, select, textarea { font: inherit; }
@@ -67,7 +68,7 @@
     .ghost-btn, .primary-btn, .secondary-btn, .chip-btn {
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: white;
+      background: #0f0f0f;
       color: var(--ink);
       padding: 12px 18px;
       cursor: pointer;
@@ -77,8 +78,8 @@
 
     .primary-btn {
       background: var(--accent);
-      color: var(--color-accent-foreground);
-      border-color: var(--accent);
+      color: #0a0a0a;
+      border-color: transparent;
     }
 
     .secondary-btn {
@@ -93,7 +94,7 @@
     .hero {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 28px;
+      border-radius: 8px;
       padding: 22px 24px;
       box-shadow: var(--shadow);
       color: var(--ink);
@@ -117,7 +118,7 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 8px;
       box-shadow: var(--shadow);
       color: var(--ink);
       overflow: hidden;
@@ -144,8 +145,29 @@
     .card {
       background: var(--panel-2);
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 8px;
       padding: 16px;
+    }
+
+    .ghost-btn, .secondary-btn, .chip-btn, .chip, .hero, .panel, .card,
+    .field, .textarea, .citation {
+      background: var(--panel);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: #0a0a0a;
+      border-color: transparent;
+    }
+
+    input, textarea, select {
+      background: #0f0f0f;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 4px;
     }
 
     .card-label {
@@ -159,8 +181,8 @@
     .field, .textarea {
       width: 100%;
       border-radius: 14px;
-      border: 1px solid #d5cebf;
-      background: white;
+      border: 1px solid var(--line);
+      background: #0f0f0f;
       color: var(--ink);
       padding: 12px 14px;
     }
@@ -198,7 +220,7 @@
       text-align: left;
       padding: 10px 12px;
       font-size: 14px;
-      background: white;
+      background: #101010;
     }
 
     .status-banner {
@@ -238,7 +260,7 @@
       border-radius: 999px;
       border: 1px solid var(--line);
       padding: 8px 12px;
-      background: white;
+      background: #101010;
       font-size: 13px;
     }
 
@@ -260,7 +282,7 @@
     }
 
     .citation {
-      background: white;
+      background: #101010;
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: 14px;
