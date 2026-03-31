@@ -533,16 +533,19 @@
     .agent-card.warn {
       background: linear-gradient(180deg, #fff7e4 0%, #ffffff 100%);
       border-color: var(--color-border-warning);
+      color: #050505;
     }
 
     .agent-card.danger {
       background: linear-gradient(180deg, #ffe8e6 0%, #fff5f4 26%, #ffffff 100%);
       border-color: var(--color-border-danger);
+      color: #050505;
     }
 
     .agent-card.ok {
       background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
       border-color: #b8ff2c;
+      color: #050505;
     }
 
     .agent-title {
@@ -557,6 +560,15 @@
       line-height: 1.5;
       color: var(--ink);
       font-size: 14px;
+    }
+
+    .agent-card.warn .agent-title,
+    .agent-card.warn .agent-bullets,
+    .agent-card.danger .agent-title,
+    .agent-card.danger .agent-bullets,
+    .agent-card.ok .agent-title,
+    .agent-card.ok .agent-bullets {
+      color: #050505;
     }
 
     .action-grid {
