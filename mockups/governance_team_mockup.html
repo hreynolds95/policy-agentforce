@@ -75,6 +75,10 @@
       padding: 12px 18px;
       cursor: pointer;
       transition: 0.18s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .secondary-btn {
@@ -781,6 +785,21 @@
           </div>
 
           <div class="summary-card">
+            <div class="card-label">Owner submission package</div>
+            <div class="mono" id="submissionPackageMeta">No quincy submission package is attached to this record yet.</div>
+            <div class="checklist" id="submissionPackageChecklist"></div>
+            <div class="action-row" id="submissionPackageLinks"></div>
+            <div class="export-shell">
+              <div class="card-label">Owner change summary</div>
+              <textarea class="export-area" id="ownerChangeSummaryText" readonly spellcheck="false"></textarea>
+            </div>
+            <div class="export-shell">
+              <div class="card-label">QC audit trail</div>
+              <textarea class="export-area" id="ownerQcAuditText" readonly spellcheck="false"></textarea>
+            </div>
+          </div>
+
+          <div class="summary-card">
             <div class="card-label">QC checklist workspace</div>
             <div class="checklist" id="qcChecklist"></div>
           </div>
@@ -846,6 +865,8 @@
   </div>
 
   <script>
+    const SUBMISSION_PACKAGE_KEY = "quincySubmissionPackages";
+
     const QUEUES = [
       { id: "intake", label: "New intake", queueLabel: "Intake review" },
       { id: "qc", label: "Tollgate 3 QC", queueLabel: "QC review" },
@@ -1105,6 +1126,11 @@
       detailMeta: document.getElementById("detailMeta"),
       agentSummaryCard: document.getElementById("agentSummaryCard"),
       agentSummary: document.getElementById("agentSummary"),
+      submissionPackageMeta: document.getElementById("submissionPackageMeta"),
+      submissionPackageChecklist: document.getElementById("submissionPackageChecklist"),
+      submissionPackageLinks: document.getElementById("submissionPackageLinks"),
+      ownerChangeSummaryText: document.getElementById("ownerChangeSummaryText"),
+      ownerQcAuditText: document.getElementById("ownerQcAuditText"),
       qcChecklist: document.getElementById("qcChecklist"),
       packetChecklist: document.getElementById("packetChecklist"),
       reviewComments: document.getElementById("reviewComments"),
@@ -1129,14 +1155,111 @@
       stageActions: document.getElementById("stageActions")
     };
 
+    function readSubmissionPackages() {
+      try {
+        const raw = window.localStorage.getItem(SUBMISSION_PACKAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function hydrateRecordsFromQuincy(records) {
+      const packages = readSubmissionPackages()
+        .filter((pkg) => pkg && pkg.recordId)
+        .sort((left, right) => new Date(right.exportedAt) - new Date(left.exportedAt));
+
+      if (!packages.length) {
+        return { records };
+      }
+
+      packages.forEach((pkg) => {
+        const existingIndex = records.findIndex((record) => record.id === pkg.recordId);
+        const existingRecord = existingIndex >= 0 ? records[existingIndex] : null;
+        const hydratedRecord = buildRecordFromSubmission(pkg, existingRecord);
+
+        if (existingIndex >= 0) {
+          records[existingIndex] = hydratedRecord;
+        } else {
+          records.unshift(hydratedRecord);
+        }
+      });
+
+      const latest = packages[0];
+      return {
+        records,
+        selectedRecordId: latest.recordId,
+        banner: {
+          message: `Imported the latest quincy submission package for ${latest.recordId} into governance intake.`,
+          kind: "ok"
+        },
+        activityMessage: `${latest.exportedAtLabel} Imported quincy package for ${latest.recordId}; owner artifacts are ready for intake review.`
+      };
+    }
+
+    function buildRecordFromSubmission(pkg, existingRecord) {
+      const unresolvedRecommendations = pkg.readiness && typeof pkg.readiness.recommendedOpen === "number"
+        ? pkg.readiness.recommendedOpen
+        : 0;
+      const relatedDocs = Array.isArray(pkg.relatedDocs)
+        ? pkg.relatedDocs.join(", ")
+        : (existingRecord ? existingRecord.relatedDocs : "None recorded");
+
+      return {
+        id: pkg.recordId,
+        title: pkg.title,
+        type: pkg.type,
+        domain: pkg.domain,
+        tier: pkg.tier,
+        due: existingRecord ? existingRecord.due : "4/12",
+        queue: "intake",
+        stage: "Owner submission received",
+        owner: pkg.owner,
+        delegate: pkg.delegate,
+        relatedDocs,
+        agentSeverity: pkg.readiness && pkg.readiness.mustFixOpen === 0 ? "ok" : "warn",
+        summary: [
+          `quincy package imported on ${pkg.exportedAtLabel}.`,
+          `Verified Google Doc remains the working redline through the governance workflow.`,
+          `${unresolvedRecommendations} recommended improvement${unresolvedRecommendations === 1 ? "" : "s"} remain visible for governance context even though required fixes were cleared before export.`
+        ],
+        qc: [
+          { label: "quincy submission package imported", status: "ok" },
+          { label: "Verified Google Doc preserved", status: pkg.artifacts.verifiedDocLinked ? "ok" : "danger" },
+          { label: "Owner change summary attached", status: pkg.artifacts.generatedChangeSummary ? "ok" : "warn" },
+          { label: "Governance intake triage complete", status: "warn" }
+        ],
+        packet: [
+          { label: "Reference clean draft", status: pkg.artifacts.cleanDraftIncluded ? "ok" : "warn" },
+          { label: "Verified Google Doc", status: pkg.artifacts.verifiedDocLinked ? "ok" : "danger" },
+          { label: "quincy change summary", status: pkg.artifacts.generatedChangeSummary ? "ok" : "warn" },
+          { label: "QC audit trail", status: pkg.artifacts.generatedQcAuditTrail ? "ok" : "warn" }
+        ],
+        recommendation: "Review the imported quincy package, confirm intake metadata, and move the record into Tollgate 3 QC without asking the owner to rebuild the redline package.",
+        submissionPackage: pkg
+      };
+    }
+
     function init() {
-      state.records = structuredClone(INITIAL_RECORDS).map(enrichRecord);
+      const hydrated = hydrateRecordsFromQuincy(structuredClone(INITIAL_RECORDS));
+      state.records = hydrated.records.map(enrichRecord);
+      if (hydrated.selectedRecordId) {
+        state.selectedRecordId = hydrated.selectedRecordId;
+      }
+      if (hydrated.banner) {
+        state.banner = hydrated.banner;
+      }
       state.activityLog = [
         "09:15 Intake triage flagged one overlapping Standard for hierarchy linkage.",
         "09:22 Metadata and tiering agent recommended Tier 2 routing for POL-001245.",
         "09:31 QC agent returned missing retention language to owner for STD-000918.",
         "09:48 Publication agent held POL-000761 until final PDF attachment is confirmed."
       ];
+      if (hydrated.activityMessage) {
+        state.activityLog.unshift(hydrated.activityMessage);
+      }
 
       bindControls();
       render();
@@ -1351,6 +1474,11 @@
         els.detailStageChip.textContent = "No selection";
         els.detailMeta.innerHTML = "";
         els.agentSummary.innerHTML = "";
+        els.submissionPackageMeta.textContent = "No quincy submission package is attached to this record yet.";
+        els.submissionPackageChecklist.innerHTML = "";
+        els.submissionPackageLinks.innerHTML = "";
+        els.ownerChangeSummaryText.value = "";
+        els.ownerQcAuditText.value = "";
         els.qcChecklist.innerHTML = "";
         els.packetChecklist.innerHTML = "";
         els.reviewComments.innerHTML = "";
@@ -1377,6 +1505,7 @@
       ].join("");
 
       els.agentSummary.innerHTML = record.summary.map((item) => `<li>${item}</li>`).join("");
+      renderSubmissionPackage(record);
       els.qcChecklist.innerHTML = record.qc.map((item) => checklistRow(item.label, item.status)).join("");
       els.packetChecklist.innerHTML = record.packet.map((item) => checklistRow(item.label, item.status)).join("");
       els.reviewComments.innerHTML = renderReviewComments(record);
@@ -1555,6 +1684,31 @@
       `).join("");
     }
 
+    function renderSubmissionPackage(record) {
+      if (!record.submissionPackage) {
+        els.submissionPackageMeta.textContent = "No quincy submission package is attached to this record yet.";
+        els.submissionPackageChecklist.innerHTML = `<div class="empty-state">When an owner exports from quincy, the verified Google Doc link, change summary, and QC audit trail will appear here for intake review.</div>`;
+        els.submissionPackageLinks.innerHTML = "";
+        els.ownerChangeSummaryText.value = "";
+        els.ownerQcAuditText.value = "";
+        return;
+      }
+
+      const pkg = record.submissionPackage;
+      els.submissionPackageMeta.textContent = `Imported from quincy ${pkg.exportedAtLabel}. The same verified Google Doc remains the working redline of record for ${record.id}.`;
+      els.submissionPackageChecklist.innerHTML = [
+        checklistRow("Reference clean draft", pkg.artifacts.cleanDraftIncluded ? "ok" : "warn"),
+        checklistRow("Verified editable Google Doc", pkg.artifacts.verifiedDocLinked ? "ok" : "danger"),
+        checklistRow("Owner change summary", pkg.artifacts.generatedChangeSummary ? "ok" : "warn"),
+        checklistRow("QC audit trail", pkg.artifacts.generatedQcAuditTrail ? "ok" : "warn")
+      ].join("");
+      els.submissionPackageLinks.innerHTML = `
+        <a class="small-btn" href="${pkg.verifiedDoc.url}" target="_blank" rel="noreferrer">Open verified Google Doc</a>
+      `;
+      els.ownerChangeSummaryText.value = pkg.artifacts.generatedChangeSummary || "";
+      els.ownerQcAuditText.value = pkg.artifacts.generatedQcAuditTrail || "";
+    }
+
     function buildPacketSummaryMeta(record) {
       const openArtifacts = record.packet.filter((item) => item.status !== "ok").length;
       const resolvedComments = record.reviewComments.filter((comment) => comment.status === "resolved").length;
@@ -1578,6 +1732,14 @@
       ];
 
       record.summary.forEach((item) => lines.push(`- ${item}`));
+      if (record.submissionPackage) {
+        lines.push(``);
+        lines.push(`Imported quincy package:`);
+        lines.push(`- Exported: ${record.submissionPackage.exportedAtLabel}`);
+        lines.push(`- Working redline: ${record.submissionPackage.verifiedDoc.fieldName}`);
+        lines.push(`- Verified Google Doc: ${record.submissionPackage.verifiedDoc.url}`);
+        lines.push(`- quincy ready score at export: ${record.submissionPackage.readiness.score}%`);
+      }
       lines.push(``);
       lines.push(`Current packet status:`);
       record.packet.forEach((item) => lines.push(`- ${item.label}: ${statusLabel(item.status)}`));
@@ -1644,6 +1806,11 @@
         `Governance completed ${record.stage.toLowerCase()} for ${record.id} (${record.title}). Please update the existing working draft and supporting package, then resubmit through the same record so the governance team can reopen review without rebuilding the packet.`,
         ``
       ];
+
+      if (record.submissionPackage) {
+        lines.push(`quincy package on file: ${record.submissionPackage.exportedAtLabel}. Keep using the same verified Google Doc as the working redline when making edits.`);
+        lines.push(``);
+      }
 
       if (mustFix.length) {
         lines.push(`Must fix before resubmission:`);

@@ -637,6 +637,37 @@
       margin-top: 8px;
     }
 
+    .artifact-meta {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .artifact-preview {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #0f0f0f;
+      color: var(--ink);
+      padding: 12px 14px;
+      line-height: 1.55;
+    }
+
+    .artifact-actions {
+      margin-top: 10px;
+    }
+
+    .link-btn {
+      text-decoration: none;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
     .footer-actions .primary-btn[disabled] {
       opacity: 0.45;
       cursor: not-allowed;
@@ -1129,6 +1160,30 @@
           </div>
 
           <div class="card">
+            <div class="card-label">Generated artifacts</div>
+            <div class="artifact-meta" id="artifactMeta">Run quincy QC to generate the change summary and one-page QC audit trail that travel with the same verified Google Doc redline.</div>
+            <div class="stack">
+              <div>
+                <div class="card-label">Proposed change summary</div>
+                <textarea class="artifact-preview" id="changeSummaryArtifact" readonly spellcheck="false"></textarea>
+                <div class="footer-actions artifact-actions">
+                  <button class="small-btn" id="copyChangeSummaryArtifact" type="button">Copy summary</button>
+                  <button class="small-btn" id="downloadChangeSummaryArtifact" type="button">Download summary</button>
+                </div>
+              </div>
+              <div>
+                <div class="card-label">QC audit trail</div>
+                <textarea class="artifact-preview" id="qcAuditArtifact" readonly spellcheck="false"></textarea>
+                <div class="footer-actions artifact-actions">
+                  <button class="small-btn" id="copyQcAuditArtifact" type="button">Copy audit trail</button>
+                  <button class="small-btn" id="downloadQcAuditArtifact" type="button">Download audit trail</button>
+                </div>
+              </div>
+              <a class="secondary-btn link-btn" href="./governance_team_mockup.html">Open governance prototype</a>
+            </div>
+          </div>
+
+          <div class="card">
             <div class="card-label">Owner time savers</div>
             <div class="footer-actions">
               <button class="secondary-btn" id="fillDemo">Auto-fill owner summary</button>
@@ -1167,6 +1222,21 @@
   </dialog>
 
   <script>
+    const RECORD_CONTEXT = {
+      recordId: "POL-001245",
+      title: "Third-Party Compliance Oversight Policy",
+      type: "Policy",
+      tier: "T2",
+      domain: "Compliance Governance",
+      owner: "Global Compliance Policy Lead",
+      delegate: "Third-Party Risk Program Manager",
+      relatedDocs: ["Vendor Due Diligence Standard", "Third-Party Risk Procedure"],
+      verifiedDocField: "Verified Link to Editable Document (In Progress Version)",
+      verifiedDocUrl: "https://docs.google.com/document/d/1quincyWorkingDraftThirdParty/edit"
+    };
+
+    const SUBMISSION_PACKAGE_KEY = "quincySubmissionPackages";
+
     // ── State ───────────────────────────────────────────────────────
     const state = {
       refreshType: "",
@@ -1182,6 +1252,7 @@
       checklist: [],         // populated by QC engine
       readiness: null,       // populated by QC engine
       showSuggestedText: false,
+      exportPackage: null,
     };
 
     // ── Element cache ───────────────────────────────────────────────
@@ -1213,6 +1284,13 @@
       pkgRedline: document.getElementById("pkgRedline"),
       pkgExplanation: document.getElementById("pkgExplanation"),
       pkgQc: document.getElementById("pkgQc"),
+      artifactMeta: document.getElementById("artifactMeta"),
+      changeSummaryArtifact: document.getElementById("changeSummaryArtifact"),
+      qcAuditArtifact: document.getElementById("qcAuditArtifact"),
+      copyChangeSummaryArtifact: document.getElementById("copyChangeSummaryArtifact"),
+      downloadChangeSummaryArtifact: document.getElementById("downloadChangeSummaryArtifact"),
+      copyQcAuditArtifact: document.getElementById("copyQcAuditArtifact"),
+      downloadQcAuditArtifact: document.getElementById("downloadQcAuditArtifact"),
       submitDialog: document.getElementById("submitDialog"),
       modalSummary: document.getElementById("modalSummary"),
       submittedBanner: document.getElementById("submittedBanner"),
@@ -1244,6 +1322,7 @@
       bindUploads();
       bindFilters();
       bindButtons();
+      restoreLatestExport();
       renderChecklist([]);   // empty until QC runs
       updateUI();
     }
@@ -1292,6 +1371,10 @@
       elements.rerunBtn.addEventListener("click", runQc);
       elements.fillDemo.addEventListener("click", fillDemoData);
       elements.bulkAccept.addEventListener("click", acceptAllRecommended);
+      elements.changeSummary.addEventListener("input", updateUI);
+      ["needsLegal", "needsRelatedDocs", "needsRetention"].forEach((id) => {
+        document.getElementById(id).addEventListener("change", updateUI);
+      });
       elements.simulateEvidence.addEventListener("click", () => {
         state.uploads["legal-evidence"] = true;
         logActivity("Supporting evidence attached.");
@@ -1300,6 +1383,16 @@
       });
       elements.saveDraftBtn.addEventListener("click", () => logActivity("Draft progress saved in quincy."));
       elements.submitBtn.addEventListener("click", openSubmitModal);
+      elements.copyChangeSummaryArtifact.addEventListener("click", () => copyArtifact(elements.changeSummaryArtifact, "Change summary copied."));
+      elements.downloadChangeSummaryArtifact.addEventListener("click", () => {
+        downloadTextFile(`${RECORD_CONTEXT.recordId.toLowerCase()}-change-summary.txt`, elements.changeSummaryArtifact.value);
+        logActivity("Change summary downloaded.");
+      });
+      elements.copyQcAuditArtifact.addEventListener("click", () => copyArtifact(elements.qcAuditArtifact, "QC audit trail copied."));
+      elements.downloadQcAuditArtifact.addEventListener("click", () => {
+        downloadTextFile(`${RECORD_CONTEXT.recordId.toLowerCase()}-qc-audit-trail.txt`, elements.qcAuditArtifact.value);
+        logActivity("QC audit trail downloaded.");
+      });
       document.getElementById("cancelSubmit").addEventListener("click", () => elements.submitDialog.close());
       document.getElementById("confirmSubmit").addEventListener("click", confirmSubmit);
       elements.resetDemo.addEventListener("click", () => window.location.reload());
@@ -1548,9 +1641,12 @@
     }
 
     function confirmSubmit() {
+      const submissionPackage = buildSubmissionPackage();
+      persistSubmissionPackage(submissionPackage);
+      state.exportPackage = submissionPackage;
       state.submitted = true;
       elements.submitDialog.close();
-      logActivity("quincy package exported for governance submission.");
+      logActivity("quincy package exported for governance submission and stored for the governance prototype.");
       updateUI();
     }
 
@@ -1571,6 +1667,40 @@
       elements.pkgQc.className = "check-status " + (state.qcRun ? "ok" : "danger");
     }
 
+    function updateArtifacts() {
+      const changeSummaryText = !state.qcRun && state.exportPackage
+        ? state.exportPackage.artifacts.generatedChangeSummary
+        : buildChangeSummaryArtifact();
+      const qcAuditText = !state.qcRun && state.exportPackage
+        ? state.exportPackage.artifacts.generatedQcAuditTrail
+        : buildQcAuditTrailArtifact();
+      elements.changeSummaryArtifact.value = changeSummaryText;
+      elements.qcAuditArtifact.value = qcAuditText;
+
+      if (state.submitted && state.exportPackage) {
+        elements.artifactMeta.textContent = `Exported ${state.exportPackage.exportedAtLabel}. The same verified Google Doc remains the working redline, and governance can import this package from local browser storage.`;
+      } else if (!state.qcRun && state.exportPackage) {
+        elements.artifactMeta.textContent = `Latest exported package found from ${state.exportPackage.exportedAtLabel}. Export again to replace it with your newest change summary and QC audit trail.`;
+      } else if (state.qcRun) {
+        const mustOpen = getOpenCount("must");
+        elements.artifactMeta.textContent = mustOpen === 0
+          ? "Artifacts are ready. Exporting will store this package for the governance prototype while keeping the existing verified Google Doc as the redline of record."
+          : "Artifacts are drafted live from the current workspace. Clear remaining must-fix items before exporting the package.";
+      } else {
+        elements.artifactMeta.textContent = "Run quincy QC to generate the change summary and one-page QC audit trail that travel with the same verified Google Doc redline.";
+      }
+
+      const hasArtifactText = state.qcRun || Boolean(state.exportPackage);
+      [
+        elements.copyChangeSummaryArtifact,
+        elements.downloadChangeSummaryArtifact,
+        elements.copyQcAuditArtifact,
+        elements.downloadQcAuditArtifact
+      ].forEach((button) => {
+        button.disabled = !hasArtifactText;
+      });
+    }
+
     function setPackageLine(el, ok) {
       el.textContent = ok ? "Included" : "Missing";
       el.className = "check-status " + (ok ? "ok" : "danger");
@@ -1580,6 +1710,7 @@
     function updateUI() {
       updateUploadLabels();
       updatePackage();
+      updateArtifacts();
 
       // Re-render checklist with current finding resolution state
       if (state.qcRun && state.checklist.length > 0) {
@@ -1630,7 +1761,7 @@
         elements.statusChipSecondary.className = "chip ok";
         elements.statusChipMain.textContent = "quincy package ready";
         elements.statusChipMain.className = "chip ok";
-        elements.submitHint.textContent = "Governance now owns the next step.";
+        elements.submitHint.textContent = "Governance can now import the stored package and keep the same verified Google Doc in the workflow.";
         elements.submittedBanner.style.display = "block";
         elements.leftPanel.classList.add("read-only");
       } else if (ready) {
@@ -1712,6 +1843,228 @@
       const div = document.createElement("div");
       div.textContent = str;
       return div.innerHTML;
+    }
+
+    function buildChecklistSummaryData() {
+      return state.qcRun ? QCEngine.getChecklistSummary(state.checklist) : [];
+    }
+
+    function buildChangeSummaryArtifact() {
+      if (!state.qcRun) {
+        return "Run quincy QC to generate the owner-facing change summary artifact.";
+      }
+
+      const summaryLines = [
+        `${RECORD_CONTEXT.recordId} · ${RECORD_CONTEXT.title}`,
+        `${RECORD_CONTEXT.type} · ${RECORD_CONTEXT.tier} · ${RECORD_CONTEXT.domain}`,
+        `Owner: ${RECORD_CONTEXT.owner}`,
+        `Delegate: ${RECORD_CONTEXT.delegate}`,
+        `Working redline of record: ${RECORD_CONTEXT.verifiedDocField}`,
+        `Verified Google Doc: ${RECORD_CONTEXT.verifiedDocUrl}`,
+        ``,
+        `Refresh type: ${humanRefreshType(state.refreshType)}`,
+        `Owner summary: ${elements.changeSummary.value.trim()}`,
+        `Related documents: ${RECORD_CONTEXT.relatedDocs.join(", ")}`,
+        `Ready score: ${state.readiness ? state.readiness.score + "%" : "0%"}`,
+        ``
+      ];
+
+      const contextFlags = [];
+      if (document.getElementById("needsLegal").checked) contextFlags.push("Legal review may be needed.");
+      if (document.getElementById("needsRelatedDocs").checked) contextFlags.push("Related documents may need updates.");
+      if (document.getElementById("needsRetention").checked) contextFlags.push("Retention language may need updates.");
+
+      if (contextFlags.length) {
+        summaryLines.push("Owner-flagged follow-up:");
+        contextFlags.forEach((flag) => summaryLines.push(`- ${flag}`));
+        summaryLines.push("");
+      }
+
+      const resolvedRecommendations = state.findings.filter((finding) => finding.kind === "reco" && finding.resolved);
+      const unresolvedRecommendations = state.findings.filter((finding) => finding.kind === "reco" && !finding.resolved);
+
+      summaryLines.push("quincy submission package contents:");
+      summaryLines.push(`- Reference clean draft: ${state.uploads.clean ? "Included" : "Missing"}`);
+      summaryLines.push(`- Verified editable Google Doc: ${state.uploads.redline ? "Linked" : "Missing"}`);
+      summaryLines.push(`- Supporting change notes: ${state.uploads["change-summary"] ? "Included" : "Not included"}`);
+      summaryLines.push(`- Stakeholder or legal evidence: ${state.uploads["legal-evidence"] ? "Included" : "Not included"}`);
+      summaryLines.push("");
+      summaryLines.push(`Required fixes remaining at export: ${getOpenCount("must")}`);
+      summaryLines.push(`Recommended improvements still open at export: ${unresolvedRecommendations.length}`);
+
+      if (resolvedRecommendations.length) {
+        summaryLines.push("");
+        summaryLines.push("Recommended improvements already accepted in quincy:");
+        resolvedRecommendations.forEach((finding) => summaryLines.push(`- ${finding.title}`));
+      }
+
+      if (unresolvedRecommendations.length) {
+        summaryLines.push("");
+        summaryLines.push("Open recommended improvements carried forward for governance visibility:");
+        unresolvedRecommendations.forEach((finding) => summaryLines.push(`- ${finding.title}`));
+      }
+
+      summaryLines.push("");
+      summaryLines.push("Expected governance next step:");
+      summaryLines.push(`- ${state.refreshType === "material" ? "Governance QC followed by approval routing." : "Governance QC intake review."}`);
+
+      return summaryLines.join("\n");
+    }
+
+    function buildQcAuditTrailArtifact() {
+      if (!state.qcRun) {
+        return "Run quincy QC to generate the one-page audit trail.";
+      }
+
+      const checklistSummary = buildChecklistSummaryData();
+      const lines = [
+        `quincy QC audit trail`,
+        `${RECORD_CONTEXT.recordId} · ${RECORD_CONTEXT.title}`,
+        `Verified working redline: ${RECORD_CONTEXT.verifiedDocField}`,
+        `Verified Google Doc: ${RECORD_CONTEXT.verifiedDocUrl}`,
+        `QC run timestamp: ${formatDateTime(new Date())}`,
+        `Ready score: ${state.readiness ? state.readiness.score + "%" : "0%"}`,
+        ``,
+        `Checklist results:`
+      ];
+
+      checklistSummary.forEach((item) => {
+        const linkedFinding = state.findings.find((finding) => finding.checkTarget === item.id);
+        const findingSuffix = linkedFinding ? ` | Finding: ${linkedFinding.title}${linkedFinding.resolved ? " (resolved)" : ""}` : "";
+        const statusText = item.status === "pass" ? "Complete" : item.status === "fail" ? (linkedFinding && linkedFinding.resolved ? "Resolved" : "Needs fix") : "Review";
+        lines.push(`- ${item.label} (${item.appendix}): ${statusText}${findingSuffix}`);
+      });
+
+      const mustFix = state.findings.filter((finding) => finding.kind === "must");
+      const recommendations = state.findings.filter((finding) => finding.kind === "reco");
+
+      lines.push("");
+      lines.push(`Findings summary:`);
+      lines.push(`- Must fix findings: ${mustFix.length}`);
+      lines.push(`- Must fix findings resolved before export: ${mustFix.filter((finding) => finding.resolved).length}`);
+      lines.push(`- Recommended findings: ${recommendations.length}`);
+      lines.push(`- Recommended findings resolved before export: ${recommendations.filter((finding) => finding.resolved).length}`);
+      lines.push("");
+      lines.push("Supporting evidence in package:");
+      lines.push(`- Reference clean draft: ${state.uploads.clean ? "Included" : "Missing"}`);
+      lines.push(`- Verified editable Google Doc: ${state.uploads.redline ? "Linked" : "Missing"}`);
+      lines.push(`- Supporting change notes: ${state.uploads["change-summary"] ? "Included" : "Not included"}`);
+      lines.push(`- Stakeholder or legal evidence: ${state.uploads["legal-evidence"] ? "Included" : "Not included"}`);
+
+      return lines.join("\n");
+    }
+
+    function buildSubmissionPackage() {
+      const now = new Date();
+      const checklistSummary = buildChecklistSummaryData();
+      return {
+        source: "quincy",
+        recordId: RECORD_CONTEXT.recordId,
+        title: RECORD_CONTEXT.title,
+        type: RECORD_CONTEXT.type,
+        tier: RECORD_CONTEXT.tier,
+        domain: RECORD_CONTEXT.domain,
+        owner: RECORD_CONTEXT.owner,
+        delegate: RECORD_CONTEXT.delegate,
+        relatedDocs: RECORD_CONTEXT.relatedDocs,
+        exportedAt: now.toISOString(),
+        exportedAtLabel: formatDateTime(now),
+        refreshType: state.refreshType,
+        ownerSummary: elements.changeSummary.value.trim(),
+        verifiedDoc: {
+          fieldName: RECORD_CONTEXT.verifiedDocField,
+          url: RECORD_CONTEXT.verifiedDocUrl
+        },
+        contextFlags: {
+          needsLegal: document.getElementById("needsLegal").checked,
+          needsRelatedDocs: document.getElementById("needsRelatedDocs").checked,
+          needsRetention: document.getElementById("needsRetention").checked
+        },
+        artifacts: {
+          cleanDraftIncluded: state.uploads.clean,
+          verifiedDocLinked: state.uploads.redline,
+          changeSummaryFileIncluded: state.uploads["change-summary"],
+          stakeholderEvidenceIncluded: state.uploads["legal-evidence"],
+          generatedChangeSummary: buildChangeSummaryArtifact(),
+          generatedQcAuditTrail: buildQcAuditTrailArtifact()
+        },
+        readiness: {
+          score: state.readiness ? state.readiness.score : 0,
+          mustFixOpen: getOpenCount("must"),
+          recommendedOpen: getOpenCount("reco")
+        },
+        checklistSummary,
+        findings: state.findings.map((finding) => ({
+          id: finding.id,
+          kind: finding.kind,
+          title: finding.title,
+          body: finding.body,
+          appendix: finding.appendix,
+          resolved: Boolean(finding.resolved)
+        }))
+      };
+    }
+
+    function persistSubmissionPackage(submissionPackage) {
+      try {
+        const existing = readStoredPackages().filter((item) => item.recordId !== submissionPackage.recordId);
+        existing.unshift(submissionPackage);
+        window.localStorage.setItem(SUBMISSION_PACKAGE_KEY, JSON.stringify(existing.slice(0, 6)));
+      } catch (error) {
+        logActivity("Browser storage was unavailable, so the governance handoff package could not be cached.");
+      }
+    }
+
+    function readStoredPackages() {
+      try {
+        const raw = window.localStorage.getItem(SUBMISSION_PACKAGE_KEY);
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function restoreLatestExport() {
+      const latest = readStoredPackages().find((item) => item.recordId === RECORD_CONTEXT.recordId);
+      if (!latest) return;
+      state.exportPackage = latest;
+      elements.artifactMeta.textContent = `Latest exported package found from ${latest.exportedAtLabel}. Export again to replace it with your newest change summary and QC audit trail.`;
+    }
+
+    async function copyArtifact(element, successMessage) {
+      if (!state.qcRun && !state.exportPackage) return;
+      try {
+        await navigator.clipboard.writeText(element.value);
+        logActivity(successMessage);
+      } catch (error) {
+        element.focus();
+        element.select();
+        logActivity("Clipboard access was unavailable, so the artifact text was selected for manual copy.");
+      }
+    }
+
+    function downloadTextFile(filename, content) {
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function formatDateTime(date) {
+      return date.toLocaleString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+      });
     }
 
     function logActivity(text) {
