@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>governance team mockup</title>
+  <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
+  <style>
+    :root {
+      --bg: var(--color-background-inverse);
+      --panel: rgba(255, 255, 255, 0.98);
+      --panel-2: var(--color-background-secondary);
+      --line: var(--color-border-primary);
+      --ink: var(--color-text-primary);
+      --muted: var(--color-text-secondary);
+      --accent: var(--color-accent);
+      --accent-soft: var(--color-background-secondary);
+      --warn: var(--color-text-warning);
+      --warn-soft: #fff4d5;
+      --danger: var(--color-text-danger);
+      --danger-soft: #ffe4e1;
+      --ok: #b8ff2c;
+      --ok-soft: #efffcb;
+      --shadow: var(--shadow-lg);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--color-text-inverse);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.08) 0, transparent 22%),
+        linear-gradient(180deg, #111 0%, var(--bg) 100%);
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .page {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .secondary-btn {
+      background: var(--accent-soft);
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: var(--color-accent-foreground);
+      border-color: var(--accent);
+    }
+
+    .small-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .ghost-btn:hover, .primary-btn:hover, .secondary-btn:hover, .small-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(26, 31, 27, 0.08);
+    }
+
+    .hero {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .hero-copy {
+      max-width: 860px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .snapshot-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .meta-card, .mini-stat, .queue-row {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .meta-label, .card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1.2fr) 380px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      color: var(--ink);
+    }
+
+    .panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid #e4ddcf;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-body {
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .queue-nav {
+      display: grid;
+      gap: 10px;
+    }
+
+    .queue-btn {
+      width: 100%;
+      text-align: left;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: white;
+      color: var(--ink);
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .queue-btn.active {
+      background: var(--accent);
+      color: var(--color-accent-foreground);
+      border-color: var(--accent);
+    }
+
+    .queue-btn .queue-name {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .queue-btn .queue-count {
+      font-size: 13px;
+      color: inherit;
+      opacity: 0.82;
+    }
+
+    .field, .search {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #d5cebf;
+      background: white;
+      color: var(--ink);
+      padding: 12px 14px;
+    }
+
+    .queue-table {
+      display: grid;
+      gap: 10px;
+    }
+
+    .queue-table-head,
+    .queue-row {
+      display: grid;
+      grid-template-columns: 110px minmax(0, 1.5fr) 120px 64px 80px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .queue-table-head {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0 2px;
+    }
+
+    .queue-row {
+      background: white;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .queue-row.selected {
+      border-color: #b8ff2c;
+      box-shadow: inset 0 0 0 1px #b8ff2c;
+      background: linear-gradient(180deg, #fcffef 0%, #ffffff 100%);
+    }
+
+    .queue-row:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(26, 31, 27, 0.06);
+    }
+
+    .row-title {
+      font-size: 14px;
+      line-height: 1.35;
+    }
+
+    .row-id, .row-small {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: white;
+      padding: 8px 12px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .chip.ok {
+      background: var(--ok-soft);
+      color: #050505;
+      border-color: #b8ff2c;
+    }
+
+    .chip.warn {
+      background: var(--warn-soft);
+      color: #7b5200;
+      border-color: var(--color-border-warning);
+    }
+
+    .chip.danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border-color: var(--color-border-danger);
+    }
+
+    .chip.info {
+      background: #eef3ff;
+      color: #2856a6;
+      border-color: #9eb7ee;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .summary-card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .comment-list,
+    .packet-drilldown {
+      display: grid;
+      gap: 10px;
+    }
+
+    .summary-list, .checklist, .activity {
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    .summary-item, .check-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #ddd5c8;
+      border-radius: 12px;
+    }
+
+    .check-status {
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .check-status.ok { color: #417b00; }
+    .check-status.warn { color: #7b5200; }
+    .check-status.danger { color: var(--danger); }
+
+    .review-comment {
+      border-radius: 14px;
+      border: 1px solid #ddd5c8;
+      background: white;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .review-comment.warn {
+      background: linear-gradient(180deg, #fff8e6 0%, #ffffff 100%);
+      border-color: var(--color-border-warning);
+    }
+
+    .review-comment.danger {
+      background: linear-gradient(180deg, #ffe6e3 0%, #fff4f3 30%, #ffffff 100%);
+      border-color: var(--color-border-danger);
+    }
+
+    .review-comment.resolved {
+      background: linear-gradient(180deg, #f8ffea 0%, #ffffff 100%);
+      border-color: #b8ff2c;
+    }
+
+    .comment-head,
+    .comment-actions,
+    .packet-summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .comment-meta,
+    .packet-meta {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .comment-body,
+    .packet-body {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    .stack-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .packet-detail {
+      border: 1px solid #ddd5c8;
+      border-radius: 14px;
+      background: white;
+      overflow: hidden;
+    }
+
+    .packet-detail[open] {
+      border-color: #b8ff2c;
+      box-shadow: inset 0 0 0 1px rgba(184, 255, 44, 0.25);
+    }
+
+    .packet-detail.warn[open] {
+      border-color: var(--color-border-warning);
+      box-shadow: inset 0 0 0 1px rgba(243, 177, 34, 0.18);
+    }
+
+    .packet-detail.danger[open] {
+      border-color: var(--color-border-danger);
+      box-shadow: inset 0 0 0 1px rgba(209, 70, 59, 0.14);
+    }
+
+    .packet-summary {
+      padding: 12px;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .packet-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .packet-body {
+      padding: 0 12px 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .note-area {
+      width: 100%;
+      min-height: 190px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid #d5cebf;
+      background: white;
+      color: var(--ink);
+      padding: 12px 14px;
+      line-height: 1.55;
+    }
+
+    .agent-card {
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .agent-card.warn {
+      background: linear-gradient(180deg, #fff7e4 0%, #ffffff 100%);
+      border-color: var(--color-border-warning);
+    }
+
+    .agent-card.danger {
+      background: linear-gradient(180deg, #ffe8e6 0%, #fff5f4 26%, #ffffff 100%);
+      border-color: var(--color-border-danger);
+    }
+
+    .agent-card.ok {
+      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
+      border-color: #b8ff2c;
+    }
+
+    .agent-title {
+      font-size: 16px;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+
+    .agent-bullets {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.5;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .action-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status-banner {
+      display: none;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+    }
+
+    .status-banner.show.ok {
+      display: block;
+      background: var(--ok-soft);
+      border: 1px solid #b8ff2c;
+      color: #050505;
+    }
+
+    .status-banner.show.warn {
+      display: block;
+      background: var(--warn-soft);
+      border: 1px solid var(--color-border-warning);
+      color: #7b5200;
+    }
+
+    .status-banner.show.danger {
+      display: block;
+      background: #ffe8e6;
+      border: 1px solid var(--color-border-danger);
+      color: var(--danger);
+    }
+
+    .maintenance-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .activity-item {
+      padding-left: 14px;
+      border-left: 2px solid #ddd4c6;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .empty-state {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px dashed #cfc7b8;
+      background: #fcfaf5;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .mono {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 1280px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .snapshot-grid,
+      .maintenance-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .snapshot-grid,
+      .maintenance-grid,
+      .meta-grid,
+      .queue-table-head,
+      .queue-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Clickable HTML Mockup</p>
+        <h1>governance team control surface</h1>
+      </div>
+      <div class="hero-actions">
+        <button class="ghost-btn" id="resetDemo">Reset demo</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <p class="eyebrow">Governance operating model</p>
+          <div class="hero-copy">
+            This mockup shows how Compliance Governance could triage intake, complete Tollgate 3 QC, route approvals, return packages to owners, and publish approved Policies and Standards while keeping LogicGate as the system of record.
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="secondary-btn" id="focusQueue">Open active queue</button>
+          <button class="ghost-btn" id="focusMaintenance">Jump to maintenance</button>
+        </div>
+      </div>
+
+      <div class="snapshot-grid" id="snapshotGrid"></div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Governance queues</p>
+            <h2 class="panel-title">Queue navigation</h2>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="queue-nav" id="queueNav"></div>
+
+          <div class="summary-card">
+            <div class="card-label">Filters</div>
+            <div class="summary-list">
+              <div>
+                <div class="card-label">Search</div>
+                <input class="search" id="searchInput" type="text" placeholder="Title or record ID" />
+              </div>
+              <div>
+                <div class="card-label">Document type</div>
+                <select class="field" id="docTypeFilter">
+                  <option value="">All</option>
+                  <option value="Policy">Policy</option>
+                  <option value="Standard">Standard</option>
+                </select>
+              </div>
+              <div>
+                <div class="card-label">Tier</div>
+                <select class="field" id="tierFilter">
+                  <option value="">All tiers</option>
+                  <option value="T1">T1</option>
+                  <option value="T2">T2</option>
+                  <option value="T3">T3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Governance agents</div>
+            <div class="summary-list">
+              <div class="summary-item"><span>Intake triage</span><span class="check-status ok">Active</span></div>
+              <div class="summary-item"><span>Metadata and tiering</span><span class="check-status ok">Active</span></div>
+              <div class="summary-item"><span>QC checklist</span><span class="check-status ok">Active</span></div>
+              <div class="summary-item"><span>Approval routing</span><span class="check-status ok">Active</span></div>
+              <div class="summary-item"><span>Publication and records</span><span class="check-status ok">Active</span></div>
+              <div class="summary-item"><span>Reporting and monitoring</span><span class="check-status ok">Active</span></div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="panel" id="queuePanel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Primary queue</p>
+            <h2 class="panel-title" id="queueTitle">New intake</h2>
+          </div>
+          <div class="row">
+            <span class="chip info" id="queueChip">0 records</span>
+            <button class="small-btn" id="bulkActionBtn">Bulk actions</button>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="status-banner" id="statusBanner"></div>
+
+          <div class="queue-table-head">
+            <div>Record ID</div>
+            <div>Title</div>
+            <div>Stage</div>
+            <div>Tier</div>
+            <div>Due</div>
+          </div>
+          <div class="queue-table" id="queueTable"></div>
+
+          <div class="summary-card">
+            <div class="card-label">Queue actions</div>
+            <div class="action-grid">
+              <div class="action-row" id="stageActions"></div>
+              <div class="mono" id="bulkHint">Select a record to enable stage actions and governance handoffs.</div>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Governance activity log</div>
+            <div class="activity" id="activityLog"></div>
+          </div>
+        </div>
+      </main>
+
+      <aside class="panel">
+        <div class="panel-header">
+          <div>
+            <p class="eyebrow">Selected record</p>
+            <h2 class="panel-title" id="detailTitle">Choose a record</h2>
+          </div>
+          <span class="chip" id="detailStageChip">No selection</span>
+        </div>
+        <div class="panel-body">
+          <div class="meta-grid" id="detailMeta"></div>
+
+          <div class="agent-card" id="agentSummaryCard">
+            <h3 class="agent-title">Governance copilot summary</h3>
+            <ul class="agent-bullets" id="agentSummary"></ul>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">QC checklist workspace</div>
+            <div class="checklist" id="qcChecklist"></div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Approval and publication packet</div>
+            <div class="checklist" id="packetChecklist"></div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Inline review comments</div>
+            <div class="comment-list" id="reviewComments"></div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Approval packet drill-down</div>
+            <div class="packet-drilldown" id="packetDrilldown"></div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Return-to-owner note</div>
+            <div class="mono" id="returnNoteMeta">Generate a note from the open QC findings and reviewer comments.</div>
+            <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
+            <div class="action-row" style="margin-top: 10px;">
+              <button class="small-btn" id="generateReturnNoteBtn">Generate note</button>
+              <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <div class="card-label">Recommended next action</div>
+            <div class="meta-value" id="recommendedAction">Select a queue record to view guidance.</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="panel" id="maintenancePanel" style="margin-top: 18px;">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">Maintenance and reporting</p>
+          <h2 class="panel-title">Extensions, exceptions, reporting, and archival</h2>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="maintenance-grid" id="maintenanceGrid"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const QUEUES = [
+      { id: "intake", label: "New intake", queueLabel: "Intake review" },
+      { id: "qc", label: "Tollgate 3 QC", queueLabel: "QC review" },
+      { id: "approvals", label: "Approval routing", queueLabel: "Approvals" },
+      { id: "publish", label: "Ready to publish", queueLabel: "Publish" },
+      { id: "overdue", label: "Overdue reviews", queueLabel: "Overdue" },
+      { id: "exceptions", label: "Exceptions and deferments", queueLabel: "Exception" },
+      { id: "archival", label: "Retirement and archival", queueLabel: "Archival" }
+    ];
+
+    const INITIAL_RECORDS = [
+      {
+        id: "POL-001245",
+        title: "Third-Party Compliance Oversight Policy",
+        type: "Policy",
+        domain: "Compliance Governance",
+        tier: "T2",
+        due: "4/12",
+        queue: "intake",
+        stage: "Intake review",
+        owner: "Global Compliance Policy Lead",
+        delegate: "Third-Party Risk Program Manager",
+        relatedDocs: "Vendor Due Diligence Standard",
+        agentSeverity: "warn",
+        summary: [
+          "No full Block-level policy conflict found.",
+          "One existing Standard must be linked in hierarchy metadata.",
+          "Tier 2 route fits domain and impact."
+        ],
+        qc: [
+          { label: "In-scope document type confirmed", status: "ok" },
+          { label: "Hierarchy overlap reviewed", status: "warn" },
+          { label: "Tier recommendation prepared", status: "ok" },
+          { label: "Owner and delegate verified", status: "ok" }
+        ],
+        packet: [
+          { label: "Owner redline package", status: "warn" },
+          { label: "Change summary", status: "warn" },
+          { label: "Approval route index", status: "ok" },
+          { label: "Publication readiness", status: "warn" }
+        ],
+        recommendation: "Accept triage and move the record into Tollgate 3 QC after hierarchy metadata is saved."
+      },
+      {
+        id: "STD-000918",
+        title: "Transaction Monitoring Standard",
+        type: "Standard",
+        domain: "AML",
+        tier: "T3",
+        due: "4/08",
+        queue: "qc",
+        stage: "Tollgate 3 QC",
+        owner: "AML Governance Lead",
+        delegate: "Monitoring Program Manager",
+        relatedDocs: "AML Enterprise Policy",
+        agentSeverity: "danger",
+        summary: [
+          "Retention language is too generic for Appendix A.",
+          "Related Documentation does not list the parent Policy.",
+          "Owner package is otherwise complete and can be returned quickly."
+        ],
+        qc: [
+          { label: "Approved template used", status: "ok" },
+          { label: "Required sections present", status: "ok" },
+          { label: "Related documents complete", status: "danger" },
+          { label: "Record retention language confirmed", status: "danger" }
+        ],
+        packet: [
+          { label: "Clean copy", status: "ok" },
+          { label: "Redline copy", status: "ok" },
+          { label: "Change summary", status: "ok" },
+          { label: "Return-to-owner note", status: "warn" }
+        ],
+        recommendation: "Return to owner with two must-fix items, preserve the rest of the package, and keep the record in the QC queue."
+      },
+      {
+        id: "POL-000442",
+        title: "AML Enterprise Policy",
+        type: "Policy",
+        domain: "AML",
+        tier: "T1",
+        due: "4/25",
+        queue: "approvals",
+        stage: "Approval routing",
+        owner: "Global AML Policy Lead",
+        delegate: "AML Program Office",
+        relatedDocs: "Transaction Monitoring Standard, KYC Standard",
+        agentSeverity: "ok",
+        summary: [
+          "Committee path is required because this is a Tier 1 Policy.",
+          "Owner attestation and clean/redline copies are attached.",
+          "Board review fields are conditionally required and ready."
+        ],
+        qc: [
+          { label: "Tollgate 3 QC complete", status: "ok" },
+          { label: "Committee route required", status: "ok" },
+          { label: "Board review requirement assessed", status: "ok" },
+          { label: "Approver path validated", status: "ok" }
+        ],
+        packet: [
+          { label: "Owner attestation packet", status: "ok" },
+          { label: "Approver list", status: "ok" },
+          { label: "Evidence index", status: "ok" },
+          { label: "Publication checklist", status: "warn" }
+        ],
+        recommendation: "Route the packet to Compliance Leadership and CPC now, then prepare publication records in parallel."
+      },
+      {
+        id: "POL-000761",
+        title: "Fair Lending Policy",
+        type: "Policy",
+        domain: "Fair Lending",
+        tier: "T2",
+        due: "4/03",
+        queue: "publish",
+        stage: "Ready to publish",
+        owner: "Fair Lending Governance Director",
+        delegate: "Fair Lending Program Manager",
+        relatedDocs: "Fair Lending Standard",
+        agentSeverity: "ok",
+        summary: [
+          "Final approvals are complete and publication metadata is ready.",
+          "Communication trigger and review date are populated.",
+          "Go/Policy upload can proceed once the final PDF is attached."
+        ],
+        qc: [
+          { label: "Final approvals recorded", status: "ok" },
+          { label: "Review date updated", status: "ok" },
+          { label: "Revision history updated", status: "ok" },
+          { label: "Final PDF attached", status: "warn" }
+        ],
+        packet: [
+          { label: "Final PDF", status: "warn" },
+          { label: "SOR metadata payload", status: "ok" },
+          { label: "Communication trigger", status: "ok" },
+          { label: "Retention record", status: "ok" }
+        ],
+        recommendation: "Attach the final published PDF, then publish to LogicGate SOR and Go/Policy."
+      },
+      {
+        id: "POL-001004",
+        title: "Customer Complaints Policy",
+        type: "Policy",
+        domain: "Consumer Compliance",
+        tier: "T2",
+        due: "3/28",
+        queue: "overdue",
+        stage: "Overdue annual review",
+        owner: "Consumer Compliance Director",
+        delegate: "Complaints Program Manager",
+        relatedDocs: "Complaints Handling Standard",
+        agentSeverity: "warn",
+        summary: [
+          "Annual review is overdue by 3 days.",
+          "Policy Team can grant a 30-day extension under PoP authority.",
+          "No evidence of material change yet."
+        ],
+        qc: [
+          { label: "Overdue review flagged", status: "danger" },
+          { label: "Extension authority available", status: "ok" },
+          { label: "Escalation needed if >30 days", status: "warn" },
+          { label: "Owner reminder sent", status: "ok" }
+        ],
+        packet: [
+          { label: "Extension request note", status: "warn" },
+          { label: "Leadership evidence", status: "warn" },
+          { label: "Review calendar entry", status: "ok" },
+          { label: "Escalation log", status: "warn" }
+        ],
+        recommendation: "Grant a 30-day extension now and escalate only if the document remains overdue beyond Policy Team authority."
+      },
+      {
+        id: "STD-001302",
+        title: "Sanctions Screening Standard",
+        type: "Standard",
+        domain: "Sanctions",
+        tier: "T2",
+        due: "4/18",
+        queue: "exceptions",
+        stage: "Exception review",
+        owner: "Sanctions Governance Lead",
+        delegate: "Screening Operations Manager",
+        relatedDocs: "Sanctions Policy",
+        agentSeverity: "warn",
+        summary: [
+          "Business requested an exception with compensating controls.",
+          "Renewal date is missing from the submission.",
+          "Leadership evidence is attached but needs classification."
+        ],
+        qc: [
+          { label: "Exception reason documented", status: "ok" },
+          { label: "Mitigating controls attached", status: "ok" },
+          { label: "Renewal date recorded", status: "danger" },
+          { label: "Leadership evidence classified", status: "warn" }
+        ],
+        packet: [
+          { label: "Exception record", status: "ok" },
+          { label: "Renewal date", status: "danger" },
+          { label: "Leadership evidence", status: "warn" },
+          { label: "Tracking record", status: "ok" }
+        ],
+        recommendation: "Record the renewal date and classify the evidence before confirming the exception path."
+      },
+      {
+        id: "POL-000210",
+        title: "Legacy Data Handling Policy",
+        type: "Policy",
+        domain: "Data Governance",
+        tier: "T2",
+        due: "4/15",
+        queue: "archival",
+        stage: "Retirement and archival",
+        owner: "Data Governance Director",
+        delegate: "Information Management Manager",
+        relatedDocs: "Data Classification and Handling Policy",
+        agentSeverity: "warn",
+        summary: [
+          "Superseding Policy has been approved and published.",
+          "Retirement evidence is attached but archive access removal is open.",
+          "Archive package is otherwise ready."
+        ],
+        qc: [
+          { label: "Retirement approval evidence", status: "ok" },
+          { label: "Archive package complete", status: "ok" },
+          { label: "Remove staff access", status: "danger" },
+          { label: "Superseded link recorded", status: "ok" }
+        ],
+        packet: [
+          { label: "Retirement packet", status: "ok" },
+          { label: "Archive destination", status: "ok" },
+          { label: "Access removal confirmation", status: "danger" },
+          { label: "Retention metadata", status: "ok" }
+        ],
+        recommendation: "Complete access removal, then archive the package and mark the document retired in LogicGate."
+      }
+    ];
+
+    const state = {
+      activeQueue: "intake",
+      selectedRecordId: "POL-001245",
+      search: "",
+      docType: "",
+      tier: "",
+      banner: { message: "Governance control surface ready.", kind: "ok" },
+      records: [],
+      activityLog: []
+    };
+
+    const els = {
+      queueNav: document.getElementById("queueNav"),
+      snapshotGrid: document.getElementById("snapshotGrid"),
+      queueTitle: document.getElementById("queueTitle"),
+      queueChip: document.getElementById("queueChip"),
+      queueTable: document.getElementById("queueTable"),
+      detailTitle: document.getElementById("detailTitle"),
+      detailStageChip: document.getElementById("detailStageChip"),
+      detailMeta: document.getElementById("detailMeta"),
+      agentSummaryCard: document.getElementById("agentSummaryCard"),
+      agentSummary: document.getElementById("agentSummary"),
+      qcChecklist: document.getElementById("qcChecklist"),
+      packetChecklist: document.getElementById("packetChecklist"),
+      reviewComments: document.getElementById("reviewComments"),
+      packetDrilldown: document.getElementById("packetDrilldown"),
+      returnNoteMeta: document.getElementById("returnNoteMeta"),
+      returnNoteText: document.getElementById("returnNoteText"),
+      generateReturnNoteBtn: document.getElementById("generateReturnNoteBtn"),
+      copyReturnNoteBtn: document.getElementById("copyReturnNoteBtn"),
+      recommendedAction: document.getElementById("recommendedAction"),
+      activityLog: document.getElementById("activityLog"),
+      maintenanceGrid: document.getElementById("maintenanceGrid"),
+      searchInput: document.getElementById("searchInput"),
+      docTypeFilter: document.getElementById("docTypeFilter"),
+      tierFilter: document.getElementById("tierFilter"),
+      statusBanner: document.getElementById("statusBanner"),
+      stageActions: document.getElementById("stageActions")
+    };
+
+    function init() {
+      state.records = structuredClone(INITIAL_RECORDS).map(enrichRecord);
+      state.activityLog = [
+        "09:15 Intake triage flagged one overlapping Standard for hierarchy linkage.",
+        "09:22 Metadata and tiering agent recommended Tier 2 routing for POL-001245.",
+        "09:31 QC agent returned missing retention language to owner for STD-000918.",
+        "09:48 Publication agent held POL-000761 until final PDF attachment is confirmed."
+      ];
+
+      bindControls();
+      render();
+    }
+
+    function bindControls() {
+      document.getElementById("resetDemo").addEventListener("click", () => window.location.reload());
+      document.getElementById("focusQueue").addEventListener("click", () => {
+        document.getElementById("queuePanel").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      document.getElementById("focusMaintenance").addEventListener("click", () => {
+        document.getElementById("maintenancePanel").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      document.getElementById("bulkActionBtn").addEventListener("click", () => {
+        setBanner("Bulk actions would apply to the visible queue selection in a production build.", "warn");
+      });
+      els.searchInput.addEventListener("input", (event) => {
+        state.search = event.target.value.trim().toLowerCase();
+        renderQueue();
+      });
+      els.docTypeFilter.addEventListener("change", (event) => {
+        state.docType = event.target.value;
+        renderQueue();
+      });
+      els.tierFilter.addEventListener("change", (event) => {
+        state.tier = event.target.value;
+        renderQueue();
+      });
+      els.reviewComments.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-comment-toggle]");
+        if (!button) return;
+        toggleCommentStatus(Number(button.dataset.commentToggle));
+      });
+      els.generateReturnNoteBtn.addEventListener("click", () => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        record.returnNote = generateReturnNote(record);
+        record.returnNoteUpdatedAt = currentStampLabel();
+        renderDetail();
+        setBanner(`Return-to-owner note regenerated for ${record.id}.`, "ok");
+      });
+      els.copyReturnNoteBtn.addEventListener("click", async () => {
+        const record = getSelectedRecord();
+        if (!record) return;
+
+        try {
+          await navigator.clipboard.writeText(els.returnNoteText.value);
+          setBanner(`Return-to-owner note copied for ${record.id}.`, "ok");
+        } catch (error) {
+          els.returnNoteText.focus();
+          els.returnNoteText.select();
+          setBanner("Clipboard access was unavailable. The note is selected so it can be copied manually.", "warn");
+        }
+      });
+      els.returnNoteText.addEventListener("input", (event) => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        record.returnNote = event.target.value;
+        record.returnNoteUpdatedAt = currentStampLabel("Edited");
+        els.returnNoteMeta.textContent = buildReturnNoteMeta(record);
+      });
+    }
+
+    function setBanner(message, kind = "ok") {
+      state.banner = { message, kind };
+      renderBanner();
+    }
+
+    function render() {
+      renderBanner();
+      renderQueueNav();
+      renderSnapshots();
+      renderQueue();
+      renderDetail();
+      renderMaintenance();
+      renderActivity();
+    }
+
+    function renderBanner() {
+      els.statusBanner.textContent = state.banner.message;
+      els.statusBanner.className = `status-banner show ${state.banner.kind}`;
+    }
+
+    function getCounts() {
+      return QUEUES.map((queue) => ({
+        ...queue,
+        count: state.records.filter((record) => record.queue === queue.id).length
+      }));
+    }
+
+    function renderQueueNav() {
+      const counts = getCounts();
+      els.queueNav.innerHTML = counts.map((queue) => `
+        <button class="queue-btn ${queue.id === state.activeQueue ? "active" : ""}" data-queue="${queue.id}">
+          <span class="queue-name">${queue.label}</span>
+          <span class="queue-count">${queue.count} record${queue.count === 1 ? "" : "s"}</span>
+        </button>
+      `).join("");
+
+      els.queueNav.querySelectorAll("[data-queue]").forEach((button) => {
+        button.addEventListener("click", () => {
+          state.activeQueue = button.dataset.queue;
+          const visible = getVisibleRecords();
+          state.selectedRecordId = visible[0] ? visible[0].id : "";
+          setBanner(`Switched to the ${button.textContent.trim().replace(/\s+/g, " ")} queue.`, "ok");
+          render();
+        });
+      });
+    }
+
+    function renderSnapshots() {
+      const counts = getCounts();
+      els.snapshotGrid.innerHTML = counts.map((queue) => `
+        <div class="meta-card">
+          <div class="meta-label">${queue.label}</div>
+          <div class="meta-value">${queue.count} active record${queue.count === 1 ? "" : "s"}</div>
+        </div>
+      `).join("");
+    }
+
+    function getVisibleRecords() {
+      return state.records.filter((record) => {
+        if (record.queue !== state.activeQueue) return false;
+        if (state.docType && record.type !== state.docType) return false;
+        if (state.tier && record.tier !== state.tier) return false;
+        if (state.search) {
+          const haystack = `${record.id} ${record.title}`.toLowerCase();
+          if (!haystack.includes(state.search)) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderQueue() {
+      const queue = QUEUES.find((item) => item.id === state.activeQueue);
+      const records = getVisibleRecords();
+      els.queueTitle.textContent = queue ? queue.label : "Queue";
+      els.queueChip.textContent = `${records.length} visible`;
+
+      if (records.length && !records.some((record) => record.id === state.selectedRecordId)) {
+        state.selectedRecordId = records[0].id;
+      }
+
+      if (!records.length) {
+        els.queueTable.innerHTML = `<div class="empty-state">No records match the current queue and filter combination.</div>`;
+      } else {
+        els.queueTable.innerHTML = records.map((record) => `
+          <div class="queue-row ${record.id === state.selectedRecordId ? "selected" : ""}" data-record-id="${record.id}">
+            <div class="row-id">${record.id}</div>
+            <div>
+              <div class="row-title">${record.title}</div>
+              <div class="row-small">${record.type} · ${record.domain}</div>
+            </div>
+            <div><span class="chip ${stageChipKind(record.queue)}">${record.stage}</span></div>
+            <div class="row-small">${record.tier}</div>
+            <div class="row-small">${record.due}</div>
+          </div>
+        `).join("");
+
+        els.queueTable.querySelectorAll("[data-record-id]").forEach((row) => {
+          row.addEventListener("click", () => {
+            state.selectedRecordId = row.dataset.recordId;
+            renderQueue();
+            renderDetail();
+          });
+        });
+      }
+
+      renderActions(queue, records);
+    }
+
+    function stageChipKind(queueId) {
+      if (queueId === "publish") return "ok";
+      if (queueId === "qc" || queueId === "overdue" || queueId === "exceptions" || queueId === "archival") return "warn";
+      if (queueId === "intake") return "info";
+      return "danger";
+    }
+
+    function getSelectedRecord() {
+      return state.records.find((record) => record.id === state.selectedRecordId) || null;
+    }
+
+    function renderDetail() {
+      const record = getSelectedRecord();
+      if (!record) {
+        els.detailTitle.textContent = "Choose a record";
+        els.detailStageChip.textContent = "No selection";
+        els.detailMeta.innerHTML = "";
+        els.agentSummary.innerHTML = "";
+        els.qcChecklist.innerHTML = "";
+        els.packetChecklist.innerHTML = "";
+        els.reviewComments.innerHTML = "";
+        els.packetDrilldown.innerHTML = "";
+        els.returnNoteMeta.textContent = "Generate a note from the open QC findings and reviewer comments.";
+        els.returnNoteText.value = "";
+        els.recommendedAction.textContent = "Select a queue record to view guidance.";
+        return;
+      }
+
+      els.detailTitle.textContent = record.title;
+      els.detailStageChip.textContent = record.stage;
+      els.detailStageChip.className = `chip ${stageChipKind(record.queue)}`;
+      els.agentSummaryCard.className = `agent-card ${record.agentSeverity}`;
+      els.detailMeta.innerHTML = [
+        metaCard("Record ID", record.id),
+        metaCard("Document type", `${record.type} · ${record.tier}`),
+        metaCard("Owner", record.owner),
+        metaCard("Delegate", record.delegate),
+        metaCard("Domain", record.domain),
+        metaCard("Related docs", record.relatedDocs)
+      ].join("");
+
+      els.agentSummary.innerHTML = record.summary.map((item) => `<li>${item}</li>`).join("");
+      els.qcChecklist.innerHTML = record.qc.map((item) => checklistRow(item.label, item.status)).join("");
+      els.packetChecklist.innerHTML = record.packet.map((item) => checklistRow(item.label, item.status)).join("");
+      els.reviewComments.innerHTML = renderReviewComments(record);
+      els.packetDrilldown.innerHTML = renderPacketDrilldown(record);
+      els.returnNoteMeta.textContent = buildReturnNoteMeta(record);
+      els.returnNoteText.value = record.returnNote || generateReturnNote(record);
+      els.recommendedAction.textContent = record.recommendation;
+    }
+
+    function metaCard(label, value) {
+      return `
+        <div class="meta-card">
+          <div class="meta-label">${label}</div>
+          <div class="meta-value">${value}</div>
+        </div>
+      `;
+    }
+
+    function checklistRow(label, status) {
+      const text = statusLabel(status);
+      return `
+        <div class="check-item">
+          <strong>${label}</strong>
+          <span class="check-status ${status}">${text}</span>
+        </div>
+      `;
+    }
+
+    function statusLabel(status) {
+      return status === "ok" ? "Complete" : status === "warn" ? "Needs review" : "Must fix";
+    }
+
+    function statusChipKind(status) {
+      return status === "ok" ? "ok" : status === "warn" ? "warn" : "danger";
+    }
+
+    function enrichRecord(record) {
+      const reviewComments = buildReviewComments(record);
+      const packetDetails = buildPacketDetails(record);
+      return {
+        ...record,
+        reviewComments,
+        packetDetails,
+        returnNote: generateReturnNote({ ...record, reviewComments }),
+        returnNoteUpdatedAt: "Draft generated from open findings"
+      };
+    }
+
+    function reviewerProfile(queueId) {
+      switch (queueId) {
+        case "intake":
+          return { reviewer: "Policy Team triage", role: "Intake governance" };
+        case "qc":
+          return { reviewer: "QC checklist agent", role: "Tollgate 3 review" };
+        case "approvals":
+          return { reviewer: "Approval routing copilot", role: "Approvals governance" };
+        case "publish":
+          return { reviewer: "Publication records agent", role: "Publication controls" };
+        case "overdue":
+          return { reviewer: "Review calendar monitor", role: "Maintenance governance" };
+        case "exceptions":
+          return { reviewer: "Exception tracker", role: "Exception governance" };
+        case "archival":
+          return { reviewer: "Records and archival agent", role: "Retirement governance" };
+        default:
+          return { reviewer: "Governance copilot", role: "Policy governance" };
+      }
+    }
+
+    function buildReviewComments(record) {
+      const profile = reviewerProfile(record.queue);
+      const comments = [];
+
+      record.qc.filter((item) => item.status !== "ok").forEach((item, index) => {
+        comments.push({
+          reviewer: profile.reviewer,
+          role: profile.role,
+          section: item.label,
+          severity: item.status,
+          status: "open",
+          comment: `${item.label} is not yet ready for governance sign-off. Update the existing owner package and keep the record in the same workflow path so review can resume without rebuilding the packet.`,
+          anchor: `QC-${index + 1}`
+        });
+      });
+
+      const packetGap = record.packet.find((item) => item.status !== "ok");
+      if (packetGap) {
+        comments.push({
+          reviewer: "Governance operations",
+          role: "Packet readiness",
+          section: packetGap.label,
+          severity: packetGap.status,
+          status: "open",
+          comment: `${packetGap.label} is the only packet dependency still open. Preserve the attached materials and only replace the artifact that actually changed.`,
+          anchor: "PKT-1"
+        });
+      }
+
+      comments.push({
+        reviewer: "Governance copilot",
+        role: "Reusable guidance",
+        section: "Resubmission handling",
+        severity: "ok",
+        status: "resolved",
+        comment: "When the owner resubmits, reopen the same governance record and preserve prior clean copy, redline, and accepted enhancements rather than creating a new package.",
+        anchor: "OPS-1"
+      });
+
+      return comments.slice(0, 4);
+    }
+
+    function packetOwner(label, record) {
+      if (/attestation|change summary|clean copy|redline|final pdf/i.test(label)) return record.owner;
+      if (/approver|approval route|committee|board/i.test(label)) return "Governance analyst";
+      if (/publication|sor|retention|archive|tracking/i.test(label)) return "Governance operations";
+      if (/communication/i.test(label)) return "Policy program manager";
+      if (/exception|renewal/i.test(label)) return "Exception administrator";
+      return "Policy Team";
+    }
+
+    function packetDetailText(label, status, record) {
+      const readiness = status === "ok"
+        ? "The artifact is attached and can flow forward without rework."
+        : status === "warn"
+          ? "The artifact is partially ready and should be verified before the packet advances."
+          : "The artifact is missing or insufficient and blocks the next governance step.";
+      return `${readiness} This artifact supports ${record.stage.toLowerCase()} for ${record.id} and should stay tied to the current LogicGate record.`;
+    }
+
+    function packetNextStep(label, status) {
+      if (status === "ok") return "No immediate action is required unless another linked artifact changes.";
+      if (status === "warn") return `Confirm ${label.toLowerCase()} and preserve all other completed packet items.`;
+      return `Replace or complete ${label.toLowerCase()} before the packet can advance.`;
+    }
+
+    function buildPacketDetails(record) {
+      return record.packet.map((item) => ({
+        artifact: item.label,
+        status: item.status,
+        owner: packetOwner(item.label, record),
+        detail: packetDetailText(item.label, item.status, record),
+        nextStep: packetNextStep(item.label, item.status)
+      }));
+    }
+
+    function renderReviewComments(record) {
+      if (!record.reviewComments.length) {
+        return `<div class="empty-state">No inline review comments have been generated for this record yet.</div>`;
+      }
+
+      return record.reviewComments.map((comment, index) => `
+        <div class="review-comment ${comment.severity} ${comment.status === "resolved" ? "resolved" : ""}">
+          <div class="comment-head">
+            <div>
+              <strong>${comment.reviewer}</strong>
+              <div class="comment-meta">${comment.role} · ${comment.section} · ${comment.anchor}</div>
+            </div>
+            <div class="stack-chips">
+              <span class="chip ${statusChipKind(comment.severity)}">${statusLabel(comment.severity)}</span>
+              <span class="chip ${comment.status === "resolved" ? "ok" : "info"}">${comment.status === "resolved" ? "Resolved" : "Open"}</span>
+            </div>
+          </div>
+          <div class="comment-body">${comment.comment}</div>
+          <div class="comment-actions">
+            <span class="mono">${comment.status === "resolved" ? "Included in current packet history." : "Will be included in the generated owner note."}</span>
+            <button class="small-btn" data-comment-toggle="${index}">${comment.status === "resolved" ? "Reopen comment" : "Mark resolved"}</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderPacketDrilldown(record) {
+      if (!record.packetDetails.length) {
+        return `<div class="empty-state">Packet details will appear here once a package is assembled.</div>`;
+      }
+
+      return record.packetDetails.map((item) => `
+        <details class="packet-detail ${item.status}" ${item.status !== "ok" ? "open" : ""}>
+          <summary class="packet-summary">
+            <div>
+              <strong>${item.artifact}</strong>
+              <div class="packet-meta">${item.owner}</div>
+            </div>
+            <span class="chip ${statusChipKind(item.status)}">${statusLabel(item.status)}</span>
+          </summary>
+          <div class="packet-body">
+            <div>${item.detail}</div>
+            <div class="packet-meta">${item.nextStep}</div>
+          </div>
+        </details>
+      `).join("");
+    }
+
+    function buildReturnNoteMeta(record) {
+      const openComments = record.reviewComments.filter((comment) => comment.status !== "resolved").length;
+      const unresolvedChecklist = record.qc.filter((item) => item.status !== "ok").length;
+      return `${record.returnNoteUpdatedAt}. ${openComments} open reviewer comment${openComments === 1 ? "" : "s"} and ${unresolvedChecklist} unresolved checklist item${unresolvedChecklist === 1 ? "" : "s"} are reflected below.`;
+    }
+
+    function generateReturnNote(record) {
+      const mustFix = record.qc.filter((item) => item.status === "danger").map((item) => item.label);
+      const needsReview = record.qc.filter((item) => item.status === "warn").map((item) => item.label);
+      const openComments = record.reviewComments.filter((comment) => comment.status !== "resolved");
+
+      const lines = [
+        `Owner,`,
+        ``,
+        `Governance completed ${record.stage.toLowerCase()} for ${record.id} (${record.title}). Please update the existing working draft and supporting package, then resubmit through the same record so the governance team can reopen review without rebuilding the packet.`,
+        ``
+      ];
+
+      if (mustFix.length) {
+        lines.push(`Must fix before resubmission:`);
+        mustFix.forEach((item) => lines.push(`- ${item}`));
+        lines.push(``);
+      }
+
+      if (needsReview.length) {
+        lines.push(`Recommended cleanup before resubmission:`);
+        needsReview.forEach((item) => lines.push(`- ${item}`));
+        lines.push(``);
+      }
+
+      if (openComments.length) {
+        lines.push(`Governance comments to address:`);
+        openComments.forEach((comment) => lines.push(`- ${comment.section}: ${comment.comment}`));
+        lines.push(``);
+      }
+
+      lines.push(`Please keep the clean copy, redline, change summary, and any already-accepted improvements intact unless one of the items above changes those artifacts.`);
+      lines.push(`Current route: ${record.type} · ${record.tier} · ${record.stage}. Related documents: ${record.relatedDocs}.`);
+
+      return lines.join("\n");
+    }
+
+    function currentStampLabel(prefix = "Updated") {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      return `${prefix} ${hh}:${mm}`;
+    }
+
+    function toggleCommentStatus(index) {
+      const record = getSelectedRecord();
+      if (!record || !record.reviewComments[index]) return;
+
+      const comment = record.reviewComments[index];
+      comment.status = comment.status === "resolved" ? "open" : "resolved";
+      record.returnNote = generateReturnNote(record);
+      record.returnNoteUpdatedAt = currentStampLabel();
+      renderDetail();
+      setBanner(`${comment.section} was marked ${comment.status} for ${record.id}.`, comment.status === "resolved" ? "ok" : "warn");
+    }
+
+    function renderActions(queue, records) {
+      const record = getSelectedRecord();
+      if (!queue || !records.length || !record) {
+        els.stageActions.innerHTML = "";
+        return;
+      }
+
+      const actions = getActionsForQueue(queue.id);
+      els.stageActions.innerHTML = actions.map((action) => `
+        <button class="${action.primary ? "primary-btn" : "ghost-btn"}" data-action="${action.id}">${action.label}</button>
+      `).join("");
+
+      els.stageActions.querySelectorAll("[data-action]").forEach((button) => {
+        button.addEventListener("click", () => handleAction(button.dataset.action, record.id));
+      });
+    }
+
+    function getActionsForQueue(queueId) {
+      switch (queueId) {
+        case "intake":
+          return [
+            { id: "accept-triage", label: "Accept triage and move to QC", primary: true },
+            { id: "request-clarification", label: "Request clarification", primary: false }
+          ];
+        case "qc":
+          return [
+            { id: "return-owner", label: "Return to owner", primary: false },
+            { id: "complete-qc", label: "Mark Tollgate 3 complete", primary: true }
+          ];
+        case "approvals":
+          return [
+            { id: "route-approvals", label: "Route approvals", primary: false },
+            { id: "ready-publish", label: "Mark ready to publish", primary: true }
+          ];
+        case "publish":
+          return [
+            { id: "publish", label: "Publish to SOR", primary: true }
+          ];
+        case "overdue":
+          return [
+            { id: "grant-extension", label: "Grant 30-day extension", primary: true },
+            { id: "escalate", label: "Escalate to CPC", primary: false }
+          ];
+        case "exceptions":
+          return [
+            { id: "record-exception", label: "Record exception", primary: false },
+            { id: "set-renewal", label: "Set renewal date", primary: true }
+          ];
+        case "archival":
+          return [
+            { id: "archive", label: "Archive package", primary: true },
+            { id: "remove-access", label: "Confirm access removal", primary: false }
+          ];
+        default:
+          return [];
+      }
+    }
+
+    function handleAction(actionId, recordId) {
+      const record = state.records.find((item) => item.id === recordId);
+      if (!record) return;
+
+      switch (actionId) {
+        case "accept-triage":
+          record.queue = "qc";
+          record.stage = "Tollgate 3 QC";
+          record.recommendation = "Governance triage accepted. Move immediately into QC and validate owner package evidence.";
+          record.summary = [
+            "Hierarchy metadata is now saved.",
+            "Record moved into Tollgate 3 QC with Tier route preserved.",
+            "Owner package can now be validated against the PoP checklist."
+          ];
+          record.reviewComments = buildReviewComments(record);
+          record.packetDetails = buildPacketDetails(record);
+          record.returnNote = generateReturnNote(record);
+          record.returnNoteUpdatedAt = currentStampLabel();
+          logActivity(`Accepted intake triage for ${record.id} and moved it to Tollgate 3 QC.`);
+          setBanner(`${record.id} moved from intake to Tollgate 3 QC.`, "ok");
+          state.activeQueue = "qc";
+          break;
+        case "request-clarification":
+          logActivity(`Requested clarification from the owner for ${record.id} before QC begins.`);
+          setBanner(`${record.id} was sent back for clarification while staying in intake review.`, "warn");
+          break;
+        case "return-owner":
+          record.stage = "Returned to owner";
+          record.agentSeverity = "danger";
+          record.returnNote = generateReturnNote(record);
+          record.returnNoteUpdatedAt = currentStampLabel("Sent");
+          record.packet = record.packet.map((item) => item.label === "Return-to-owner note" ? { ...item, status: "ok" } : item);
+          record.packetDetails = buildPacketDetails(record);
+          record.summary = [
+            "Two must-fix items were preserved for owner remediation.",
+            "Return package should keep prior uploads and accepted improvements intact.",
+            "Governance can re-open the same QC record after resubmission."
+          ];
+          logActivity(`Returned ${record.id} to the owner with a generated governance note and preserved package context.`);
+          setBanner(`${record.id} was returned to the owner with focused remediation notes.`, "danger");
+          break;
+        case "complete-qc":
+          record.queue = "approvals";
+          record.stage = "Approval routing";
+          record.agentSeverity = "ok";
+          record.qc = record.qc.map((item) => ({ ...item, status: "ok" }));
+          record.reviewComments = record.reviewComments.map((comment) => ({ ...comment, status: "resolved" }));
+          record.packetDetails = buildPacketDetails(record);
+          record.returnNote = generateReturnNote(record);
+          record.returnNoteUpdatedAt = currentStampLabel();
+          record.recommendation = "QC is complete. Build the approval packet and route it using the recommended path.";
+          logActivity(`Marked Tollgate 3 complete for ${record.id} and moved it into approval routing.`);
+          setBanner(`${record.id} moved from QC to approval routing.`, "ok");
+          state.activeQueue = "approvals";
+          break;
+        case "route-approvals":
+          record.packet = record.packet.map((item) => /Approver list|Evidence index/i.test(item.label) ? { ...item, status: "ok" } : item);
+          record.packetDetails = buildPacketDetails(record);
+          logActivity(`Triggered approval routing for ${record.id}. Compliance Leadership and CPC were added to the packet route.`);
+          setBanner(`Approval routing kicked off for ${record.id}.`, "ok");
+          break;
+        case "ready-publish":
+          record.queue = "publish";
+          record.stage = "Ready to publish";
+          record.agentSeverity = "ok";
+          record.packet = record.packet.map((item) => item.label === "Publication checklist" ? { ...item, status: "ok" } : item);
+          record.packetDetails = buildPacketDetails(record);
+          logActivity(`Marked ${record.id} ready to publish after final approvals were received.`);
+          setBanner(`${record.id} moved into the ready-to-publish queue.`, "ok");
+          state.activeQueue = "publish";
+          break;
+        case "publish":
+          logActivity(`Published ${record.id} to LogicGate SOR and Go/Policy.`);
+          record.stage = "Published";
+          setBanner(`${record.id} was published successfully.`, "ok");
+          break;
+        case "grant-extension":
+          record.due = "4/27";
+          logActivity(`Granted a 30-day extension for ${record.id} under Policy Team authority.`);
+          setBanner(`30-day extension granted for ${record.id}.`, "ok");
+          break;
+        case "escalate":
+          logActivity(`Escalated ${record.id} for CPC visibility because the overdue review may exceed 30 days.`);
+          setBanner(`${record.id} was escalated for CPC visibility.`, "warn");
+          break;
+        case "record-exception":
+          logActivity(`Recorded exception metadata for ${record.id}; renewal date remains required.`);
+          setBanner(`Exception record updated for ${record.id}.`, "ok");
+          break;
+        case "set-renewal":
+          record.qc = record.qc.map((item) => item.label === "Renewal date recorded" ? { ...item, status: "ok" } : item);
+          record.packet = record.packet.map((item) => item.label === "Renewal date" ? { ...item, status: "ok" } : item);
+          record.packetDetails = buildPacketDetails(record);
+          logActivity(`Set the renewal date for ${record.id} and completed the exception tracking record.`);
+          setBanner(`Renewal date recorded for ${record.id}.`, "ok");
+          break;
+        case "archive":
+          logActivity(`Archived the retirement package for ${record.id}.`);
+          setBanner(`Archive package completed for ${record.id}.`, "ok");
+          break;
+        case "remove-access":
+          record.qc = record.qc.map((item) => item.label === "Remove staff access" ? { ...item, status: "ok" } : item);
+          record.packet = record.packet.map((item) => item.label === "Access removal confirmation" ? { ...item, status: "ok" } : item);
+          record.packetDetails = buildPacketDetails(record);
+          logActivity(`Confirmed access removal for ${record.id} before archival.`);
+          setBanner(`Access removal confirmed for ${record.id}.`, "ok");
+          break;
+      }
+
+      render();
+    }
+
+    function logActivity(message) {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, "0");
+      const mm = String(now.getMinutes()).padStart(2, "0");
+      state.activityLog.unshift(`${hh}:${mm} ${message}`);
+      state.activityLog = state.activityLog.slice(0, 8);
+    }
+
+    function renderActivity() {
+      els.activityLog.innerHTML = state.activityLog.map((item) => `<div class="activity-item">${item}</div>`).join("");
+    }
+
+    function renderMaintenance() {
+      const cards = [
+        {
+          label: "Review calendar",
+          body: "Upcoming annual reviews, extension authority within 30 days, and CPC escalation when overdue thresholds are crossed."
+        },
+        {
+          label: "Exceptions and deferments",
+          body: "Reason, mitigating controls, renewal date, and leadership evidence stay visible in one queue with tracked decisions."
+        },
+        {
+          label: "Monthly governance reporting",
+          body: "Inventory status, publication backlog, ownership transfers, and escalation logs are ready for policy program reporting."
+        },
+        {
+          label: "Retirement and archival",
+          body: "Approval evidence, archive package status, access removal, and superseded-document linkage stay together for closure."
+        }
+      ];
+
+      els.maintenanceGrid.innerHTML = cards.map((card) => `
+        <div class="summary-card">
+          <div class="card-label">${card.label}</div>
+          <div class="meta-value">${card.body}</div>
+        </div>
+      `).join("");
+    }
+
+    init();
+  </script>
+</body>
+</html>

@@ -26,6 +26,7 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 
 - [Open the quincy annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
 - [Open the quincy return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
+- [Open the governance team mockup](./mockups/governance_team_mockup.html)
 - [Open the GitHub Pages landing page](./index.html)
 - [View the owner annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
@@ -37,6 +38,8 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
   Standalone clickable HTML prototype for quincy's annual refresh and proposed-change QC flow
 - [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
   Standalone clickable HTML prototype for quincy after Governance returns the package for fixes
+- [`governance_team_mockup.html`](./mockups/governance_team_mockup.html)
+  Standalone clickable HTML prototype for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
 
 ### `wireframes/`
 
