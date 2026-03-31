@@ -216,6 +216,36 @@
       gap: 8px;
     }
 
+    .history-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .history-item {
+      display: grid;
+      gap: 6px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #101010;
+      cursor: pointer;
+    }
+
+    .history-item.active {
+      border-color: rgba(255, 255, 255, 0.28);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
+    .history-question {
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .history-meta {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
     .chip-btn {
       text-align: left;
       padding: 10px 12px;
@@ -288,6 +318,11 @@
       padding: 14px;
     }
 
+    .citation.active {
+      border-color: rgba(255, 255, 255, 0.26);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+    }
+
     .citation-title {
       font-size: 16px;
       font-weight: 600;
@@ -307,6 +342,31 @@
       line-height: 1.5;
       color: var(--ink);
       margin-bottom: 10px;
+    }
+
+    .source-preview {
+      display: grid;
+      gap: 10px;
+    }
+
+    .preview-shell {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #101010;
+      padding: 14px;
+      min-height: 180px;
+    }
+
+    .preview-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .preview-excerpt {
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
     }
 
     .link-row {
@@ -407,6 +467,13 @@
             </div>
           </div>
 
+          <div class="card">
+            <div class="card-label">Conversation history</div>
+            <div id="historyList" class="history-list">
+              <div class="muted">Recent questions and grounded answers will appear here.</div>
+            </div>
+          </div>
+
           <div class="row">
             <button id="askBtn" class="primary-btn">Ask quincy</button>
             <button id="jsonBtn" class="secondary-btn">Show raw JSON</button>
@@ -444,6 +511,19 @@
           </div>
 
           <div class="card">
+            <div class="card-label">Source preview</div>
+            <div class="source-preview">
+              <div class="meta-strip">
+                <span id="previewTitleChip" class="chip">Document: n/a</span>
+                <span id="previewSectionChip" class="chip">Section: n/a</span>
+              </div>
+              <div id="sourcePreview" class="preview-shell">
+                <div class="muted">Choose a citation to inspect the exact excerpt used in the answer.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
             <div class="card-label">Raw payload</div>
             <pre id="jsonOutput" class="muted" style="white-space: pre-wrap; margin: 0;">No response yet.</pre>
           </div>
@@ -469,10 +549,19 @@
       citationsChip: document.getElementById("citationsChip"),
       citationList: document.getElementById("citationList"),
       statusBanner: document.getElementById("statusBanner"),
-      jsonOutput: document.getElementById("jsonOutput")
+      jsonOutput: document.getElementById("jsonOutput"),
+      historyList: document.getElementById("historyList"),
+      sourcePreview: document.getElementById("sourcePreview"),
+      previewTitleChip: document.getElementById("previewTitleChip"),
+      previewSectionChip: document.getElementById("previewSectionChip")
     };
 
-    let lastPayload = null;
+    const state = {
+      lastPayload: null,
+      history: [],
+      activeHistoryId: null,
+      activeCitationIndex: null
+    };
 
     function setStatus(message, kind = "ok") {
       els.statusBanner.textContent = message;
@@ -514,7 +603,8 @@
           throw new Error(data.error || "Request failed.");
         }
 
-        lastPayload = data;
+        state.lastPayload = data;
+        saveHistoryEntry(payload, data);
         renderPayload(data, showJsonOnly);
         setStatus("Answer ready.", "ok");
       } catch (error) {
@@ -538,6 +628,7 @@
 
       renderCitations(payload.citations || []);
       els.jsonOutput.textContent = JSON.stringify(payload, null, 2);
+      renderHistory();
 
       if (showJsonOnly) {
         els.answerText.textContent = "Raw JSON shown below.";
@@ -547,6 +638,7 @@
     function renderCitations(citations) {
       if (!citations.length) {
         els.citationList.innerHTML = '<div class="muted">No citations returned for this query.</div>';
+        renderSourcePreview(null, null);
         return;
       }
 
@@ -558,7 +650,7 @@
         const recordText = citation.logicgate_record_id ? `LogicGate record: ${escapeHtml(citation.logicgate_record_id)}` : "LogicGate record unavailable";
 
         return `
-          <article class="citation">
+          <article class="citation" data-citation-index="${index}">
             <div class="citation-title">${index + 1}. ${escapeHtml(citation.document_title || "Untitled document")}</div>
             <div class="citation-meta">
               <div>Type: ${escapeHtml(citation.document_type_label || "Unknown")}</div>
@@ -568,8 +660,70 @@
               <div>${recordText}</div>
             </div>
             <div class="citation-excerpt">${excerpt}</div>
-            <div class="link-row">${pdfLink}</div>
+            <div class="link-row">
+              <button class="chip-btn" data-preview-index="${index}">Preview source</button>
+              ${pdfLink}
+            </div>
           </article>
+        `;
+      }).join("");
+
+      state.activeCitationIndex = 0;
+      renderSourcePreview(citations[0], 0);
+    }
+
+    function renderSourcePreview(citation, index) {
+      if (!citation) {
+        els.previewTitleChip.textContent = "Document: n/a";
+        els.previewSectionChip.textContent = "Section: n/a";
+        els.sourcePreview.innerHTML = '<div class="muted">Choose a citation to inspect the exact excerpt used in the answer.</div>';
+        return;
+      }
+
+      state.activeCitationIndex = index;
+      els.previewTitleChip.textContent = `Document: ${citation.document_title || "Untitled"}`;
+      els.previewSectionChip.textContent = `Section: ${citation.section_heading || "Unavailable"}`;
+      els.sourcePreview.innerHTML = `
+        <div class="preview-title">${escapeHtml(citation.document_title || "Untitled document")}</div>
+        <div class="muted">Page ${citation.page_number ?? "n/a"} · ${escapeHtml(citation.document_type_label || "Unknown")} · ${escapeHtml(citation.publication_date || "Unknown date")}</div>
+        <div class="preview-excerpt">${escapeHtml((citation.chunk_text || "").trim() || "No excerpt returned.")}</div>
+      `;
+
+      els.citationList.querySelectorAll("[data-citation-index]").forEach((card) => {
+        card.classList.toggle("active", Number(card.dataset.citationIndex) === index);
+      });
+    }
+
+    function saveHistoryEntry(request, response) {
+      const entry = {
+        id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
+        question: request.question,
+        request,
+        filters: response.applied_filters || {},
+        response,
+        createdAt: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      };
+
+      state.history.unshift(entry);
+      state.history = state.history.slice(0, 8);
+      state.activeHistoryId = entry.id;
+    }
+
+    function renderHistory() {
+      if (!state.history.length) {
+        els.historyList.innerHTML = '<div class="muted">Recent questions and grounded answers will appear here.</div>';
+        return;
+      }
+
+      els.historyList.innerHTML = state.history.map((entry) => {
+        const filterParts = [];
+        if (entry.filters.document_type) filterParts.push(entry.filters.document_type);
+        if (entry.filters.domain) filterParts.push(entry.filters.domain);
+        return `
+          <button class="history-item ${entry.id === state.activeHistoryId ? "active" : ""}" data-history-id="${entry.id}">
+            <div class="history-question">${escapeHtml(entry.question)}</div>
+            <div class="history-meta">${entry.createdAt} · ${escapeHtml(filterParts.join(" · ") || "All active documents")} · ${escapeHtml(entry.response.confidence || "n/a")} confidence</div>
+          </button>
         `;
       }).join("");
     }
@@ -595,6 +749,31 @@
       });
     });
 
+    els.citationList.addEventListener("click", (event) => {
+      const previewButton = event.target.closest("[data-preview-index]");
+      if (!previewButton || !state.lastPayload) return;
+      const index = Number(previewButton.dataset.previewIndex);
+      renderSourcePreview((state.lastPayload.citations || [])[index], index);
+    });
+
+    els.historyList.addEventListener("click", (event) => {
+      const item = event.target.closest("[data-history-id]");
+      if (!item) return;
+      const entry = state.history.find((record) => record.id === item.dataset.historyId);
+      if (!entry) return;
+
+      state.activeHistoryId = entry.id;
+      state.lastPayload = entry.response;
+      els.questionInput.value = entry.question;
+      els.documentType.value = entry.request.document_type || "";
+      els.domainInput.value = entry.request.domain || "";
+      els.topK.value = String(entry.request.top_k || 5);
+      els.useLlm.checked = Boolean(entry.request.use_llm);
+      els.modelInput.value = entry.request.model || "gpt-5-mini";
+      renderPayload(entry.response, false);
+      setStatus(`Loaded history item from ${entry.createdAt}.`, "ok");
+    });
+
     els.askBtn.addEventListener("click", () => askQuestion(false));
     els.jsonBtn.addEventListener("click", () => askQuestion(true));
     els.clearBtn.addEventListener("click", () => {
@@ -609,9 +788,12 @@
       els.filtersChip.textContent = "Filters: none";
       els.citationsChip.textContent = "Citations: 0";
       els.citationList.innerHTML = '<div class="muted">Citations will appear here after your first query.</div>';
+      renderSourcePreview(null, null);
       els.jsonOutput.textContent = "No response yet.";
       setStatus("Ready.", "ok");
-      lastPayload = null;
+      state.lastPayload = null;
+      state.activeHistoryId = null;
+      renderHistory();
     });
 
     els.questionInput.addEventListener("keydown", (event) => {

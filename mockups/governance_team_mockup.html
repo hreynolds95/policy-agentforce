@@ -372,6 +372,23 @@
       gap: 10px;
     }
 
+    .export-shell {
+      display: grid;
+      gap: 10px;
+    }
+
+    .export-area {
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #0f0f0f;
+      color: var(--ink);
+      padding: 12px 14px;
+      line-height: 1.55;
+    }
+
     .summary-list, .checklist, .activity {
       display: grid;
       gap: 8px;
@@ -784,12 +801,26 @@
           </div>
 
           <div class="summary-card">
+            <div class="card-label">Approval packet summary</div>
+            <div class="mono" id="packetSummaryMeta">Generate a one-page packet summary from the current governance state.</div>
+            <div class="export-shell">
+              <textarea class="export-area" id="packetSummaryText" spellcheck="false"></textarea>
+              <div class="action-row">
+                <button class="small-btn" id="generatePacketSummaryBtn">Generate summary</button>
+                <button class="small-btn" id="copyPacketSummaryBtn">Copy summary</button>
+                <button class="small-btn" id="downloadPacketSummaryBtn">Download summary</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="summary-card">
             <div class="card-label">Return-to-owner note</div>
             <div class="mono" id="returnNoteMeta">Generate a note from the open QC findings and reviewer comments.</div>
             <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
             <div class="action-row" style="margin-top: 10px;">
               <button class="small-btn" id="generateReturnNoteBtn">Generate note</button>
               <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
+              <button class="small-btn" id="downloadReturnNoteBtn">Download note</button>
             </div>
           </div>
 
@@ -1078,10 +1109,16 @@
       packetChecklist: document.getElementById("packetChecklist"),
       reviewComments: document.getElementById("reviewComments"),
       packetDrilldown: document.getElementById("packetDrilldown"),
+      packetSummaryMeta: document.getElementById("packetSummaryMeta"),
+      packetSummaryText: document.getElementById("packetSummaryText"),
+      generatePacketSummaryBtn: document.getElementById("generatePacketSummaryBtn"),
+      copyPacketSummaryBtn: document.getElementById("copyPacketSummaryBtn"),
+      downloadPacketSummaryBtn: document.getElementById("downloadPacketSummaryBtn"),
       returnNoteMeta: document.getElementById("returnNoteMeta"),
       returnNoteText: document.getElementById("returnNoteText"),
       generateReturnNoteBtn: document.getElementById("generateReturnNoteBtn"),
       copyReturnNoteBtn: document.getElementById("copyReturnNoteBtn"),
+      downloadReturnNoteBtn: document.getElementById("downloadReturnNoteBtn"),
       recommendedAction: document.getElementById("recommendedAction"),
       activityLog: document.getElementById("activityLog"),
       maintenanceGrid: document.getElementById("maintenanceGrid"),
@@ -1145,14 +1182,32 @@
         const record = getSelectedRecord();
         if (!record) return;
 
-        try {
-          await navigator.clipboard.writeText(els.returnNoteText.value);
-          setBanner(`Return-to-owner note copied for ${record.id}.`, "ok");
-        } catch (error) {
-          els.returnNoteText.focus();
-          els.returnNoteText.select();
-          setBanner("Clipboard access was unavailable. The note is selected so it can be copied manually.", "warn");
-        }
+        await copyText(els.returnNoteText, `Return-to-owner note copied for ${record.id}.`);
+      });
+      els.downloadReturnNoteBtn.addEventListener("click", () => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        downloadTextFile(`${record.id.toLowerCase()}-return-note.txt`, els.returnNoteText.value);
+        setBanner(`Return-to-owner note downloaded for ${record.id}.`, "ok");
+      });
+      els.generatePacketSummaryBtn.addEventListener("click", () => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        record.packetSummary = generatePacketSummary(record);
+        record.packetSummaryUpdatedAt = currentStampLabel();
+        renderDetail();
+        setBanner(`Approval packet summary regenerated for ${record.id}.`, "ok");
+      });
+      els.copyPacketSummaryBtn.addEventListener("click", async () => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        await copyText(els.packetSummaryText, `Approval packet summary copied for ${record.id}.`);
+      });
+      els.downloadPacketSummaryBtn.addEventListener("click", () => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        downloadTextFile(`${record.id.toLowerCase()}-approval-packet-summary.txt`, els.packetSummaryText.value);
+        setBanner(`Approval packet summary downloaded for ${record.id}.`, "ok");
       });
       els.returnNoteText.addEventListener("input", (event) => {
         const record = getSelectedRecord();
@@ -1160,6 +1215,13 @@
         record.returnNote = event.target.value;
         record.returnNoteUpdatedAt = currentStampLabel("Edited");
         els.returnNoteMeta.textContent = buildReturnNoteMeta(record);
+      });
+      els.packetSummaryText.addEventListener("input", (event) => {
+        const record = getSelectedRecord();
+        if (!record) return;
+        record.packetSummary = event.target.value;
+        record.packetSummaryUpdatedAt = currentStampLabel("Edited");
+        els.packetSummaryMeta.textContent = buildPacketSummaryMeta(record);
       });
     }
 
@@ -1293,6 +1355,8 @@
         els.packetChecklist.innerHTML = "";
         els.reviewComments.innerHTML = "";
         els.packetDrilldown.innerHTML = "";
+        els.packetSummaryMeta.textContent = "Generate a one-page packet summary from the current governance state.";
+        els.packetSummaryText.value = "";
         els.returnNoteMeta.textContent = "Generate a note from the open QC findings and reviewer comments.";
         els.returnNoteText.value = "";
         els.recommendedAction.textContent = "Select a queue record to view guidance.";
@@ -1317,6 +1381,8 @@
       els.packetChecklist.innerHTML = record.packet.map((item) => checklistRow(item.label, item.status)).join("");
       els.reviewComments.innerHTML = renderReviewComments(record);
       els.packetDrilldown.innerHTML = renderPacketDrilldown(record);
+      els.packetSummaryMeta.textContent = buildPacketSummaryMeta(record);
+      els.packetSummaryText.value = record.packetSummary || generatePacketSummary(record);
       els.returnNoteMeta.textContent = buildReturnNoteMeta(record);
       els.returnNoteText.value = record.returnNote || generateReturnNote(record);
       els.recommendedAction.textContent = record.recommendation;
@@ -1356,6 +1422,8 @@
         ...record,
         reviewComments,
         packetDetails,
+        packetSummary: generatePacketSummary({ ...record, reviewComments, packetDetails }),
+        packetSummaryUpdatedAt: "Draft generated from packet state",
         returnNote: generateReturnNote({ ...record, reviewComments }),
         returnNoteUpdatedAt: "Draft generated from open findings"
       };
@@ -1394,7 +1462,8 @@
           severity: item.status,
           status: "open",
           comment: `${item.label} is not yet ready for governance sign-off. Update the existing owner package and keep the record in the same workflow path so review can resume without rebuilding the packet.`,
-          anchor: `QC-${index + 1}`
+          anchor: `QC-${index + 1}`,
+          updatedAt: "Generated"
         });
       });
 
@@ -1407,7 +1476,8 @@
           severity: packetGap.status,
           status: "open",
           comment: `${packetGap.label} is the only packet dependency still open. Preserve the attached materials and only replace the artifact that actually changed.`,
-          anchor: "PKT-1"
+          anchor: "PKT-1",
+          updatedAt: "Generated"
         });
       }
 
@@ -1418,7 +1488,8 @@
         severity: "ok",
         status: "resolved",
         comment: "When the owner resubmits, reopen the same governance record and preserve prior clean copy, redline, and accepted enhancements rather than creating a new package.",
-        anchor: "OPS-1"
+        anchor: "OPS-1",
+        updatedAt: "Generated"
       });
 
       return comments.slice(0, 4);
@@ -1477,11 +1548,61 @@
           </div>
           <div class="comment-body">${comment.comment}</div>
           <div class="comment-actions">
-            <span class="mono">${comment.status === "resolved" ? "Included in current packet history." : "Will be included in the generated owner note."}</span>
+            <span class="mono">${comment.status === "resolved" ? "Included in current packet history." : "Will be included in the generated owner note."} ${comment.updatedAt ? `· ${comment.updatedAt}` : ""}</span>
             <button class="small-btn" data-comment-toggle="${index}">${comment.status === "resolved" ? "Reopen comment" : "Mark resolved"}</button>
           </div>
         </div>
       `).join("");
+    }
+
+    function buildPacketSummaryMeta(record) {
+      const openArtifacts = record.packet.filter((item) => item.status !== "ok").length;
+      const resolvedComments = record.reviewComments.filter((comment) => comment.status === "resolved").length;
+      return `${record.packetSummaryUpdatedAt}. ${openArtifacts} packet artifact${openArtifacts === 1 ? "" : "s"} still need review and ${resolvedComments} reviewer comment${resolvedComments === 1 ? "" : "s"} are already resolved.`;
+    }
+
+    function generatePacketSummary(record) {
+      const openPacket = record.packet.filter((item) => item.status !== "ok");
+      const resolvedComments = record.reviewComments.filter((comment) => comment.status === "resolved");
+      const openComments = record.reviewComments.filter((comment) => comment.status !== "resolved");
+
+      const lines = [
+        `${record.id} · ${record.title}`,
+        `${record.type} · ${record.tier} · ${record.stage}`,
+        `Owner: ${record.owner}`,
+        `Delegate: ${record.delegate}`,
+        `Domain: ${record.domain}`,
+        `Related documents: ${record.relatedDocs}`,
+        ``,
+        `Governance summary:`
+      ];
+
+      record.summary.forEach((item) => lines.push(`- ${item}`));
+      lines.push(``);
+      lines.push(`Current packet status:`);
+      record.packet.forEach((item) => lines.push(`- ${item.label}: ${statusLabel(item.status)}`));
+
+      if (openPacket.length) {
+        lines.push(``);
+        lines.push(`Open packet dependencies:`);
+        openPacket.forEach((item) => lines.push(`- ${item.label}`));
+      }
+
+      if (openComments.length) {
+        lines.push(``);
+        lines.push(`Open reviewer comments:`);
+        openComments.forEach((comment) => lines.push(`- ${comment.section}: ${comment.comment}`));
+      }
+
+      if (resolvedComments.length) {
+        lines.push(``);
+        lines.push(`Resolved reviewer comments retained in packet history:`);
+        resolvedComments.forEach((comment) => lines.push(`- ${comment.section}`));
+      }
+
+      lines.push(``);
+      lines.push(`Recommended next action: ${record.recommendation}`);
+      return lines.join("\n");
     }
 
     function renderPacketDrilldown(record) {
@@ -1561,10 +1682,36 @@
 
       const comment = record.reviewComments[index];
       comment.status = comment.status === "resolved" ? "open" : "resolved";
+      comment.updatedAt = currentStampLabel(comment.status === "resolved" ? "Resolved" : "Reopened");
+      record.packetSummary = generatePacketSummary(record);
+      record.packetSummaryUpdatedAt = currentStampLabel();
       record.returnNote = generateReturnNote(record);
       record.returnNoteUpdatedAt = currentStampLabel();
       renderDetail();
       setBanner(`${comment.section} was marked ${comment.status} for ${record.id}.`, comment.status === "resolved" ? "ok" : "warn");
+    }
+
+    async function copyText(element, successMessage) {
+      try {
+        await navigator.clipboard.writeText(element.value);
+        setBanner(successMessage, "ok");
+      } catch (error) {
+        element.focus();
+        element.select();
+        setBanner("Clipboard access was unavailable. The text is selected so it can be copied manually.", "warn");
+      }
+    }
+
+    function downloadTextFile(filename, content) {
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
     }
 
     function renderActions(queue, records) {
@@ -1641,6 +1788,8 @@
           ];
           record.reviewComments = buildReviewComments(record);
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel();
           record.returnNote = generateReturnNote(record);
           record.returnNoteUpdatedAt = currentStampLabel();
           logActivity(`Accepted intake triage for ${record.id} and moved it to Tollgate 3 QC.`);
@@ -1658,6 +1807,8 @@
           record.returnNoteUpdatedAt = currentStampLabel("Sent");
           record.packet = record.packet.map((item) => item.label === "Return-to-owner note" ? { ...item, status: "ok" } : item);
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel("Sent");
           record.summary = [
             "Two must-fix items were preserved for owner remediation.",
             "Return package should keep prior uploads and accepted improvements intact.",
@@ -1673,6 +1824,8 @@
           record.qc = record.qc.map((item) => ({ ...item, status: "ok" }));
           record.reviewComments = record.reviewComments.map((comment) => ({ ...comment, status: "resolved" }));
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel();
           record.returnNote = generateReturnNote(record);
           record.returnNoteUpdatedAt = currentStampLabel();
           record.recommendation = "QC is complete. Build the approval packet and route it using the recommended path.";
@@ -1683,6 +1836,8 @@
         case "route-approvals":
           record.packet = record.packet.map((item) => /Approver list|Evidence index/i.test(item.label) ? { ...item, status: "ok" } : item);
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel();
           logActivity(`Triggered approval routing for ${record.id}. Compliance Leadership and CPC were added to the packet route.`);
           setBanner(`Approval routing kicked off for ${record.id}.`, "ok");
           break;
@@ -1692,6 +1847,8 @@
           record.agentSeverity = "ok";
           record.packet = record.packet.map((item) => item.label === "Publication checklist" ? { ...item, status: "ok" } : item);
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel();
           logActivity(`Marked ${record.id} ready to publish after final approvals were received.`);
           setBanner(`${record.id} moved into the ready-to-publish queue.`, "ok");
           state.activeQueue = "publish";
@@ -1718,6 +1875,8 @@
           record.qc = record.qc.map((item) => item.label === "Renewal date recorded" ? { ...item, status: "ok" } : item);
           record.packet = record.packet.map((item) => item.label === "Renewal date" ? { ...item, status: "ok" } : item);
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel();
           logActivity(`Set the renewal date for ${record.id} and completed the exception tracking record.`);
           setBanner(`Renewal date recorded for ${record.id}.`, "ok");
           break;
@@ -1729,6 +1888,8 @@
           record.qc = record.qc.map((item) => item.label === "Remove staff access" ? { ...item, status: "ok" } : item);
           record.packet = record.packet.map((item) => item.label === "Access removal confirmation" ? { ...item, status: "ok" } : item);
           record.packetDetails = buildPacketDetails(record);
+          record.packetSummary = generatePacketSummary(record);
+          record.packetSummaryUpdatedAt = currentStampLabel();
           logActivity(`Confirmed access removal for ${record.id} before archival.`);
           setBanner(`Access removal confirmed for ${record.id}.`, "ok");
           break;
