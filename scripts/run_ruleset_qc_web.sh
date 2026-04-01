@@ -8,6 +8,13 @@ if [[ ! -f "${ENV_FILE}" ]]; then
   echo "Missing ${ENV_FILE}"
   echo "Create it first with:"
   echo "  cp .env.example .env"
+  echo
+  echo "For the ruleset QC web UI, the required value is:"
+  echo "  GOOGLE_APPLICATION_CREDENTIALS=/absolute/path/to/service-account.json"
+  echo
+  echo "Optional values:"
+  echo "  ANTHROPIC_API_KEY=..."
+  echo "  OPENAI_API_KEY=..."
   exit 1
 fi
 
