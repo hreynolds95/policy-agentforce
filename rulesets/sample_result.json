@@ -1,0 +1,123 @@
+{
+  "document_metadata": {
+    "source": "google_doc",
+    "google_doc_url": "https://docs.google.com/document/d/1quincyWorkingDraftThirdParty/edit",
+    "document_id": "1quincyWorkingDraftThirdParty",
+    "document_title": "Third-Party Compliance Oversight Policy",
+    "document_type": "Policy"
+  },
+  "ruleset_metadata": {
+    "name": "Block Policy on Policies QC",
+    "version": "0.1",
+    "document_type": "Policy"
+  },
+  "run_metadata": {
+    "provider": "anthropic",
+    "model": "claude-3-5-sonnet-latest",
+    "run_timestamp": "2026-04-01T10:35:00-04:00",
+    "output_mode": "findings_and_enhancements"
+  },
+  "summary": {
+    "must_fix_count": 2,
+    "recommended_count": 3,
+    "info_count": 1,
+    "overall_readiness": "needs_revision"
+  },
+  "findings": [
+    {
+      "rule_id": "required_sections",
+      "title": "Required Sections Present",
+      "severity": "must",
+      "status": "fail",
+      "finding": "The draft does not include a clearly labeled Related Documents section.",
+      "evidence": "No heading or clearly identifiable section for related documents was found in the uploaded Google Doc.",
+      "suggested_enhancement": "Add a short Related Documents section near the end of the document.",
+      "suggested_language": "Related Documents: Vendor Due Diligence Standard; Third-Party Risk Procedure."
+    },
+    {
+      "rule_id": "retention_language_specificity",
+      "title": "Retention Language Is Specific",
+      "severity": "must",
+      "status": "fail",
+      "finding": "The retention statement is too generic to be operationally useful.",
+      "evidence": "\"Records will be retained as required by applicable law and company policy.\"",
+      "suggested_enhancement": "Replace the generic statement with language that points to the governing retention schedule or controlling standard.",
+      "suggested_language": "Records and evidence created under this Policy must be retained in accordance with the approved corporate retention schedule and any controlling records management standard."
+    },
+    {
+      "rule_id": "document_purpose_scope_alignment",
+      "title": "Purpose and Scope Are Distinct and Clear",
+      "severity": "must",
+      "status": "pass",
+      "finding": "Purpose and scope are distinguishable and understandable.",
+      "evidence": "The draft includes a short Purpose section and a separate Scope section describing the businesses and activities covered.",
+      "suggested_enhancement": null,
+      "suggested_language": null
+    },
+    {
+      "rule_id": "owner_and_review_cadence",
+      "title": "Owner and Review Cadence Are Explicit",
+      "severity": "must",
+      "status": "pass",
+      "finding": "The owner and annual review expectation are both explicit.",
+      "evidence": "\"Document Owner: Global Compliance Policy Lead\" and \"This Policy will be reviewed at least annually.\"",
+      "suggested_enhancement": null,
+      "suggested_language": null
+    },
+    {
+      "rule_id": "related_documents_consistency",
+      "title": "Related Documents Are Complete and Consistent",
+      "severity": "recommended",
+      "status": "fail",
+      "finding": "The draft references a Standard in the body but does not list it in a dedicated related-documents section.",
+      "evidence": "\"See the Vendor Due Diligence Standard for minimum diligence requirements.\"",
+      "suggested_enhancement": "List the referenced Standard and Procedure together in a consistent format.",
+      "suggested_language": "Related Documents: Vendor Due Diligence Standard; Third-Party Risk Procedure."
+    },
+    {
+      "rule_id": "policy_vs_procedure_language",
+      "title": "Policy Language Avoids Excessive Procedure Detail",
+      "severity": "recommended",
+      "status": "fail",
+      "finding": "One section includes step-by-step instructions that read more like a procedure than a policy requirement.",
+      "evidence": "\"First, the reviewer opens the vendor file. Next, the reviewer updates the checklist. Then, the reviewer emails Legal for sign-off.\"",
+      "suggested_enhancement": "Convert the section into a policy-level expectation and move detailed steps to a procedure or standard.",
+      "suggested_language": "Business teams must complete and document required third-party diligence steps before onboarding, using the approved standard and procedure."
+    },
+    {
+      "rule_id": "obligation_language_clarity",
+      "title": "Requirement Language Is Clear",
+      "severity": "recommended",
+      "status": "fail",
+      "finding": "Some obligation statements use weak language such as 'should consider' where mandatory language may be more appropriate.",
+      "evidence": "\"Business teams should consider enhanced diligence for high-risk vendors.\"",
+      "suggested_enhancement": "Use clear requirement language where the obligation is mandatory.",
+      "suggested_language": "Business teams must perform enhanced diligence for high-risk vendors in accordance with the approved standard."
+    },
+    {
+      "rule_id": "references_to_external_authority",
+      "title": "External Authority References Are Anchored",
+      "severity": "info",
+      "status": "pass",
+      "finding": "The draft references applicable law and regulatory expectations, but the citations remain high level.",
+      "evidence": "\"This Policy supports compliance with applicable anti-corruption and third-party oversight requirements.\"",
+      "suggested_enhancement": null,
+      "suggested_language": null
+    }
+  ],
+  "audit_trail": {
+    "rules_evaluated": 8,
+    "rules_passed": [
+      "document_purpose_scope_alignment",
+      "owner_and_review_cadence",
+      "references_to_external_authority"
+    ],
+    "rules_failed": [
+      "required_sections",
+      "retention_language_specificity",
+      "related_documents_consistency",
+      "policy_vs_procedure_language",
+      "obligation_language_clarity"
+    ]
+  }
+}

@@ -66,6 +66,15 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 - [`example_payloads.json`](./prototypes/example_payloads.json)
   Example request and handoff payloads
 
+### `rulesets/`
+
+- [`RULESET_FORMAT.md`](./rulesets/RULESET_FORMAT.md)
+  Parser contract and authoring format for reusable markdown QC rulesets
+- [`policy_on_policies_qc_ruleset.md`](./rulesets/policy_on_policies_qc_ruleset.md)
+  Reusable markdown QC ruleset for document-owner self-review of Google Docs drafts
+- [`sample_result.json`](./rulesets/sample_result.json)
+  Example normalized output payload for a ruleset-driven QC run
+
 ### `scripts/`
 
 - [`ingest_policy_pdfs.py`](./scripts/ingest_policy_pdfs.py)
@@ -93,6 +102,47 @@ The current quincy concept is intentionally narrow:
 7. quincy prepares the supporting submission artifacts: a change summary and a one-page QC audit trail.
 
 This avoids making owners work through a full governance workflow while still preserving Policy Team standards and keeping the verified Google Doc as the authoritative working draft.
+
+## Ruleset-driven Google Doc QC MVP
+
+The repo now includes a lightweight MVP for a different QC approach:
+
+- a working Google Doc draft remains the source document
+- a reusable markdown ruleset defines the QC checks
+- the owner chooses the LLM provider and model
+- the runner returns normalized JSON and an optional markdown report
+
+Core assets:
+
+- [`rulesets/RULESET_FORMAT.md`](./rulesets/RULESET_FORMAT.md)
+- [`rulesets/policy_on_policies_qc_ruleset.md`](./rulesets/policy_on_policies_qc_ruleset.md)
+- [`rulesets/sample_result.json`](./rulesets/sample_result.json)
+- [`scripts/run_ruleset_qc.py`](./scripts/run_ruleset_qc.py)
+
+Example dry run:
+
+```bash
+python3 scripts/run_ruleset_qc.py \
+  --google-doc-url "https://docs.google.com/document/d/YOUR_DOC_ID/edit" \
+  --ruleset rulesets/policy_on_policies_qc_ruleset.md \
+  --dry-run \
+  --output /tmp/ruleset-qc-dry-run.json
+```
+
+Example live run with Anthropic:
+
+```bash
+export ANTHROPIC_API_KEY="YOUR_KEY"
+export LLM_PROVIDER="auto"
+
+python3 scripts/run_ruleset_qc.py \
+  --google-doc-url "https://docs.google.com/document/d/YOUR_DOC_ID/edit" \
+  --ruleset rulesets/policy_on_policies_qc_ruleset.md \
+  --provider anthropic \
+  --model claude-3-5-sonnet-latest \
+  --output /tmp/ruleset-qc-result.json \
+  --report-output /tmp/ruleset-qc-report.md
+```
 
 ## Policy bot setup
 
