@@ -27,6 +27,7 @@ import re
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -169,8 +170,7 @@ def parse_key_value_line(line: str) -> tuple[str, str] | None:
     return key.strip(), value.strip()
 
 
-def parse_ruleset_markdown(path: Path) -> tuple[RulesetMetadata, list[Rule]]:
-    raw = path.read_text(encoding="utf-8")
+def parse_ruleset_markdown_text(raw: str) -> tuple[RulesetMetadata, list[Rule]]:
     lines = raw.splitlines()
 
     metadata_map: dict[str, str] = {}
@@ -246,6 +246,11 @@ def parse_ruleset_markdown(path: Path) -> tuple[RulesetMetadata, list[Rule]]:
         extra={key: value for key, value in metadata_map.items() if key not in REQUIRED_METADATA_FIELDS},
     )
     return metadata, parsed_rules
+
+
+def parse_ruleset_markdown(path: Path) -> tuple[RulesetMetadata, list[Rule]]:
+    raw = path.read_text(encoding="utf-8")
+    return parse_ruleset_markdown_text(raw)
 
 
 def get_llm_provider(requested_provider: str | None = None) -> str:
@@ -428,6 +433,32 @@ def build_result_payload(document: GoogleDoc, metadata: RulesetMetadata, finding
     }
 
 
+def run_ruleset_qc(
+    google_doc_url: str,
+    ruleset_text: str,
+    provider: str = "auto",
+    model: str = DEFAULT_MODEL,
+    dry_run: bool = False,
+) -> dict[str, Any]:
+    metadata, rules = parse_ruleset_markdown_text(ruleset_text)
+    document = read_google_doc(google_doc_url)
+
+    if dry_run:
+        return {
+            "document_metadata": asdict(document),
+            "ruleset_metadata": asdict(metadata),
+            "rules": [asdict(rule) for rule in rules if rule.enabled],
+        }
+
+    resolved_provider = get_llm_provider(provider)
+    findings = [
+        run_rule(rule, document, metadata, provider=resolved_provider, model=model)
+        for rule in rules
+        if rule.enabled
+    ]
+    return build_result_payload(document, metadata, findings, provider=resolved_provider, model=model)
+
+
 def build_markdown_report(payload: dict) -> str:
     summary = payload["summary"]
     lines = [
@@ -481,26 +512,16 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
     ruleset_path = Path(args.ruleset).expanduser().resolve()
-    metadata, rules = parse_ruleset_markdown(ruleset_path)
-    document = read_google_doc(args.google_doc_url)
+    payload = run_ruleset_qc(
+        google_doc_url=args.google_doc_url,
+        ruleset_text=ruleset_path.read_text(encoding="utf-8"),
+        provider=args.provider,
+        model=args.model,
+        dry_run=args.dry_run,
+    )
 
-    if args.dry_run:
-        payload = {
-            "document_metadata": asdict(document),
-            "ruleset_metadata": asdict(metadata),
-            "rules": [asdict(rule) for rule in rules if rule.enabled],
-        }
-    else:
-        provider = get_llm_provider(args.provider)
-        findings = [
-            run_rule(rule, document, metadata, provider=provider, model=args.model)
-            for rule in rules
-            if rule.enabled
-        ]
-        payload = build_result_payload(document, metadata, findings, provider=provider, model=args.model)
-
-        if args.report_output:
-            Path(args.report_output).write_text(build_markdown_report(payload), encoding="utf-8")
+    if args.report_output and not args.dry_run:
+        Path(args.report_output).write_text(build_markdown_report(payload), encoding="utf-8")
 
     if args.output:
         Path(args.output).write_text(json.dumps(payload, indent=2), encoding="utf-8")

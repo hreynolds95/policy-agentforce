@@ -83,11 +83,19 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
   CLI query tool for grounded policy answers with citations
 - [`policy_bot_web.py`](./scripts/policy_bot_web.py)
   Lightweight local web server for the policy bot chat UI
+- [`run_ruleset_qc.py`](./scripts/run_ruleset_qc.py)
+  Ruleset-driven QC runner for Google Docs drafts using a markdown ruleset and selected LLM provider
+- [`ruleset_qc_web.py`](./scripts/ruleset_qc_web.py)
+  Lightweight local web server for the ruleset-driven QC UI
+- [`run_ruleset_qc_web.sh`](./scripts/run_ruleset_qc_web.sh)
+  Helper script to start the local ruleset QC web UI with `.env` loaded
 
 ### `ui/`
 
 - [`policy_bot_chat.html`](./ui/policy_bot_chat.html)
   Local browser chat interface for querying active Policies and Standards against Snowflake-backed retrieval
+- [`ruleset_qc.html`](./ui/ruleset_qc.html)
+  Local browser interface for Google Doc URL + markdown ruleset upload + QC execution
 
 ## Current experience concept
 
@@ -142,6 +150,18 @@ python3 scripts/run_ruleset_qc.py \
   --model claude-3-5-sonnet-latest \
   --output /tmp/ruleset-qc-result.json \
   --report-output /tmp/ruleset-qc-report.md
+```
+
+Local web UI:
+
+```bash
+./scripts/run_ruleset_qc_web.sh
+```
+
+Then open:
+
+```text
+http://127.0.0.1:8090
 ```
 
 ## Policy bot setup

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quincy ruleset QC</title>
+  <link rel="stylesheet" href="/assets/styles/block-theme-static.css" />
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: rgba(22, 22, 22, 0.95);
+      --panel-2: rgba(15, 15, 15, 0.96);
+      --line: rgba(255, 255, 255, 0.16);
+      --ink: #f2f2f2;
+      --muted: #b7b7b7;
+      --accent: #f2f2f2;
+      --accent-soft: #141414;
+      --ok: #b8ff2c;
+      --ok-soft: #efffcb;
+      --warn-soft: #fff4d5;
+      --danger: var(--color-text-danger);
+      --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at left bottom, #1a1a1a 0 210px, transparent 211px),
+        radial-gradient(circle at right top, #151515 0 190px, transparent 191px),
+        var(--bg);
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .page {
+      max-width: 1520px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .hero, .panel, .card, .finding, .status-banner, .chip, .ghost-btn, .secondary-btn {
+      background: var(--panel);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy {
+      max-width: 900px;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 420px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-body {
+      padding: 18px 20px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .card-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .field, .textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #0f0f0f;
+      color: var(--ink);
+      padding: 12px 14px;
+    }
+
+    .textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .small-textarea {
+      min-height: 110px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .row, .meta-strip, .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .primary-btn, .ghost-btn, .secondary-btn, .small-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #0f0f0f;
+      color: var(--ink);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      text-decoration: none;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: #0a0a0a;
+      border-color: transparent;
+    }
+
+    .small-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .primary-btn:disabled,
+    .ghost-btn:disabled,
+    .secondary-btn:disabled,
+    .small-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .status-banner {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      background: var(--ok-soft);
+      color: #050505;
+      border: 1px solid #b8ff2c;
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      background: #101010;
+      font-size: 13px;
+    }
+
+    .chip.ok {
+      background: var(--ok-soft);
+      border-color: #b8ff2c;
+      color: #050505;
+    }
+
+    .chip.warn {
+      background: var(--warn-soft);
+      border-color: var(--color-border-warning);
+      color: #7b5200;
+    }
+
+    .chip.danger {
+      background: #ffe8e6;
+      border-color: var(--color-border-danger);
+      color: var(--danger);
+    }
+
+    .finding-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .finding {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #101010;
+    }
+
+    .finding.must {
+      background: linear-gradient(180deg, rgba(249, 75, 75, 0.16) 0%, rgba(16, 16, 16, 0.98) 44%, #101010 100%);
+      border-color: var(--color-border-danger);
+    }
+
+    .finding.recommended {
+      background: linear-gradient(180deg, rgba(255, 244, 213, 0.12) 0%, #101010 44%);
+      border-color: var(--color-border-warning);
+    }
+
+    .finding.info {
+      background: linear-gradient(180deg, rgba(184, 255, 44, 0.08) 0%, #101010 44%);
+      border-color: rgba(184, 255, 44, 0.4);
+    }
+
+    .finding-title {
+      font-size: 16px;
+      margin: 8px 0;
+      font-weight: 600;
+    }
+
+    .finding-body {
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    pre.json-shell {
+      margin: 0;
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1180px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Local Ruleset QC</p>
+        <h1>quincy ruleset runner</h1>
+      </div>
+      <div class="row">
+        <button class="ghost-btn" id="loadDefaultBtn" type="button">Load default ruleset</button>
+        <button class="ghost-btn" id="resetBtn" type="button">Reset</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <p class="eyebrow">How It Works</p>
+      <div class="hero-copy">
+        Paste a working Google Doc URL, upload or paste a markdown QC ruleset, choose a provider and model, and run document-owner self-QC. The runner evaluates each rule separately and returns normalized JSON plus a markdown report you can download.
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-header">
+          <p class="eyebrow">Inputs</p>
+          <h2 class="panel-title">Google Doc and ruleset</h2>
+        </div>
+        <div class="panel-body">
+          <div class="card">
+            <div class="card-label">Google Doc URL</div>
+            <input id="googleDocUrl" class="field" type="text" placeholder="https://docs.google.com/document/d/FILE_ID/edit" />
+          </div>
+
+          <div class="card">
+            <div class="card-label">Ruleset file upload</div>
+            <input id="rulesetFile" class="field" type="file" accept=".md,text/markdown,.txt" />
+            <div class="muted" id="rulesetFileName" style="margin-top:10px;">No ruleset file selected yet.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Ruleset markdown</div>
+            <textarea id="rulesetText" class="textarea" placeholder="Paste a markdown ruleset here or load the default template."></textarea>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Provider and model</div>
+            <div class="grid">
+              <div>
+                <div class="card-label">Provider</div>
+                <select id="providerInput" class="field">
+                  <option value="auto" selected>Auto-detect</option>
+                  <option value="anthropic">Anthropic</option>
+                  <option value="openai">OpenAI</option>
+                </select>
+              </div>
+              <div>
+                <div class="card-label">Model</div>
+                <input id="modelInput" class="field" type="text" value="claude-3-5-sonnet-latest" />
+              </div>
+              <label class="row muted">
+                <input id="dryRunInput" type="checkbox" />
+                <span>Dry run only: parse the document and ruleset without calling the LLM</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="primary-btn" id="runBtn" type="button">Run ruleset QC</button>
+            <button class="secondary-btn" id="downloadJsonBtn" type="button" disabled>Download JSON</button>
+            <button class="secondary-btn" id="downloadReportBtn" type="button" disabled>Download report</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="panel-header">
+          <p class="eyebrow">Results</p>
+          <h2 class="panel-title">QC output and audit trail</h2>
+        </div>
+        <div class="panel-body">
+          <div id="statusBanner" class="status-banner">Ready.</div>
+
+          <div class="card">
+            <div class="card-label">Run summary</div>
+            <div class="meta-strip">
+              <span class="chip" id="providerChip">Provider: n/a</span>
+              <span class="chip" id="modelChip">Model: n/a</span>
+              <span class="chip" id="readinessChip">Readiness: n/a</span>
+              <span class="chip" id="findingCountChip">Findings: 0</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Document and ruleset metadata</div>
+            <div class="grid">
+              <textarea id="metadataText" class="textarea small-textarea" readonly spellcheck="false">Run a QC check to view metadata here.</textarea>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Findings</div>
+            <div id="findingsList" class="finding-list">
+              <div class="muted">Findings will appear here after the first run.</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Markdown report</div>
+            <textarea id="reportText" class="textarea" readonly spellcheck="false">No report yet.</textarea>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Raw JSON</div>
+            <pre id="jsonOutput" class="json-shell">No response yet.</pre>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const els = {
+      googleDocUrl: document.getElementById("googleDocUrl"),
+      rulesetFile: document.getElementById("rulesetFile"),
+      rulesetFileName: document.getElementById("rulesetFileName"),
+      rulesetText: document.getElementById("rulesetText"),
+      providerInput: document.getElementById("providerInput"),
+      modelInput: document.getElementById("modelInput"),
+      dryRunInput: document.getElementById("dryRunInput"),
+      runBtn: document.getElementById("runBtn"),
+      loadDefaultBtn: document.getElementById("loadDefaultBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      downloadJsonBtn: document.getElementById("downloadJsonBtn"),
+      downloadReportBtn: document.getElementById("downloadReportBtn"),
+      statusBanner: document.getElementById("statusBanner"),
+      providerChip: document.getElementById("providerChip"),
+      modelChip: document.getElementById("modelChip"),
+      readinessChip: document.getElementById("readinessChip"),
+      findingCountChip: document.getElementById("findingCountChip"),
+      metadataText: document.getElementById("metadataText"),
+      findingsList: document.getElementById("findingsList"),
+      reportText: document.getElementById("reportText"),
+      jsonOutput: document.getElementById("jsonOutput")
+    };
+
+    const state = {
+      lastPayload: null,
+      lastReport: ""
+    };
+
+    function setStatus(message, kind = "ok") {
+      els.statusBanner.textContent = message;
+      if (kind === "error") {
+        els.statusBanner.style.background = "#ffe8e6";
+        els.statusBanner.style.borderColor = "var(--color-border-danger)";
+        els.statusBanner.style.color = "var(--danger)";
+      } else if (kind === "warn") {
+        els.statusBanner.style.background = "var(--warn-soft)";
+        els.statusBanner.style.borderColor = "var(--color-border-warning)";
+        els.statusBanner.style.color = "#7b5200";
+      } else {
+        els.statusBanner.style.background = "var(--ok-soft)";
+        els.statusBanner.style.borderColor = "#b8ff2c";
+        els.statusBanner.style.color = "#050505";
+      }
+    }
+
+    async function loadDefaultRuleset() {
+      try {
+        const response = await fetch("/api/default-ruleset");
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Unable to load the default ruleset.");
+        els.rulesetText.value = data.content || "";
+        els.rulesetFileName.textContent = `Loaded default template: ${data.name}`;
+        setStatus("Default ruleset loaded.", "ok");
+      } catch (error) {
+        setStatus(error.message || "Unable to load the default ruleset.", "error");
+      }
+    }
+
+    function buildRequest() {
+      return {
+        google_doc_url: els.googleDocUrl.value.trim(),
+        ruleset_text: els.rulesetText.value,
+        provider: els.providerInput.value || "auto",
+        model: els.modelInput.value.trim() || "claude-3-5-sonnet-latest",
+        dry_run: els.dryRunInput.checked
+      };
+    }
+
+    async function runQc() {
+      const request = buildRequest();
+      if (!request.google_doc_url) {
+        setStatus("Add a Google Doc URL first.", "error");
+        return;
+      }
+      if (!request.ruleset_text.trim()) {
+        setStatus("Upload or paste a markdown ruleset first.", "error");
+        return;
+      }
+
+      els.runBtn.disabled = true;
+      setStatus(request.dry_run ? "Parsing document and ruleset..." : "Running ruleset QC...", "ok");
+
+      try {
+        const response = await fetch("/api/run", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(request)
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || "Ruleset QC run failed.");
+
+        state.lastPayload = data.payload;
+        state.lastReport = data.report_markdown || "";
+        renderResults(data.payload, data.report_markdown || "");
+        setStatus(request.dry_run ? "Dry run complete." : "Ruleset QC complete.", "ok");
+      } catch (error) {
+        setStatus(error.message || "Ruleset QC run failed.", "error");
+      } finally {
+        els.runBtn.disabled = false;
+      }
+    }
+
+    function renderResults(payload, reportMarkdown) {
+      els.jsonOutput.textContent = JSON.stringify(payload, null, 2);
+      els.reportText.value = reportMarkdown || "No markdown report was generated for this run.";
+
+      if (payload.run_metadata) {
+        els.providerChip.textContent = `Provider: ${payload.run_metadata.provider || "n/a"}`;
+        els.modelChip.textContent = `Model: ${payload.run_metadata.model || "n/a"}`;
+      } else {
+        els.providerChip.textContent = "Provider: dry run";
+        els.modelChip.textContent = "Model: skipped";
+      }
+
+      if (payload.summary) {
+        els.readinessChip.textContent = `Readiness: ${payload.summary.overall_readiness}`;
+        els.readinessChip.className = `chip ${payload.summary.must_fix_count > 0 ? "danger" : payload.summary.recommended_count > 0 ? "warn" : "ok"}`;
+        const total = (payload.summary.must_fix_count || 0) + (payload.summary.recommended_count || 0) + (payload.summary.info_count || 0);
+        els.findingCountChip.textContent = `Findings: ${total}`;
+      } else {
+        els.readinessChip.textContent = "Readiness: dry run";
+        els.readinessChip.className = "chip";
+        els.findingCountChip.textContent = `Rules: ${(payload.rules || []).length}`;
+      }
+
+      els.metadataText.value = buildMetadataText(payload);
+      renderFindings(payload.findings || []);
+      els.downloadJsonBtn.disabled = false;
+      els.downloadReportBtn.disabled = !reportMarkdown;
+    }
+
+    function buildMetadataText(payload) {
+      const documentMetadata = payload.document_metadata || {};
+      const rulesetMetadata = payload.ruleset_metadata || {};
+      const runMetadata = payload.run_metadata || {};
+      const lines = [
+        `Document title: ${documentMetadata.document_title || "Unknown"}`,
+        `Google Doc URL: ${documentMetadata.google_doc_url || "Unknown"}`,
+        `Document ID: ${documentMetadata.document_id || "Unknown"}`,
+        `Ruleset: ${rulesetMetadata.name || "Unknown"} v${rulesetMetadata.version || "Unknown"}`,
+        `Document type: ${rulesetMetadata.document_type || documentMetadata.document_type || "Unknown"}`,
+        `Provider: ${runMetadata.provider || "Dry run"}`,
+        `Model: ${runMetadata.model || "Skipped"}`,
+        `Run timestamp: ${runMetadata.run_timestamp || "Not generated"}`
+      ];
+      return lines.join("\n");
+    }
+
+    function renderFindings(findings) {
+      if (!findings.length) {
+        els.findingsList.innerHTML = '<div class="muted">No findings were returned. In dry run mode, this is expected because the LLM step is skipped.</div>';
+        return;
+      }
+
+      els.findingsList.innerHTML = findings.map((finding) => `
+        <article class="finding ${escapeHtml(finding.severity || "info")}">
+          <div class="row">
+            <span class="chip ${finding.severity === "must" ? "danger" : finding.severity === "recommended" ? "warn" : "ok"}">${escapeHtml(finding.severity || "info")}</span>
+            <span class="chip ${finding.status === "fail" ? "danger" : "ok"}">${escapeHtml(finding.status || "unknown")}</span>
+            <span class="chip">${escapeHtml(finding.rule_id || "rule")}</span>
+          </div>
+          <div class="finding-title">${escapeHtml(finding.title || "Untitled rule")}</div>
+          <div class="finding-body">Finding: ${escapeHtml(finding.finding || "No finding text returned.")}</div>
+          <div class="finding-body">Evidence: ${escapeHtml(finding.evidence || "No evidence returned.")}</div>
+          <div class="finding-body">Suggested enhancement: ${escapeHtml(finding.suggested_enhancement || "None")}</div>
+          <div class="finding-body">Suggested language: ${escapeHtml(finding.suggested_language || "None")}</div>
+        </article>
+      `).join("");
+    }
+
+    function downloadFile(filename, content, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    els.rulesetFile.addEventListener("change", async (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      els.rulesetText.value = text;
+      els.rulesetFileName.textContent = `Loaded file: ${file.name}`;
+      setStatus(`Ruleset file loaded: ${file.name}`, "ok");
+    });
+
+    els.loadDefaultBtn.addEventListener("click", loadDefaultRuleset);
+    els.runBtn.addEventListener("click", runQc);
+    els.resetBtn.addEventListener("click", () => {
+      els.googleDocUrl.value = "";
+      els.rulesetFile.value = "";
+      els.rulesetText.value = "";
+      els.rulesetFileName.textContent = "No ruleset file selected yet.";
+      els.providerInput.value = "auto";
+      els.modelInput.value = "claude-3-5-sonnet-latest";
+      els.dryRunInput.checked = false;
+      els.metadataText.value = "Run a QC check to view metadata here.";
+      els.findingsList.innerHTML = '<div class="muted">Findings will appear here after the first run.</div>';
+      els.reportText.value = "No report yet.";
+      els.jsonOutput.textContent = "No response yet.";
+      els.providerChip.textContent = "Provider: n/a";
+      els.modelChip.textContent = "Model: n/a";
+      els.readinessChip.textContent = "Readiness: n/a";
+      els.readinessChip.className = "chip";
+      els.findingCountChip.textContent = "Findings: 0";
+      els.downloadJsonBtn.disabled = true;
+      els.downloadReportBtn.disabled = true;
+      state.lastPayload = null;
+      state.lastReport = "";
+      setStatus("Ready.", "ok");
+    });
+
+    els.downloadJsonBtn.addEventListener("click", () => {
+      if (!state.lastPayload) return;
+      downloadFile("ruleset-qc-result.json", JSON.stringify(state.lastPayload, null, 2), "application/json;charset=utf-8");
+    });
+
+    els.downloadReportBtn.addEventListener("click", () => {
+      if (!state.lastReport) return;
+      downloadFile("ruleset-qc-report.md", state.lastReport, "text/markdown;charset=utf-8");
+    });
+  </script>
+</body>
+</html>
