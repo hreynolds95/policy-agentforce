@@ -74,6 +74,7 @@
       display: flex;
       gap: 14px;
       flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
     .btn {
@@ -170,6 +171,65 @@
       font-size: 14px;
     }
 
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .task-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 16px;
+    }
+
+    .task-kicker {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .task-card h2 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.08;
+    }
+
+    .task-copy {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .task-points {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .task-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .support-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
     .footer {
       font-size: 14px;
       color: var(--muted);
@@ -185,6 +245,8 @@
     }
 
     @media (max-width: 900px) {
+      .task-grid,
+      .support-grid,
       .grid {
         grid-template-columns: 1fr;
       }
@@ -203,34 +265,81 @@
   <div class="wrap">
     <section class="hero">
       <p class="eyebrow">Policy Agentforce</p>
-      <h1>quincy prototypes and clickable owner experience</h1>
+      <h1>Choose the fastest path to the policy task you need to finish</h1>
       <div class="lede">
-        This repo contains low-fidelity policy lifecycle wireframes, Block-aligned subagent prototypes, and clickable quincy mockups for Block employees proposing changes to Compliance Policies and Standards.
+        These mockups are organized around real jobs to be done for Block employees working with Compliance Policies and Standards: review a draft, manage governance work, or find the answer you need quickly.
       </div>
       <div class="actions">
-        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open quincy mockup</a>
-        <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Open returned-state mockup</a>
-        <a class="btn" href="./mockups/governance_team_mockup.html">Open governance mockup</a>
-        <a class="btn" href="./mockups/policy_bot_demo_mockup.html">Open policy bot demo</a>
+        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Start in quincy</a>
+        <a class="btn secondary" href="./mockups/governance_team_mockup.html">Open governance workspace</a>
+        <a class="btn" href="./mockups/policy_bot_demo_mockup.html">Ask the policy bot</a>
       </div>
     </section>
 
-    <section class="grid">
+    <section class="task-grid">
+      <article class="task-card">
+        <div class="task-kicker">Document Owners</div>
+        <h2>Review a draft in quincy</h2>
+        <div class="task-copy">
+          Use quincy to QC a Google Doc draft, tighten the change summary, and assemble the audit evidence before the document goes back into the current lifecycle.
+        </div>
+        <ul class="task-points">
+          <li>Run annual refresh QC checks</li>
+          <li>Generate change summary and audit trail artifacts</li>
+          <li>See must-fix issues before handoff</li>
+        </ul>
+        <div class="task-actions">
+          <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open annual refresh</a>
+          <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Open returned state</a>
+        </div>
+      </article>
+
+      <article class="task-card">
+        <div class="task-kicker">Governance Team</div>
+        <h2>Run the governance workspace</h2>
+        <div class="task-copy">
+          Move quickly through intake, QC, return-to-owner, packet preparation, and publication readiness with a queue-based control surface.
+        </div>
+        <ul class="task-points">
+          <li>Triage the next record that needs action</li>
+          <li>Resolve comments and export owner notes</li>
+          <li>Prepare approval and publication artifacts</li>
+        </ul>
+        <div class="task-actions">
+          <a class="btn primary" href="./mockups/governance_team_mockup.html">Open governance mockup</a>
+        </div>
+      </article>
+
+      <article class="task-card">
+        <div class="task-kicker">Policy Search</div>
+        <h2>Ask the policy bot</h2>
+        <div class="task-copy">
+          Search approved policy content with a grounded chat experience designed to surface answers, citations, and supporting excerpts quickly.
+        </div>
+        <ul class="task-points">
+          <li>Ask natural-language policy questions</li>
+          <li>Inspect citations and source previews</li>
+          <li>Reuse common questions from history</li>
+        </ul>
+        <div class="task-actions">
+          <a class="btn primary" href="./mockups/policy_bot_demo_mockup.html">Open bot demo</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="support-grid">
       <div class="panel">
-        <h2>What’s in here</h2>
+        <h2>Why this helps</h2>
         <ul>
-          <li>quincy owner and Governance Team wireframes</li>
-          <li>Document Owner annual refresh and return user journeys</li>
-          <li>Subagent prototype specs for policy lifecycle support</li>
-          <li>Workflow state model aligned to the Block Policy on Policies</li>
-          <li>A standalone HTML mockup you can share and review without a build step</li>
-          <li>A static policy chatbot demo plus a local Snowflake-backed chat app</li>
-          <li>A local ruleset-driven QC runner for Google Docs drafts and markdown rule files</li>
+          <li>Faster pathfinding to the right tool for the job</li>
+          <li>Less time spent interpreting mockup names and artifact types</li>
+          <li>Clearer handoff between owner, governance, and search experiences</li>
+          <li>Better alignment to Block’s “give time back” product principle</li>
         </ul>
       </div>
 
       <div class="panel">
-        <h2>Open artifacts</h2>
+        <h2>Supporting artifacts</h2>
         <div class="link-list">
           <a class="link-card" href="./mockups/document_owner_annual_refresh_mockup.html">
             <strong>quincy annual refresh mockup</strong>
@@ -249,11 +358,11 @@
             <span>GitHub Pages-safe chatbot demo with grounded answers, citations, and source preview</span>
           </a>
           <a class="link-card" href="./wireframes/document_owner_annual_refresh_user_story.md">
-            <strong>Annual Refresh User Story</strong>
-            <span>Screen states, statuses, and quincy owner interactions</span>
+            <strong>annual refresh user story</strong>
+            <span>Detailed screen states, statuses, and owner interactions</span>
           </a>
           <a class="link-card" href="./prototypes/README.md">
-            <strong>Subagent Prototype Pack</strong>
+            <strong>subagent prototype pack</strong>
             <span>Top-level agents, subagents, and lifecycle model</span>
           </a>
         </div>
