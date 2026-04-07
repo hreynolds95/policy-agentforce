@@ -35,8 +35,8 @@
 }
 
 :root {
-  --font-sans: "Roboto Mono", "SFMono-Regular", Menlo, monospace;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: "Cash Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "Roboto Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
 
   --color-white: #ffffff;
   --color-black: #000000;
