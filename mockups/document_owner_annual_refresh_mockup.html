@@ -1112,7 +1112,7 @@
             quincy prepared the submission package. Keep using the same verified Google Doc as the working redline, and carry quincy's change summary and QC audit trail into the governance workflow.
           </div>
 
-          <div class="summary-grid">
+        <div class="summary-grid">
             <div class="card">
               <div class="card-label">Submission readiness</div>
               <div class="summary-grid">
@@ -1130,7 +1130,7 @@
                 </div>
                 <div class="mini-stat">
                   <div>
-                    <div class="card-label">Package complete</div>
+                    <div class="card-label">Manual prep removed</div>
                   </div>
                   <div class="mini-stat-value danger" id="packageStatus">Needs action</div>
                 </div>
@@ -1182,8 +1182,8 @@
       <aside class="panel" id="rightPanel">
         <div class="panel-header">
           <div>
-            <p class="eyebrow">Ready to Export</p>
-            <h3 class="panel-title">Submission package</h3>
+            <p class="eyebrow">Prepared for handoff</p>
+            <h3 class="panel-title">Prepared package</h3>
           </div>
         </div>
         <div class="panel-body">
@@ -1197,14 +1197,14 @@
           <div class="readiness">
             <div class="mini-stat">
               <div>
-                <div class="card-label">Current status</div>
+                <div class="card-label">Value unlocked</div>
                 <div id="statusText">Waiting on owner delta</div>
               </div>
               <span class="badge" id="statusBadge">Needs action</span>
             </div>
             <div class="mini-stat">
               <div>
-                <div class="card-label">Ready score</div>
+                <div class="card-label">Confidence to hand off</div>
               </div>
               <div class="mini-stat-value" id="readyScore">0%</div>
             </div>
@@ -1215,7 +1215,7 @@
           </div>
 
           <div class="card">
-            <div class="card-label">What quincy prepares for you</div>
+            <div class="card-label">What quincy already lines up</div>
             <div class="checklist">
               <div class="check-item"><strong>Reference clean draft</strong><span class="check-status" id="pkgClean">Needs action</span></div>
               <div class="check-item"><strong>Verified Google Doc or change summary</strong><span class="check-status" id="pkgRedline">Needs action</span></div>
@@ -1922,25 +1922,25 @@
 
       // Status chips and text
       if (state.submitted) {
-        elements.statusText.textContent = "Submission package ready";
+        elements.statusText.textContent = "Package assembled";
         elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Submission package ready";
         elements.statusChipSecondary.className = "chip ok";
         elements.statusChipMain.textContent = "Ready";
         elements.statusChipMain.className = "chip ok";
-        elements.submitHint.textContent = "Governance can now import the stored package and keep the same verified Google Doc in the workflow.";
+        elements.submitHint.textContent = "Governance can now import the stored package while the same verified Google Doc stays in the workflow.";
         elements.submittedBanner.style.display = "block";
         elements.leftPanel.classList.add("read-only");
       } else if (ready) {
-        elements.statusText.textContent = "Ready for export";
+        elements.statusText.textContent = "Ready to hand off";
         elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
         elements.statusChipSecondary.textContent = "Ready for export";
         elements.statusChipSecondary.className = "chip ok";
         elements.statusChipMain.textContent = "Ready";
         elements.statusChipMain.className = "chip ok";
-        elements.submitHint.textContent = "Required fixes are cleared. quincy can now prepare the submission package.";
+        elements.submitHint.textContent = "Required fixes are cleared. quincy has removed the remaining handoff prep.";
       } else if (state.qcRun) {
         elements.statusText.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusBadge.textContent = mustOpen > 0 ? "Needs action" : "In review";
@@ -1950,8 +1950,8 @@
         elements.statusChipMain.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusChipMain.className = mustOpen > 0 ? "chip danger" : "chip warn";
         elements.submitHint.textContent = mustOpen > 0
-          ? "Resolve required fixes before package export becomes available."
-          : "Add any final edits, then export the package.";
+          ? "Resolve required fixes and quincy will finish the handoff package."
+          : "Add any final edits, then export the package quincy prepared.";
       } else if (canRunQc()) {
         elements.statusText.textContent = "In review";
         elements.statusBadge.textContent = "In review";
@@ -1960,7 +1960,7 @@
         elements.statusChipSecondary.className = "chip warn";
         elements.statusChipMain.textContent = "In review";
         elements.statusChipMain.className = "chip warn";
-        elements.submitHint.textContent = "Run quincy QC to see required fixes and recommendations.";
+        elements.submitHint.textContent = "Run quincy QC so it can surface fixes and prepare the next handoff steps.";
       } else if (state.refreshType) {
         elements.statusText.textContent = "In review";
         elements.statusBadge.textContent = "In review";

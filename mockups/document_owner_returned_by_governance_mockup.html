@@ -708,7 +708,7 @@
                   <div class="mini-stat-value danger" id="mustCount">2</div>
                 </div>
                 <div class="mini-stat">
-                  <div><div class="card-label">Package complete</div></div>
+                  <div><div class="card-label">Rework removed</div></div>
                   <div class="mini-stat-value danger" id="packageStatus">No</div>
                 </div>
                 <div class="mini-stat">
@@ -716,7 +716,7 @@
                   <div class="mini-stat-value ok">3</div>
                 </div>
                 <div class="mini-stat">
-                  <div><div class="card-label">Ready score</div></div>
+                  <div><div class="card-label">Confidence to hand back</div></div>
                   <div class="mini-stat-value" id="readyScore">62%</div>
                 </div>
               </div>
@@ -791,7 +791,7 @@ Published versions of this Policy and associated approval evidence must be retai
         </div>
         <div class="panel-body">
           <div class="card">
-            <div class="card-label">What will go back</div>
+            <div class="card-label">What quincy will carry back</div>
             <div class="checklist">
               <div class="check-item"><strong>Prior clean draft</strong><span class="check-status ok">Attached</span></div>
               <div class="check-item"><strong>Verified Google Doc link confirmed</strong><span class="check-status ok" id="redlinePkg">Attached</span></div>
@@ -965,22 +965,22 @@ Published versions of this Policy and associated approval evidence must be retai
         els.statusChipMain.className = "chip ok";
         els.statusChipSecondary.textContent = "Waiting on Governance";
         els.statusChipSecondary.className = "chip warn";
-        els.submitHint.textContent = "Governance now owns the next step.";
+        els.submitHint.textContent = "Governance owns the next step now, and quincy already preserved the resubmission package.";
         els.successBanner.style.display = "block";
         els.resubmitBtn.disabled = true;
       } else if (ready) {
-        els.statusChipMain.textContent = "Ready to export";
+        els.statusChipMain.textContent = "Ready to hand back";
         els.statusChipMain.className = "chip ok";
         els.statusChipSecondary.textContent = "All returned items fixed";
         els.statusChipSecondary.className = "chip ok";
-        els.submitHint.textContent = "You can export this package and attach it for governance review.";
+        els.submitHint.textContent = "You can export this package now and avoid rebuilding the prior submission by hand.";
         els.successBanner.style.display = "block";
       } else {
         els.statusChipMain.textContent = "Returned by Governance";
         els.statusChipMain.className = "chip danger";
         els.statusChipSecondary.textContent = `${open} required fixes open`;
         els.statusChipSecondary.className = "chip warn";
-        els.submitHint.textContent = "Fix the returned items, then let quincy prepare the updated package without rebuilding everything.";
+        els.submitHint.textContent = "Fix the returned items, then let quincy carry the preserved package back with only the new updates.";
         els.successBanner.style.display = "none";
       }
     }
