@@ -16,7 +16,7 @@
       --accent: #111111;
       --accent-soft: #f7f8fa;
       --ok: #b8ff2c;
-      --ok-soft: #efffcb;
+      --ok-soft: #fbfee9;
       --danger: var(--color-text-danger);
       --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
     }
@@ -241,9 +241,10 @@
       padding: 12px 14px;
       border-radius: 16px;
       font-size: 14px;
-      background: var(--ok-soft);
-      color: #050505;
-      border: 1px solid #b8ff2c;
+      background: #ffffff;
+      color: #2f4d00;
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      box-shadow: inset 4px 0 0 #b8ff2c;
     }
 
     .answer {
@@ -261,9 +262,9 @@
     }
 
     .chip.ok {
-      background: var(--ok-soft);
+      background: #ffffff;
       border-color: #b8ff2c;
-      color: #050505;
+      color: #2f4d00;
     }
 
     .citation {
@@ -320,8 +321,8 @@
       padding: 18px;
       border-radius: 18px;
       border: 1px solid rgba(17, 17, 17, 0.16);
-      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
-      box-shadow: 0 12px 28px rgba(17, 17, 17, 0.08);
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
     }
 
     .next-step-title {
@@ -799,9 +800,10 @@
 
     function setStatus(message, ok = true) {
       els.statusBanner.textContent = message;
-      els.statusBanner.style.background = ok ? "var(--ok-soft)" : "#ffe8e6";
-      els.statusBanner.style.borderColor = ok ? "#b8ff2c" : "var(--color-border-danger)";
-      els.statusBanner.style.color = ok ? "#050505" : "var(--danger)";
+      els.statusBanner.style.background = ok ? "#ffffff" : "#ffe8e6";
+      els.statusBanner.style.borderColor = ok ? "rgba(17, 17, 17, 0.12)" : "var(--color-border-danger)";
+      els.statusBanner.style.boxShadow = ok ? "inset 4px 0 0 #b8ff2c" : "none";
+      els.statusBanner.style.color = ok ? "#2f4d00" : "var(--danger)";
     }
 
     function summarize(text) {

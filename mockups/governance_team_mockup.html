@@ -20,7 +20,7 @@
       --danger: var(--color-text-danger);
       --danger-soft: #ffe4e1;
       --ok: #b8ff2c;
-      --ok-soft: #efffcb;
+      --ok-soft: #fbfee9;
       --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
     }
 
@@ -270,9 +270,9 @@
     }
 
     .queue-row.selected {
-      border-color: #b8ff2c;
-      box-shadow: inset 0 0 0 1px #b8ff2c;
-      background: linear-gradient(180deg, #fcffef 0%, #ffffff 100%);
+      border-color: rgba(17, 17, 17, 0.14);
+      box-shadow: inset 4px 0 0 #b8ff2c, 0 10px 22px rgba(26, 31, 27, 0.06);
+      background: #ffffff;
     }
 
     .queue-row:hover {
@@ -303,8 +303,8 @@
     }
 
     .chip.ok {
-      background: var(--ok-soft);
-      color: #050505;
+      background: #ffffff;
+      color: #2f4d00;
       border-color: #b8ff2c;
     }
 
@@ -475,8 +475,9 @@
     }
 
     .review-comment.resolved {
-      background: linear-gradient(180deg, #f8ffea 0%, #ffffff 100%);
-      border-color: #b8ff2c;
+      background: #ffffff;
+      border-color: rgba(17, 17, 17, 0.12);
+      box-shadow: inset 4px 0 0 #b8ff2c;
     }
 
     .comment-head,
@@ -579,8 +580,9 @@
     }
 
     .agent-card.ok {
-      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
-      border-color: #b8ff2c;
+      background: #ffffff;
+      border-color: rgba(17, 17, 17, 0.12);
+      box-shadow: inset 4px 0 0 #b8ff2c;
       color: #050505;
     }
 
@@ -627,9 +629,10 @@
 
     .status-banner.show.ok {
       display: block;
-      background: var(--ok-soft);
-      border: 1px solid #b8ff2c;
-      color: #050505;
+      background: #ffffff;
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      box-shadow: inset 4px 0 0 #b8ff2c;
+      color: #2f4d00;
     }
 
     .status-banner.show.warn {
@@ -652,8 +655,8 @@
       padding: 18px;
       border-radius: 18px;
       border: 1px solid rgba(17, 17, 17, 0.16);
-      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
-      box-shadow: 0 12px 28px rgba(17, 17, 17, 0.08);
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
     }
 
     .next-step-title {
