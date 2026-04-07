@@ -951,9 +951,9 @@
     <section class="notification">
       <div>
         <strong>Annual review due in 14 days</strong>
-        <div>Open the verified editable Google Doc from LogicGate, make your proposed edits there, then use quincy to run Policy on Policies QC and prepare submission artifacts.</div>
+        <div>Open the verified editable Google Doc from LogicGate, make the proposed edits there, then let quincy review the draft and prepare the owner package around it.</div>
       </div>
-      <button class="secondary-btn" id="focusRefresh">Open quincy workspace</button>
+      <button class="secondary-btn" id="focusRefresh">Open prepared workspace</button>
     </section>
 
     <section class="hero">
@@ -966,7 +966,7 @@
         <div class="chips">
           <span class="chip">Tier 2</span>
           <span class="chip danger" id="statusChipMain">Needs action</span>
-          <span class="chip danger" id="statusChipSecondary">Awaiting owner input</span>
+          <span class="chip danger" id="statusChipSecondary">Waiting on owner delta</span>
         </div>
       </div>
       <div class="meta-grid">
@@ -1091,11 +1091,11 @@
           <div class="card">
             <div class="card-label">Time saver</div>
             <div class="side-note">
-              LogicGate already knows the owner, delegate, tier, domain, due date, related documents, and prior approval route. quincy asks only for the delta and reuses the same verified Google Doc as the working redline.
+              LogicGate already supplied the owner, delegate, tier, domain, due date, related documents, and prior approval route. quincy asks only for the delta and reuses the same verified Google Doc as the working redline.
             </div>
           </div>
 
-          <button class="primary-btn" id="runQcBtn">Run quincy QC</button>
+          <button class="primary-btn" id="runQcBtn">Let quincy review the draft</button>
         </div>
       </section>
 
@@ -1109,7 +1109,7 @@
         </div>
         <div class="panel-body">
           <div class="submitted-banner" id="submittedBanner">
-            Submission package prepared. Keep using the same verified Google Doc as the working redline, and attach quincy's change summary and QC audit trail in the governance workflow.
+            quincy prepared the submission package. Keep using the same verified Google Doc as the working redline, and carry quincy's change summary and QC audit trail into the governance workflow.
           </div>
 
           <div class="summary-grid">
@@ -1190,15 +1190,15 @@
           <div class="next-step-card">
             <div class="card-label">Next best action</div>
             <h4 class="next-step-title" id="nextActionTitle">Capture what changed</h4>
-            <div class="next-step-copy" id="nextActionCopy">Start by selecting the refresh type and summarizing the proposed changes from the verified Google Doc draft.</div>
-            <button class="primary-btn" id="nextActionBtn" type="button">Start review</button>
+            <div class="next-step-copy" id="nextActionCopy">Start by selecting the refresh type and summarizing the proposed changes so quincy can prepare the QC pass around your Google Doc draft.</div>
+            <button class="primary-btn" id="nextActionBtn" type="button">Start with the delta</button>
           </div>
 
           <div class="readiness">
             <div class="mini-stat">
               <div>
                 <div class="card-label">Current status</div>
-                <div id="statusText">Awaiting owner input</div>
+                <div id="statusText">Waiting on owner delta</div>
               </div>
               <span class="badge" id="statusBadge">Needs action</span>
             </div>
@@ -1215,7 +1215,7 @@
           </div>
 
           <div class="card">
-            <div class="card-label">What quincy prepares</div>
+            <div class="card-label">What quincy prepares for you</div>
             <div class="checklist">
               <div class="check-item"><strong>Reference clean draft</strong><span class="check-status" id="pkgClean">Needs action</span></div>
               <div class="check-item"><strong>Verified Google Doc or change summary</strong><span class="check-status" id="pkgRedline">Needs action</span></div>
@@ -1228,7 +1228,7 @@
             <summary>
               <div>
                 <div class="card-label">Generated artifacts</div>
-                <div class="subtle">Expand when you need the exported summary and audit trail.</div>
+                <div class="subtle">Expand when you need to review or export the prepared summary and audit trail.</div>
               </div>
             </summary>
             <div class="disclosure-body">
@@ -1813,8 +1813,8 @@
       }
 
       elements.nextActionTitle.textContent = "Capture what changed";
-      elements.nextActionCopy.textContent = "Start by selecting the refresh type and summarizing the proposed changes from the verified Google Doc draft.";
-      elements.nextActionBtn.textContent = "Start review";
+      elements.nextActionCopy.textContent = "Start by selecting the refresh type and summarizing the proposed changes so quincy can prepare the QC pass around your Google Doc draft.";
+      elements.nextActionBtn.textContent = "Start with the delta";
     }
 
     // ── Upload labels ───────────────────────────────────────────────
@@ -1970,10 +1970,10 @@
         elements.statusChipMain.textContent = "In review";
         elements.statusChipMain.className = "chip warn";
       } else {
-        elements.statusText.textContent = "Awaiting owner input";
+        elements.statusText.textContent = "Waiting on owner delta";
         elements.statusBadge.textContent = "Needs action";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Awaiting owner input";
+        elements.statusChipSecondary.textContent = "Waiting on owner delta";
         elements.statusChipSecondary.className = "chip danger";
         elements.statusChipMain.textContent = "Needs action";
         elements.statusChipMain.className = "chip danger";

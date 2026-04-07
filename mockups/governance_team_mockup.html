@@ -739,7 +739,7 @@
         <div>
           <p class="eyebrow">Governance operating model</p>
           <div class="hero-copy">
-            This mockup shows how Compliance Governance could triage intake, complete Tollgate 3 QC, route approvals, return packages to owners, and publish approved Policies and Standards while keeping LogicGate as the system of record.
+            This mockup shows how Compliance Governance could bring the next record forward, complete Tollgate 3 QC, prepare owner notes and packet summaries, and keep approved Policies and Standards moving while LogicGate remains the system of record.
           </div>
         </div>
         <div class="hero-actions">
@@ -820,7 +820,7 @@
           <div class="next-step-card">
             <div class="card-label">Next best action</div>
             <h3 class="next-step-title" id="queueNextActionTitle">Choose a record to work</h3>
-            <div class="next-step-copy" id="queueNextActionCopy">Select a record from the active queue and the governance workspace will surface the recommended action for that record.</div>
+            <div class="next-step-copy" id="queueNextActionCopy">Select a record from the active queue and the governance workspace will surface the recommended action, owner note, and packet work that are already ready to move.</div>
             <div class="action-row">
               <button class="primary-btn" id="queueNextActionBtn" type="button">Select first record</button>
             </div>
@@ -839,7 +839,7 @@
             <div class="card-label">Queue actions</div>
             <div class="action-grid">
               <div class="action-row" id="stageActions"></div>
-              <div class="mono" id="bulkHint">Select a record to enable stage actions and governance handoffs.</div>
+              <div class="mono" id="bulkHint">Select a record and the workspace will unlock the next governance actions automatically.</div>
             </div>
           </div>
 
@@ -922,15 +922,15 @@
             <summary>
               <div>
                 <div class="card-label">Approval packet summary</div>
-                <div class="mono">Expand to generate or export the one-page packet summary.</div>
+                <div class="mono">Expand to prepare or export the one-page packet summary.</div>
               </div>
             </summary>
             <div class="disclosure-body">
-              <div class="mono" id="packetSummaryMeta">Generate a one-page packet summary from the current governance state.</div>
+              <div class="mono" id="packetSummaryMeta">Prepare a one-page packet summary from the current governance state.</div>
               <div class="export-shell">
                 <textarea class="export-area" id="packetSummaryText" spellcheck="false"></textarea>
                 <div class="action-row">
-                  <button class="small-btn" id="generatePacketSummaryBtn">Generate summary</button>
+                  <button class="small-btn" id="generatePacketSummaryBtn">Prepare summary</button>
                   <button class="small-btn" id="copyPacketSummaryBtn">Copy summary</button>
                   <button class="small-btn" id="downloadPacketSummaryBtn">Download summary</button>
                 </div>
@@ -942,14 +942,14 @@
             <summary>
               <div>
                 <div class="card-label">Return-to-owner note</div>
-                <div class="mono">Expand to draft or export the owner note.</div>
+                <div class="mono">Expand to prepare or export the owner note.</div>
               </div>
             </summary>
             <div class="disclosure-body">
-              <div class="mono" id="returnNoteMeta">Generate a note from the open QC findings and reviewer comments.</div>
+              <div class="mono" id="returnNoteMeta">Prepare a note from the open QC findings and reviewer comments.</div>
               <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
               <div class="action-row" style="margin-top: 10px;">
-                <button class="small-btn" id="generateReturnNoteBtn">Generate note</button>
+                <button class="small-btn" id="generateReturnNoteBtn">Prepare note</button>
                 <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
                 <button class="small-btn" id="downloadReturnNoteBtn">Download note</button>
               </div>
@@ -1595,7 +1595,7 @@
       if (!queue || !record) {
         els.queueNextActionTitle.textContent = records.length ? "Choose a record to work" : "No records in this view";
         els.queueNextActionCopy.textContent = records.length
-          ? "Select a record from the queue and the workspace will surface the best governance action to take next."
+          ? "Select a record from the queue and the workspace will surface the best governance action, owner note, and packet work to move next."
           : "Adjust the queue or filters to bring records back into view.";
         els.queueNextActionBtn.textContent = records.length ? "Select first record" : "Review filters";
         els.queueNextActionBtn.disabled = !records.length;
@@ -1636,9 +1636,9 @@
         els.packetChecklist.innerHTML = "";
         els.reviewComments.innerHTML = "";
         els.packetDrilldown.innerHTML = "";
-        els.packetSummaryMeta.textContent = "Generate a one-page packet summary from the current governance state.";
+        els.packetSummaryMeta.textContent = "Prepare a one-page packet summary from the current governance state.";
         els.packetSummaryText.value = "";
-        els.returnNoteMeta.textContent = "Generate a note from the open QC findings and reviewer comments.";
+        els.returnNoteMeta.textContent = "Prepare a note from the open QC findings and reviewer comments.";
         els.returnNoteText.value = "";
         els.recommendedAction.textContent = "Select a queue record to view guidance.";
         return;

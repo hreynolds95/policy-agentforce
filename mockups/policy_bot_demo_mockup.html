@@ -354,12 +354,12 @@
     <section class="hero">
       <p class="eyebrow">Demo Mode</p>
       <div class="hero-copy">
-        This is a GitHub Pages-safe mockup of the employee policy chatbot. It simulates grounded answers, citations, and source previews using demo data so you can share the experience without Snowflake access, API keys, or a local server.
+        This is a GitHub Pages-safe mockup of the employee policy chatbot. It simulates grounded answers, citations, and source previews using demo data so you can show how quincy retrieves approved content and prepares a reusable answer without Snowflake access, API keys, or a local server.
       </div>
       <div class="next-step-card">
         <div class="card-label">Next best action</div>
         <h2 class="next-step-title" id="botNextActionTitle">Start with a policy question</h2>
-        <div class="muted" id="botNextActionCopy">Use one of the seeded prompts or type a natural-language question to see how quincy returns grounded answers and citations.</div>
+        <div class="muted" id="botNextActionCopy">Use one of the seeded prompts or type a natural-language question to see how quincy prepares a grounded answer with citations.</div>
         <div class="row">
           <button class="primary-btn" id="botNextActionBtn" type="button">Load sample prompt</button>
         </div>
@@ -382,7 +382,7 @@
             <summary>
               <div>
                 <div class="card-label">Advanced filters</div>
-                <div class="muted">Expand to narrow scope, provider, and model.</div>
+                <div class="muted">Expand only if you need to narrow scope, provider, or model.</div>
               </div>
             </summary>
             <div class="filter-grid disclosure-body">
@@ -438,7 +438,7 @@
             <summary>
               <div>
                 <div class="card-label">Conversation history</div>
-                <div class="muted">Expand to revisit prior demo questions.</div>
+                <div class="muted">Expand to reuse prior demo questions instead of starting over.</div>
               </div>
             </summary>
             <div id="historyList" class="history-list disclosure-body">
@@ -447,7 +447,7 @@
           </details>
 
           <div class="row">
-            <button id="askBtn" class="primary-btn" type="button">Ask quincy</button>
+            <button id="askBtn" class="primary-btn" type="button">Get grounded answer</button>
             <button id="jsonBtn" class="secondary-btn" type="button">Show raw JSON</button>
           </div>
         </div>
@@ -459,7 +459,7 @@
           <h2 class="panel-title">Grounded answer and citations</h2>
         </div>
         <div class="panel-body">
-          <div id="statusBanner" class="status-banner">Demo ready.</div>
+          <div id="statusBanner" class="status-banner">Demo ready. quincy can prepare a grounded answer from the sample prompts.</div>
 
           <div class="card">
             <div class="card-label">Answer</div>
@@ -770,7 +770,7 @@
 
       if (!question) {
         els.botNextActionTitle.textContent = "Start with a policy question";
-        els.botNextActionCopy.textContent = "Use one of the seeded prompts or type a natural-language question to see how quincy returns grounded answers and citations.";
+        els.botNextActionCopy.textContent = "Use one of the seeded prompts or type a natural-language question to see how quincy prepares a grounded answer with citations.";
         els.botNextActionBtn.textContent = "Load sample prompt";
         els.botNextActionBtn.dataset.mode = "sample";
         return;
@@ -778,8 +778,8 @@
 
       if (!state.lastPayload) {
         els.botNextActionTitle.textContent = "Run the search";
-        els.botNextActionCopy.textContent = "The question is ready. Ask quincy to retrieve grounded excerpts and build a cited answer.";
-        els.botNextActionBtn.textContent = "Ask quincy";
+        els.botNextActionCopy.textContent = "The question is ready. Let quincy retrieve grounded excerpts and prepare a cited answer.";
+        els.botNextActionBtn.textContent = "Get grounded answer";
         els.botNextActionBtn.dataset.mode = "ask";
         return;
       }
@@ -870,7 +870,7 @@
       renderSourcePreview(null, null);
       state.activeHistoryId = null;
       state.lastPayload = null;
-      setStatus("Demo ready.", true);
+      setStatus("Demo ready. quincy can prepare a grounded answer from the sample prompts.", true);
       renderHistory();
       updateBotNextAction();
     });
