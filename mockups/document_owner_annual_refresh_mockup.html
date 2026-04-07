@@ -9,21 +9,21 @@
   <script src="../assets/js/qc-engine.js"></script>
   <style>
     :root {
-      --bg: #050505;
-      --panel: rgba(22, 22, 22, 0.95);
-      --panel-2: rgba(15, 15, 15, 0.96);
-      --ink: #f2f2f2;
-      --muted: #b7b7b7;
-      --line: rgba(255, 255, 255, 0.16);
-      --accent: #f2f2f2;
-      --accent-soft: #141414;
+      --bg: #eef2f4;
+      --panel: rgba(255, 255, 255, 0.96);
+      --panel-2: #f7f8fa;
+      --ink: #111111;
+      --muted: #6c737a;
+      --line: rgba(17, 17, 17, 0.12);
+      --accent: #111111;
+      --accent-soft: #f7f8fa;
       --warn: var(--color-text-warning);
       --warn-soft: #fff4d5;
       --danger: var(--color-text-danger);
       --danger-soft: #ffe4e1;
       --ok: #b8ff2c;
       --ok-soft: #efffcb;
-      --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
+      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
       --radius: 18px;
     }
 
@@ -32,8 +32,8 @@
       margin: 0;
       font-family: var(--font-sans);
       background:
-        radial-gradient(circle at left bottom, #1a1a1a 0 210px, transparent 211px),
-        radial-gradient(circle at right top, #151515 0 190px, transparent 191px),
+        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
+        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
         var(--bg);
       color: var(--ink);
     }
@@ -82,7 +82,7 @@
     .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
       padding: 12px 18px;
       cursor: pointer;
@@ -91,7 +91,7 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #0a0a0a;
+      color: #ffffff;
       border-color: transparent;
     }
 
@@ -112,7 +112,7 @@
     }
 
     .notification {
-      background: rgba(22, 22, 22, 0.95);
+      background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 18px 20px;
@@ -181,12 +181,12 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #0a0a0a;
+      color: #ffffff;
       border-color: transparent;
     }
 
     input, textarea, select {
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 4px;
@@ -194,12 +194,12 @@
 
     .step-arrow.active {
       background: var(--accent);
-      color: #0a0a0a;
+      color: #ffffff;
     }
 
     .step-arrow.active .step-num {
-      background: #0a0a0a;
-      color: var(--ink);
+      background: #ffffff;
+      color: #111111;
     }
 
     .meta-label, .card-label {
@@ -242,7 +242,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: #101010;
+      background: #ffffff;
       font-size: 14px;
     }
 
@@ -400,15 +400,15 @@
       align-items: flex-start;
       gap: 10px;
       padding: 10px 12px;
-      background: #101010;
+      background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 14px;
       cursor: pointer;
     }
 
     label.option.active {
-      border-color: rgba(255, 255, 255, 0.26);
-      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(17, 17, 17, 0.2);
+      background: #f3f6f8;
     }
 
     .textarea, .input-display {
@@ -416,7 +416,7 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
     }
 
@@ -431,8 +431,8 @@
     }
 
     .upload-box {
-      background: #101010;
-      border: 1.5px dashed rgba(255, 255, 255, 0.2);
+      background: var(--panel-2);
+      border: 1.5px dashed rgba(17, 17, 17, 0.16);
       border-radius: 16px;
       padding: 14px;
     }
@@ -458,18 +458,18 @@
     .finding {
       border-radius: 18px;
       border: 1px solid var(--line);
-      background: #101010;
+      background: var(--panel);
       overflow: hidden;
     }
 
     .finding.must {
       border-color: var(--color-border-danger);
-      background: linear-gradient(180deg, rgba(249, 75, 75, 0.18) 0%, rgba(22, 22, 22, 0.96) 44%, #101010 100%);
+      background: linear-gradient(180deg, rgba(249, 75, 75, 0.16) 0%, rgba(255, 255, 255, 0.98) 54%, #fff7f6 100%);
     }
 
     .finding.reco {
       border-color: var(--line);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, #101010 40%);
+      background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
     }
 
     .finding-head {
@@ -652,7 +652,7 @@
       resize: vertical;
       border-radius: 14px;
       border: 1px solid var(--line);
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
       padding: 12px 14px;
       line-height: 1.55;

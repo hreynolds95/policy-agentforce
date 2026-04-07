@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="./assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: #050505;
-      --panel: rgba(22, 22, 22, 0.95);
-      --line: rgba(255, 255, 255, 0.16);
-      --ink: #f2f2f2;
-      --muted: #b7b7b7;
-      --accent: #f2f2f2;
-      --accent-soft: #141414;
-      --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
+      --bg: #eef2f4;
+      --panel: rgba(255, 255, 255, 0.96);
+      --line: rgba(18, 18, 18, 0.1);
+      --ink: #111111;
+      --muted: #6c737a;
+      --accent: #111111;
+      --accent-soft: #f7f8fa;
+      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -23,8 +23,8 @@
       font-family: var(--font-sans);
       color: var(--ink);
       background:
-        radial-gradient(circle at left bottom, #1a1a1a 0 210px, transparent 211px),
-        radial-gradient(circle at right top, #151515 0 190px, transparent 191px),
+        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
+        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
         var(--bg);
     }
 
@@ -85,14 +85,14 @@
       text-decoration: none;
       border: 1px solid var(--line);
       color: var(--ink);
-      background: #0f0f0f;
+      background: #ffffff;
       transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
 
     .btn.primary {
       background: var(--accent);
       border-color: transparent;
-      color: #0a0a0a;
+      color: #ffffff;
     }
 
     .btn.secondary {
@@ -104,7 +104,7 @@
     .btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-      border-color: rgba(255, 255, 255, 0.24);
+      border-color: rgba(17, 17, 17, 0.18);
     }
 
     .grid {
@@ -146,7 +146,7 @@
       display: block;
       text-decoration: none;
       color: inherit;
-      background: #101010;
+      background: #ffffff;
       border: 1px solid var(--line);
       border-radius: 8px;
       padding: 16px 18px;
@@ -155,7 +155,7 @@
 
     .link-card:hover {
       transform: translateY(-1px);
-      border-color: rgba(255, 255, 255, 0.24);
+      border-color: rgba(17, 17, 17, 0.18);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
     }
 
@@ -177,7 +177,7 @@
     }
 
     code {
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 8px;

@@ -7,21 +7,21 @@
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: #050505;
-      --panel: rgba(22, 22, 22, 0.95);
-      --panel-2: rgba(15, 15, 15, 0.96);
-      --line: rgba(255, 255, 255, 0.16);
-      --ink: #f2f2f2;
-      --muted: #b7b7b7;
-      --accent: #f2f2f2;
-      --accent-soft: #141414;
+      --bg: #eef2f4;
+      --panel: rgba(255, 255, 255, 0.96);
+      --panel-2: #f7f8fa;
+      --line: rgba(17, 17, 17, 0.12);
+      --ink: #111111;
+      --muted: #6c737a;
+      --accent: #111111;
+      --accent-soft: #f7f8fa;
       --warn: var(--color-text-warning);
       --warn-soft: #fff4d5;
       --danger: var(--color-text-danger);
       --danger-soft: #ffe4e1;
       --ok: #b8ff2c;
       --ok-soft: #efffcb;
-      --shadow: 0 10px 32px rgba(0, 0, 0, 0.5);
+      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
     }
 
     * { box-sizing: border-box; }
@@ -30,8 +30,8 @@
       font-family: var(--font-sans);
       color: var(--ink);
       background:
-        radial-gradient(circle at left bottom, #1a1a1a 0 210px, transparent 211px),
-        radial-gradient(circle at right top, #151515 0 190px, transparent 191px),
+        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
+        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
         var(--bg);
     }
 
@@ -71,7 +71,7 @@
     .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
       padding: 12px 18px;
       cursor: pointer;
@@ -80,7 +80,7 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #0a0a0a;
+      color: #ffffff;
       border-color: transparent;
     }
 
@@ -101,7 +101,7 @@
     }
 
     .banner {
-      background: rgba(22, 22, 22, 0.95);
+      background: var(--panel);
       border: 1px solid rgba(249, 75, 75, 0.32);
       border-radius: 8px;
       padding: 18px 20px;
@@ -156,7 +156,7 @@
       border-radius: 999px;
       border: 1px solid var(--line);
       padding: 10px 14px;
-      background: #101010;
+      background: #ffffff;
       font-size: 14px;
     }
 
@@ -261,12 +261,12 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #0a0a0a;
+      color: #ffffff;
       border-color: transparent;
     }
 
     input, textarea, select {
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 4px;
@@ -279,7 +279,7 @@
       border-radius: 14px;
       border: 1px solid var(--line);
       padding: 12px 14px;
-      background: #0f0f0f;
+      background: #ffffff;
       color: var(--ink);
     }
 
@@ -289,8 +289,8 @@
     }
 
     .upload-box {
-      background: #101010;
-      border: 1.5px dashed rgba(255, 255, 255, 0.2);
+      background: var(--panel-2);
+      border: 1.5px dashed rgba(17, 17, 17, 0.16);
       border-radius: 16px;
       padding: 14px;
     }
@@ -318,7 +318,7 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 10px;
-      background: #101010;
+      background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
@@ -334,7 +334,7 @@
       padding: 6px 10px;
       font-size: 12px;
       border: 1px solid var(--line);
-      background: #101010;
+      background: var(--panel-2);
       white-space: nowrap;
     }
 
