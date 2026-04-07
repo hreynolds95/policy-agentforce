@@ -962,8 +962,8 @@
         </div>
         <div class="chips">
           <span class="chip">Tier 2</span>
-          <span class="chip warn" id="statusChipMain">Annual refresh due</span>
-          <span class="chip" id="statusChipSecondary">Draft check not started</span>
+          <span class="chip danger" id="statusChipMain">Needs action</span>
+          <span class="chip danger" id="statusChipSecondary">Awaiting owner input</span>
         </div>
       </div>
       <div class="meta-grid">
@@ -1129,7 +1129,7 @@
                   <div>
                     <div class="card-label">Package complete</div>
                   </div>
-                  <div class="mini-stat-value danger" id="packageStatus">No</div>
+                  <div class="mini-stat-value danger" id="packageStatus">Needs action</div>
                 </div>
                 <div class="mini-stat">
                   <div>
@@ -1195,9 +1195,9 @@
             <div class="mini-stat">
               <div>
                 <div class="card-label">Current status</div>
-                <div id="statusText">Draft check not started</div>
+                <div id="statusText">Awaiting owner input</div>
               </div>
-              <span class="badge" id="statusBadge">Open</span>
+              <span class="badge" id="statusBadge">Needs action</span>
             </div>
             <div class="mini-stat">
               <div>
@@ -1214,10 +1214,10 @@
           <div class="card">
             <div class="card-label">What quincy prepares</div>
             <div class="checklist">
-              <div class="check-item"><strong>Reference clean draft</strong><span class="check-status" id="pkgClean">Missing</span></div>
-              <div class="check-item"><strong>Verified Google Doc or change summary</strong><span class="check-status" id="pkgRedline">Missing</span></div>
-              <div class="check-item"><strong>Proposed change summary</strong><span class="check-status" id="pkgExplanation">Missing</span></div>
-              <div class="check-item"><strong>QC audit trail</strong><span class="check-status" id="pkgQc">Not generated</span></div>
+              <div class="check-item"><strong>Reference clean draft</strong><span class="check-status" id="pkgClean">Needs action</span></div>
+              <div class="check-item"><strong>Verified Google Doc or change summary</strong><span class="check-status" id="pkgRedline">Needs action</span></div>
+              <div class="check-item"><strong>Proposed change summary</strong><span class="check-status" id="pkgExplanation">Needs action</span></div>
+              <div class="check-item"><strong>QC audit trail</strong><span class="check-status" id="pkgQc">Needs action</span></div>
             </div>
           </div>
 
@@ -1621,24 +1621,24 @@
           // Check if a linked finding was resolved
           const linkedFinding = state.findings.find(f => f.checkTarget === item.id);
           if (linkedFinding && !linkedFinding.resolved && item.status !== "pass") {
-            statusText = "Needs fix";
+            statusText = "Needs action";
             statusClass = "danger";
           } else {
-            statusText = "Complete";
+            statusText = "Ready";
             statusClass = "ok";
           }
         } else if (item.status === "fail") {
           // Check if the linked finding has been resolved
           const linkedFinding = state.findings.find(f => f.checkTarget === item.id);
           if (linkedFinding && linkedFinding.resolved) {
-            statusText = "Resolved";
+            statusText = "Ready";
             statusClass = "ok";
           } else {
-            statusText = "Needs fix";
+            statusText = "Needs action";
             statusClass = "danger";
           }
         } else {
-          statusText = "Review";
+          statusText = "In review";
           statusClass = "warn";
         }
 
@@ -1827,7 +1827,7 @@
       setPackageLine(elements.pkgClean, state.uploads.clean);
       setPackageLine(elements.pkgRedline, state.uploads.redline || state.uploads["change-summary"]);
       setPackageLine(elements.pkgExplanation, elements.changeSummary.value.trim().length > 0);
-      elements.pkgQc.textContent = state.qcRun ? "Generated" : "Not generated";
+      elements.pkgQc.textContent = state.qcRun ? "Ready" : "Needs action";
       elements.pkgQc.className = "check-status " + (state.qcRun ? "ok" : "danger");
     }
 
@@ -1866,7 +1866,7 @@
     }
 
     function setPackageLine(el, ok) {
-      el.textContent = ok ? "Included" : "Missing";
+      el.textContent = ok ? "Ready" : "Needs action";
       el.className = "check-status " + (ok ? "ok" : "danger");
     }
 
@@ -1893,7 +1893,7 @@
       // Counts
       elements.mustCount.textContent = state.qcRun ? mustOpen : "—";
       elements.recoCount.textContent = state.qcRun ? recoOpen : "—";
-      elements.packageStatus.textContent = packageComplete ? "Yes" : "No";
+      elements.packageStatus.textContent = packageComplete ? "Ready" : "Needs action";
       elements.packageStatus.className = "mini-stat-value " + (packageComplete ? "ok" : "danger");
       elements.mustCount.className = "mini-stat-value " + (state.qcRun ? (mustOpen === 0 ? "ok" : "danger") : "danger");
       elements.recoCount.className = "mini-stat-value " + (state.qcRun ? (recoOpen === 0 ? "ok" : "warn") : "warn");
@@ -1919,51 +1919,61 @@
 
       // Status chips and text
       if (state.submitted) {
-        elements.statusText.textContent = "Package exported";
-        elements.statusBadge.textContent = "Exported";
+        elements.statusText.textContent = "Submission package ready";
+        elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Package exported";
+        elements.statusChipSecondary.textContent = "Submission package ready";
         elements.statusChipSecondary.className = "chip ok";
-        elements.statusChipMain.textContent = "quincy package ready";
+        elements.statusChipMain.textContent = "Ready";
         elements.statusChipMain.className = "chip ok";
         elements.submitHint.textContent = "Governance can now import the stored package and keep the same verified Google Doc in the workflow.";
         elements.submittedBanner.style.display = "block";
         elements.leftPanel.classList.add("read-only");
       } else if (ready) {
-        elements.statusText.textContent = "Ready to export";
+        elements.statusText.textContent = "Ready for export";
         elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Ready to export";
+        elements.statusChipSecondary.textContent = "Ready for export";
         elements.statusChipSecondary.className = "chip ok";
+        elements.statusChipMain.textContent = "Ready";
+        elements.statusChipMain.className = "chip ok";
         elements.submitHint.textContent = "Required fixes are cleared. quincy can now prepare the submission package.";
       } else if (state.qcRun) {
-        elements.statusText.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
-        elements.statusBadge.textContent = mustOpen > 0 ? "Updates needed" : "QC complete";
+        elements.statusText.textContent = mustOpen > 0 ? "Needs action" : "In review";
+        elements.statusBadge.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs owner updates" : "QC complete";
+        elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusChipSecondary.className = mustOpen > 0 ? "chip danger" : "chip warn";
+        elements.statusChipMain.textContent = mustOpen > 0 ? "Needs action" : "In review";
+        elements.statusChipMain.className = mustOpen > 0 ? "chip danger" : "chip warn";
         elements.submitHint.textContent = mustOpen > 0
           ? "Resolve required fixes before package export becomes available."
           : "Add any final edits, then export the package.";
       } else if (canRunQc()) {
-        elements.statusText.textContent = "Files uploaded";
-        elements.statusBadge.textContent = "Ready to run QC";
+        elements.statusText.textContent = "In review";
+        elements.statusBadge.textContent = "In review";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Files uploaded";
+        elements.statusChipSecondary.textContent = "Ready to run QC";
         elements.statusChipSecondary.className = "chip warn";
+        elements.statusChipMain.textContent = "In review";
+        elements.statusChipMain.className = "chip warn";
         elements.submitHint.textContent = "Run quincy QC to see required fixes and recommendations.";
       } else if (state.refreshType) {
-        elements.statusText.textContent = "Refresh type captured";
-        elements.statusBadge.textContent = "In progress";
+        elements.statusText.textContent = "In review";
+        elements.statusBadge.textContent = "In review";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Refresh type captured";
+        elements.statusChipSecondary.textContent = "Owner input in progress";
         elements.statusChipSecondary.className = "chip warn";
+        elements.statusChipMain.textContent = "In review";
+        elements.statusChipMain.className = "chip warn";
       } else {
-        elements.statusText.textContent = "Draft check not started";
-        elements.statusBadge.textContent = "Open";
+        elements.statusText.textContent = "Awaiting owner input";
+        elements.statusBadge.textContent = "Needs action";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Draft check not started";
+        elements.statusChipSecondary.textContent = "Awaiting owner input";
         elements.statusChipSecondary.className = "chip danger";
+        elements.statusChipMain.textContent = "Needs action";
+        elements.statusChipMain.className = "chip danger";
       }
 
       // ── Flow strip progression ──

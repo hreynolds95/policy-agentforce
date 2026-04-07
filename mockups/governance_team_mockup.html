@@ -1686,7 +1686,7 @@
     }
 
     function statusLabel(status) {
-      return status === "ok" ? "Complete" : status === "warn" ? "Needs review" : "Must fix";
+      return status === "ok" ? "Ready" : status === "warn" ? "In review" : "Needs action";
     }
 
     function statusChipKind(status) {
@@ -1821,7 +1821,7 @@
             </div>
             <div class="stack-chips">
               <span class="chip ${statusChipKind(comment.severity)}">${statusLabel(comment.severity)}</span>
-              <span class="chip ${comment.status === "resolved" ? "ok" : "info"}">${comment.status === "resolved" ? "Resolved" : "Open"}</span>
+              <span class="chip ${comment.status === "resolved" ? "ok" : "warn"}">${comment.status === "resolved" ? "Ready" : "In review"}</span>
             </div>
           </div>
           <div class="comment-body">${comment.comment}</div>
