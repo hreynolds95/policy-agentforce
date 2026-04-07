@@ -310,6 +310,22 @@
       line-height: 1.5;
     }
 
+    .next-step-card {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
+    }
+
+    .next-step-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.15;
+    }
+
     @media (max-width: 1120px) {
       .layout {
         grid-template-columns: 1fr;
@@ -334,6 +350,14 @@
       <p class="eyebrow">Demo Mode</p>
       <div class="hero-copy">
         This is a GitHub Pages-safe mockup of the employee policy chatbot. It simulates grounded answers, citations, and source previews using demo data so you can share the experience without Snowflake access, API keys, or a local server.
+      </div>
+      <div class="next-step-card">
+        <div class="card-label">Next best action</div>
+        <h2 class="next-step-title" id="botNextActionTitle">Start with a policy question</h2>
+        <div class="muted" id="botNextActionCopy">Use one of the seeded prompts or type a natural-language question to see how quincy returns grounded answers and citations.</div>
+        <div class="row">
+          <button class="primary-btn" id="botNextActionBtn" type="button">Load sample prompt</button>
+        </div>
       </div>
     </section>
 
@@ -582,7 +606,10 @@
       historyList: document.getElementById("historyList"),
       sourcePreview: document.getElementById("sourcePreview"),
       previewTitleChip: document.getElementById("previewTitleChip"),
-      previewSectionChip: document.getElementById("previewSectionChip")
+      previewSectionChip: document.getElementById("previewSectionChip"),
+      botNextActionTitle: document.getElementById("botNextActionTitle"),
+      botNextActionCopy: document.getElementById("botNextActionCopy"),
+      botNextActionBtn: document.getElementById("botNextActionBtn")
     };
 
     const state = {
@@ -636,6 +663,7 @@
       saveHistoryEntry(request, payload);
       renderPayload(payload, showJsonOnly);
       setStatus("Demo answer ready.", true);
+      updateBotNextAction();
     }
 
     function renderPayload(payload, showJsonOnly = false) {
@@ -652,6 +680,7 @@
       els.jsonOutput.textContent = JSON.stringify(payload, null, 2);
       renderCitations(payload.citations || []);
       renderHistory();
+      updateBotNextAction();
     }
 
     function renderCitations(citations) {
@@ -730,6 +759,40 @@
       `).join("");
     }
 
+    function updateBotNextAction() {
+      const question = els.questionInput.value.trim();
+      const citations = state.lastPayload ? (state.lastPayload.citations || []) : [];
+
+      if (!question) {
+        els.botNextActionTitle.textContent = "Start with a policy question";
+        els.botNextActionCopy.textContent = "Use one of the seeded prompts or type a natural-language question to see how quincy returns grounded answers and citations.";
+        els.botNextActionBtn.textContent = "Load sample prompt";
+        els.botNextActionBtn.dataset.mode = "sample";
+        return;
+      }
+
+      if (!state.lastPayload) {
+        els.botNextActionTitle.textContent = "Run the search";
+        els.botNextActionCopy.textContent = "The question is ready. Ask quincy to retrieve grounded excerpts and build a cited answer.";
+        els.botNextActionBtn.textContent = "Ask quincy";
+        els.botNextActionBtn.dataset.mode = "ask";
+        return;
+      }
+
+      if (citations.length) {
+        els.botNextActionTitle.textContent = "Review the cited source";
+        els.botNextActionCopy.textContent = "The answer is ready. Jump to the citations and inspect the source preview before reusing the answer.";
+        els.botNextActionBtn.textContent = "Jump to citations";
+        els.botNextActionBtn.dataset.mode = "citations";
+        return;
+      }
+
+      els.botNextActionTitle.textContent = "Try a seeded sample prompt";
+      els.botNextActionCopy.textContent = "This prompt did not return demo citations. Use one of the seeded prompts to walk through the full grounded answer flow.";
+      els.botNextActionBtn.textContent = "Load sample prompt";
+      els.botNextActionBtn.dataset.mode = "sample";
+    }
+
     function setStatus(message, ok = true) {
       els.statusBanner.textContent = message;
       els.statusBanner.style.background = ok ? "var(--ok-soft)" : "#ffe8e6";
@@ -755,7 +818,31 @@
     document.querySelectorAll("[data-question]").forEach((button) => {
       button.addEventListener("click", () => {
         els.questionInput.value = button.dataset.question;
+        state.lastPayload = null;
+        updateBotNextAction();
       });
+    });
+
+    els.questionInput.addEventListener("input", () => {
+      state.lastPayload = null;
+      updateBotNextAction();
+    });
+
+    els.botNextActionBtn.addEventListener("click", () => {
+      const mode = els.botNextActionBtn.dataset.mode;
+      if (mode === "sample") {
+        els.questionInput.value = "What policy governs third-party due diligence?";
+        state.lastPayload = null;
+        updateBotNextAction();
+        return;
+      }
+      if (mode === "ask") {
+        askQuestion(false);
+        return;
+      }
+      if (mode === "citations") {
+        document.getElementById("citationList").scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     });
 
     els.askBtn.addEventListener("click", () => askQuestion(false));
@@ -779,6 +866,7 @@
       state.lastPayload = null;
       setStatus("Demo ready.", true);
       renderHistory();
+      updateBotNextAction();
     });
 
     els.historyList.addEventListener("click", (event) => {
@@ -805,6 +893,8 @@
       const index = Number(button.dataset.previewIndex);
       renderSourcePreview((state.lastPayload.citations || [])[index], index);
     });
+
+    updateBotNextAction();
   </script>
 </body>
 </html>

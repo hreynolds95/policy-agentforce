@@ -646,6 +646,27 @@
       color: var(--danger);
     }
 
+    .next-step-card {
+      display: grid;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
+    }
+
+    .next-step-title {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.15;
+    }
+
+    .next-step-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     .maintenance-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -791,6 +812,15 @@
         </div>
         <div class="panel-body">
           <div class="status-banner" id="statusBanner"></div>
+
+          <div class="next-step-card">
+            <div class="card-label">Next best action</div>
+            <h3 class="next-step-title" id="queueNextActionTitle">Choose a record to work</h3>
+            <div class="next-step-copy" id="queueNextActionCopy">Select a record from the active queue and the governance workspace will surface the recommended action for that record.</div>
+            <div class="action-row">
+              <button class="primary-btn" id="queueNextActionBtn" type="button">Select first record</button>
+            </div>
+          </div>
 
           <div class="queue-table-head">
             <div>Record ID</div>
@@ -1231,7 +1261,10 @@
       docTypeFilter: document.getElementById("docTypeFilter"),
       tierFilter: document.getElementById("tierFilter"),
       statusBanner: document.getElementById("statusBanner"),
-      stageActions: document.getElementById("stageActions")
+      stageActions: document.getElementById("stageActions"),
+      queueNextActionTitle: document.getElementById("queueNextActionTitle"),
+      queueNextActionCopy: document.getElementById("queueNextActionCopy"),
+      queueNextActionBtn: document.getElementById("queueNextActionBtn")
     };
 
     function readSubmissionPackages() {
@@ -1354,6 +1387,23 @@
       });
       document.getElementById("bulkActionBtn").addEventListener("click", () => {
         setBanner("Bulk actions would apply to the visible queue selection in a production build.", "warn");
+      });
+      els.queueNextActionBtn.addEventListener("click", () => {
+        const visible = getVisibleRecords();
+        const record = getSelectedRecord() || visible[0];
+        if (!record) {
+          setBanner("No record is available for action in the current queue.", "warn");
+          return;
+        }
+
+        const primaryAction = getActionsForQueue(record.queue).find((action) => action.primary) || getActionsForQueue(record.queue)[0];
+        if (!primaryAction) {
+          setBanner(`No primary action is configured for ${record.id}.`, "warn");
+          return;
+        }
+
+        state.selectedRecordId = record.id;
+        handleAction(primaryAction.id, record.id);
       });
       els.searchInput.addEventListener("input", (event) => {
         state.search = event.target.value.trim().toLowerCase();
@@ -1533,6 +1583,26 @@
       }
 
       renderActions(queue, records);
+      renderQueueNextAction(queue, records);
+    }
+
+    function renderQueueNextAction(queue, records) {
+      const record = getSelectedRecord() || records[0] || null;
+      if (!queue || !record) {
+        els.queueNextActionTitle.textContent = records.length ? "Choose a record to work" : "No records in this view";
+        els.queueNextActionCopy.textContent = records.length
+          ? "Select a record from the queue and the workspace will surface the best governance action to take next."
+          : "Adjust the queue or filters to bring records back into view.";
+        els.queueNextActionBtn.textContent = records.length ? "Select first record" : "Review filters";
+        els.queueNextActionBtn.disabled = !records.length;
+        return;
+      }
+
+      const primaryAction = getActionsForQueue(record.queue).find((action) => action.primary) || getActionsForQueue(record.queue)[0];
+      els.queueNextActionTitle.textContent = `${record.id}: ${primaryAction ? primaryAction.label : "Review record"}`;
+      els.queueNextActionCopy.textContent = record.recommendation;
+      els.queueNextActionBtn.textContent = primaryAction ? primaryAction.label : "Review record";
+      els.queueNextActionBtn.disabled = false;
     }
 
     function stageChipKind(queueId) {

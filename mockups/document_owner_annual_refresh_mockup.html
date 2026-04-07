@@ -897,6 +897,27 @@
       margin-left: 8px;
     }
 
+    .next-step-card {
+      border-radius: 18px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, #f7ffe7 0%, #ffffff 100%);
+      display: grid;
+      gap: 10px;
+    }
+
+    .next-step-title {
+      font-size: 18px;
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .next-step-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     @media (max-width: 1200px) {
       .layout {
         grid-template-columns: 1fr;
@@ -1163,6 +1184,13 @@
           </div>
         </div>
         <div class="panel-body">
+          <div class="next-step-card">
+            <div class="card-label">Next best action</div>
+            <h4 class="next-step-title" id="nextActionTitle">Capture what changed</h4>
+            <div class="next-step-copy" id="nextActionCopy">Start by selecting the refresh type and summarizing the proposed changes from the verified Google Doc draft.</div>
+            <button class="primary-btn" id="nextActionBtn" type="button">Start review</button>
+          </div>
+
           <div class="readiness">
             <div class="mini-stat">
               <div>
@@ -1329,6 +1357,9 @@
       submitHint: document.getElementById("submitHint"),
       statusChipMain: document.getElementById("statusChipMain"),
       statusChipSecondary: document.getElementById("statusChipSecondary"),
+      nextActionTitle: document.getElementById("nextActionTitle"),
+      nextActionCopy: document.getElementById("nextActionCopy"),
+      nextActionBtn: document.getElementById("nextActionBtn"),
       findingList: document.getElementById("findingList"),
       activityLog: document.getElementById("activityLog"),
       pkgClean: document.getElementById("pkgClean"),
@@ -1460,6 +1491,7 @@
         bd.classList.toggle("visible");
         elements.toggleBreakdown.textContent = bd.classList.contains("visible") ? "Hide score breakdown" : "Show score breakdown";
       });
+      elements.nextActionBtn.addEventListener("click", handleNextAction);
     }
 
     // ── QC Run (with animated loading) ──────────────────────────────
@@ -1701,6 +1733,87 @@
       updateUI();
     }
 
+    function handleNextAction() {
+      const mustOpen = getOpenCount("must");
+      const packageComplete = state.uploads.clean
+        && (state.uploads.redline || state.uploads["change-summary"])
+        && elements.changeSummary.value.trim().length > 0
+        && state.qcRun;
+      const ready = state.qcRun && mustOpen === 0 && packageComplete;
+
+      if (state.submitted) {
+        window.location.href = "./governance_team_mockup.html";
+        return;
+      }
+
+      if (ready) {
+        openSubmitModal();
+        return;
+      }
+
+      if (state.qcRun && mustOpen > 0) {
+        elements.findingList.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      if (canRunQc()) {
+        runQc();
+        return;
+      }
+
+      document.getElementById("refreshTypeList").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    function updateNextActionCard({ ready, packageComplete, mustOpen }) {
+      if (state.submitted) {
+        elements.nextActionTitle.textContent = "Open the governance handoff";
+        elements.nextActionCopy.textContent = "The quincy package is exported. Governance can now import the change summary and QC audit trail while keeping the same verified Google Doc in the workflow.";
+        elements.nextActionBtn.textContent = "Open governance prototype";
+        return;
+      }
+
+      if (ready) {
+        elements.nextActionTitle.textContent = "Export the submission package";
+        elements.nextActionCopy.textContent = "Required fixes are cleared and the package is complete. Export the change summary and QC audit trail so the record can move forward.";
+        elements.nextActionBtn.textContent = "Export package";
+        return;
+      }
+
+      if (state.qcRun && mustOpen > 0) {
+        elements.nextActionTitle.textContent = "Resolve required fixes";
+        elements.nextActionCopy.textContent = `${mustOpen} must-fix item${mustOpen === 1 ? "" : "s"} still block export. Focus the findings list and clear those first.`;
+        elements.nextActionBtn.textContent = "Go to must-fix items";
+        return;
+      }
+
+      if (state.qcRun) {
+        elements.nextActionTitle.textContent = "Finish the package";
+        elements.nextActionCopy.textContent = packageComplete
+          ? "QC is complete. Review any optional recommendations, then export the package."
+          : "QC is complete, but the package still needs required artifacts before it can be exported.";
+        elements.nextActionBtn.textContent = packageComplete ? "Review export package" : "Complete package";
+        return;
+      }
+
+      if (canRunQc()) {
+        elements.nextActionTitle.textContent = "Run quincy QC";
+        elements.nextActionCopy.textContent = "The core owner inputs are in place. Run the checklist now to surface must-fix items and recommended enhancements.";
+        elements.nextActionBtn.textContent = "Run QC now";
+        return;
+      }
+
+      if (state.refreshType || elements.changeSummary.value.trim()) {
+        elements.nextActionTitle.textContent = "Attach the working draft";
+        elements.nextActionCopy.textContent = "Add the reference clean draft and verified Google Doc link so quincy can evaluate the proposed changes.";
+        elements.nextActionBtn.textContent = "Finish required inputs";
+        return;
+      }
+
+      elements.nextActionTitle.textContent = "Capture what changed";
+      elements.nextActionCopy.textContent = "Start by selecting the refresh type and summarizing the proposed changes from the verified Google Doc draft.";
+      elements.nextActionBtn.textContent = "Start review";
+    }
+
     // ── Upload labels ───────────────────────────────────────────────
     function updateUploadLabels() {
       document.getElementById("cleanStatus").textContent = state.uploads.clean ? "Uploaded: policy_clean_v3.docx" : "Not uploaded";
@@ -1775,6 +1888,7 @@
         && elements.changeSummary.value.trim().length > 0
         && state.qcRun;
       const ready = state.qcRun && mustOpen === 0 && packageComplete;
+      updateNextActionCard({ ready, packageComplete, mustOpen });
 
       // Counts
       elements.mustCount.textContent = state.qcRun ? mustOpen : "—";
