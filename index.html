@@ -44,6 +44,31 @@
       color: var(--ink);
     }
 
+    .hero-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 8px;
+    }
+
+    .hero-brand {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 14px;
+      border: 1px solid rgba(17, 17, 17, 0.1);
+      border-radius: 999px;
+      background: rgba(247, 248, 250, 0.92);
+    }
+
+    .hero-brand-logo {
+      display: block;
+      width: auto;
+      height: 26px;
+    }
+
     .eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.14em;
@@ -288,14 +313,26 @@
       .hero {
         padding: 28px 22px;
       }
+
+      .hero-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="hero">
-      <p class="eyebrow">Policy Agentforce</p>
-      <h1>Choose the fastest path to the policy task you need to finish</h1>
+      <div class="hero-head">
+        <div>
+          <p class="eyebrow">Policy Agentforce</p>
+          <h1>Choose the fastest path to the policy task you need to finish</h1>
+        </div>
+        <div class="hero-brand" aria-label="Block logo">
+          <img class="hero-brand-logo" src="./assets/images/block-lockup-black-no-padding.png" alt="Block" />
+        </div>
+      </div>
       <div class="lede">
         These mockups are organized around the jobs Block employees need to finish quickly: review a draft with context already pulled forward, move the next governance record without extra hunting, or get a grounded answer with citations ready to reuse.
       </div>
