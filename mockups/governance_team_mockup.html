@@ -339,6 +339,40 @@
       padding: 14px;
     }
 
+    .disclosure {
+      overflow: hidden;
+    }
+
+    .disclosure summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .disclosure summary::after {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .disclosure[open] summary::after {
+      content: "−";
+    }
+
+    .disclosure-body {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
     .ghost-btn, .secondary-btn, .small-btn, .queue-btn, .field, .search, .chip,
     .meta-card, .mini-stat, .queue-row, .panel, .summary-card, .summary-item,
     .check-item, .agent-card, .review-comment, .packet-detail, .note-area {
@@ -775,10 +809,15 @@
             </div>
           </div>
 
-          <div class="summary-card">
-            <div class="card-label">Governance activity log</div>
-            <div class="activity" id="activityLog"></div>
-          </div>
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Governance activity log</div>
+                <div class="mono">Expand for the full operational timeline.</div>
+              </div>
+            </summary>
+            <div class="activity disclosure-body" id="activityLog"></div>
+          </details>
         </div>
       </main>
 
@@ -798,20 +837,27 @@
             <ul class="agent-bullets" id="agentSummary"></ul>
           </div>
 
-          <div class="summary-card">
-            <div class="card-label">Owner submission package</div>
-            <div class="mono" id="submissionPackageMeta">No quincy submission package is attached to this record yet.</div>
-            <div class="checklist" id="submissionPackageChecklist"></div>
-            <div class="action-row" id="submissionPackageLinks"></div>
-            <div class="export-shell">
-              <div class="card-label">Owner change summary</div>
-              <textarea class="export-area" id="ownerChangeSummaryText" readonly spellcheck="false"></textarea>
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Owner submission package</div>
+                <div class="mono">Expand to inspect owner artifacts and supporting evidence.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
+              <div class="mono" id="submissionPackageMeta">No quincy submission package is attached to this record yet.</div>
+              <div class="checklist" id="submissionPackageChecklist"></div>
+              <div class="action-row" id="submissionPackageLinks"></div>
+              <div class="export-shell">
+                <div class="card-label">Owner change summary</div>
+                <textarea class="export-area" id="ownerChangeSummaryText" readonly spellcheck="false"></textarea>
+              </div>
+              <div class="export-shell">
+                <div class="card-label">QC audit trail</div>
+                <textarea class="export-area" id="ownerQcAuditText" readonly spellcheck="false"></textarea>
+              </div>
             </div>
-            <div class="export-shell">
-              <div class="card-label">QC audit trail</div>
-              <textarea class="export-area" id="ownerQcAuditText" readonly spellcheck="false"></textarea>
-            </div>
-          </div>
+          </details>
 
           <div class="summary-card">
             <div class="card-label">QC checklist workspace</div>
@@ -828,34 +874,53 @@
             <div class="comment-list" id="reviewComments"></div>
           </div>
 
-          <div class="summary-card">
-            <div class="card-label">Approval packet drill-down</div>
-            <div class="packet-drilldown" id="packetDrilldown"></div>
-          </div>
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Approval packet drill-down</div>
+                <div class="mono">Expand when you need artifact-level readiness detail.</div>
+              </div>
+            </summary>
+            <div class="packet-drilldown disclosure-body" id="packetDrilldown"></div>
+          </details>
 
-          <div class="summary-card">
-            <div class="card-label">Approval packet summary</div>
-            <div class="mono" id="packetSummaryMeta">Generate a one-page packet summary from the current governance state.</div>
-            <div class="export-shell">
-              <textarea class="export-area" id="packetSummaryText" spellcheck="false"></textarea>
-              <div class="action-row">
-                <button class="small-btn" id="generatePacketSummaryBtn">Generate summary</button>
-                <button class="small-btn" id="copyPacketSummaryBtn">Copy summary</button>
-                <button class="small-btn" id="downloadPacketSummaryBtn">Download summary</button>
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Approval packet summary</div>
+                <div class="mono">Expand to generate or export the one-page packet summary.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
+              <div class="mono" id="packetSummaryMeta">Generate a one-page packet summary from the current governance state.</div>
+              <div class="export-shell">
+                <textarea class="export-area" id="packetSummaryText" spellcheck="false"></textarea>
+                <div class="action-row">
+                  <button class="small-btn" id="generatePacketSummaryBtn">Generate summary</button>
+                  <button class="small-btn" id="copyPacketSummaryBtn">Copy summary</button>
+                  <button class="small-btn" id="downloadPacketSummaryBtn">Download summary</button>
+                </div>
               </div>
             </div>
-          </div>
+          </details>
 
-          <div class="summary-card">
-            <div class="card-label">Return-to-owner note</div>
-            <div class="mono" id="returnNoteMeta">Generate a note from the open QC findings and reviewer comments.</div>
-            <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
-            <div class="action-row" style="margin-top: 10px;">
-              <button class="small-btn" id="generateReturnNoteBtn">Generate note</button>
-              <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
-              <button class="small-btn" id="downloadReturnNoteBtn">Download note</button>
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Return-to-owner note</div>
+                <div class="mono">Expand to draft or export the owner note.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
+              <div class="mono" id="returnNoteMeta">Generate a note from the open QC findings and reviewer comments.</div>
+              <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
+              <div class="action-row" style="margin-top: 10px;">
+                <button class="small-btn" id="generateReturnNoteBtn">Generate note</button>
+                <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
+                <button class="small-btn" id="downloadReturnNoteBtn">Download note</button>
+              </div>
             </div>
-          </div>
+          </details>
 
           <div class="summary-card">
             <div class="card-label">Recommended next action</div>

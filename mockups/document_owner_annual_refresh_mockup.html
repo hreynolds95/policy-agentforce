@@ -389,6 +389,38 @@
       padding: 16px;
     }
 
+    .disclosure {
+      overflow: hidden;
+    }
+
+    .disclosure summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .disclosure summary::after {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .disclosure[open] summary::after {
+      content: "−";
+    }
+
+    .disclosure-body {
+      margin-top: 14px;
+    }
+
     .radio-list, .check-list {
       display: grid;
       gap: 10px;
@@ -1161,8 +1193,14 @@
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-label">Generated artifacts</div>
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Generated artifacts</div>
+                <div class="subtle">Expand when you need the exported summary and audit trail.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
             <div class="artifact-meta" id="artifactMeta">Run quincy QC to generate the change summary and one-page QC audit trail that travel with the same verified Google Doc redline.</div>
             <div class="stack">
               <div>
@@ -1183,23 +1221,34 @@
               </div>
               <a class="secondary-btn link-btn" href="./governance_team_mockup.html">Open governance prototype</a>
             </div>
-          </div>
+            </div>
+          </details>
 
-          <div class="card">
-            <div class="card-label">Owner time savers</div>
-            <div class="footer-actions">
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Owner time savers</div>
+                <div class="subtle">Quick actions that reduce manual rework.</div>
+              </div>
+            </summary>
+            <div class="footer-actions disclosure-body">
               <button class="secondary-btn" id="fillDemo">Auto-fill owner summary</button>
               <button class="ghost-btn" id="bulkAccept">Accept all recommended</button>
               <button class="ghost-btn" id="simulateEvidence">Attach stakeholder evidence</button>
             </div>
-          </div>
+          </details>
 
-          <div class="card">
-            <div class="card-label">Activity log</div>
-            <div class="activity" id="activityLog">
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Activity log</div>
+                <div class="subtle">Expand to inspect the full demo timeline.</div>
+              </div>
+            </summary>
+            <div class="activity disclosure-body" id="activityLog">
               <div class="activity-item">Waiting for the proposer to open quincy and review the verified Google Doc draft.</div>
             </div>
-          </div>
+          </details>
 
           <div class="footer-actions">
             <button class="ghost-btn" id="saveDraftBtn">Save draft</button>

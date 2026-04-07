@@ -145,6 +145,38 @@
       padding: 16px;
     }
 
+    .disclosure {
+      overflow: hidden;
+    }
+
+    .disclosure summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .disclosure summary::after {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .disclosure[open] summary::after {
+      content: "−";
+    }
+
+    .disclosure-body {
+      margin-top: 14px;
+    }
+
     .card-label {
       font-size: 12px;
       text-transform: uppercase;
@@ -317,9 +349,14 @@
             <textarea id="questionInput" class="textarea" placeholder="Example: What policy governs third-party due diligence?"></textarea>
           </div>
 
-          <div class="card">
-            <div class="card-label">Filters</div>
-            <div class="filter-grid">
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Advanced filters</div>
+                <div class="muted">Expand to narrow scope, provider, and model.</div>
+              </div>
+            </summary>
+            <div class="filter-grid disclosure-body">
               <div>
                 <div class="card-label">Document type</div>
                 <select id="documentType" class="field">
@@ -357,7 +394,7 @@
                 <input id="modelInput" class="field" type="text" value="claude-3-5-sonnet-latest" />
               </div>
             </div>
-          </div>
+          </details>
 
           <div class="card">
             <div class="card-label">Sample prompts</div>
@@ -368,12 +405,17 @@
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-label">Conversation history</div>
-            <div id="historyList" class="history-list">
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Conversation history</div>
+                <div class="muted">Expand to revisit prior demo questions.</div>
+              </div>
+            </summary>
+            <div id="historyList" class="history-list disclosure-body">
               <div class="muted">Demo questions will appear here as you test the flow.</div>
             </div>
-          </div>
+          </details>
 
           <div class="row">
             <button id="askBtn" class="primary-btn" type="button">Ask quincy</button>
