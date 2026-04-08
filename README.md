@@ -1,6 +1,6 @@
 # Policy Agentforce
 
-Low-fidelity policy lifecycle prototypes, wireframes, and clickable quincy mockups for a Block policy operations experience.
+Low-fidelity policy lifecycle workspaces, demos, flows, and wireframes for a Block policy operations experience.
 
 This repository currently focuses on:
 
@@ -24,38 +24,38 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 
 ## Start here
 
-- [Open the end-to-end process flow](./mockups/end_to_end_process_flow.html)
-- [Open the quincy annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
-- [Open the quincy return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
-- [Open the governance team mockup](./mockups/governance_team_mockup.html)
-- [Open the static policy bot demo mockup](./mockups/policy_bot_demo_mockup.html)
-- [Open the static ruleset QC demo mockup](./mockups/ruleset_qc_demo_mockup.html)
-- [Open the GitHub Pages landing page](./index.html)
-- [View the owner annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
+- [Open the connected flow](./mockups/end_to_end_process_flow.html)
+- [Open the owner workspace](./mockups/document_owner_annual_refresh_mockup.html)
+- [Open the returned-item workspace](./mockups/document_owner_returned_by_governance_mockup.html)
+- [Open the governance workspace](./mockups/governance_team_mockup.html)
+- [Open the policy bot demo](./mockups/policy_bot_demo_mockup.html)
+- [Open the ruleset QC demo](./mockups/ruleset_qc_demo_mockup.html)
+- [Open the launcher](./index.html)
+- [View the annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
 ## Repository structure
 
 ### `mockups/`
 
 - [`end_to_end_process_flow.html`](./mockups/end_to_end_process_flow.html)
-  Connected map showing how the owner, governance, policy bot, and ruleset QC mockups fit together
+  Connected flow showing how the owner workspace, governance workspace, policy bot demo, and ruleset QC demo fit together
 - [`document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
-  Standalone clickable HTML prototype for quincy's annual refresh and proposed-change QC flow
+  Owner workspace for annual refresh and proposed-change QC
 - [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
-  Standalone clickable HTML prototype for quincy after Governance returns the package for fixes
+  Returned-item workspace for targeted owner fixes after Governance review
 - [`governance_team_mockup.html`](./mockups/governance_team_mockup.html)
-  Standalone clickable HTML prototype for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
+  Governance workspace for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
 - [`policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
-  Standalone GitHub Pages-safe chatbot demo with canned grounded answers and citations
+  GitHub Pages-safe policy bot demo with grounded answers and citations
 - [`ruleset_qc_demo_mockup.html`](./mockups/ruleset_qc_demo_mockup.html)
-  Standalone GitHub Pages-safe demo for Google Doc + markdown ruleset + provider-driven QC
+  GitHub Pages-safe ruleset QC demo for Google Doc + markdown ruleset + provider-driven QC
 
 ### `wireframes/`
 
 - [`document_owner_qc_assistant_wireframe.svg`](./wireframes/document_owner_qc_assistant_wireframe.svg)
   Focused quincy pre-submission QC assistant screen
 - [`document_owner_annual_refresh_user_story.md`](./wireframes/document_owner_annual_refresh_user_story.md)
-  Detailed step-by-step owner interaction model
+  Detailed step-by-step owner workspace interaction model
 - [`document_owner_wireframe.svg`](./wireframes/document_owner_wireframe.svg)
   Broader owner workspace concept
 - [`governance_team_wireframe.svg`](./wireframes/governance_team_wireframe.svg)
@@ -265,6 +265,7 @@ Recommended test order:
 For demos without a local server, use:
 
 - [`mockups/policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
+  Open the policy bot demo on GitHub Pages when you want a static walkthrough without the local server
 
 ## Publishing
 
