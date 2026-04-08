@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>quincy annual refresh mockup</title>
+  <title>quincy owner workspace</title>
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <script src="../assets/js/qc-checklist-config.js"></script>
   <script src="../assets/js/qc-engine.js"></script>
@@ -952,8 +952,8 @@
   <div class="page">
     <div class="topbar">
       <div>
-        <p class="eyebrow">Clickable HTML Mockup</p>
-        <h1>quincy</h1>
+        <p class="eyebrow">quincy owner workspace</p>
+        <h1>Owner review workspace</h1>
       </div>
       <div class="topbar-actions">
         <div class="brand-pill" aria-label="Block logo">
@@ -968,7 +968,7 @@
         <strong>Annual review due in 14 days</strong>
         <div>Open the verified editable Google Doc from LogicGate, make the proposed edits there, then let quincy review the draft and prepare the owner package around it.</div>
       </div>
-      <button class="secondary-btn" id="focusRefresh">Open prepared workspace</button>
+      <button class="secondary-btn" id="focusRefresh">Open owner workspace</button>
     </section>
 
     <section class="hero">
@@ -1273,7 +1273,7 @@
                   <button class="small-btn" id="downloadQcAuditArtifact" type="button">Download audit trail</button>
                 </div>
               </div>
-              <a class="secondary-btn link-btn" href="./governance_team_mockup.html">Open governance prototype</a>
+              <a class="secondary-btn link-btn" href="./governance_team_mockup.html">Open governance workspace</a>
             </div>
             </div>
           </details>
@@ -1800,9 +1800,9 @@
 
     function updateNextActionCard({ ready, packageComplete, mustOpen }) {
       if (state.submitted) {
-        elements.nextActionTitle.textContent = "Open the governance handoff";
+        elements.nextActionTitle.textContent = "Open the governance workspace";
         elements.nextActionCopy.textContent = "The quincy package is exported. Governance can now import the change summary and QC audit trail while keeping the same verified Google Doc in the workflow.";
-        elements.nextActionBtn.textContent = "Open governance prototype";
+        elements.nextActionBtn.textContent = "Open governance workspace";
         return;
       }
 
