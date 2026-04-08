@@ -24,6 +24,7 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 
 ## Start here
 
+- [Open the end-to-end process flow](./mockups/end_to_end_process_flow.html)
 - [Open the quincy annual refresh mockup](./mockups/document_owner_annual_refresh_mockup.html)
 - [Open the quincy return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
 - [Open the governance team mockup](./mockups/governance_team_mockup.html)
@@ -36,6 +37,8 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 
 ### `mockups/`
 
+- [`end_to_end_process_flow.html`](./mockups/end_to_end_process_flow.html)
+  Connected map showing how the owner, governance, policy bot, and ruleset QC mockups fit together
 - [`document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
   Standalone clickable HTML prototype for quincy's annual refresh and proposed-change QC flow
 - [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)

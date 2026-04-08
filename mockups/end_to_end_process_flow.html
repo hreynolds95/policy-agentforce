@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quincy end-to-end process flow</title>
+  <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
+  <style>
+    :root {
+      --bg: #eef2f4;
+      --panel: rgba(255, 255, 255, 0.96);
+      --line: rgba(17, 17, 17, 0.12);
+      --ink: #111111;
+      --muted: #6c737a;
+      --accent: #111111;
+      --accent-soft: #f7f8fa;
+      --ok: #b8ff2c;
+      --ok-soft: #fbfee9;
+      --warn-soft: #fff4d5;
+      --danger-soft: #ffe4e1;
+      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
+        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
+        var(--bg);
+    }
+
+    a, button { font: inherit; }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 24px 56px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+      font-family: var(--font-mono);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+
+    .hero,
+    .panel,
+    .flow-card,
+    .assist-card,
+    .summary-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 20px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .hero-copy {
+      max-width: 860px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #454c53;
+    }
+
+    .hero-actions,
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 12px 18px;
+      background: #ffffff;
+      color: var(--ink);
+      text-decoration: none;
+      transition: 0.18s ease;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    .btn.secondary {
+      background: var(--accent-soft);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(17, 17, 17, 0.08);
+    }
+
+    .summary-card {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
+    }
+
+    .summary-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .summary-copy {
+      color: #454c53;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .flow-section {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 760px;
+    }
+
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: start;
+    }
+
+    .flow-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      min-height: 100%;
+      position: relative;
+    }
+
+    .flow-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      border-radius: 8px 8px 0 0;
+      background: linear-gradient(90deg, #111111 0%, #111111 74%, #b8ff2c 100%);
+    }
+
+    .flow-step {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-top: 4px;
+    }
+
+    .flow-card h3 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .flow-card p {
+      margin: 0;
+      color: #454c53;
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      background: #ffffff;
+    }
+
+    .chip.ok {
+      border-color: rgba(184, 255, 44, 0.7);
+      color: #2f4d00;
+      background: var(--ok-soft);
+    }
+
+    .chip.warn {
+      background: var(--warn-soft);
+      color: #7b5200;
+      border-color: rgba(123, 82, 0, 0.12);
+    }
+
+    .chip.danger {
+      background: var(--danger-soft);
+      color: #b3261e;
+      border-color: rgba(179, 38, 30, 0.12);
+    }
+
+    .flow-points {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .loop-grid {
+      display: grid;
+      grid-template-columns: 1fr 120px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .assist-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .assist-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .assist-card h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .assist-card p {
+      margin: 0;
+      color: #454c53;
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .legend {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .legend .summary-card {
+      padding: 14px 16px;
+      background: #ffffff;
+      box-shadow: none;
+      border-radius: 16px;
+      gap: 6px;
+    }
+
+    .legend strong {
+      font-size: 14px;
+    }
+
+    .legend span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 1100px) {
+      .hero-grid,
+      .flow-grid,
+      .assist-grid,
+      .legend,
+      .loop-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .connector {
+        min-height: auto;
+        padding: 4px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Connected Mockup Flow</p>
+        <h1>End-to-end process flow across quincy, governance, and policy search</h1>
+      </div>
+      <div class="hero-actions">
+        <a class="btn secondary" href="../index.html">Back to landing page</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">How the experiences connect</p>
+          <div class="hero-copy">
+            This flow ties the mockups together into one practical story. A Block employee can start by answering a policy question or running a lightweight ruleset check, move into the owner QC flow in quincy, hand the prepared package to governance, and loop back only if governance returns the record for targeted updates.
+          </div>
+          <div class="hero-actions" style="margin-top:18px;">
+            <a class="btn primary" href="./document_owner_annual_refresh_mockup.html">Start at owner QC</a>
+            <a class="btn" href="./governance_team_mockup.html">Open governance workspace</a>
+          </div>
+        </div>
+        <div class="summary-card">
+          <div class="flow-step">Fastest reading order</div>
+          <h2 class="summary-title">Start with the lifecycle, then layer in self-serve assists</h2>
+          <div class="summary-copy">
+            The primary lifecycle is owner draft review in quincy, governance review, and then either publication or a targeted return to owner. The policy bot and ruleset QC mockups are support paths that help users prepare faster before they ever enter the governance cycle.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="flow-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Primary lifecycle</p>
+          <h2 class="section-title">The main end-to-end path</h2>
+        </div>
+        <div class="section-copy">This is the core process a document owner and governance team would follow for an annual refresh or proposed policy change.</div>
+      </div>
+
+      <div class="flow-grid">
+        <article class="flow-card">
+          <div class="flow-step">Step 1</div>
+          <h3>Owner prepares the draft in quincy</h3>
+          <p>The owner starts from the LogicGate-linked working Google Doc, explains what changed, runs quincy QC, and prepares the owner package with a change summary and QC audit trail.</p>
+          <div class="chip-row">
+            <span class="chip ok">Primary entry</span>
+            <span class="chip">Google Doc remains source</span>
+          </div>
+          <ul class="flow-points">
+            <li>Capture the delta</li>
+            <li>Run QC against the draft</li>
+            <li>Clear must-fix items</li>
+            <li>Export the submission package</li>
+          </ul>
+          <div class="card-actions">
+            <a class="btn primary" href="./document_owner_annual_refresh_mockup.html">Open annual refresh mockup</a>
+          </div>
+        </article>
+
+        <article class="flow-card">
+          <div class="flow-step">Step 2</div>
+          <h3>Governance receives and reviews the package</h3>
+          <p>The governance workspace imports the owner package, brings the next record forward, prepares packet summaries and return notes, and decides whether the record moves ahead or comes back with targeted fixes.</p>
+          <div class="chip-row">
+            <span class="chip warn">Decision point</span>
+            <span class="chip">System of record remains LogicGate</span>
+          </div>
+          <ul class="flow-points">
+            <li>Review owner package and QC context</li>
+            <li>Prepare packet summary or return note</li>
+            <li>Move the record forward or send it back</li>
+          </ul>
+          <div class="card-actions">
+            <a class="btn primary" href="./governance_team_mockup.html">Open governance mockup</a>
+          </div>
+        </article>
+
+        <article class="flow-card">
+          <div class="flow-step">Step 3</div>
+          <h3>Record is approved and continues the normal lifecycle</h3>
+          <p>If governance is satisfied, the package moves into approval and publication without extra owner cleanup. The approved document remains governed in the existing LogicGate and Google Drive lifecycle.</p>
+          <div class="chip-row">
+            <span class="chip ok">Forward path</span>
+            <span class="chip">No extra mockup required</span>
+          </div>
+          <ul class="flow-points">
+            <li>Approval routing continues</li>
+            <li>Publication and record updates complete</li>
+            <li>Next review cycle resumes normally</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="flow-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Return loop</p>
+          <h2 class="section-title">If governance sends the package back</h2>
+        </div>
+        <div class="section-copy">This is the targeted rework loop: only the returned items come back to the owner, and the preserved package avoids rebuilding work that governance already accepted.</div>
+      </div>
+
+      <div class="loop-grid">
+        <article class="flow-card">
+          <div class="flow-step">Governance outcome</div>
+          <h3>Returned with required fixes</h3>
+          <p>Governance identifies the exact missing items and prepares a note so the owner knows what to change next and what can stay preserved.</p>
+          <div class="chip-row">
+            <span class="chip danger">Returned to owner</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn" href="./governance_team_mockup.html">See governance decision</a>
+          </div>
+        </article>
+
+        <div class="connector">Loop back to owner</div>
+
+        <article class="flow-card">
+          <div class="flow-step">Owner rework</div>
+          <h3>Owner fixes only the returned items in quincy</h3>
+          <p>The returned-state flow preserves the Google Doc and prior package so the owner only updates the targeted items, refreshes the note, and exports the updated package back to governance.</p>
+          <div class="chip-row">
+            <span class="chip warn">Rework minimized</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="./document_owner_returned_by_governance_mockup.html">Open returned-state mockup</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="flow-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Self-serve assists</p>
+          <h2 class="section-title">Optional tools that help users start faster</h2>
+        </div>
+        <div class="section-copy">These mockups support the lifecycle but do not replace it. They help employees answer questions or do a lighter preflight before the main owner and governance path begins.</div>
+      </div>
+
+      <div class="assist-grid">
+        <article class="assist-card">
+          <div class="flow-step">Support path A</div>
+          <h3>quincy policy bot</h3>
+          <p>Use the policy bot when an employee needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
+          <div class="chip-row">
+            <span class="chip">Question answering</span>
+            <span class="chip ok">Reusable citations</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="./policy_bot_demo_mockup.html">Open policy bot demo</a>
+          </div>
+        </article>
+
+        <article class="assist-card">
+          <div class="flow-step">Support path B</div>
+          <h3>Ruleset QC demo</h3>
+          <p>Use the ruleset-driven QC flow when the owner wants to bring a Google Doc and markdown ruleset into a lighter-weight QC pass before entering the main lifecycle.</p>
+          <div class="chip-row">
+            <span class="chip">Preflight review</span>
+            <span class="chip ok">Markdown ruleset</span>
+          </div>
+          <div class="card-actions">
+            <a class="btn primary" href="./ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="flow-section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Legend</p>
+          <h2 class="section-title">How to read the flow</h2>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="summary-card">
+          <strong>Primary entry</strong>
+          <span>Where most document owners should start in the lifecycle.</span>
+        </div>
+        <div class="summary-card">
+          <strong>Decision point</strong>
+          <span>Where governance determines whether the record moves ahead or loops back.</span>
+        </div>
+        <div class="summary-card">
+          <strong>Return loop</strong>
+          <span>The targeted rework path that keeps the preserved package intact.</span>
+        </div>
+        <div class="summary-card">
+          <strong>Support path</strong>
+          <span>Optional assist experiences that help users answer questions or preflight drafts faster.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
