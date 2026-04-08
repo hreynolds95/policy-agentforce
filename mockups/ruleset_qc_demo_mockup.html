@@ -328,6 +328,20 @@
       line-height: 1.5;
     }
 
+    .export-card {
+      border-radius: 18px;
+      border: 1px solid rgba(17, 17, 17, 0.16);
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
+    }
+
+    .export-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -623,8 +637,6 @@
 
           <div class="action-row">
             <button class="primary-btn" id="runBtn" type="button">Run ruleset demo</button>
-            <button class="secondary-btn" id="downloadJsonBtn" type="button" disabled>Download JSON</button>
-            <button class="secondary-btn" id="downloadReportBtn" type="button" disabled>Download report</button>
           </div>
           <div class="subtle" id="runHint">Link the Google Doc and load the ruleset to unlock the QC run.</div>
         </div>
@@ -689,6 +701,15 @@
 
           <div id="findingsList" class="finding-list">
             <div class="muted">Run the demo to see rule-by-rule findings and suggested language.</div>
+          </div>
+
+          <div class="card export-card" id="exportPanel">
+            <div class="card-label">Step 6 export outputs</div>
+            <div class="subtle">When the review is complete, download the owner-facing markdown report or the JSON audit trail from this section.</div>
+            <div class="export-actions">
+              <button class="secondary-btn" id="downloadReportBtn" type="button" disabled>Download markdown report</button>
+              <button class="secondary-btn" id="downloadJsonBtn" type="button" disabled>Download JSON audit trail</button>
+            </div>
           </div>
 
           <details class="card disclosure" open>
@@ -947,6 +968,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       findingsList: document.getElementById("findingsList"),
       reportText: document.getElementById("reportText"),
       jsonOutput: document.getElementById("jsonOutput"),
+      exportPanel: document.getElementById("exportPanel"),
       downloadJsonBtn: document.getElementById("downloadJsonBtn"),
       downloadReportBtn: document.getElementById("downloadReportBtn")
     };
@@ -1034,7 +1056,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
         els.stepExport,
         els.stepExportState,
         !qcDone ? "locked" : mustOpen > 0 ? "active" : "done",
-        !qcDone ? "Prepared after review" : mustOpen > 0 ? "Exports are ready after blocker review" : "Report and JSON are ready to download"
+        !qcDone ? "Prepared after review" : mustOpen > 0 ? "Use the Step 6 export panel below after reviewing blockers" : "Use the Step 6 export panel below to download the report and JSON"
       );
 
       if (!docReady) {
@@ -1059,8 +1081,8 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
         els.nextActionBtn.dataset.mode = "must";
       } else {
         els.nextActionTitle.textContent = "Export the prepared outputs";
-        els.nextActionCopy.textContent = "The blockers are cleared. Download the markdown report or JSON audit trail and carry them with the proposal.";
-        els.nextActionBtn.textContent = "Download report";
+        els.nextActionCopy.textContent = "The blockers are cleared. Go to the Step 6 export outputs section and download the markdown report or JSON audit trail.";
+        els.nextActionBtn.textContent = "Open export outputs";
         els.nextActionBtn.dataset.mode = "export";
       }
     }
@@ -1255,7 +1277,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
         renderFindings();
         document.getElementById("findingsList").scrollIntoView({ behavior: "smooth", block: "start" });
       } else if (mode === "export") {
-        els.reportText.scrollIntoView({ behavior: "smooth", block: "start" });
+        els.exportPanel.scrollIntoView({ behavior: "smooth", block: "center" });
       } else if (mode === "ruleset") {
         els.loadRulesetBtn.click();
       } else {
