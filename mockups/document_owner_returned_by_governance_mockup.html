@@ -408,6 +408,31 @@
       gap: 12px;
     }
 
+    .readiness-grid {
+      margin-top: 10px;
+      gap: 14px;
+    }
+
+    .readiness-grid .mini-stat {
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+      min-height: 96px;
+      padding: 14px;
+      border-radius: 14px;
+    }
+
+    .readiness-grid .card-label {
+      margin-bottom: 0;
+      line-height: 1.35;
+    }
+
+    .readiness-grid .mini-stat-value {
+      justify-self: end;
+      font-size: 18px;
+      line-height: 1;
+    }
+
     .finding-list {
       display: grid;
       gap: 14px;
@@ -777,7 +802,7 @@
           <div class="summary-grid">
             <div class="card">
               <div class="card-label">Resubmission readiness</div>
-              <div class="summary-grid">
+              <div class="summary-grid readiness-grid">
                 <div class="mini-stat">
                   <div><div class="card-label">Required fixes open</div></div>
                   <div class="mini-stat-value danger" id="mustCount">2</div>
