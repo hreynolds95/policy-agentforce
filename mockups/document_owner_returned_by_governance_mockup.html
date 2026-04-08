@@ -733,13 +733,13 @@
     <section class="hero">
       <div class="hero-top">
         <div>
-          <p class="eyebrow">Source LogicGate Record</p>
+          <p class="eyebrow">LogicGate record</p>
           <h2 class="hero-title">Third-Party Compliance Oversight Policy</h2>
           <div class="subtle">POL-001245 · Policy · Compliance Governance · Owner: Global Compliance Policy Lead · Delegate: Third-Party Risk Program Manager</div>
         </div>
         <div class="chips">
-          <span class="chip">Tier 2</span>
-          <span class="chip danger" id="statusChipMain">Returned by Governance</span>
+          <span class="chip">Tier: T2</span>
+          <span class="chip danger" id="statusChipMain">Needs action</span>
           <span class="chip warn" id="statusChipSecondary">2 required fixes open</span>
         </div>
       </div>
@@ -749,7 +749,7 @@
           <div class="meta-value">March 27, 2026</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Expected next stage</div>
+          <div class="meta-label">Next stage</div>
           <div class="meta-value">Tollgate 3 QC review</div>
         </div>
         <div class="meta-card">
@@ -757,11 +757,11 @@
           <div class="meta-value">Google Doc link + change summary + QC audit trail preserved</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Accepted enhancements already saved</div>
+          <div class="meta-label">Accepted enhancements</div>
           <div class="meta-value">3 recommendations</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Due back to Governance</div>
+          <div class="meta-label">Due back to governance</div>
           <div class="meta-value">April 2, 2026</div>
         </div>
       </div>
@@ -1133,7 +1133,7 @@ Published versions of this Policy and associated approval evidence must be retai
       const ready = open === 0 && notePresent && !state.submitted;
 
       els.mustCount.textContent = open;
-      els.packageStatus.textContent = ready || state.submitted ? "Yes" : "No";
+      els.packageStatus.textContent = ready || state.submitted ? "Ready" : "Needs action";
       els.packageStatus.className = "mini-stat-value " + ((ready || state.submitted) ? "ok" : "danger");
       els.readyScore.textContent = computeScore(open, notePresent) + "%";
       els.mustCount.className = "mini-stat-value " + (open === 0 ? "ok" : "danger");
@@ -1151,24 +1151,24 @@ Published versions of this Policy and associated approval evidence must be retai
       els.resubmitBtn.disabled = !ready;
 
       if (state.submitted) {
-        els.statusChipMain.textContent = "Package exported";
-        els.statusChipMain.className = "chip ok";
-        els.statusChipSecondary.textContent = "Waiting on Governance";
+        els.statusChipMain.textContent = "In review";
+        els.statusChipMain.className = "chip warn";
+        els.statusChipSecondary.textContent = "Waiting on governance";
         els.statusChipSecondary.className = "chip warn";
         els.submitHint.textContent = "Governance owns the next step now, and quincy already preserved the resubmission package.";
         els.successBanner.style.display = "block";
         els.resubmitBtn.disabled = true;
       } else if (ready) {
-        els.statusChipMain.textContent = "Ready to hand back";
+        els.statusChipMain.textContent = "Ready";
         els.statusChipMain.className = "chip ok";
-        els.statusChipSecondary.textContent = "All returned items fixed";
+        els.statusChipSecondary.textContent = "Ready for governance";
         els.statusChipSecondary.className = "chip ok";
         els.submitHint.textContent = "You can export this package now and avoid rebuilding the prior submission by hand.";
         els.successBanner.style.display = "block";
       } else {
-        els.statusChipMain.textContent = "Returned by Governance";
+        els.statusChipMain.textContent = "Needs action";
         els.statusChipMain.className = "chip danger";
-        els.statusChipSecondary.textContent = `${open} required fixes open`;
+        els.statusChipSecondary.textContent = open > 0 ? "Returned from governance" : "Add owner response";
         els.statusChipSecondary.className = "chip warn";
         els.submitHint.textContent = "Fix the returned items, then let quincy carry the preserved package back with only the new updates.";
         els.successBanner.style.display = "none";

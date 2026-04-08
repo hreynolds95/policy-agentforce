@@ -1003,35 +1003,35 @@
     <section class="hero">
       <div class="hero-top">
         <div>
-          <p class="eyebrow">Source LogicGate Record</p>
+          <p class="eyebrow">LogicGate record</p>
           <h2 class="hero-title">Third-Party Compliance Oversight Policy</h2>
           <div class="subtle">POL-001245 · Policy · Compliance Governance · Owner: Global Compliance Policy Lead · Delegate: Third-Party Risk Program Manager</div>
         </div>
         <div class="chips">
-          <span class="chip">Tier 2</span>
+          <span class="chip">Tier: T2</span>
           <span class="chip danger" id="statusChipMain">Needs action</span>
           <span class="chip danger" id="statusChipSecondary">Waiting on owner delta</span>
         </div>
       </div>
       <div class="meta-grid">
         <div class="meta-card">
-          <div class="meta-label">Next Review Due</div>
+          <div class="meta-label">Next review date</div>
           <div class="meta-value">February 18, 2027</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Last Approval Date</div>
+          <div class="meta-label">Last approval date</div>
           <div class="meta-value">February 18, 2026</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Related Documents</div>
+          <div class="meta-label">Related documents</div>
           <div class="meta-value">Vendor Due Diligence Standard<br />Third-Party Risk Procedure</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Prior Approver Path</div>
+          <div class="meta-label">Approval path</div>
           <div class="meta-value">Owner Attestation → Compliance Leadership → CPC</div>
         </div>
         <div class="meta-card">
-          <div class="meta-label">Open Exceptions</div>
+          <div class="meta-label">Open exceptions</div>
           <div class="meta-value">None recorded</div>
         </div>
       </div>
@@ -1985,7 +1985,7 @@
         elements.statusText.textContent = "Package assembled";
         elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Submission package ready";
+        elements.statusChipSecondary.textContent = "Waiting on governance";
         elements.statusChipSecondary.className = "chip ok";
         elements.statusChipMain.textContent = "Ready";
         elements.statusChipMain.className = "chip ok";
@@ -1996,7 +1996,7 @@
         elements.statusText.textContent = "Ready to hand off";
         elements.statusBadge.textContent = "Ready";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Ready for export";
+        elements.statusChipSecondary.textContent = "Ready for governance";
         elements.statusChipSecondary.className = "chip ok";
         elements.statusChipMain.textContent = "Ready";
         elements.statusChipMain.className = "chip ok";
@@ -2005,7 +2005,7 @@
         elements.statusText.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusBadge.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = mustOpen > 0 ? "Needs action" : "In review";
+        elements.statusChipSecondary.textContent = mustOpen > 0 ? "Resolve blockers" : "Review final changes";
         elements.statusChipSecondary.className = mustOpen > 0 ? "chip danger" : "chip warn";
         elements.statusChipMain.textContent = mustOpen > 0 ? "Needs action" : "In review";
         elements.statusChipMain.className = mustOpen > 0 ? "chip danger" : "chip warn";
@@ -2016,7 +2016,7 @@
         elements.statusText.textContent = "In review";
         elements.statusBadge.textContent = "In review";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Ready to run QC";
+        elements.statusChipSecondary.textContent = "Run QC next";
         elements.statusChipSecondary.className = "chip warn";
         elements.statusChipMain.textContent = "In review";
         elements.statusChipMain.className = "chip warn";
@@ -2025,15 +2025,15 @@
         elements.statusText.textContent = "In review";
         elements.statusBadge.textContent = "In review";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Owner input in progress";
+        elements.statusChipSecondary.textContent = "Add draft details";
         elements.statusChipSecondary.className = "chip warn";
         elements.statusChipMain.textContent = "In review";
         elements.statusChipMain.className = "chip warn";
       } else {
-        elements.statusText.textContent = "Waiting on owner delta";
+        elements.statusText.textContent = "Needs action";
         elements.statusBadge.textContent = "Needs action";
         elements.statusBadge.className = "badge";
-        elements.statusChipSecondary.textContent = "Waiting on owner delta";
+        elements.statusChipSecondary.textContent = "Add owner delta";
         elements.statusChipSecondary.className = "chip danger";
         elements.statusChipMain.textContent = "Needs action";
         elements.statusChipMain.className = "chip danger";
