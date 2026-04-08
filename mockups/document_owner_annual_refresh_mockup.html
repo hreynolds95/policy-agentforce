@@ -9,21 +9,21 @@
   <script src="../assets/js/qc-engine.js"></script>
   <style>
     :root {
-      --bg: #eef2f4;
-      --panel: rgba(255, 255, 255, 0.96);
-      --panel-2: #f7f8fa;
-      --ink: #111111;
-      --muted: #6c737a;
-      --line: rgba(17, 17, 17, 0.12);
-      --accent: #111111;
-      --accent-soft: #f7f8fa;
-      --warn: var(--color-text-warning);
-      --warn-soft: #fff4d5;
-      --danger: var(--color-text-danger);
-      --danger-soft: #ffe4e1;
-      --ok: #b8ff2c;
-      --ok-soft: #fbfee9;
-      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
+      --bg: #22252a;
+      --panel: #32353b;
+      --panel-2: #3f434b;
+      --ink: #ffffff;
+      --muted: #a7b0b9;
+      --line: #3f434b;
+      --accent: #e3e6ea;
+      --accent-soft: #3f434b;
+      --warn: #ffd966;
+      --warn-soft: rgba(255, 217, 102, 0.12);
+      --danger: #ff6b6b;
+      --danger-soft: rgba(255, 107, 107, 0.12);
+      --ok: #a3d795;
+      --ok-soft: rgba(163, 215, 149, 0.12);
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
       --radius: 18px;
     }
 
@@ -31,11 +31,34 @@
     body {
       margin: 0;
       font-family: var(--font-sans);
-      background:
-        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
-        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
-        var(--bg);
+      background: var(--bg);
       color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .bg-shape {
+      position: fixed;
+      z-index: -1;
+      border-radius: 999px;
+      opacity: 0.4;
+      filter: blur(0.5px);
+    }
+
+    .bg-shape-a {
+      width: 400px;
+      height: 400px;
+      background: #2a2d33;
+      left: -130px;
+      bottom: -110px;
+    }
+
+    .bg-shape-b {
+      width: 360px;
+      height: 360px;
+      background: #282b30;
+      right: -90px;
+      top: -140px;
     }
 
     button, input, textarea, select {
@@ -43,9 +66,9 @@
     }
 
     .page {
-      max-width: 1480px;
+      width: min(1480px, 94vw);
       margin: 0 auto;
-      padding: 24px;
+      padding: 30px 0 40px;
     }
 
     .topbar {
@@ -68,9 +91,26 @@
     h1 {
       font-size: 28px;
       line-height: 1.08;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       margin: 0;
       font-weight: 700;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--card, #32353b);
+    }
+
+    .brand-pill img {
+      display: block;
+      height: 20px;
+      width: auto;
+      filter: invert(1);
     }
 
     .topbar-actions {
@@ -80,9 +120,9 @@
     }
 
     .ghost-btn, .primary-btn, .secondary-btn, .small-btn {
-      border-radius: 999px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      background: #ffffff;
+      background: var(--bg);
       color: var(--ink);
       padding: 12px 18px;
       cursor: pointer;
@@ -91,7 +131,7 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #ffffff;
+      color: var(--bg);
       border-color: transparent;
     }
 
@@ -108,13 +148,14 @@
 
     .ghost-btn:hover, .primary-btn:hover, .secondary-btn:hover, .small-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 8px 20px rgba(25, 30, 27, 0.08);
+      filter: brightness(0.92);
+      box-shadow: var(--shadow);
     }
 
     .notification {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 18px 20px;
       display: flex;
       justify-content: space-between;
@@ -134,7 +175,7 @@
     .hero {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 22px 24px;
       box-shadow: var(--shadow);
       margin-bottom: 18px;
@@ -165,7 +206,7 @@
     .meta-card, .mini-stat {
       background: var(--accent-soft);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 10px 12px;
     }
 
@@ -177,24 +218,24 @@
     }
 
     .step-card {
-      background: rgba(255, 255, 255, 0.78);
+      background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 16px;
       padding: 12px;
       display: grid;
       gap: 6px;
-      box-shadow: 0 8px 20px rgba(17, 17, 17, 0.04);
+      box-shadow: var(--shadow);
     }
 
     .step-card.active {
-      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
-      box-shadow: inset 0 3px 0 #b8ff2c, 0 10px 22px rgba(17, 17, 17, 0.08);
-      border-color: rgba(17, 17, 17, 0.16);
+      background: linear-gradient(180deg, rgba(227, 230, 234, 0.12) 0%, #32353b 72%);
+      box-shadow: inset 0 3px 0 #a3d795, var(--shadow);
+      border-color: #4b5058;
     }
 
     .step-card.done {
-      background: #ffffff;
-      box-shadow: inset 4px 0 0 #b8ff2c;
+      background: #32353b;
+      box-shadow: inset 4px 0 0 #a3d795;
     }
 
     .step-card.locked {
@@ -233,12 +274,12 @@
 
     .primary-btn {
       background: var(--accent);
-      color: #ffffff;
+      color: var(--bg);
       border-color: transparent;
     }
 
     input, textarea, select {
-      background: #ffffff;
+      background: var(--bg);
       color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 4px;
@@ -284,7 +325,7 @@
       padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: #ffffff;
+      background: var(--bg);
       font-size: 13px;
     }
 
@@ -301,9 +342,9 @@
     }
 
     .chip.ok {
-      background: #ffffff;
-      color: #2f4d00;
-      border-color: #b8ff2c;
+      background: rgba(163, 215, 149, 0.12);
+      color: var(--ok);
+      border-color: rgba(163, 215, 149, 0.35);
     }
 
     .layout {
@@ -316,7 +357,7 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: var(--shadow);
       overflow: hidden;
       color: var(--ink);
@@ -324,7 +365,7 @@
 
     .panel-header {
       padding: 16px 20px 12px;
-      border-bottom: 1px solid #e5dfd2;
+      border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -352,7 +393,7 @@
     .card {
       background: var(--accent-soft);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 14px;
     }
 
@@ -406,8 +447,8 @@
     }
 
     label.option.active {
-      border-color: rgba(17, 17, 17, 0.2);
-      background: #f3f6f8;
+      border-color: #5f666f;
+      background: #3a3f46;
     }
 
     .textarea, .input-display {
@@ -415,7 +456,7 @@
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px 14px;
-      background: #ffffff;
+      background: var(--bg);
       color: var(--ink);
     }
 
@@ -431,7 +472,7 @@
 
     .upload-box {
       background: var(--panel-2);
-      border: 1.5px dashed rgba(17, 17, 17, 0.16);
+      border: 1.5px dashed #59606a;
       border-radius: 16px;
       padding: 14px;
     }
@@ -463,12 +504,12 @@
 
     .finding.must {
       border-color: var(--color-border-danger);
-      background: linear-gradient(180deg, rgba(249, 75, 75, 0.16) 0%, rgba(255, 255, 255, 0.98) 54%, #fff7f6 100%);
+      background: linear-gradient(180deg, rgba(255, 107, 107, 0.18) 0%, rgba(50, 53, 59, 0.96) 54%, #2f3137 100%);
     }
 
     .finding.reco {
       border-color: var(--line);
-      background: linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+      background: linear-gradient(180deg, #3a3f46 0%, #32353b 100%);
     }
 
     .finding-head {
@@ -492,7 +533,7 @@
       padding: 6px 10px;
       font-size: 12px;
       border: 1px solid var(--line);
-      background: #fff;
+      background: var(--bg);
     }
 
     .badge.must {
@@ -522,8 +563,8 @@
       margin-top: 14px;
       padding: 12px 14px;
       border-radius: 14px;
-      background: #f7f4ec;
-      border: 1px dashed #c5bcab;
+      background: #2b2f35;
+      border: 1px dashed #5f666f;
       font-size: 14px;
       line-height: 1.45;
       display: none;
@@ -560,8 +601,8 @@
       gap: 10px;
       padding: 10px 12px;
       border-radius: 12px;
-      background: white;
-      border: 1px solid #ddd5c8;
+      background: var(--bg);
+      border: 1px solid var(--line);
     }
 
     .check-item strong {
@@ -628,7 +669,7 @@
 
     .activity-item {
       padding-left: 14px;
-      border-left: 2px solid #ddd5c6;
+      border-left: 2px solid var(--line);
       color: var(--muted);
     }
 
@@ -651,7 +692,7 @@
       resize: vertical;
       border-radius: 14px;
       border: 1px solid var(--line);
-      background: #ffffff;
+      background: var(--bg);
       color: var(--ink);
       padding: 12px 14px;
       line-height: 1.55;
@@ -697,11 +738,11 @@
       border-radius: 24px;
       width: min(560px, calc(100vw - 40px));
       padding: 0;
-      box-shadow: 0 24px 70px rgba(26, 28, 24, 0.22);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
     }
 
     dialog::backdrop {
-      background: rgba(24, 27, 23, 0.4);
+      background: rgba(13, 14, 17, 0.6);
       backdrop-filter: blur(3px);
     }
 
@@ -732,10 +773,10 @@
       display: none;
       padding: 12px 16px;
       border-radius: 16px;
-      background: #ffffff;
-      color: #2f4d00;
-      border: 1px solid rgba(17, 17, 17, 0.12);
-      box-shadow: inset 4px 0 0 #b8ff2c;
+      background: rgba(163, 215, 149, 0.12);
+      color: var(--ok);
+      border: 1px solid rgba(163, 215, 149, 0.28);
+      box-shadow: inset 4px 0 0 #a3d795;
       margin-bottom: 12px;
       font-size: 14px;
     }
@@ -795,6 +836,7 @@
       padding: 6px 10px;
       border-radius: 10px;
       background: white;
+      color: var(--ink);
       border: 1px solid var(--line);
       opacity: 0.4;
       transition: opacity 0.3s ease;
@@ -803,8 +845,8 @@
     .qc-loading .check-progress .step.done {
       opacity: 1;
       border-color: #b8ff2c;
-      background: #ffffff;
-      box-shadow: inset 4px 0 0 #b8ff2c;
+      background: #32353b;
+      box-shadow: inset 4px 0 0 #a3d795;
     }
 
     .readiness-breakdown {
@@ -824,7 +866,7 @@
       align-items: center;
       gap: 8px;
       padding: 5px 0;
-      border-bottom: 1px solid #eee8db;
+      border-bottom: 1px solid var(--line);
     }
 
     .breakdown-row:last-child {
@@ -835,7 +877,7 @@
       width: 60px;
       height: 6px;
       border-radius: 3px;
-      background: #e8e2d6;
+      background: #4b5058;
       overflow: hidden;
       flex-shrink: 0;
     }
@@ -870,10 +912,10 @@
       border-radius: 18px;
       padding: 18px;
       border: 1px solid rgba(17, 17, 17, 0.16);
-      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      background: linear-gradient(180deg, rgba(227, 230, 234, 0.12) 0%, #32353b 72%);
       display: grid;
       gap: 8px;
-      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
+      box-shadow: inset 0 3px 0 #a3d795, var(--shadow);
     }
 
     .next-step-title {
@@ -883,7 +925,7 @@
     }
 
     .next-step-copy {
-      color: #454c53;
+      color: var(--muted);
       font-size: 15px;
       line-height: 1.5;
     }
@@ -905,6 +947,8 @@
   </style>
 </head>
 <body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
   <div class="page">
     <div class="topbar">
       <div>
@@ -912,6 +956,9 @@
         <h1>quincy</h1>
       </div>
       <div class="topbar-actions">
+        <div class="brand-pill" aria-label="Block logo">
+          <img src="../assets/images/block-lockup-black-no-padding.png" alt="Block" />
+        </div>
         <button class="ghost-btn" id="resetDemo">Reset demo</button>
       </div>
     </div>
