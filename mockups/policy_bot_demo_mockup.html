@@ -110,6 +110,58 @@
       font-size: 16px;
     }
 
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(17, 17, 17, 0.04);
+    }
+
+    .step-card.active {
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 10px 22px rgba(17, 17, 17, 0.08);
+      border-color: rgba(17, 17, 17, 0.16);
+    }
+
+    .step-card.done {
+      background: #ffffff;
+      box-shadow: inset 4px 0 0 #b8ff2c;
+    }
+
+    .step-card.locked {
+      opacity: 0.68;
+    }
+
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .step-state {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: 340px minmax(0, 1fr);
@@ -335,6 +387,16 @@
       .layout {
         grid-template-columns: 1fr;
       }
+
+      .step-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .step-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -364,6 +426,33 @@
           <button class="primary-btn" id="botNextActionBtn" type="button">Load sample prompt</button>
         </div>
       </div>
+      <section class="step-grid" aria-label="policy bot demo steps">
+        <div class="step-card active" id="stepQuestionCard">
+          <div class="step-index">Step 1</div>
+          <div class="step-name">Add a question</div>
+          <div class="step-state" id="stepQuestionState">Start with a natural-language policy question.</div>
+        </div>
+        <div class="step-card locked" id="stepFilterCard">
+          <div class="step-index">Step 2</div>
+          <div class="step-name">Tune filters</div>
+          <div class="step-state" id="stepFilterState">Optional when you want to narrow the scope.</div>
+        </div>
+        <div class="step-card locked" id="stepSearchCard">
+          <div class="step-index">Step 3</div>
+          <div class="step-name">Run search</div>
+          <div class="step-state" id="stepSearchState">Retrieve grounded excerpts from the demo corpus.</div>
+        </div>
+        <div class="step-card locked" id="stepCitationsCard">
+          <div class="step-index">Step 4</div>
+          <div class="step-name">Review citations</div>
+          <div class="step-state" id="stepCitationsState">Inspect the source preview before reusing the answer.</div>
+        </div>
+        <div class="step-card locked" id="stepReuseCard">
+          <div class="step-index">Step 5</div>
+          <div class="step-name">Reuse the answer</div>
+          <div class="step-state" id="stepReuseState">Carry forward the grounded answer once it looks right.</div>
+        </div>
+      </section>
     </section>
 
     <div class="layout">
@@ -614,7 +703,17 @@
       previewSectionChip: document.getElementById("previewSectionChip"),
       botNextActionTitle: document.getElementById("botNextActionTitle"),
       botNextActionCopy: document.getElementById("botNextActionCopy"),
-      botNextActionBtn: document.getElementById("botNextActionBtn")
+      botNextActionBtn: document.getElementById("botNextActionBtn"),
+      stepQuestionCard: document.getElementById("stepQuestionCard"),
+      stepQuestionState: document.getElementById("stepQuestionState"),
+      stepFilterCard: document.getElementById("stepFilterCard"),
+      stepFilterState: document.getElementById("stepFilterState"),
+      stepSearchCard: document.getElementById("stepSearchCard"),
+      stepSearchState: document.getElementById("stepSearchState"),
+      stepCitationsCard: document.getElementById("stepCitationsCard"),
+      stepCitationsState: document.getElementById("stepCitationsState"),
+      stepReuseCard: document.getElementById("stepReuseCard"),
+      stepReuseState: document.getElementById("stepReuseState")
     };
 
     const state = {
@@ -633,6 +732,11 @@
         provider: els.providerInput.value || "auto",
         model: els.modelInput.value.trim() || "claude-3-5-sonnet-latest"
       };
+    }
+
+    function setStep(card, stateEl, mode, copy) {
+      card.className = `step-card ${mode}`;
+      stateEl.textContent = copy;
     }
 
     function getDemoResponse(question) {
@@ -767,35 +871,56 @@
     function updateBotNextAction() {
       const question = els.questionInput.value.trim();
       const citations = state.lastPayload ? (state.lastPayload.citations || []) : [];
+      const hasFilters = Boolean(
+        els.documentType.value
+        || els.domainInput.value.trim()
+        || els.topK.value !== "5"
+        || !els.useLlm.checked
+        || els.providerInput.value !== "anthropic"
+        || els.modelInput.value.trim() !== "claude-3-5-sonnet-latest"
+      );
 
       if (!question) {
         els.botNextActionTitle.textContent = "Start with a policy question";
         els.botNextActionCopy.textContent = "Use one of the seeded prompts or type a natural-language question to see how quincy prepares a grounded answer with citations.";
         els.botNextActionBtn.textContent = "Load sample prompt";
         els.botNextActionBtn.dataset.mode = "sample";
-        return;
-      }
-
-      if (!state.lastPayload) {
+        setStep(els.stepQuestionCard, els.stepQuestionState, "active", "Start with a natural-language policy question.");
+        setStep(els.stepFilterCard, els.stepFilterState, "locked", "Optional when you want to narrow the scope.");
+        setStep(els.stepSearchCard, els.stepSearchState, "locked", "Retrieve grounded excerpts from the demo corpus.");
+        setStep(els.stepCitationsCard, els.stepCitationsState, "locked", "Inspect the source preview before reusing the answer.");
+        setStep(els.stepReuseCard, els.stepReuseState, "locked", "Carry forward the grounded answer once it looks right.");
+      } else if (!state.lastPayload) {
         els.botNextActionTitle.textContent = "Run the search";
         els.botNextActionCopy.textContent = "The question is ready. Let quincy retrieve grounded excerpts and prepare a cited answer.";
         els.botNextActionBtn.textContent = "Get grounded answer";
         els.botNextActionBtn.dataset.mode = "ask";
-        return;
-      }
-
-      if (citations.length) {
+        setStep(els.stepQuestionCard, els.stepQuestionState, "done", "A policy question is ready to run.");
+        setStep(els.stepFilterCard, els.stepFilterState, hasFilters ? "done" : "active", hasFilters ? "Filters are tuned for this search." : "Optional: narrow by type, domain, or model before searching.");
+        setStep(els.stepSearchCard, els.stepSearchState, "active", "Run the search to retrieve grounded excerpts.");
+        setStep(els.stepCitationsCard, els.stepCitationsState, "locked", "Inspect the source preview before reusing the answer.");
+        setStep(els.stepReuseCard, els.stepReuseState, "locked", "Carry forward the grounded answer once it looks right.");
+      } else if (citations.length) {
         els.botNextActionTitle.textContent = "Review the cited source";
         els.botNextActionCopy.textContent = "The answer is ready. Jump to the citations and inspect the source preview before reusing the answer.";
         els.botNextActionBtn.textContent = "Jump to citations";
         els.botNextActionBtn.dataset.mode = "citations";
-        return;
+        setStep(els.stepQuestionCard, els.stepQuestionState, "done", "A policy question is ready to run.");
+        setStep(els.stepFilterCard, els.stepFilterState, "done", hasFilters ? "Filters helped narrow this answer." : "Default filters were enough for this answer.");
+        setStep(els.stepSearchCard, els.stepSearchState, "done", "Grounded excerpts were retrieved from the demo corpus.");
+        setStep(els.stepCitationsCard, els.stepCitationsState, "done", `Reviewed ${citations.length} cited ${citations.length === 1 ? "source" : "sources"} for this answer.`);
+        setStep(els.stepReuseCard, els.stepReuseState, "active", "The grounded answer is ready to reuse in downstream work.");
+      } else {
+        els.botNextActionTitle.textContent = "Try a seeded sample prompt";
+        els.botNextActionCopy.textContent = "This prompt did not return demo citations. Use one of the seeded prompts to walk through the full grounded answer flow.";
+        els.botNextActionBtn.textContent = "Load sample prompt";
+        els.botNextActionBtn.dataset.mode = "sample";
+        setStep(els.stepQuestionCard, els.stepQuestionState, "done", "A policy question is ready to run.");
+        setStep(els.stepFilterCard, els.stepFilterState, "done", hasFilters ? "Filters helped narrow this answer." : "Default filters were enough for this answer.");
+        setStep(els.stepSearchCard, els.stepSearchState, "done", "The demo search completed.");
+        setStep(els.stepCitationsCard, els.stepCitationsState, "active", "No citations were returned for this prompt, so try a stronger sample.");
+        setStep(els.stepReuseCard, els.stepReuseState, "locked", "Use a cited answer before carrying it forward.");
       }
-
-      els.botNextActionTitle.textContent = "Try a seeded sample prompt";
-      els.botNextActionCopy.textContent = "This prompt did not return demo citations. Use one of the seeded prompts to walk through the full grounded answer flow.";
-      els.botNextActionBtn.textContent = "Load sample prompt";
-      els.botNextActionBtn.dataset.mode = "sample";
     }
 
     function setStatus(message, ok = true) {

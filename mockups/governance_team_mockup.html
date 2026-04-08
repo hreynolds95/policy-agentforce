@@ -139,6 +139,58 @@
       gap: 10px;
     }
 
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(17, 17, 17, 0.04);
+    }
+
+    .step-card.active {
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 10px 22px rgba(17, 17, 17, 0.08);
+      border-color: rgba(17, 17, 17, 0.16);
+    }
+
+    .step-card.done {
+      background: #ffffff;
+      box-shadow: inset 4px 0 0 #b8ff2c;
+    }
+
+    .step-card.locked {
+      opacity: 0.68;
+    }
+
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .step-state {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     .meta-card, .mini-stat, .queue-row {
       background: var(--accent-soft);
       border: 1px solid var(--line);
@@ -706,6 +758,7 @@
       }
 
       .snapshot-grid,
+      .step-grid,
       .maintenance-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -713,6 +766,7 @@
 
     @media (max-width: 760px) {
       .snapshot-grid,
+      .step-grid,
       .maintenance-grid,
       .meta-grid,
       .queue-table-head,
@@ -749,6 +803,33 @@
       </div>
 
       <div class="snapshot-grid" id="snapshotGrid"></div>
+      <section class="step-grid" aria-label="governance workspace steps">
+        <div class="step-card active" id="stepQueueCard">
+          <div class="step-index">Step 1</div>
+          <div class="step-name">Choose the queue</div>
+          <div class="step-state" id="stepQueueState">Start with the governance queue that needs attention now.</div>
+        </div>
+        <div class="step-card locked" id="stepRecordCard">
+          <div class="step-index">Step 2</div>
+          <div class="step-name">Open the record</div>
+          <div class="step-state" id="stepRecordState">Select the next record to bring forward.</div>
+        </div>
+        <div class="step-card locked" id="stepReviewCard">
+          <div class="step-index">Step 3</div>
+          <div class="step-name">Review QC context</div>
+          <div class="step-state" id="stepReviewState">Use comments, checklist, and owner package context together.</div>
+        </div>
+        <div class="step-card locked" id="stepPrepCard">
+          <div class="step-index">Step 4</div>
+          <div class="step-name">Prepare packet or note</div>
+          <div class="step-state" id="stepPrepState">Generate the approval packet summary or return note.</div>
+        </div>
+        <div class="step-card locked" id="stepMoveCard">
+          <div class="step-index">Step 5</div>
+          <div class="step-name">Move the record</div>
+          <div class="step-state" id="stepMoveState">Take the stage action that keeps the record moving.</div>
+        </div>
+      </section>
     </section>
 
     <div class="layout">
@@ -1268,8 +1349,23 @@
       stageActions: document.getElementById("stageActions"),
       queueNextActionTitle: document.getElementById("queueNextActionTitle"),
       queueNextActionCopy: document.getElementById("queueNextActionCopy"),
-      queueNextActionBtn: document.getElementById("queueNextActionBtn")
+      queueNextActionBtn: document.getElementById("queueNextActionBtn"),
+      stepQueueCard: document.getElementById("stepQueueCard"),
+      stepQueueState: document.getElementById("stepQueueState"),
+      stepRecordCard: document.getElementById("stepRecordCard"),
+      stepRecordState: document.getElementById("stepRecordState"),
+      stepReviewCard: document.getElementById("stepReviewCard"),
+      stepReviewState: document.getElementById("stepReviewState"),
+      stepPrepCard: document.getElementById("stepPrepCard"),
+      stepPrepState: document.getElementById("stepPrepState"),
+      stepMoveCard: document.getElementById("stepMoveCard"),
+      stepMoveState: document.getElementById("stepMoveState")
     };
+
+    function setStep(card, stateEl, mode, copy) {
+      card.className = `step-card ${mode}`;
+      stateEl.textContent = copy;
+    }
 
     function readSubmissionPackages() {
       try {
@@ -1588,6 +1684,55 @@
 
       renderActions(queue, records);
       renderQueueNextAction(queue, records);
+      updateGovernanceSteps(queue, records);
+    }
+
+    function updateGovernanceSteps(queue, records) {
+      const record = getSelectedRecord() || records[0] || null;
+
+      if (!queue) {
+        setStep(els.stepQueueCard, els.stepQueueState, "active", "Choose the queue that needs attention now.");
+        setStep(els.stepRecordCard, els.stepRecordState, "locked", "Select the next record to bring forward.");
+        setStep(els.stepReviewCard, els.stepReviewState, "locked", "Review QC context after a record is selected.");
+        setStep(els.stepPrepCard, els.stepPrepState, "locked", "Generate the packet summary or return note.");
+        setStep(els.stepMoveCard, els.stepMoveState, "locked", "Take the stage action that keeps the record moving.");
+        return;
+      }
+
+      const queueLabel = queue.label.toLowerCase();
+      setStep(els.stepQueueCard, els.stepQueueState, "done", `Queue in focus: ${queueLabel}.`);
+
+      if (!record) {
+        setStep(els.stepRecordCard, els.stepRecordState, "active", "Select the next record to bring forward.");
+        setStep(els.stepReviewCard, els.stepReviewState, "locked", "Review QC context after a record is selected.");
+        setStep(els.stepPrepCard, els.stepPrepState, "locked", "Generate the packet summary or return note.");
+        setStep(els.stepMoveCard, els.stepMoveState, "locked", "Take the stage action that keeps the record moving.");
+        return;
+      }
+
+      setStep(els.stepRecordCard, els.stepRecordState, "done", `${record.id} is open in the governance workspace.`);
+
+      const reviewQueues = new Set(["intake", "qc", "overdue", "exceptions"]);
+      const prepQueues = new Set(["approvals", "publish", "archival"]);
+      const moveQueues = new Set(["publish", "archival"]);
+
+      if (reviewQueues.has(record.queue)) {
+        setStep(els.stepReviewCard, els.stepReviewState, "active", `Review ${record.stage.toLowerCase()} context and owner artifacts.`);
+        setStep(els.stepPrepCard, els.stepPrepState, "locked", "Generate the packet summary or return note after review.");
+        setStep(els.stepMoveCard, els.stepMoveState, "locked", "Take the stage action that keeps the record moving.");
+        return;
+      }
+
+      setStep(els.stepReviewCard, els.stepReviewState, "done", "QC context, comments, and owner artifacts are reviewed.");
+
+      if (prepQueues.has(record.queue) && !moveQueues.has(record.queue)) {
+        setStep(els.stepPrepCard, els.stepPrepState, "active", "Prepare the approval packet summary or owner note for this stage.");
+        setStep(els.stepMoveCard, els.stepMoveState, "locked", "Move the record once the packet work is ready.");
+        return;
+      }
+
+      setStep(els.stepPrepCard, els.stepPrepState, "done", "Packet summary or owner note is prepared for handoff.");
+      setStep(els.stepMoveCard, els.stepMoveState, "active", `Take the next action to move ${record.id} forward.`);
     }
 
     function renderQueueNextAction(queue, records) {

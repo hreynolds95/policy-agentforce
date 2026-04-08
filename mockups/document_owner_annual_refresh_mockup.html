@@ -169,9 +169,61 @@
       padding: 10px 12px;
     }
 
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(17, 17, 17, 0.04);
+    }
+
+    .step-card.active {
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 10px 22px rgba(17, 17, 17, 0.08);
+      border-color: rgba(17, 17, 17, 0.16);
+    }
+
+    .step-card.done {
+      background: #ffffff;
+      box-shadow: inset 4px 0 0 #b8ff2c;
+    }
+
+    .step-card.locked {
+      opacity: 0.68;
+    }
+
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .step-state {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     .ghost-btn, .secondary-btn, .small-btn, .chip, .meta-card, .mini-stat, .hero,
     .panel, .card, .upload-card, .helper-card, .issue-card, .summary-card,
-    .result-card, .evidence-card, .status-card, .step-arrow, .textarea,
+    .result-card, .evidence-card, .status-card, .textarea,
     .input-display, .upload-box, label.option, .finding {
       background: var(--panel);
       color: var(--ink);
@@ -190,16 +242,6 @@
       color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 4px;
-    }
-
-    .step-arrow.active {
-      background: var(--accent);
-      color: #ffffff;
-    }
-
-    .step-arrow.active .step-num {
-      background: #ffffff;
-      color: #111111;
     }
 
     .meta-label, .card-label {
@@ -263,81 +305,6 @@
       color: #2f4d00;
       border-color: #b8ff2c;
     }
-
-    .flow-strip {
-      display: flex;
-      align-items: stretch;
-      margin-top: 18px;
-      gap: 0;
-    }
-
-    .step-arrow {
-      position: relative;
-      flex: 1;
-      display: flex;
-      align-items: center;
-      padding: 12px 16px 12px 28px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--muted);
-      background: #111;
-      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%, 16px 50%);
-      transition: background 0.25s, color 0.25s;
-    }
-
-    .step-arrow:first-child {
-      padding-left: 16px;
-      clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 0 100%);
-      border-radius: 8px 0 0 8px;
-    }
-
-    .step-arrow:last-child {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 16px 50%);
-      border-radius: 0 8px 8px 0;
-    }
-
-    .step-arrow .step-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: var(--line);
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 700;
-      margin-right: 8px;
-      flex-shrink: 0;
-      transition: background 0.25s, color 0.25s;
-    }
-
-    .step-arrow.active {
-      background: var(--ink);
-      color: #fff;
-    }
-
-    .step-arrow.active .step-num {
-      background: #fff;
-      color: var(--ink);
-    }
-
-    .step-arrow.done {
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    .step-arrow.done .step-num {
-      background: #2e7d32;
-      color: #fff;
-    }
-
-    .step-arrow.done .step-num::after {
-      content: "✓";
-      font-size: 12px;
-    }
-
-    .step-arrow.done .step-num span { display: none; }
 
     .layout {
       display: grid;
@@ -926,7 +893,8 @@
         grid-template-columns: 1fr;
       }
 
-      .meta-grid {
+      .meta-grid,
+      .step-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -991,20 +959,28 @@
           <div class="meta-value">None recorded</div>
         </div>
       </div>
-      <div class="flow-strip" id="flowStrip">
-        <div class="step-arrow active" data-step="1">
-          <span class="step-num"><span>1</span></span> Confirm Google Doc draft
+      <section class="step-grid" aria-label="quincy annual refresh steps">
+        <div class="step-card active" id="stepDocCard">
+          <div class="step-index">Step 1</div>
+          <div class="step-name">Confirm draft inputs</div>
+          <div class="step-state" id="stepDocState">Start with the Google Doc and owner delta.</div>
         </div>
-        <div class="step-arrow" data-step="2">
-          <span class="step-num"><span>2</span></span> Run quincy QC
+        <div class="step-card locked" id="stepQcCard">
+          <div class="step-index">Step 2</div>
+          <div class="step-name">Run quincy QC</div>
+          <div class="step-state" id="stepQcState">Unlock after the required inputs are complete.</div>
         </div>
-        <div class="step-arrow" data-step="3">
-          <span class="step-num"><span>3</span></span> Resolve findings fast
+        <div class="step-card locked" id="stepReviewCard">
+          <div class="step-index">Step 3</div>
+          <div class="step-name">Review blockers</div>
+          <div class="step-state" id="stepReviewState">Run QC first to surface must-fix items.</div>
         </div>
-        <div class="step-arrow" data-step="4">
-          <span class="step-num"><span>4</span></span> Export submission package
+        <div class="step-card locked" id="stepExportCard">
+          <div class="step-index">Step 4</div>
+          <div class="step-name">Export package</div>
+          <div class="step-state" id="stepExportState">Prepared after blockers are resolved.</div>
         </div>
-      </div>
+      </section>
     </section>
 
     <div class="layout">
@@ -1363,6 +1339,14 @@
       nextActionTitle: document.getElementById("nextActionTitle"),
       nextActionCopy: document.getElementById("nextActionCopy"),
       nextActionBtn: document.getElementById("nextActionBtn"),
+      stepDocCard: document.getElementById("stepDocCard"),
+      stepDocState: document.getElementById("stepDocState"),
+      stepQcCard: document.getElementById("stepQcCard"),
+      stepQcState: document.getElementById("stepQcState"),
+      stepReviewCard: document.getElementById("stepReviewCard"),
+      stepReviewState: document.getElementById("stepReviewState"),
+      stepExportCard: document.getElementById("stepExportCard"),
+      stepExportState: document.getElementById("stepExportState"),
       findingList: document.getElementById("findingList"),
       activityLog: document.getElementById("activityLog"),
       pkgClean: document.getElementById("pkgClean"),
@@ -1985,14 +1969,32 @@
       const allResolved = qcDone && mustOpen === 0;
       const exported = state.submitted;
 
-      const currentStep = exported ? 5 : allResolved ? 4 : qcDone ? 3 : hasDoc ? 2 : 1;
-
-      document.querySelectorAll(".step-arrow").forEach(el => {
-        const s = parseInt(el.getAttribute("data-step"));
-        el.classList.remove("active", "done");
-        if (s < currentStep) el.classList.add("done");
-        else if (s === currentStep) el.classList.add("active");
-      });
+      if (!hasDoc) {
+        setStep(elements.stepDocCard, elements.stepDocState, "active", "Start with the Google Doc and owner delta.");
+        setStep(elements.stepQcCard, elements.stepQcState, "locked", "Unlock after the required inputs are complete.");
+        setStep(elements.stepReviewCard, elements.stepReviewState, "locked", "Run QC first to surface must-fix items.");
+        setStep(elements.stepExportCard, elements.stepExportState, "locked", "Prepared after blockers are resolved.");
+      } else if (!qcDone) {
+        setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs are ready for review.");
+        setStep(elements.stepQcCard, elements.stepQcState, "active", "Run quincy QC on the prepared draft package.");
+        setStep(elements.stepReviewCard, elements.stepReviewState, "locked", "Run QC first to surface must-fix items.");
+        setStep(elements.stepExportCard, elements.stepExportState, "locked", "Prepared after blockers are resolved.");
+      } else if (!allResolved) {
+        setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs are ready for review.");
+        setStep(elements.stepQcCard, elements.stepQcState, "done", "QC completed and findings are prepared.");
+        setStep(elements.stepReviewCard, elements.stepReviewState, "active", `Resolve ${mustOpen} must-fix ${mustOpen === 1 ? "item" : "items"} before exporting.`);
+        setStep(elements.stepExportCard, elements.stepExportState, "locked", "Prepared after blockers are resolved.");
+      } else if (!exported) {
+        setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs are ready for review.");
+        setStep(elements.stepQcCard, elements.stepQcState, "done", "QC completed and findings are prepared.");
+        setStep(elements.stepReviewCard, elements.stepReviewState, "done", "Must-fix items are cleared.");
+        setStep(elements.stepExportCard, elements.stepExportState, "active", "Export the owner package and hand it forward.");
+      } else {
+        setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs were confirmed from the working package.");
+        setStep(elements.stepQcCard, elements.stepQcState, "done", "QC completed and findings were prepared.");
+        setStep(elements.stepReviewCard, elements.stepReviewState, "done", "Blockers were cleared before export.");
+        setStep(elements.stepExportCard, elements.stepExportState, "done", "Submission package exported for governance intake.");
+      }
     }
 
     // ── Helpers ──────────────────────────────────────────────────────
@@ -2007,6 +2009,11 @@
 
     function getOpenCount(kind) {
       return state.findings.filter(f => f.kind === kind && !f.resolved).length;
+    }
+
+    function setStep(card, stateEl, mode, copy) {
+      card.className = `step-card ${mode}`;
+      stateEl.textContent = copy;
     }
 
     function humanUploadName(kind) {

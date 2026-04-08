@@ -191,6 +191,58 @@
       padding: 10px 12px;
     }
 
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(17, 17, 17, 0.04);
+    }
+
+    .step-card.active {
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 10px 22px rgba(17, 17, 17, 0.08);
+      border-color: rgba(17, 17, 17, 0.16);
+    }
+
+    .step-card.done {
+      background: #ffffff;
+      box-shadow: inset 4px 0 0 #b8ff2c;
+    }
+
+    .step-card.locked {
+      opacity: 0.68;
+    }
+
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .step-state {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     .meta-label, .card-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -551,6 +603,7 @@
       }
 
       .meta-grid,
+      .step-grid,
       .summary-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -610,6 +663,28 @@
           <div class="meta-value">April 2, 2026</div>
         </div>
       </div>
+      <section class="step-grid" aria-label="quincy returned package steps">
+        <div class="step-card active" id="stepReviewCard">
+          <div class="step-index">Step 1</div>
+          <div class="step-name">Review return notes</div>
+          <div class="step-state" id="stepReviewState">Start with the governance feedback and preserved package.</div>
+        </div>
+        <div class="step-card locked" id="stepUpdateCard">
+          <div class="step-index">Step 2</div>
+          <div class="step-name">Update the draft</div>
+          <div class="step-state" id="stepUpdateState">Add the refreshed owner note and draft changes.</div>
+        </div>
+        <div class="step-card locked" id="stepFixCard">
+          <div class="step-index">Step 3</div>
+          <div class="step-name">Clear required fixes</div>
+          <div class="step-state" id="stepFixState">Resolve the returned items before exporting again.</div>
+        </div>
+        <div class="step-card locked" id="stepResubmitCard">
+          <div class="step-index">Step 4</div>
+          <div class="step-name">Export updated package</div>
+          <div class="step-state" id="stepResubmitState">Prepared once the package is ready to hand back.</div>
+        </div>
+      </section>
     </section>
 
     <div class="layout">
@@ -857,6 +932,14 @@ Published versions of this Policy and associated approval evidence must be retai
       statusChipMain: document.getElementById("statusChipMain"),
       statusChipSecondary: document.getElementById("statusChipSecondary"),
       submitHint: document.getElementById("submitHint"),
+      stepReviewCard: document.getElementById("stepReviewCard"),
+      stepReviewState: document.getElementById("stepReviewState"),
+      stepUpdateCard: document.getElementById("stepUpdateCard"),
+      stepUpdateState: document.getElementById("stepUpdateState"),
+      stepFixCard: document.getElementById("stepFixCard"),
+      stepFixState: document.getElementById("stepFixState"),
+      stepResubmitCard: document.getElementById("stepResubmitCard"),
+      stepResubmitState: document.getElementById("stepResubmitState"),
       resubmitBtn: document.getElementById("resubmitBtn"),
       activityLog: document.getElementById("activityLog"),
       successBanner: document.getElementById("successBanner"),
@@ -937,6 +1020,11 @@ Published versions of this Policy and associated approval evidence must be retai
       return state.fixes.filter(f => !f.resolved).length;
     }
 
+    function setStep(card, stateEl, mode, copy) {
+      card.className = `step-card ${mode}`;
+      stateEl.textContent = copy;
+    }
+
     function updateUI() {
       const open = getOpenFixes();
       const notePresent = els.returnNote.value.trim().length > 0;
@@ -982,6 +1070,33 @@ Published versions of this Policy and associated approval evidence must be retai
         els.statusChipSecondary.className = "chip warn";
         els.submitHint.textContent = "Fix the returned items, then let quincy carry the preserved package back with only the new updates.";
         els.successBanner.style.display = "none";
+      }
+
+      if (!notePresent && open === state.fixes.length) {
+        setStep(els.stepReviewCard, els.stepReviewState, "active", "Start with the governance feedback and preserved package.");
+        setStep(els.stepUpdateCard, els.stepUpdateState, "locked", "Add the refreshed owner note and draft changes.");
+        setStep(els.stepFixCard, els.stepFixState, "locked", "Resolve the returned items before exporting again.");
+        setStep(els.stepResubmitCard, els.stepResubmitState, "locked", "Prepared once the package is ready to hand back.");
+      } else if (!notePresent) {
+        setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback is open in the workspace.");
+        setStep(els.stepUpdateCard, els.stepUpdateState, "active", "Refresh the owner note so the updated package can be explained.");
+        setStep(els.stepFixCard, els.stepFixState, "locked", "Resolve the returned items before exporting again.");
+        setStep(els.stepResubmitCard, els.stepResubmitState, "locked", "Prepared once the package is ready to hand back.");
+      } else if (open > 0) {
+        setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback is open in the workspace.");
+        setStep(els.stepUpdateCard, els.stepUpdateState, "done", "Owner note and draft updates are ready.");
+        setStep(els.stepFixCard, els.stepFixState, "active", `Resolve ${open} required ${open === 1 ? "fix" : "fixes"} before exporting again.`);
+        setStep(els.stepResubmitCard, els.stepResubmitState, "locked", "Prepared once the package is ready to hand back.");
+      } else if (!state.submitted) {
+        setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback is open in the workspace.");
+        setStep(els.stepUpdateCard, els.stepUpdateState, "done", "Owner note and draft updates are ready.");
+        setStep(els.stepFixCard, els.stepFixState, "done", "Returned fixes are cleared.");
+        setStep(els.stepResubmitCard, els.stepResubmitState, "active", "Export the updated package back to governance.");
+      } else {
+        setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback was reviewed in quincy.");
+        setStep(els.stepUpdateCard, els.stepUpdateState, "done", "Owner updates were captured in the preserved package.");
+        setStep(els.stepFixCard, els.stepFixState, "done", "Returned fixes were cleared.");
+        setStep(els.stepResubmitCard, els.stepResubmitState, "done", "Updated package exported for governance resubmission.");
       }
     }
 
