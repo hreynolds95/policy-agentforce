@@ -793,6 +793,35 @@
       color: var(--muted);
     }
 
+    .page-exit {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 12px;
+    }
+
+    .page-exit-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .page-exit-copy {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .page-exit-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     @media (max-width: 1280px) {
       .layout {
         grid-template-columns: 1fr;
@@ -2451,5 +2480,17 @@
 
     init();
   </script>
+  <div class="page">
+    <section class="page-exit">
+      <h3 class="page-exit-title">Where to go next</h3>
+      <div class="page-exit-copy">Move back to the owner workspace to show the source package, open the returned-item workspace to explain the rework loop, or return to the launcher to switch paths.</div>
+      <div class="page-exit-actions">
+        <a class="primary-btn" href="./document_owner_annual_refresh_mockup.html">Open owner workspace</a>
+        <a class="secondary-btn" href="./document_owner_returned_by_governance_mockup.html">Open returned-item workspace</a>
+        <a class="ghost-btn" href="./end_to_end_process_flow.html">Open connected flow</a>
+        <a class="ghost-btn" href="../index.html">Return to launcher</a>
+      </div>
+    </section>
+  </div>
 </body>
 </html>

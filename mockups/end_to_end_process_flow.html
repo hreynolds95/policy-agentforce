@@ -377,6 +377,35 @@
       line-height: 1.45;
     }
 
+    .page-exit {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      display: grid;
+      gap: 12px;
+    }
+
+    .page-exit-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .page-exit-copy {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .page-exit-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
     @media (max-width: 1100px) {
       .hero-grid,
       .flow-grid,
@@ -597,6 +626,18 @@
           <strong>Support path</strong>
           <span>Optional assist experiences that help users answer questions or preflight drafts faster.</span>
         </div>
+      </div>
+    </section>
+
+    <section class="page-exit">
+      <h3 class="page-exit-title">Where to go next</h3>
+      <div class="page-exit-copy">Open the owner or governance workspace to walk through the main lifecycle, or move into one of the assist demos to show how users can prepare faster first.</div>
+      <div class="page-exit-actions">
+        <a class="btn primary" href="./document_owner_annual_refresh_mockup.html">Open owner workspace</a>
+        <a class="btn secondary" href="./governance_team_mockup.html">Open governance workspace</a>
+        <a class="btn" href="./policy_bot_demo_mockup.html">Open policy bot demo</a>
+        <a class="btn" href="./ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+        <a class="btn" href="../index.html">Return to launcher</a>
       </div>
     </section>
   </div>
