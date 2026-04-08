@@ -100,6 +100,58 @@
       align-items: start;
     }
 
+    .step-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .step-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      display: grid;
+      gap: 6px;
+      box-shadow: 0 8px 20px rgba(17, 17, 17, 0.04);
+    }
+
+    .step-card.active {
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 10px 22px rgba(17, 17, 17, 0.08);
+      border-color: rgba(17, 17, 17, 0.16);
+    }
+
+    .step-card.done {
+      background: #ffffff;
+      box-shadow: inset 4px 0 0 #b8ff2c;
+    }
+
+    .step-card.locked {
+      opacity: 0.68;
+    }
+
+    .step-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .step-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .step-state {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     .layout {
       display: grid;
       grid-template-columns: 430px minmax(0, 1fr);
@@ -302,6 +354,31 @@
     .mini-stat-value.warn { color: #7b5200; }
     .mini-stat-value.danger { color: var(--danger); }
 
+    .checklist {
+      display: grid;
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .check-status {
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .check-status.ok { color: #2f4d00; }
+    .check-status.warn { color: #7b5200; }
+    .check-status.danger { color: var(--danger); }
+
     .finding-list {
       display: grid;
       gap: 12px;
@@ -401,11 +478,16 @@
       .layout {
         grid-template-columns: 1fr;
       }
+
+      .step-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 960px) {
       .summary-grid,
-      .two-up {
+      .two-up,
+      .step-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -443,6 +525,39 @@
       </div>
     </section>
 
+    <section class="step-grid" aria-label="Ruleset QC steps">
+      <div class="step-card active" id="stepDoc">
+        <div class="step-index">Step 1</div>
+        <div class="step-name">Link Google Doc</div>
+        <div class="step-state" id="stepDocState">Required first</div>
+      </div>
+      <div class="step-card locked" id="stepRuleset">
+        <div class="step-index">Step 2</div>
+        <div class="step-name">Load ruleset</div>
+        <div class="step-state" id="stepRulesetState">Waiting on document</div>
+      </div>
+      <div class="step-card locked" id="stepModel">
+        <div class="step-index">Step 3</div>
+        <div class="step-name">Confirm model</div>
+        <div class="step-state" id="stepModelState">Ready when ruleset is loaded</div>
+      </div>
+      <div class="step-card locked" id="stepRun">
+        <div class="step-index">Step 4</div>
+        <div class="step-name">Run QC</div>
+        <div class="step-state" id="stepRunState">Locked until required inputs are complete</div>
+      </div>
+      <div class="step-card locked" id="stepReview">
+        <div class="step-index">Step 5</div>
+        <div class="step-name">Review blockers</div>
+        <div class="step-state" id="stepReviewState">Run QC first</div>
+      </div>
+      <div class="step-card locked" id="stepExport">
+        <div class="step-index">Step 6</div>
+        <div class="step-name">Export outputs</div>
+        <div class="step-state" id="stepExportState">Prepared after review</div>
+      </div>
+    </section>
+
     <div class="layout">
       <aside class="panel">
         <div class="panel-header">
@@ -450,6 +565,16 @@
           <h2 class="panel-title">Google Doc, ruleset, and model</h2>
         </div>
         <div class="panel-body">
+          <div class="card">
+            <div class="card-label">Required before you continue</div>
+            <div class="checklist">
+              <div class="check-item"><strong>Google Doc linked</strong><span class="check-status danger" id="docCheck">Required</span></div>
+              <div class="check-item"><strong>Ruleset loaded</strong><span class="check-status danger" id="rulesetCheck">Required</span></div>
+              <div class="check-item"><strong>Model confirmed</strong><span class="check-status ok" id="modelCheck">Ready</span></div>
+              <div class="check-item"><strong>QC run completed</strong><span class="check-status warn" id="runCheck">Pending</span></div>
+            </div>
+          </div>
+
           <div class="card">
             <div class="card-label">Google Doc URL</div>
             <input id="googleDocUrl" class="field" type="text" placeholder="https://docs.google.com/document/d/FILE_ID/edit" />
@@ -501,6 +626,7 @@
             <button class="secondary-btn" id="downloadJsonBtn" type="button" disabled>Download JSON</button>
             <button class="secondary-btn" id="downloadReportBtn" type="button" disabled>Download report</button>
           </div>
+          <div class="subtle" id="runHint">Link the Google Doc and load the ruleset to unlock the QC run.</div>
         </div>
       </aside>
 
@@ -553,10 +679,10 @@
                 <div class="subtle">Filter to the issues that matter most before proposing edits back in the Google Doc.</div>
               </div>
               <div class="row">
-                <button class="small-btn filter-btn" data-filter="all" type="button">All findings</button>
-                <button class="small-btn filter-btn" data-filter="must" type="button">Must fix</button>
-                <button class="small-btn filter-btn" data-filter="recommended" type="button">Recommended</button>
-                <button class="small-btn filter-btn" data-filter="info" type="button">Info</button>
+                <button class="small-btn filter-btn" data-filter="all" type="button" disabled>All findings</button>
+                <button class="small-btn filter-btn" data-filter="must" type="button" disabled>Must fix</button>
+                <button class="small-btn filter-btn" data-filter="recommended" type="button" disabled>Recommended</button>
+                <button class="small-btn filter-btn" data-filter="info" type="button" disabled>Info</button>
               </div>
             </div>
           </div>
@@ -791,6 +917,23 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       nextActionBtn: document.getElementById("nextActionBtn"),
       nextActionTitle: document.getElementById("nextActionTitle"),
       nextActionCopy: document.getElementById("nextActionCopy"),
+      stepDoc: document.getElementById("stepDoc"),
+      stepRuleset: document.getElementById("stepRuleset"),
+      stepModel: document.getElementById("stepModel"),
+      stepRun: document.getElementById("stepRun"),
+      stepReview: document.getElementById("stepReview"),
+      stepExport: document.getElementById("stepExport"),
+      stepDocState: document.getElementById("stepDocState"),
+      stepRulesetState: document.getElementById("stepRulesetState"),
+      stepModelState: document.getElementById("stepModelState"),
+      stepRunState: document.getElementById("stepRunState"),
+      stepReviewState: document.getElementById("stepReviewState"),
+      stepExportState: document.getElementById("stepExportState"),
+      docCheck: document.getElementById("docCheck"),
+      rulesetCheck: document.getElementById("rulesetCheck"),
+      modelCheck: document.getElementById("modelCheck"),
+      runCheck: document.getElementById("runCheck"),
+      runHint: document.getElementById("runHint"),
       statusBanner: document.getElementById("statusBanner"),
       mustCount: document.getElementById("mustCount"),
       recoCount: document.getElementById("recoCount"),
@@ -812,6 +955,115 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       activeFilter: "all",
       ran: false
     };
+
+    function hasDoc() {
+      return Boolean(els.googleDocUrl.value.trim());
+    }
+
+    function hasRuleset() {
+      return Boolean(els.rulesetText.value.trim());
+    }
+
+    function hasModel() {
+      return Boolean(els.providerInput.value && els.modelInput.value.trim());
+    }
+
+    function setStep(card, stateEl, mode, copy) {
+      card.className = `step-card ${mode}`;
+      stateEl.textContent = copy;
+    }
+
+    function updateGuidance() {
+      const docReady = hasDoc();
+      const rulesetReady = hasRuleset();
+      const modelReady = hasModel();
+      const canRun = docReady && rulesetReady && modelReady;
+      const qcDone = state.ran;
+      const mustOpen = qcDone ? SAMPLE_PAYLOAD.summary.must_fix_count : 0;
+
+      els.docCheck.textContent = docReady ? "Complete" : "Required";
+      els.docCheck.className = `check-status ${docReady ? "ok" : "danger"}`;
+      els.rulesetCheck.textContent = rulesetReady ? "Complete" : "Required";
+      els.rulesetCheck.className = `check-status ${rulesetReady ? "ok" : "danger"}`;
+      els.modelCheck.textContent = modelReady ? "Ready" : "Required";
+      els.modelCheck.className = `check-status ${modelReady ? "ok" : "danger"}`;
+      els.runCheck.textContent = qcDone ? "Complete" : "Pending";
+      els.runCheck.className = `check-status ${qcDone ? "ok" : "warn"}`;
+
+      els.runBtn.disabled = !canRun;
+      els.runHint.textContent = !docReady
+        ? "Paste the Google Doc URL first."
+        : !rulesetReady
+          ? "Load or paste the markdown ruleset next."
+          : !modelReady
+            ? "Confirm the provider and model to continue."
+            : qcDone
+              ? "QC is complete. Review must-fix items first, then export the prepared outputs."
+              : "All required inputs are ready. Run the QC pass now.";
+
+      document.querySelectorAll(".filter-btn").forEach((button) => {
+        button.disabled = !qcDone;
+      });
+
+      setStep(els.stepDoc, els.stepDocState, docReady ? "done" : "active", docReady ? "Google Doc linked" : "Paste the working draft link");
+      setStep(
+        els.stepRuleset,
+        els.stepRulesetState,
+        !docReady ? "locked" : rulesetReady ? "done" : "active",
+        !docReady ? "Waiting on document" : rulesetReady ? "Ruleset loaded" : "Load the markdown ruleset"
+      );
+      setStep(
+        els.stepModel,
+        els.stepModelState,
+        !rulesetReady ? "locked" : modelReady ? "done" : "active",
+        !rulesetReady ? "Ready when ruleset is loaded" : modelReady ? "Model confirmed" : "Choose the interface to run"
+      );
+      setStep(
+        els.stepRun,
+        els.stepRunState,
+        !canRun ? "locked" : qcDone ? "done" : "active",
+        !canRun ? "Locked until required inputs are complete" : qcDone ? "QC pass completed" : "Run the ruleset QC pass"
+      );
+      setStep(
+        els.stepReview,
+        els.stepReviewState,
+        !qcDone ? "locked" : "active",
+        !qcDone ? "Run QC first" : `${mustOpen} must-fix item${mustOpen === 1 ? "" : "s"} to review first`
+      );
+      setStep(
+        els.stepExport,
+        els.stepExportState,
+        !qcDone ? "locked" : mustOpen > 0 ? "active" : "done",
+        !qcDone ? "Prepared after review" : mustOpen > 0 ? "Exports are ready after blocker review" : "Report and JSON are ready to download"
+      );
+
+      if (!docReady) {
+        els.nextActionTitle.textContent = "Paste the Google Doc link";
+        els.nextActionCopy.textContent = "Start with the working draft link so quincy knows which document the ruleset should evaluate.";
+        els.nextActionBtn.textContent = "Load sample inputs";
+        els.nextActionBtn.dataset.mode = "load";
+      } else if (!rulesetReady) {
+        els.nextActionTitle.textContent = "Load the markdown ruleset";
+        els.nextActionCopy.textContent = "The document is linked. Load or paste the markdown ruleset so quincy knows which checks to run and in what structure.";
+        els.nextActionBtn.textContent = "Load default ruleset";
+        els.nextActionBtn.dataset.mode = "ruleset";
+      } else if (!qcDone) {
+        els.nextActionTitle.textContent = "Run the seeded QC pass";
+        els.nextActionCopy.textContent = "The required inputs are ready. Run the ruleset QC pass to surface blockers, suggested enhancements, and the audit outputs.";
+        els.nextActionBtn.textContent = "Run seeded demo";
+        els.nextActionBtn.dataset.mode = "run";
+      } else if (mustOpen > 0) {
+        els.nextActionTitle.textContent = "Review must-fix items first";
+        els.nextActionCopy.textContent = "The QC pass is prepared. Start with the must-fix findings, then reuse the suggested language and report when you propose edits back in the Google Doc.";
+        els.nextActionBtn.textContent = "Show must-fix findings";
+        els.nextActionBtn.dataset.mode = "must";
+      } else {
+        els.nextActionTitle.textContent = "Export the prepared outputs";
+        els.nextActionCopy.textContent = "The blockers are cleared. Download the markdown report or JSON audit trail and carry them with the proposal.";
+        els.nextActionBtn.textContent = "Download report";
+        els.nextActionBtn.dataset.mode = "export";
+      }
+    }
 
     function setStatus(message, kind = "ok") {
       els.statusBanner.textContent = message;
@@ -839,10 +1091,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       els.providerInput.value = "anthropic";
       els.modelInput.value = "claude-3-5-sonnet-latest";
       setStatus("Sample Google Doc and ruleset loaded. Run the demo to see prepared findings and audit outputs.", "ok");
-      els.nextActionTitle.textContent = "Run the seeded QC pass";
-      els.nextActionCopy.textContent = "The sample inputs are ready. Run the ruleset demo and quincy will prepare findings, suggested language, and the markdown report.";
-      els.nextActionBtn.textContent = "Run seeded demo";
-      els.nextActionBtn.dataset.mode = "run";
+      updateGuidance();
     }
 
     function showFormat() {
@@ -852,6 +1101,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       els.nextActionCopy.textContent = "This format keeps the rules reusable across documents while still giving quincy enough structure to produce a traceable audit trail.";
       els.nextActionBtn.textContent = "Load sample ruleset";
       els.nextActionBtn.dataset.mode = "load";
+      updateGuidance();
     }
 
     function buildMetadataText(payload) {
@@ -930,10 +1180,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
 
       renderFindings();
       setStatus("Ruleset demo complete. quincy prepared findings, suggested language, and a reusable QC report from the seeded Google Doc and markdown ruleset.", "ok");
-      els.nextActionTitle.textContent = "Review the must-fix items first";
-      els.nextActionCopy.textContent = "The QC pass is prepared. Start with the must-fix findings, then reuse the suggested language and report when you propose edits back in the Google Doc.";
-      els.nextActionBtn.textContent = "Show must-fix findings";
-      els.nextActionBtn.dataset.mode = "must";
+      updateGuidance();
     }
 
     function resetDemo() {
@@ -959,10 +1206,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       els.downloadJsonBtn.disabled = true;
       els.downloadReportBtn.disabled = true;
       setStatus("Demo reset. Load the seeded sample to run the ruleset QC walkthrough again.", "ok");
-      els.nextActionTitle.textContent = "Load the Google Doc and ruleset";
-      els.nextActionCopy.textContent = "Start with the seeded sample and let quincy prepare a ruleset-based QC pass with findings, suggested language, and audit evidence.";
-      els.nextActionBtn.textContent = "Load sample inputs";
-      els.nextActionBtn.dataset.mode = "load";
+      updateGuidance();
     }
 
     function downloadFile(name, content, type) {
@@ -993,6 +1237,11 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       });
     });
 
+    [els.googleDocUrl, els.rulesetText, els.providerInput, els.modelInput].forEach((el) => {
+      el.addEventListener("input", updateGuidance);
+      el.addEventListener("change", updateGuidance);
+    });
+
     els.loadRulesetBtn.addEventListener("click", loadSampleInputs);
     els.showFormatBtn.addEventListener("click", showFormat);
     els.runBtn.addEventListener("click", runDemo);
@@ -1005,6 +1254,10 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
         state.activeFilter = "must";
         renderFindings();
         document.getElementById("findingsList").scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (mode === "export") {
+        els.reportText.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else if (mode === "ruleset") {
+        els.loadRulesetBtn.click();
       } else {
         loadSampleInputs();
       }
@@ -1017,6 +1270,8 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
     els.downloadReportBtn.addEventListener("click", () => {
       downloadFile("quincy-ruleset-qc-demo.md", SAMPLE_REPORT, "text/markdown");
     });
+
+    updateGuidance();
   </script>
 </body>
 </html>
