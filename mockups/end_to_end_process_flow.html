@@ -7,18 +7,19 @@
   <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: #eef2f4;
-      --panel: rgba(255, 255, 255, 0.96);
-      --line: rgba(17, 17, 17, 0.12);
-      --ink: #111111;
-      --muted: #6c737a;
-      --accent: #111111;
-      --accent-soft: #f7f8fa;
-      --ok: #b8ff2c;
-      --ok-soft: #fbfee9;
-      --warn-soft: #fff4d5;
-      --danger-soft: #ffe4e1;
-      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
+      --bg: #22252a;
+      --panel: rgba(50, 53, 59, 0.94);
+      --panel-2: #3f434b;
+      --line: rgba(255, 255, 255, 0.08);
+      --ink: #ffffff;
+      --muted: #a7b0b9;
+      --accent: #e3e6ea;
+      --accent-soft: #2b2f35;
+      --ok: #a3d795;
+      --ok-soft: rgba(163, 215, 149, 0.12);
+      --warn-soft: rgba(255, 227, 156, 0.12);
+      --danger-soft: rgba(255, 107, 107, 0.14);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
     }
 
     * { box-sizing: border-box; }
@@ -27,18 +28,41 @@
       margin: 0;
       font-family: var(--font-sans);
       color: var(--ink);
-      background:
-        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
-        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
-        var(--bg);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .bg-shape {
+      position: fixed;
+      z-index: -1;
+      border-radius: 999px;
+      opacity: 0.48;
+      filter: blur(0.5px);
+    }
+
+    .bg-shape-a {
+      width: 400px;
+      height: 400px;
+      background: #1a1d21;
+      left: -130px;
+      bottom: -110px;
+    }
+
+    .bg-shape-b {
+      width: 360px;
+      height: 360px;
+      background: #1f2328;
+      right: -90px;
+      top: -140px;
     }
 
     a, button { font: inherit; }
 
     .page {
-      max-width: 1400px;
+      width: min(1400px, 94vw);
       margin: 0 auto;
-      padding: 24px 24px 56px;
+      padding: 30px 0 40px;
     }
 
     .topbar {
@@ -72,7 +96,7 @@
     .summary-card {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: var(--shadow);
     }
 
@@ -94,7 +118,25 @@
       max-width: 860px;
       font-size: 16px;
       line-height: 1.55;
-      color: #454c53;
+      color: var(--muted);
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(17, 17, 17, 0.06);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+    }
+
+    .brand-pill img {
+      display: block;
+      height: 18px;
+      width: auto;
     }
 
     .hero-actions,
@@ -108,10 +150,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: 999px;
+      border-radius: 8px;
       border: 1px solid var(--line);
       padding: 12px 18px;
-      background: #ffffff;
+      background: var(--bg);
       color: var(--ink);
       text-decoration: none;
       transition: 0.18s ease;
@@ -119,7 +161,7 @@
 
     .btn.primary {
       background: var(--accent);
-      color: #ffffff;
+      color: #111111;
       border-color: transparent;
     }
 
@@ -136,8 +178,8 @@
       padding: 18px;
       display: grid;
       gap: 10px;
-      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
-      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
+      background: linear-gradient(180deg, rgba(163, 215, 149, 0.14) 0%, rgba(50, 53, 59, 0.96) 76%);
+      box-shadow: inset 0 3px 0 #a3d795, 0 12px 28px rgba(0, 0, 0, 0.24);
     }
 
     .summary-title {
@@ -147,7 +189,7 @@
     }
 
     .summary-copy {
-      color: #454c53;
+      color: var(--muted);
       line-height: 1.5;
       font-size: 15px;
     }
@@ -197,8 +239,8 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 4px;
-      border-radius: 8px 8px 0 0;
-      background: linear-gradient(90deg, #111111 0%, #111111 74%, #b8ff2c 100%);
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, #e3e6ea 0%, #e3e6ea 74%, #a3d795 100%);
     }
 
     .flow-step {
@@ -219,7 +261,7 @@
 
     .flow-card p {
       margin: 0;
-      color: #454c53;
+      color: var(--muted);
       line-height: 1.55;
       font-size: 15px;
     }
@@ -237,25 +279,25 @@
       border-radius: 999px;
       padding: 6px 10px;
       font-size: 12px;
-      background: #ffffff;
+      background: var(--panel-2);
     }
 
     .chip.ok {
-      border-color: rgba(184, 255, 44, 0.7);
-      color: #2f4d00;
+      border-color: rgba(163, 215, 149, 0.35);
+      color: #dff0d7;
       background: var(--ok-soft);
     }
 
     .chip.warn {
       background: var(--warn-soft);
-      color: #7b5200;
-      border-color: rgba(123, 82, 0, 0.12);
+      color: #ffe39c;
+      border-color: rgba(255, 227, 156, 0.3);
     }
 
     .chip.danger {
       background: var(--danger-soft);
-      color: #b3261e;
-      border-color: rgba(179, 38, 30, 0.12);
+      color: #ff8f8f;
+      border-color: rgba(255, 107, 107, 0.3);
     }
 
     .flow-points {
@@ -306,7 +348,7 @@
 
     .assist-card p {
       margin: 0;
-      color: #454c53;
+      color: var(--muted);
       line-height: 1.55;
       font-size: 15px;
     }
@@ -319,7 +361,7 @@
 
     .legend .summary-card {
       padding: 14px 16px;
-      background: #ffffff;
+      background: var(--panel-2);
       box-shadow: none;
       border-radius: 16px;
       gap: 6px;
@@ -352,6 +394,8 @@
   </style>
 </head>
 <body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
   <div class="page">
     <div class="topbar">
       <div>
@@ -359,6 +403,9 @@
         <h1>End-to-end process flow across quincy, governance, and policy search</h1>
       </div>
       <div class="hero-actions">
+        <div class="brand-pill" aria-label="Block logo">
+          <img src="../assets/images/block-lockup-black-no-padding.png" alt="Block" />
+        </div>
         <a class="btn secondary" href="../index.html">Back to landing page</a>
       </div>
     </div>

@@ -7,14 +7,15 @@
   <link rel="stylesheet" href="./assets/styles/block-theme-static.css" />
   <style>
     :root {
-      --bg: #eef2f4;
-      --panel: rgba(255, 255, 255, 0.96);
-      --line: rgba(18, 18, 18, 0.1);
-      --ink: #111111;
-      --muted: #6c737a;
-      --accent: #111111;
-      --accent-soft: #f7f8fa;
-      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
+      --bg: #22252a;
+      --panel: rgba(50, 53, 59, 0.94);
+      --panel-2: #3f434b;
+      --line: rgba(255, 255, 255, 0.08);
+      --ink: #ffffff;
+      --muted: #a7b0b9;
+      --accent: #e3e6ea;
+      --accent-soft: #2b2f35;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
     }
 
     * { box-sizing: border-box; }
@@ -22,22 +23,45 @@
       margin: 0;
       font-family: var(--font-sans);
       color: var(--ink);
-      background:
-        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
-        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
-        var(--bg);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .bg-shape {
+      position: fixed;
+      z-index: -1;
+      border-radius: 999px;
+      opacity: 0.48;
+      filter: blur(0.5px);
+    }
+
+    .bg-shape-a {
+      width: 400px;
+      height: 400px;
+      background: #1a1d21;
+      left: -130px;
+      bottom: -110px;
+    }
+
+    .bg-shape-b {
+      width: 360px;
+      height: 360px;
+      background: #1f2328;
+      right: -90px;
+      top: -140px;
     }
 
     .wrap {
-      max-width: 1180px;
+      width: min(1180px, 94vw);
       margin: 0 auto;
-      padding: 32px 24px 64px;
+      padding: 30px 0 40px;
     }
 
     .hero {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 36px;
       box-shadow: var(--shadow);
       margin-bottom: 24px;
@@ -58,9 +82,10 @@
       align-items: center;
       justify-content: center;
       padding: 12px 14px;
-      border: 1px solid rgba(17, 17, 17, 0.1);
+      border: 1px solid rgba(17, 17, 17, 0.06);
       border-radius: 999px;
-      background: rgba(247, 248, 250, 0.92);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
     }
 
     .hero-brand-logo {
@@ -107,18 +132,18 @@
       align-items: center;
       justify-content: center;
       padding: 14px 20px;
-      border-radius: 999px;
+      border-radius: 8px;
       text-decoration: none;
       border: 1px solid var(--line);
       color: var(--ink);
-      background: #ffffff;
+      background: var(--bg);
       transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
 
     .btn.primary {
       background: var(--accent);
       border-color: transparent;
-      color: #ffffff;
+      color: #111111;
     }
 
     .btn.secondary {
@@ -143,7 +168,7 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 24px;
       box-shadow: var(--shadow);
       color: var(--ink);
@@ -172,9 +197,9 @@
       display: block;
       text-decoration: none;
       color: inherit;
-      background: #ffffff;
+      background: var(--panel-2);
       border: 1px solid var(--line);
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 16px 18px;
       transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
@@ -205,10 +230,10 @@
 
     .task-card {
       background: var(--panel);
-      border: 1px solid rgba(17, 17, 17, 0.14);
-      border-radius: 8px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
       padding: 28px;
-      box-shadow: 0 18px 44px rgba(17, 17, 17, 0.1);
+      box-shadow: var(--shadow);
       display: grid;
       gap: 14px;
       position: relative;
@@ -219,8 +244,8 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 4px;
-      border-radius: 8px 8px 0 0;
-      background: linear-gradient(90deg, #111111 0%, #111111 78%, #b8ff2c 100%);
+      border-radius: 12px 12px 0 0;
+      background: linear-gradient(90deg, #e3e6ea 0%, #e3e6ea 78%, #a3d795 100%);
     }
 
     .task-kicker {
@@ -238,7 +263,7 @@
     }
 
     .task-copy {
-      color: #454c53;
+      color: var(--muted);
       font-size: 15px;
       line-height: 1.55;
     }
@@ -266,13 +291,13 @@
     }
 
     .support-grid .panel {
-      background: rgba(255, 255, 255, 0.82);
-      box-shadow: 0 10px 24px rgba(17, 17, 17, 0.04);
+      background: rgba(50, 53, 59, 0.9);
+      box-shadow: var(--shadow);
       padding: 22px;
     }
 
     .support-grid .link-card {
-      background: #f7f8fa;
+      background: var(--panel-2);
       box-shadow: none;
     }
 
@@ -292,7 +317,7 @@
     }
 
     code {
-      background: #ffffff;
+      background: var(--panel-2);
       color: var(--ink);
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -322,6 +347,8 @@
   </style>
 </head>
 <body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
   <div class="wrap">
     <section class="hero">
       <div class="hero-head">
