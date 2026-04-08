@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quincy ruleset QC demo</title>
+  <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
+  <style>
+    :root {
+      --bg: #eef2f4;
+      --panel: rgba(255, 255, 255, 0.96);
+      --panel-2: #f7f8fa;
+      --line: rgba(17, 17, 17, 0.12);
+      --ink: #111111;
+      --muted: #6c737a;
+      --accent: #111111;
+      --accent-soft: #f7f8fa;
+      --ok: #b8ff2c;
+      --ok-soft: #fbfee9;
+      --warn-soft: #fff4d5;
+      --danger: var(--color-text-danger);
+      --danger-soft: #ffe8e6;
+      --shadow: 0 16px 40px rgba(17, 17, 17, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at left bottom, #dbe3e7 0 220px, transparent 221px),
+        radial-gradient(circle at right top, #e4eaee 0 190px, transparent 191px),
+        var(--bg);
+    }
+
+    button, input, select, textarea { font: inherit; }
+
+    .page {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+      font-family: var(--font-mono);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.04;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
+
+    .hero, .panel, .card, .finding, .chip, .ghost-btn, .secondary-btn {
+      background: var(--panel);
+      color: var(--ink);
+      border-color: var(--line);
+      box-shadow: none;
+    }
+
+    .hero, .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 24px;
+      margin-bottom: 18px;
+    }
+
+    .hero-copy {
+      max-width: 920px;
+      font-size: 16px;
+      line-height: 1.55;
+      color: #454c53;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 360px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 430px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .panel-body {
+      padding: 16px 20px 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--accent-soft);
+    }
+
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+    }
+
+    .subtle {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .field, .textarea {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--ink);
+      padding: 12px 14px;
+    }
+
+    .textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .textarea.small {
+      min-height: 100px;
+    }
+
+    .row, .meta-strip, .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .two-up {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .primary-btn, .ghost-btn, .secondary-btn, .small-btn, .chip-btn {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #ffffff;
+      color: var(--ink);
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: 0.18s ease;
+      text-decoration: none;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: transparent;
+    }
+
+    .small-btn, .chip-btn {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .primary-btn:hover,
+    .ghost-btn:hover,
+    .secondary-btn:hover,
+    .small-btn:hover,
+    .chip-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(17, 17, 17, 0.08);
+    }
+
+    .chip {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      padding: 8px 12px;
+      background: #ffffff;
+      font-size: 13px;
+    }
+
+    .chip.ok {
+      color: #2f4d00;
+      border-color: #b8ff2c;
+    }
+
+    .chip.warn {
+      background: var(--warn-soft);
+      border-color: var(--color-border-warning);
+      color: #7b5200;
+    }
+
+    .chip.danger {
+      background: var(--danger-soft);
+      border-color: var(--color-border-danger);
+      color: var(--danger);
+    }
+
+    .status-banner {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      background: #ffffff;
+      color: #2f4d00;
+      border: 1px solid rgba(17, 17, 17, 0.12);
+      box-shadow: inset 4px 0 0 #b8ff2c;
+    }
+
+    .next-step-card {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(17, 17, 17, 0.16);
+      background: linear-gradient(180deg, #fbfef4 0%, #ffffff 72%);
+      box-shadow: inset 0 3px 0 #b8ff2c, 0 12px 28px rgba(17, 17, 17, 0.08);
+    }
+
+    .next-step-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.15;
+    }
+
+    .next-step-copy {
+      color: #454c53;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mini-stat {
+      background: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .mini-stat-value {
+      font-size: 24px;
+      line-height: 1;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .mini-stat-value.ok { color: #2f4d00; }
+    .mini-stat-value.warn { color: #7b5200; }
+    .mini-stat-value.danger { color: var(--danger); }
+
+    .finding-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .finding {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #ffffff;
+    }
+
+    .finding.must {
+      background: linear-gradient(180deg, rgba(249, 75, 75, 0.08) 0%, #ffffff 46%);
+      border-color: var(--color-border-danger);
+    }
+
+    .finding.recommended {
+      background: linear-gradient(180deg, rgba(255, 244, 213, 0.32) 0%, #ffffff 46%);
+      border-color: var(--color-border-warning);
+    }
+
+    .finding.info {
+      background: linear-gradient(180deg, rgba(184, 255, 44, 0.16) 0%, #ffffff 46%);
+      border-color: rgba(184, 255, 44, 0.55);
+    }
+
+    .finding-title {
+      font-size: 16px;
+      margin: 8px 0;
+      font-weight: 600;
+    }
+
+    .finding-body {
+      font-size: 14px;
+      line-height: 1.55;
+      margin-top: 8px;
+      white-space: pre-wrap;
+    }
+
+    .finding-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .disclosure {
+      overflow: hidden;
+    }
+
+    .disclosure summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .disclosure summary::after {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--muted);
+    }
+
+    .disclosure[open] summary::after {
+      content: "−";
+    }
+
+    .disclosure-body {
+      margin-top: 12px;
+      display: grid;
+      gap: 12px;
+    }
+
+    pre.json-shell {
+      margin: 0;
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1220px) {
+      .hero-grid,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 960px) {
+      .summary-grid,
+      .two-up {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <p class="eyebrow">Static Demo Mockup</p>
+        <h1>quincy ruleset QC</h1>
+      </div>
+      <div class="row">
+        <a class="secondary-btn" href="../ui/ruleset_qc.html">Open local app shell</a>
+        <button class="ghost-btn" id="resetBtn" type="button">Reset demo</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">Ruleset-driven review</p>
+          <div class="hero-copy">
+            This GitHub Pages-safe demo shows a lighter-weight quincy direction: a document owner brings a Google Doc draft, a reusable markdown ruleset, and the LLM interface of their choice. quincy evaluates each rule independently and prepares findings, suggested enhancements, and an audit trail without pulling the owner into the full governance workflow.
+          </div>
+        </div>
+        <div class="next-step-card">
+          <div class="card-label">Next best action</div>
+          <h2 class="next-step-title" id="nextActionTitle">Load the Google Doc and ruleset</h2>
+          <div class="next-step-copy" id="nextActionCopy">Start with the seeded sample and let quincy prepare a ruleset-based QC pass with findings, suggested language, and audit evidence.</div>
+          <div class="row">
+            <button class="primary-btn" id="nextActionBtn" type="button">Load sample inputs</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="panel">
+        <div class="panel-header">
+          <p class="eyebrow">Inputs</p>
+          <h2 class="panel-title">Google Doc, ruleset, and model</h2>
+        </div>
+        <div class="panel-body">
+          <div class="card">
+            <div class="card-label">Google Doc URL</div>
+            <input id="googleDocUrl" class="field" type="text" placeholder="https://docs.google.com/document/d/FILE_ID/edit" />
+            <div class="subtle" style="margin-top:10px;">The Google Doc remains the working draft. quincy reviews it and prepares supporting outputs around it.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Ruleset source</div>
+            <div class="row" style="margin-bottom:10px;">
+              <button class="small-btn" id="loadRulesetBtn" type="button">Load default ruleset</button>
+              <button class="small-btn" id="showFormatBtn" type="button">Show format</button>
+            </div>
+            <textarea id="rulesetText" class="textarea" placeholder="Paste a markdown ruleset here."></textarea>
+          </div>
+
+          <div class="card">
+            <div class="card-label">LLM interface</div>
+            <div class="two-up">
+              <div>
+                <div class="card-label">Provider</div>
+                <select id="providerInput" class="field">
+                  <option value="anthropic" selected>Anthropic</option>
+                  <option value="openai">OpenAI</option>
+                  <option value="auto">Auto-detect</option>
+                </select>
+              </div>
+              <div>
+                <div class="card-label">Model</div>
+                <input id="modelInput" class="field" type="text" value="claude-3-5-sonnet-latest" />
+              </div>
+            </div>
+          </div>
+
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">What quincy prepares</div>
+                <div class="subtle">Expand to see the owner outputs this mode can generate.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
+              <div class="row"><span class="chip ok">Findings by rule</span><span class="chip ok">Suggested enhancements</span><span class="chip ok">Suggested language</span></div>
+              <div class="row"><span class="chip ok">Markdown report</span><span class="chip ok">JSON audit trail</span><span class="chip ok">Traceable rule execution</span></div>
+            </div>
+          </details>
+
+          <div class="action-row">
+            <button class="primary-btn" id="runBtn" type="button">Run ruleset demo</button>
+            <button class="secondary-btn" id="downloadJsonBtn" type="button" disabled>Download JSON</button>
+            <button class="secondary-btn" id="downloadReportBtn" type="button" disabled>Download report</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="panel">
+        <div class="panel-header">
+          <p class="eyebrow">Results</p>
+          <h2 class="panel-title">Prepared findings and audit trail</h2>
+        </div>
+        <div class="panel-body">
+          <div id="statusBanner" class="status-banner">Demo ready. Load the seeded sample to see a ruleset-driven QC run.</div>
+
+          <div class="summary-grid">
+            <div class="mini-stat">
+              <div class="card-label">Must-fix items surfaced</div>
+              <div class="mini-stat-value danger" id="mustCount">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="card-label">Recommended improvements</div>
+              <div class="mini-stat-value warn" id="recoCount">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="card-label">Audit evidence prepared</div>
+              <div class="mini-stat-value" id="auditCount">0</div>
+            </div>
+            <div class="mini-stat">
+              <div class="card-label">Confidence to propose</div>
+              <div class="mini-stat-value" id="readinessScore">n/a</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Run summary</div>
+            <div class="meta-strip">
+              <span class="chip" id="providerChip">Provider: n/a</span>
+              <span class="chip" id="modelChip">Model: n/a</span>
+              <span class="chip" id="rulesetChip">Ruleset: n/a</span>
+              <span class="chip" id="readinessChip">Readiness: n/a</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-label">Document and ruleset context</div>
+            <textarea id="metadataText" class="textarea small" readonly spellcheck="false">Load the sample inputs and run the demo to see document, ruleset, and model metadata here.</textarea>
+          </div>
+
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+              <div>
+                <div class="card-label">Findings</div>
+                <div class="subtle">Filter to the issues that matter most before proposing edits back in the Google Doc.</div>
+              </div>
+              <div class="row">
+                <button class="small-btn filter-btn" data-filter="all" type="button">All findings</button>
+                <button class="small-btn filter-btn" data-filter="must" type="button">Must fix</button>
+                <button class="small-btn filter-btn" data-filter="recommended" type="button">Recommended</button>
+                <button class="small-btn filter-btn" data-filter="info" type="button">Info</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="findingsList" class="finding-list">
+            <div class="muted">Run the demo to see rule-by-rule findings and suggested language.</div>
+          </div>
+
+          <details class="card disclosure" open>
+            <summary>
+              <div>
+                <div class="card-label">Prepared markdown report</div>
+                <div class="subtle">Expand to review the owner-facing QC summary that can travel with the proposal.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
+              <textarea id="reportText" class="textarea" readonly spellcheck="false">No report prepared yet.</textarea>
+            </div>
+          </details>
+
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Developer payload</div>
+                <div class="subtle">Expand for the normalized JSON and audit-trail structure.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body">
+              <pre id="jsonOutput" class="json-shell">No response yet.</pre>
+            </div>
+          </details>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const DEFAULT_DOC_URL = "https://docs.google.com/document/d/1quincyWorkingDraftThirdParty/edit";
+    const DEFAULT_RULESET = `# Ruleset Metadata
+name: Block Policy on Policies QC
+version: 0.1
+document_type: Policy
+document_source: Google Docs
+intended_use: Document owner self-QC before continuing the standard LogicGate and Google Drive lifecycle
+default_output_mode: findings_and_enhancements
+ruleset_owner: Compliance Governance
+
+## Rule
+id: required_sections
+title: Required Sections Present
+severity: must
+enabled: true
+check_type: presence
+instructions: Confirm the document includes clearly identifiable sections for purpose, scope, document owner, review cadence, and related documents.
+
+## Rule
+id: retention_language_specificity
+title: Retention Language Is Specific
+severity: must
+enabled: true
+check_type: quality
+instructions: Review the retention language and determine whether it is specific enough to be actionable rather than generic.
+
+## Rule
+id: related_documents_consistency
+title: Related Documents Are Complete and Consistent
+severity: recommended
+enabled: true
+check_type: consistency
+instructions: Confirm that related policies, standards, procedures, or guidelines are listed consistently when referenced in the body of the draft.`;
+
+    const RULESET_FORMAT = `Required metadata fields:
+- name
+- version
+- document_type
+- intended_use
+
+Required rule fields:
+- id
+- title
+- severity
+- enabled
+- check_type
+- instructions
+
+Recommended severity values:
+- must
+- recommended
+- info`;
+
+    const SAMPLE_PAYLOAD = {
+      document_metadata: {
+        source: "google_doc",
+        google_doc_url: DEFAULT_DOC_URL,
+        document_id: "1quincyWorkingDraftThirdParty",
+        document_title: "Third-Party Compliance Oversight Policy",
+        document_type: "Policy"
+      },
+      ruleset_metadata: {
+        name: "Block Policy on Policies QC",
+        version: "0.1",
+        document_type: "Policy"
+      },
+      run_metadata: {
+        provider: "anthropic",
+        model: "claude-3-5-sonnet-latest",
+        run_timestamp: "2026-04-01T10:35:00-04:00",
+        output_mode: "findings_and_enhancements"
+      },
+      summary: {
+        must_fix_count: 2,
+        recommended_count: 3,
+        info_count: 1,
+        overall_readiness: "needs_revision",
+        confidence_to_propose: "68%"
+      },
+      findings: [
+        {
+          rule_id: "required_sections",
+          title: "Required Sections Present",
+          severity: "must",
+          status: "fail",
+          finding: "The draft does not include a clearly labeled Related Documents section.",
+          evidence: "No heading or clearly identifiable section for related documents was found in the uploaded Google Doc.",
+          suggested_enhancement: "Add a short Related Documents section near the end of the document.",
+          suggested_language: "Related Documents: Vendor Due Diligence Standard; Third-Party Risk Procedure."
+        },
+        {
+          rule_id: "retention_language_specificity",
+          title: "Retention Language Is Specific",
+          severity: "must",
+          status: "fail",
+          finding: "The retention statement is too generic to be operationally useful.",
+          evidence: "\"Records will be retained as required by applicable law and company policy.\"",
+          suggested_enhancement: "Replace the generic statement with language that points to the governing retention schedule or controlling standard.",
+          suggested_language: "Records and evidence created under this Policy must be retained in accordance with the approved corporate retention schedule and any controlling records management standard."
+        },
+        {
+          rule_id: "related_documents_consistency",
+          title: "Related Documents Are Complete and Consistent",
+          severity: "recommended",
+          status: "fail",
+          finding: "The draft references a Standard in the body but does not list it in a dedicated related-documents section.",
+          evidence: "\"See the Vendor Due Diligence Standard for minimum diligence requirements.\"",
+          suggested_enhancement: "List the referenced Standard and Procedure together in a consistent format.",
+          suggested_language: "Related Documents: Vendor Due Diligence Standard; Third-Party Risk Procedure."
+        },
+        {
+          rule_id: "policy_vs_procedure_language",
+          title: "Policy Language Avoids Excessive Procedure Detail",
+          severity: "recommended",
+          status: "fail",
+          finding: "One section includes step-by-step instructions that read more like a procedure than a policy requirement.",
+          evidence: "\"First, the reviewer opens the vendor file. Next, the reviewer updates the checklist. Then, the reviewer emails Legal for sign-off.\"",
+          suggested_enhancement: "Convert the section into a policy-level expectation and move detailed steps to a procedure or standard.",
+          suggested_language: "Business teams must complete and document required third-party diligence steps before onboarding, using the approved standard and procedure."
+        },
+        {
+          rule_id: "obligation_language_clarity",
+          title: "Requirement Language Is Clear",
+          severity: "recommended",
+          status: "fail",
+          finding: "Some obligation statements use weak language such as 'should consider' where mandatory language may be more appropriate.",
+          evidence: "\"Business teams should consider enhanced diligence for high-risk vendors.\"",
+          suggested_enhancement: "Use clear requirement language where the obligation is mandatory.",
+          suggested_language: "Business teams must perform enhanced diligence for high-risk vendors in accordance with the approved standard."
+        },
+        {
+          rule_id: "references_to_external_authority",
+          title: "External Authority References Are Anchored",
+          severity: "info",
+          status: "pass",
+          finding: "The draft references applicable law and regulatory expectations, but the citations remain high level.",
+          evidence: "\"This Policy supports compliance with applicable anti-corruption and third-party oversight requirements.\"",
+          suggested_enhancement: null,
+          suggested_language: null
+        }
+      ],
+      audit_trail: {
+        rules_evaluated: 8,
+        rules_passed: [
+          "document_purpose_scope_alignment",
+          "owner_and_review_cadence",
+          "references_to_external_authority"
+        ],
+        rules_failed: [
+          "required_sections",
+          "retention_language_specificity",
+          "related_documents_consistency",
+          "policy_vs_procedure_language",
+          "obligation_language_clarity"
+        ]
+      }
+    };
+
+    const SAMPLE_REPORT = `# quincy Ruleset QC Report
+
+Document reviewed: Third-Party Compliance Oversight Policy
+Google Doc URL: ${DEFAULT_DOC_URL}
+Ruleset used: Block Policy on Policies QC v0.1
+Provider/model: anthropic / claude-3-5-sonnet-latest
+
+## Summary
+- Must-fix items: 2
+- Recommended improvements: 3
+- Info notes: 1
+- Confidence to propose: 68%
+
+## Must fix
+1. Add a clearly labeled Related Documents section.
+2. Replace the generic retention clause with a specific controlling reference.
+
+## Recommended improvements
+1. List the referenced Standard and Procedure together in a consistent format.
+2. Rewrite step-by-step operational detail into policy-level expectations.
+3. Strengthen weak obligation language where the intent is mandatory.
+
+## Audit trail
+- Rules evaluated: 8
+- Rules failed: required_sections, retention_language_specificity, related_documents_consistency, policy_vs_procedure_language, obligation_language_clarity
+- Rules passed: document_purpose_scope_alignment, owner_and_review_cadence, references_to_external_authority`;
+
+    const els = {
+      googleDocUrl: document.getElementById("googleDocUrl"),
+      rulesetText: document.getElementById("rulesetText"),
+      providerInput: document.getElementById("providerInput"),
+      modelInput: document.getElementById("modelInput"),
+      loadRulesetBtn: document.getElementById("loadRulesetBtn"),
+      showFormatBtn: document.getElementById("showFormatBtn"),
+      runBtn: document.getElementById("runBtn"),
+      resetBtn: document.getElementById("resetBtn"),
+      nextActionBtn: document.getElementById("nextActionBtn"),
+      nextActionTitle: document.getElementById("nextActionTitle"),
+      nextActionCopy: document.getElementById("nextActionCopy"),
+      statusBanner: document.getElementById("statusBanner"),
+      mustCount: document.getElementById("mustCount"),
+      recoCount: document.getElementById("recoCount"),
+      auditCount: document.getElementById("auditCount"),
+      readinessScore: document.getElementById("readinessScore"),
+      providerChip: document.getElementById("providerChip"),
+      modelChip: document.getElementById("modelChip"),
+      rulesetChip: document.getElementById("rulesetChip"),
+      readinessChip: document.getElementById("readinessChip"),
+      metadataText: document.getElementById("metadataText"),
+      findingsList: document.getElementById("findingsList"),
+      reportText: document.getElementById("reportText"),
+      jsonOutput: document.getElementById("jsonOutput"),
+      downloadJsonBtn: document.getElementById("downloadJsonBtn"),
+      downloadReportBtn: document.getElementById("downloadReportBtn")
+    };
+
+    const state = {
+      activeFilter: "all",
+      ran: false
+    };
+
+    function setStatus(message, kind = "ok") {
+      els.statusBanner.textContent = message;
+      if (kind === "error") {
+        els.statusBanner.style.background = "#ffe8e6";
+        els.statusBanner.style.borderColor = "var(--color-border-danger)";
+        els.statusBanner.style.boxShadow = "none";
+        els.statusBanner.style.color = "var(--danger)";
+      } else if (kind === "warn") {
+        els.statusBanner.style.background = "var(--warn-soft)";
+        els.statusBanner.style.borderColor = "var(--color-border-warning)";
+        els.statusBanner.style.boxShadow = "none";
+        els.statusBanner.style.color = "#7b5200";
+      } else {
+        els.statusBanner.style.background = "#ffffff";
+        els.statusBanner.style.borderColor = "rgba(17, 17, 17, 0.12)";
+        els.statusBanner.style.boxShadow = "inset 4px 0 0 #b8ff2c";
+        els.statusBanner.style.color = "#2f4d00";
+      }
+    }
+
+    function loadSampleInputs() {
+      els.googleDocUrl.value = DEFAULT_DOC_URL;
+      els.rulesetText.value = DEFAULT_RULESET;
+      els.providerInput.value = "anthropic";
+      els.modelInput.value = "claude-3-5-sonnet-latest";
+      setStatus("Sample Google Doc and ruleset loaded. Run the demo to see prepared findings and audit outputs.", "ok");
+      els.nextActionTitle.textContent = "Run the seeded QC pass";
+      els.nextActionCopy.textContent = "The sample inputs are ready. Run the ruleset demo and quincy will prepare findings, suggested language, and the markdown report.";
+      els.nextActionBtn.textContent = "Run seeded demo";
+      els.nextActionBtn.dataset.mode = "run";
+    }
+
+    function showFormat() {
+      els.rulesetText.value = RULESET_FORMAT;
+      setStatus("Ruleset format loaded. Switch back to the default ruleset when you want to run the sample.", "warn");
+      els.nextActionTitle.textContent = "Inspect the ruleset contract";
+      els.nextActionCopy.textContent = "This format keeps the rules reusable across documents while still giving quincy enough structure to produce a traceable audit trail.";
+      els.nextActionBtn.textContent = "Load sample ruleset";
+      els.nextActionBtn.dataset.mode = "load";
+    }
+
+    function buildMetadataText(payload) {
+      return [
+        `Document title: ${payload.document_metadata.document_title}`,
+        `Google Doc URL: ${payload.document_metadata.google_doc_url}`,
+        `Document ID: ${payload.document_metadata.document_id}`,
+        `Ruleset: ${payload.ruleset_metadata.name} v${payload.ruleset_metadata.version}`,
+        `Document type: ${payload.ruleset_metadata.document_type}`,
+        `Provider/model: ${payload.run_metadata.provider} / ${payload.run_metadata.model}`,
+        `Rules evaluated: ${payload.audit_trail.rules_evaluated}`,
+        `Rules failed: ${payload.audit_trail.rules_failed.join(", ")}`,
+        `Rules passed: ${payload.audit_trail.rules_passed.join(", ")}`
+      ].join("\n");
+    }
+
+    function renderFindings() {
+      const findings = SAMPLE_PAYLOAD.findings.filter((finding) => state.activeFilter === "all" || finding.severity === state.activeFilter);
+      if (!findings.length) {
+        els.findingsList.innerHTML = '<div class="muted">No findings match the active filter.</div>';
+        return;
+      }
+
+      els.findingsList.innerHTML = findings.map((finding) => `
+        <article class="finding ${escapeHtml(finding.severity)}">
+          <div class="row">
+            <span class="chip ${finding.severity === "must" ? "danger" : finding.severity === "recommended" ? "warn" : "ok"}">${escapeHtml(finding.severity)}</span>
+            <span class="chip ${finding.status === "fail" ? "danger" : "ok"}">${escapeHtml(finding.status)}</span>
+            <span class="chip">${escapeHtml(finding.rule_id)}</span>
+          </div>
+          <div class="finding-title">${escapeHtml(finding.title)}</div>
+          <div class="finding-body"><strong>Finding</strong>\n${escapeHtml(finding.finding)}</div>
+          <div class="finding-body"><strong>Evidence</strong>\n${escapeHtml(finding.evidence)}</div>
+          <div class="finding-body"><strong>Suggested enhancement</strong>\n${escapeHtml(finding.suggested_enhancement || "None")}</div>
+          <div class="finding-body"><strong>Suggested language</strong>\n${escapeHtml(finding.suggested_language || "None")}</div>
+          <div class="finding-actions">
+            <button class="small-btn" type="button">Accept suggestion</button>
+            <button class="small-btn" type="button">Copy language</button>
+            <button class="small-btn" type="button">Keep for later</button>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function runDemo() {
+      if (!els.googleDocUrl.value.trim()) {
+        setStatus("Load a Google Doc URL first.", "error");
+        return;
+      }
+      if (!els.rulesetText.value.trim()) {
+        setStatus("Load or paste a markdown ruleset first.", "error");
+        return;
+      }
+
+      state.ran = true;
+      els.mustCount.textContent = SAMPLE_PAYLOAD.summary.must_fix_count;
+      els.mustCount.className = "mini-stat-value danger";
+      els.recoCount.textContent = SAMPLE_PAYLOAD.summary.recommended_count;
+      els.recoCount.className = "mini-stat-value warn";
+      els.auditCount.textContent = SAMPLE_PAYLOAD.audit_trail.rules_evaluated;
+      els.auditCount.className = "mini-stat-value";
+      els.readinessScore.textContent = SAMPLE_PAYLOAD.summary.confidence_to_propose;
+      els.readinessScore.className = "mini-stat-value warn";
+
+      els.providerChip.textContent = `Provider: ${SAMPLE_PAYLOAD.run_metadata.provider}`;
+      els.modelChip.textContent = `Model: ${SAMPLE_PAYLOAD.run_metadata.model}`;
+      els.rulesetChip.textContent = `Ruleset: ${SAMPLE_PAYLOAD.ruleset_metadata.name} v${SAMPLE_PAYLOAD.ruleset_metadata.version}`;
+      els.readinessChip.textContent = `Readiness: ${SAMPLE_PAYLOAD.summary.overall_readiness}`;
+      els.readinessChip.className = "chip danger";
+
+      els.metadataText.value = buildMetadataText(SAMPLE_PAYLOAD);
+      els.reportText.value = SAMPLE_REPORT;
+      els.jsonOutput.textContent = JSON.stringify(SAMPLE_PAYLOAD, null, 2);
+      els.downloadJsonBtn.disabled = false;
+      els.downloadReportBtn.disabled = false;
+
+      renderFindings();
+      setStatus("Ruleset demo complete. quincy prepared findings, suggested language, and a reusable QC report from the seeded Google Doc and markdown ruleset.", "ok");
+      els.nextActionTitle.textContent = "Review the must-fix items first";
+      els.nextActionCopy.textContent = "The QC pass is prepared. Start with the must-fix findings, then reuse the suggested language and report when you propose edits back in the Google Doc.";
+      els.nextActionBtn.textContent = "Show must-fix findings";
+      els.nextActionBtn.dataset.mode = "must";
+    }
+
+    function resetDemo() {
+      state.activeFilter = "all";
+      state.ran = false;
+      els.googleDocUrl.value = "";
+      els.rulesetText.value = "";
+      els.providerInput.value = "anthropic";
+      els.modelInput.value = "claude-3-5-sonnet-latest";
+      els.mustCount.textContent = "0";
+      els.recoCount.textContent = "0";
+      els.auditCount.textContent = "0";
+      els.readinessScore.textContent = "n/a";
+      els.providerChip.textContent = "Provider: n/a";
+      els.modelChip.textContent = "Model: n/a";
+      els.rulesetChip.textContent = "Ruleset: n/a";
+      els.readinessChip.textContent = "Readiness: n/a";
+      els.readinessChip.className = "chip";
+      els.metadataText.value = "Load the sample inputs and run the demo to see document, ruleset, and model metadata here.";
+      els.findingsList.innerHTML = '<div class="muted">Run the demo to see rule-by-rule findings and suggested language.</div>';
+      els.reportText.value = "No report prepared yet.";
+      els.jsonOutput.textContent = "No response yet.";
+      els.downloadJsonBtn.disabled = true;
+      els.downloadReportBtn.disabled = true;
+      setStatus("Demo reset. Load the seeded sample to run the ruleset QC walkthrough again.", "ok");
+      els.nextActionTitle.textContent = "Load the Google Doc and ruleset";
+      els.nextActionCopy.textContent = "Start with the seeded sample and let quincy prepare a ruleset-based QC pass with findings, suggested language, and audit evidence.";
+      els.nextActionBtn.textContent = "Load sample inputs";
+      els.nextActionBtn.dataset.mode = "load";
+    }
+
+    function downloadFile(name, content, type) {
+      const blob = new Blob([content], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.querySelectorAll(".filter-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.activeFilter = button.dataset.filter;
+        if (state.ran) renderFindings();
+      });
+    });
+
+    els.loadRulesetBtn.addEventListener("click", loadSampleInputs);
+    els.showFormatBtn.addEventListener("click", showFormat);
+    els.runBtn.addEventListener("click", runDemo);
+    els.resetBtn.addEventListener("click", resetDemo);
+    els.nextActionBtn.addEventListener("click", () => {
+      const mode = els.nextActionBtn.dataset.mode || "load";
+      if (mode === "run") {
+        runDemo();
+      } else if (mode === "must") {
+        state.activeFilter = "must";
+        renderFindings();
+        document.getElementById("findingsList").scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        loadSampleInputs();
+      }
+    });
+
+    els.downloadJsonBtn.addEventListener("click", () => {
+      downloadFile("quincy-ruleset-qc-demo.json", JSON.stringify(SAMPLE_PAYLOAD, null, 2), "application/json");
+    });
+
+    els.downloadReportBtn.addEventListener("click", () => {
+      downloadFile("quincy-ruleset-qc-demo.md", SAMPLE_REPORT, "text/markdown");
+    });
+  </script>
+</body>
+</html>

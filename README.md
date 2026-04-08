@@ -28,6 +28,7 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 - [Open the quincy return-to-owner mockup](./mockups/document_owner_returned_by_governance_mockup.html)
 - [Open the governance team mockup](./mockups/governance_team_mockup.html)
 - [Open the static policy bot demo mockup](./mockups/policy_bot_demo_mockup.html)
+- [Open the static ruleset QC demo mockup](./mockups/ruleset_qc_demo_mockup.html)
 - [Open the GitHub Pages landing page](./index.html)
 - [View the owner annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
@@ -43,6 +44,8 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
   Standalone clickable HTML prototype for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
 - [`policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
   Standalone GitHub Pages-safe chatbot demo with canned grounded answers and citations
+- [`ruleset_qc_demo_mockup.html`](./mockups/ruleset_qc_demo_mockup.html)
+  Standalone GitHub Pages-safe demo for Google Doc + markdown ruleset + provider-driven QC
 
 ### `wireframes/`
 
