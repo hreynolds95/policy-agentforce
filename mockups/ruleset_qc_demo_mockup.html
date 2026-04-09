@@ -156,6 +156,7 @@
       display: grid;
       gap: 6px;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+      cursor: pointer;
     }
 
     .step-card.active {
@@ -1532,7 +1533,26 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       downloadFile("quincy-ruleset-qc-demo.md", SAMPLE_REPORT, "text/markdown");
     });
 
+    function bindStepCards() {
+      const stepTargets = new Map([
+        [els.stepDoc, els.googleDocUrl],
+        [els.stepRuleset, els.rulesetText],
+        [els.stepModel, els.providerInput],
+        [els.stepRun, els.runBtn],
+        [els.stepReview, document.getElementById("findingsList")],
+        [els.stepExport, els.exportPanel]
+      ]);
+
+      stepTargets.forEach((target, card) => {
+        if (!card || !target) return;
+        card.addEventListener("click", () => {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    }
+
     updateCompletionCallout();
+    bindStepCards();
     updateGuidance();
   </script>
   <div class="page">

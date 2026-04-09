@@ -195,6 +195,7 @@
       display: grid;
       gap: 6px;
       box-shadow: var(--shadow);
+      cursor: pointer;
     }
 
     .step-card.active {
@@ -1655,6 +1656,7 @@
       }
 
       bindControls();
+      bindStepCards();
       render();
     }
 
@@ -1755,6 +1757,23 @@
         record.packetSummary = event.target.value;
         record.packetSummaryUpdatedAt = currentStampLabel("Edited");
         els.packetSummaryMeta.textContent = buildPacketSummaryMeta(record);
+      });
+    }
+
+    function bindStepCards() {
+      const stepTargets = new Map([
+        [els.stepQueueCard, document.getElementById("queueNav")],
+        [els.stepRecordCard, document.getElementById("queueTable")],
+        [els.stepReviewCard, document.getElementById("qcChecklist")],
+        [els.stepPrepCard, document.getElementById("packetSummaryText")],
+        [els.stepMoveCard, document.getElementById("stageActions")]
+      ]);
+
+      stepTargets.forEach((target, card) => {
+        if (!card || !target) return;
+        card.addEventListener("click", () => {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
       });
     }
 

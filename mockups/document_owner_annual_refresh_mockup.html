@@ -227,6 +227,7 @@
       display: grid;
       gap: 6px;
       box-shadow: var(--shadow);
+      cursor: pointer;
     }
 
     .step-card.active {
@@ -1611,6 +1612,7 @@
       bindUploads();
       bindFilters();
       bindButtons();
+      bindStepCards();
       restoreLatestExport();
       renderChecklist([]);   // empty until QC runs
       updateUI();
@@ -1699,6 +1701,22 @@
         elements.toggleBreakdown.textContent = bd.classList.contains("visible") ? "Hide score breakdown" : "Show score breakdown";
       });
       elements.nextActionBtn.addEventListener("click", handleNextAction);
+    }
+
+    function bindStepCards() {
+      const stepTargets = new Map([
+        [elements.stepDocCard, document.getElementById("refreshTypeList")],
+        [elements.stepQcCard, elements.runQcBtn],
+        [elements.stepReviewCard, elements.findingList],
+        [elements.stepExportCard, elements.submitBtn]
+      ]);
+
+      stepTargets.forEach((target, card) => {
+        if (!card || !target) return;
+        card.addEventListener("click", () => {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
     }
 
     // ── QC Run (with animated loading) ──────────────────────────────

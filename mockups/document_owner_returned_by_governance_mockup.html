@@ -255,6 +255,7 @@
       display: grid;
       gap: 6px;
       box-shadow: var(--shadow);
+      cursor: pointer;
     }
 
     .step-card.active {
@@ -1201,6 +1202,7 @@ Published versions of this Policy and associated approval evidence must be retai
     function init() {
       bindFindingActions();
       bindButtons();
+      bindStepCards();
       updateUI();
     }
 
@@ -1246,6 +1248,22 @@ Published versions of this Policy and associated approval evidence must be retai
       document.getElementById("cancelSubmit").addEventListener("click", () => els.submitDialog.close());
       document.getElementById("confirmSubmit").addEventListener("click", confirmResubmit);
       els.returnNote.addEventListener("input", updateUI);
+    }
+
+    function bindStepCards() {
+      const stepTargets = new Map([
+        [els.stepReviewCard, document.getElementById("findingList")],
+        [els.stepUpdateCard, els.returnNote],
+        [els.stepFixCard, document.getElementById("findingList")],
+        [els.stepResubmitCard, els.resubmitBtn]
+      ]);
+
+      stepTargets.forEach((target, card) => {
+        if (!card || !target) return;
+        card.addEventListener("click", () => {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
     }
 
     function openModal() {

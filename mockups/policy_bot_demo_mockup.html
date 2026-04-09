@@ -165,6 +165,7 @@
       display: grid;
       gap: 6px;
       box-shadow: var(--shadow);
+      cursor: pointer;
     }
 
     .step-card.active {
@@ -1115,6 +1116,23 @@
       }
     }
 
+    function bindStepCards() {
+      const stepTargets = new Map([
+        [els.stepQuestionCard, els.questionInput],
+        [els.stepFilterCard, document.getElementById("documentType")],
+        [els.stepSearchCard, els.askBtn],
+        [els.stepCitationsCard, document.getElementById("citationList")],
+        [els.stepReuseCard, document.getElementById("answerText")]
+      ]);
+
+      stepTargets.forEach((target, card) => {
+        if (!card || !target) return;
+        card.addEventListener("click", () => {
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
+      });
+    }
+
     function setStatus(message, ok = true) {
       els.statusBanner.textContent = message;
       els.statusBanner.style.background = ok ? "#ffffff" : "#ffe8e6";
@@ -1217,6 +1235,7 @@
       renderSourcePreview((state.lastPayload.citations || [])[index], index);
     });
 
+    bindStepCards();
     updateBotNextAction();
   </script>
   <div class="page">
