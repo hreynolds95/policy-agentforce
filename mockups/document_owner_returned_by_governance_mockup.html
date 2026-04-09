@@ -292,6 +292,45 @@
       line-height: 1.4;
     }
 
+    .progress-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .progress-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .progress-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      margin-bottom: 8px;
+    }
+
+    .progress-value {
+      font-size: 22px;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-weight: 700;
+      margin: 0 0 6px;
+    }
+
+    .progress-copy {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0;
+    }
+
     .meta-label, .card-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -797,6 +836,23 @@
           <div class="step-state" id="stepResubmitState">Prepared once the package is ready to hand back.</div>
         </div>
       </section>
+      <section class="progress-strip" aria-label="returned package progress summary">
+        <div class="progress-card">
+          <div class="progress-label">Progress</div>
+          <div class="progress-value" id="progressComplete">0 of 4 complete</div>
+          <p class="progress-copy" id="progressCompleteCopy">Start with the governance feedback and preserved package.</p>
+        </div>
+        <div class="progress-card">
+          <div class="progress-label">Blocking now</div>
+          <div class="progress-value" id="progressBlocker">Returned fixes</div>
+          <p class="progress-copy" id="progressBlockerCopy">Review the feedback first so the owner response and draft update stay focused.</p>
+        </div>
+        <div class="progress-card">
+          <div class="progress-label">Next move</div>
+          <div class="progress-value" id="progressNext">Review return notes</div>
+          <p class="progress-copy" id="progressNextCopy">quincy keeps the prior package intact so only the new updates need attention.</p>
+        </div>
+      </section>
     </section>
 
     <div class="layout">
@@ -1052,6 +1108,12 @@ Published versions of this Policy and associated approval evidence must be retai
       stepFixState: document.getElementById("stepFixState"),
       stepResubmitCard: document.getElementById("stepResubmitCard"),
       stepResubmitState: document.getElementById("stepResubmitState"),
+      progressComplete: document.getElementById("progressComplete"),
+      progressCompleteCopy: document.getElementById("progressCompleteCopy"),
+      progressBlocker: document.getElementById("progressBlocker"),
+      progressBlockerCopy: document.getElementById("progressBlockerCopy"),
+      progressNext: document.getElementById("progressNext"),
+      progressNextCopy: document.getElementById("progressNextCopy"),
       resubmitBtn: document.getElementById("resubmitBtn"),
       activityLog: document.getElementById("activityLog"),
       successBanner: document.getElementById("successBanner"),
@@ -1137,6 +1199,15 @@ Published versions of this Policy and associated approval evidence must be retai
       stateEl.textContent = copy;
     }
 
+    function setProgressSummary(complete, completeCopy, blocker, blockerCopy, next, nextCopy) {
+      els.progressComplete.textContent = complete;
+      els.progressCompleteCopy.textContent = completeCopy;
+      els.progressBlocker.textContent = blocker;
+      els.progressBlockerCopy.textContent = blockerCopy;
+      els.progressNext.textContent = next;
+      els.progressNextCopy.textContent = nextCopy;
+    }
+
     function updateUI() {
       const open = getOpenFixes();
       const notePresent = els.returnNote.value.trim().length > 0;
@@ -1189,26 +1260,31 @@ Published versions of this Policy and associated approval evidence must be retai
         setStep(els.stepUpdateCard, els.stepUpdateState, "locked", "Add the refreshed owner note and draft changes.");
         setStep(els.stepFixCard, els.stepFixState, "locked", "Resolve the returned items before exporting again.");
         setStep(els.stepResubmitCard, els.stepResubmitState, "locked", "Prepared once the package is ready to hand back.");
+        setProgressSummary("0 of 4 complete", "The returned package is open but not yet updated.", "Returned fixes", "Governance feedback still needs to be reviewed and translated into owner updates.", "Review return notes", "Start with the preserved package so only the new updates need work.");
       } else if (!notePresent) {
         setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback is open in the workspace.");
         setStep(els.stepUpdateCard, els.stepUpdateState, "active", "Refresh the owner note so the updated package can be explained.");
         setStep(els.stepFixCard, els.stepFixState, "locked", "Resolve the returned items before exporting again.");
         setStep(els.stepResubmitCard, els.stepResubmitState, "locked", "Prepared once the package is ready to hand back.");
+        setProgressSummary("1 of 4 complete", "The return context is reviewed and ready for updates.", "Owner note missing", "The package still needs the refreshed owner explanation before resubmission.", "Update the draft", "Capture the response note and refresh the working redline before clearing fixes.");
       } else if (open > 0) {
         setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback is open in the workspace.");
         setStep(els.stepUpdateCard, els.stepUpdateState, "done", "Owner note and draft updates are ready.");
         setStep(els.stepFixCard, els.stepFixState, "active", `Resolve ${open} required ${open === 1 ? "fix" : "fixes"} before exporting again.`);
         setStep(els.stepResubmitCard, els.stepResubmitState, "locked", "Prepared once the package is ready to hand back.");
+        setProgressSummary("2 of 4 complete", "The updated package is ready for fix review.", `${open} required ${open === 1 ? "fix" : "fixes"}`, "Returned items still block the new export package.", "Clear required fixes", "Use the preserved package plus the new owner note to resolve only what came back.");
       } else if (!state.submitted) {
         setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback is open in the workspace.");
         setStep(els.stepUpdateCard, els.stepUpdateState, "done", "Owner note and draft updates are ready.");
         setStep(els.stepFixCard, els.stepFixState, "done", "Returned fixes are cleared.");
         setStep(els.stepResubmitCard, els.stepResubmitState, "active", "Export the updated package back to governance.");
+        setProgressSummary("3 of 4 complete", "The returned package is ready to hand back.", "No blockers", "Required fixes are cleared and the preserved package is updated.", "Export updated package", "Let quincy carry the refreshed explanation and Google Doc back to governance.");
       } else {
         setStep(els.stepReviewCard, els.stepReviewState, "done", "Governance feedback was reviewed in quincy.");
         setStep(els.stepUpdateCard, els.stepUpdateState, "done", "Owner updates were captured in the preserved package.");
         setStep(els.stepFixCard, els.stepFixState, "done", "Returned fixes were cleared.");
         setStep(els.stepResubmitCard, els.stepResubmitState, "done", "Updated package exported for governance resubmission.");
+        setProgressSummary("4 of 4 complete", "The updated package is exported for governance.", "No blockers", "The returned package is back in motion with the preserved working draft.", "Wait on governance", "Governance now owns the next review step while the package stays intact.");
       }
     }
 
