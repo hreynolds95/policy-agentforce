@@ -232,6 +232,30 @@
       margin: 0;
     }
 
+    .action-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-top: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .required-tag {
+      background: rgba(184, 255, 44, 0.14);
+      border-color: rgba(184, 255, 44, 0.3);
+      color: #d7ff8f;
+    }
+
+    .optional-tag {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
     .layout {
       display: grid;
       grid-template-columns: 430px minmax(0, 1fr);
@@ -725,12 +749,14 @@
 
           <div class="card">
             <div class="card-label">Google Doc URL</div>
+            <div class="action-tag required-tag">Required to move forward</div>
             <input id="googleDocUrl" class="field" type="text" placeholder="https://docs.google.com/document/d/FILE_ID/edit" />
             <div class="subtle" style="margin-top:10px;">The Google Doc remains the working draft. quincy reviews it and prepares supporting outputs around it.</div>
           </div>
 
           <div class="card">
             <div class="card-label">Ruleset source</div>
+            <div class="action-tag required-tag">Required to move forward</div>
             <div class="row" style="margin-bottom:10px;">
               <button class="small-btn" id="loadRulesetBtn" type="button">Load default ruleset</button>
               <button class="small-btn" id="showFormatBtn" type="button">Show format</button>
@@ -740,6 +766,7 @@
 
           <div class="card">
             <div class="card-label">LLM interface</div>
+            <div class="action-tag required-tag">Required to move forward</div>
             <div class="two-up">
               <div>
                 <div class="card-label">Provider</div>
@@ -760,6 +787,7 @@
             <summary>
               <div>
                 <div class="card-label">What quincy prepares</div>
+                <div class="action-tag optional-tag">Optional preview</div>
                 <div class="subtle">Expand to see the owner outputs this mode can generate.</div>
               </div>
             </summary>
@@ -850,6 +878,7 @@
             <summary>
               <div>
                 <div class="card-label">Prepared markdown report</div>
+                <div class="action-tag optional-tag">Optional review</div>
                 <div class="subtle">Expand to review the owner-facing QC summary that can travel with the proposal.</div>
               </div>
             </summary>
@@ -862,6 +891,7 @@
             <summary>
               <div>
                 <div class="card-label">Developer payload</div>
+                <div class="action-tag optional-tag">Optional detail</div>
                 <div class="subtle">Expand for the normalized JSON and audit-trail structure.</div>
               </div>
             </summary>

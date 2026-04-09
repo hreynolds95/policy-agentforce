@@ -303,6 +303,30 @@
       margin: 0;
     }
 
+    .action-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-top: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .required-tag {
+      background: rgba(184, 255, 44, 0.14);
+      border-color: rgba(184, 255, 44, 0.3);
+      color: #d7ff8f;
+    }
+
+    .optional-tag {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
     .ghost-btn, .secondary-btn, .small-btn, .chip, .meta-card, .mini-stat, .hero,
     .panel, .card, .upload-card, .helper-card, .issue-card, .summary-card,
     .result-card, .evidence-card, .status-card, .textarea,
@@ -1125,6 +1149,7 @@
           <div>
             <p class="eyebrow">Owner Input</p>
             <h3 class="panel-title">What changed this year?</h3>
+            <div class="action-tag required-tag">Required to move forward</div>
             <p style="font-size:11px; color:var(--muted); margin-top:4px;"><span class="required-marker">*</span> Required before running QC</p>
           </div>
         </div>
@@ -1202,6 +1227,7 @@
 
           <div class="card">
             <div class="card-label">Time saver</div>
+            <div class="action-tag optional-tag">Optional helper</div>
             <div class="side-note">
               LogicGate already supplied the owner, delegate, tier, domain, due date, related documents, and prior approval route. quincy asks only for the delta and reuses the same verified Google Doc as the working redline.
             </div>
@@ -1267,6 +1293,7 @@
             <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
               <div>
                 <div class="card-label">View</div>
+                <div class="action-tag optional-tag">Optional helper</div>
                 <div class="subtle">Use filters to focus on only what blocks submission.</div>
               </div>
               <div style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -1340,6 +1367,7 @@
             <summary>
               <div>
                 <div class="card-label">Generated artifacts</div>
+                <div class="action-tag optional-tag">Optional review</div>
                 <div class="subtle">Expand when you need to review or export the prepared summary and audit trail.</div>
               </div>
             </summary>
@@ -1371,6 +1399,7 @@
             <summary>
               <div>
                 <div class="card-label">Owner time savers</div>
+                <div class="action-tag optional-tag">Optional helper</div>
                 <div class="subtle">Quick actions that reduce manual rework.</div>
               </div>
             </summary>

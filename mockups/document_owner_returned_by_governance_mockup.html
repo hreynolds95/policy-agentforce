@@ -331,6 +331,30 @@
       margin: 0;
     }
 
+    .action-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-top: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .required-tag {
+      background: rgba(184, 255, 44, 0.14);
+      border-color: rgba(184, 255, 44, 0.3);
+      color: #d7ff8f;
+    }
+
+    .optional-tag {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
     .meta-label, .card-label {
       font-size: 11px;
       text-transform: uppercase;
@@ -861,6 +885,7 @@
           <div>
             <p class="eyebrow">Governance Feedback</p>
             <h3 class="panel-title">What came back?</h3>
+            <div class="action-tag required-tag">Required to move forward</div>
           </div>
         </div>
         <div class="panel-body">
@@ -922,6 +947,7 @@
 
           <div class="card">
             <div class="card-label">Fast path</div>
+            <div class="action-tag optional-tag">Optional helper</div>
             <div class="subtle">
               Owners only need to fix what Governance returned. Everything else from the prior package stays attached unless the owner chooses to replace it.
             </div>
@@ -934,6 +960,7 @@
           <div>
             <p class="eyebrow">Fix and Resubmit</p>
             <h3 class="panel-title">Returned findings</h3>
+            <div class="action-tag required-tag">Required to move forward</div>
           </div>
           <button class="ghost-btn" id="toggleSuggestedText">Show suggested text</button>
         </div>
@@ -1045,6 +1072,7 @@ Published versions of this Policy and associated approval evidence must be retai
 
           <div class="card">
             <div class="card-label">Owner shortcuts</div>
+            <div class="action-tag optional-tag">Optional helper</div>
             <div class="footer-actions">
               <button class="secondary-btn" id="applyAllFixes">Apply all suggested fixes</button>
               <button class="ghost-btn" id="replaceRedline">Refresh Google Doc link</button>

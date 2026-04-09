@@ -241,6 +241,30 @@
       margin: 0;
     }
 
+    .action-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+      margin-top: 8px;
+      border: 1px solid var(--line);
+    }
+
+    .required-tag {
+      background: rgba(184, 255, 44, 0.14);
+      border-color: rgba(184, 255, 44, 0.3);
+      color: #d7ff8f;
+    }
+
+    .optional-tag {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--muted);
+    }
+
     .layout {
       display: grid;
       grid-template-columns: 340px minmax(0, 1fr);
@@ -596,6 +620,7 @@
         <div class="panel-body">
           <div class="card">
             <div class="card-label">Question</div>
+            <div class="action-tag required-tag">Required to move forward</div>
             <textarea id="questionInput" class="textarea" placeholder="Example: What policy governs third-party due diligence?"></textarea>
           </div>
 
@@ -603,6 +628,7 @@
             <summary>
               <div>
                 <div class="card-label">Advanced filters</div>
+                <div class="action-tag optional-tag">Optional helper</div>
                 <div class="muted">Expand only if you need to narrow scope, provider, or model.</div>
               </div>
             </summary>
@@ -648,6 +674,7 @@
 
           <div class="card">
             <div class="card-label">Sample prompts</div>
+            <div class="action-tag optional-tag">Optional accelerator</div>
             <div class="filter-grid">
               <button class="chip-btn" data-question="What policy governs third-party due diligence?">What policy governs third-party due diligence?</button>
               <button class="chip-btn" data-question="What is the record retention requirement?">What is the record retention requirement?</button>
@@ -659,6 +686,7 @@
             <summary>
               <div>
                 <div class="card-label">Conversation history</div>
+                <div class="action-tag optional-tag">Optional helper</div>
                 <div class="muted">Expand to reuse prior demo questions instead of starting over.</div>
               </div>
             </summary>
@@ -716,6 +744,7 @@
 
           <div class="card">
             <div class="card-label">Developer payload</div>
+            <div class="action-tag optional-tag">Optional detail</div>
             <pre id="jsonOutput" class="muted" style="white-space: pre-wrap; margin: 0;">No response yet.</pre>
           </div>
         </div>
