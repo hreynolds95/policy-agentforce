@@ -1928,7 +1928,7 @@
         els.queueNextActionCopy.textContent = records.length
           ? "Select a record from the queue and the workspace will surface the best governance action, owner note, and packet work to move next."
           : "Adjust the queue or filters to bring records back into view.";
-        els.queueNextActionBtn.textContent = records.length ? "Select first record" : "Review filters";
+        els.queueNextActionBtn.textContent = records.length ? "Start with first record" : "Adjust filters";
         els.queueNextActionBtn.disabled = !records.length;
         els.queueNextActionHint.textContent = records.length
           ? "A queue is ready, but you still need one record in focus before governance can move it forward."
@@ -1939,7 +1939,7 @@
       const primaryAction = getActionsForQueue(record.queue).find((action) => action.primary) || getActionsForQueue(record.queue)[0];
       els.queueNextActionTitle.textContent = `${record.id}: ${primaryAction ? primaryAction.label : "Review record"}`;
       els.queueNextActionCopy.textContent = record.recommendation;
-      els.queueNextActionBtn.textContent = primaryAction ? primaryAction.label : "Review record";
+      els.queueNextActionBtn.textContent = primaryAction ? `Run: ${primaryAction.label}` : "Review record";
       els.queueNextActionBtn.disabled = false;
       els.queueNextActionHint.textContent = "The next governance move is unlocked and ready from this queue state.";
     }

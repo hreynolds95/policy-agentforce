@@ -1328,6 +1328,11 @@ Published versions of this Policy and associated approval evidence must be retai
       els.responseCheck.textContent = notePresent ? "Complete" : "Missing";
 
       els.resubmitBtn.disabled = !ready;
+      els.resubmitBtn.textContent = state.submitted
+        ? "Package handed back to governance"
+        : ready
+          ? "Export and hand back"
+          : "Export resubmission package";
 
       if (state.submitted) {
         els.statusChipMain.textContent = "In review";

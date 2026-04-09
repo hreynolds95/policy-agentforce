@@ -1975,21 +1975,21 @@
       if (state.submitted) {
         elements.nextActionTitle.textContent = "Open the governance workspace";
         elements.nextActionCopy.textContent = "The quincy package is exported. Governance can now import the change summary and QC audit trail while keeping the same verified Google Doc in the workflow.";
-        elements.nextActionBtn.textContent = "Open governance workspace";
+        elements.nextActionBtn.textContent = "Hand off to governance";
         return;
       }
 
       if (ready) {
         elements.nextActionTitle.textContent = "Export the submission package";
         elements.nextActionCopy.textContent = "Required fixes are cleared and the package is complete. Export the change summary and QC audit trail so the record can move forward.";
-        elements.nextActionBtn.textContent = "Export package";
+        elements.nextActionBtn.textContent = "Export and hand off";
         return;
       }
 
       if (state.qcRun && mustOpen > 0) {
         elements.nextActionTitle.textContent = "Resolve required fixes";
         elements.nextActionCopy.textContent = `${mustOpen} must-fix item${mustOpen === 1 ? "" : "s"} still block export. Focus the findings list and clear those first.`;
-        elements.nextActionBtn.textContent = "Go to must-fix items";
+        elements.nextActionBtn.textContent = "Review blockers";
         return;
       }
 
@@ -1998,14 +1998,14 @@
         elements.nextActionCopy.textContent = packageComplete
           ? "QC is complete. Review any optional recommendations, then export the package."
           : "QC is complete, but the package still needs required artifacts before it can be exported.";
-        elements.nextActionBtn.textContent = packageComplete ? "Review export package" : "Complete package";
+        elements.nextActionBtn.textContent = packageComplete ? "Review handoff package" : "Complete required package";
         return;
       }
 
       if (canRunQc()) {
         elements.nextActionTitle.textContent = "Run quincy QC";
         elements.nextActionCopy.textContent = "The core owner inputs are in place. Run the checklist now to surface must-fix items and recommended enhancements.";
-        elements.nextActionBtn.textContent = "Run QC now";
+        elements.nextActionBtn.textContent = "Run QC review";
         return;
       }
 
@@ -2018,7 +2018,7 @@
 
       elements.nextActionTitle.textContent = "Capture what changed";
       elements.nextActionCopy.textContent = "Start by selecting the refresh type and summarizing the proposed changes so quincy can prepare the QC pass around your Google Doc draft.";
-      elements.nextActionBtn.textContent = "Start with the delta";
+      elements.nextActionBtn.textContent = "Start the package";
     }
 
     function updateCompletionCallout({ ready }) {
@@ -2138,6 +2138,11 @@
 
       // Submit button
       elements.submitBtn.disabled = !ready || state.submitted;
+      elements.submitBtn.textContent = state.submitted
+        ? "Package handed to governance"
+        : ready
+          ? "Export and hand off"
+          : "Export submission package";
 
       // Material change: adjust expected next stage
       if (state.refreshType === "material") {
@@ -2213,6 +2218,11 @@
       const qcReady = canRunQc();
 
       elements.runQcBtn.disabled = !qcReady || state.submitted;
+      elements.runQcBtn.textContent = state.submitted
+        ? "QC already completed"
+        : state.qcRun
+          ? "Run QC review again"
+          : "Run QC review";
       elements.runQcHint.textContent = state.submitted
         ? "The package is already exported. Governance owns the next step."
         : qcReady

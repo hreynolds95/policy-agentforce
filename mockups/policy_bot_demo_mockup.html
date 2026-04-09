@@ -1059,6 +1059,11 @@
       );
 
       els.askBtn.disabled = !question;
+      els.askBtn.textContent = !question
+        ? "Add question to search"
+        : state.lastPayload
+          ? "Run grounded search again"
+          : "Run grounded search";
       els.askHint.textContent = !question
         ? "Add a question first to unlock the grounded answer flow."
         : "The question is ready. Run the search when you want quincy to prepare the answer and citations.";
@@ -1066,7 +1071,7 @@
       if (!question) {
         els.botNextActionTitle.textContent = "Start with a policy question";
         els.botNextActionCopy.textContent = "Use one of the seeded prompts or type a natural-language question to see how quincy prepares a grounded answer with citations.";
-        els.botNextActionBtn.textContent = "Load sample prompt";
+        els.botNextActionBtn.textContent = "Start with sample prompt";
         els.botNextActionBtn.dataset.mode = "sample";
         setStep(els.stepQuestionCard, els.stepQuestionState, "active", "Start with a natural-language policy question.");
         setStep(els.stepFilterCard, els.stepFilterState, "locked", "Optional when you want to narrow the scope.");
@@ -1077,7 +1082,7 @@
       } else if (!state.lastPayload) {
         els.botNextActionTitle.textContent = "Run the search";
         els.botNextActionCopy.textContent = "The question is ready. Let quincy retrieve grounded excerpts and prepare a cited answer.";
-        els.botNextActionBtn.textContent = "Get grounded answer";
+        els.botNextActionBtn.textContent = "Run grounded search";
         els.botNextActionBtn.dataset.mode = "ask";
         setStep(els.stepQuestionCard, els.stepQuestionState, "done", "A policy question is ready to run.");
         setStep(els.stepFilterCard, els.stepFilterState, hasFilters ? "done" : "active", hasFilters ? "Filters are tuned for this search." : "Optional: narrow by type, domain, or model before searching.");
@@ -1088,7 +1093,7 @@
       } else if (citations.length) {
         els.botNextActionTitle.textContent = "Review the cited source";
         els.botNextActionCopy.textContent = "The answer is ready. Jump to the citations and inspect the source preview before reusing the answer.";
-        els.botNextActionBtn.textContent = "Jump to citations";
+        els.botNextActionBtn.textContent = "Review citations";
         els.botNextActionBtn.dataset.mode = "citations";
         setStep(els.stepQuestionCard, els.stepQuestionState, "done", "A policy question is ready to run.");
         setStep(els.stepFilterCard, els.stepFilterState, "done", hasFilters ? "Filters helped narrow this answer." : "Default filters were enough for this answer.");
