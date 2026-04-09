@@ -1234,6 +1234,7 @@
           </div>
 
           <button class="primary-btn" id="runQcBtn">Let quincy review the draft</button>
+          <div class="subtle" id="runQcHint">Finish the required owner inputs to unlock the QC pass.</div>
         </div>
       </section>
 
@@ -1481,6 +1482,7 @@
     // ── Element cache ───────────────────────────────────────────────
     const elements = {
       runQcBtn: document.getElementById("runQcBtn"),
+      runQcHint: document.getElementById("runQcHint"),
       rerunBtn: document.getElementById("rerunBtn"),
       submitBtn: document.getElementById("submitBtn"),
       saveDraftBtn: document.getElementById("saveDraftBtn"),
@@ -2139,6 +2141,14 @@
       const qcDone = state.qcRun;
       const allResolved = qcDone && mustOpen === 0;
       const exported = state.submitted;
+      const qcReady = canRunQc();
+
+      elements.runQcBtn.disabled = !qcReady || state.submitted;
+      elements.runQcHint.textContent = state.submitted
+        ? "The package is already exported. Governance owns the next step."
+        : qcReady
+          ? "All required owner inputs are ready. Run the QC pass when you want to surface blockers and enhancements."
+          : "Finish the required owner inputs to unlock the QC pass.";
 
       if (!hasDoc) {
         setStep(elements.stepDocCard, elements.stepDocState, "active", "Start with the Google Doc and owner delta.");

@@ -699,6 +699,7 @@
             <button id="askBtn" class="primary-btn" type="button">Get grounded answer</button>
             <button id="jsonBtn" class="secondary-btn" type="button">Show raw JSON</button>
           </div>
+          <div class="muted" id="askHint">Add a question first to unlock the grounded answer flow.</div>
         </div>
       </aside>
 
@@ -849,6 +850,7 @@
       providerInput: document.getElementById("providerInput"),
       modelInput: document.getElementById("modelInput"),
       askBtn: document.getElementById("askBtn"),
+      askHint: document.getElementById("askHint"),
       jsonBtn: document.getElementById("jsonBtn"),
       clearBtn: document.getElementById("clearBtn"),
       answerText: document.getElementById("answerText"),
@@ -1055,6 +1057,11 @@
         || els.providerInput.value !== "anthropic"
         || els.modelInput.value.trim() !== "claude-3-5-sonnet-latest"
       );
+
+      els.askBtn.disabled = !question;
+      els.askHint.textContent = !question
+        ? "Add a question first to unlock the grounded answer flow."
+        : "The question is ready. Run the search when you want quincy to prepare the answer and citations.";
 
       if (!question) {
         els.botNextActionTitle.textContent = "Start with a policy question";

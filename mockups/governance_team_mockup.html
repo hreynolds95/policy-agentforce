@@ -1065,6 +1065,7 @@
             <div class="action-row">
               <button class="primary-btn" id="queueNextActionBtn" type="button">Select first record</button>
             </div>
+            <div class="mono" id="queueNextActionHint">Choose a queue and keep one visible record in scope to unlock the next governance action.</div>
           </div>
 
           <div class="queue-table-head">
@@ -1514,6 +1515,7 @@
       queueNextActionTitle: document.getElementById("queueNextActionTitle"),
       queueNextActionCopy: document.getElementById("queueNextActionCopy"),
       queueNextActionBtn: document.getElementById("queueNextActionBtn"),
+      queueNextActionHint: document.getElementById("queueNextActionHint"),
       stepQueueCard: document.getElementById("stepQueueCard"),
       stepQueueState: document.getElementById("stepQueueState"),
       stepRecordCard: document.getElementById("stepRecordCard"),
@@ -1928,6 +1930,9 @@
           : "Adjust the queue or filters to bring records back into view.";
         els.queueNextActionBtn.textContent = records.length ? "Select first record" : "Review filters";
         els.queueNextActionBtn.disabled = !records.length;
+        els.queueNextActionHint.textContent = records.length
+          ? "A queue is ready, but you still need one record in focus before governance can move it forward."
+          : "This action is blocked because the current queue and filter combination does not show any records.";
         return;
       }
 
@@ -1936,6 +1941,7 @@
       els.queueNextActionCopy.textContent = record.recommendation;
       els.queueNextActionBtn.textContent = primaryAction ? primaryAction.label : "Review record";
       els.queueNextActionBtn.disabled = false;
+      els.queueNextActionHint.textContent = "The next governance move is unlocked and ready from this queue state.";
     }
 
     function stageChipKind(queueId) {
