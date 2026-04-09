@@ -440,6 +440,32 @@
       box-shadow: inset 0 3px 0 #a3d795, 0 12px 28px rgba(0, 0, 0, 0.24);
     }
 
+    .completion-callout {
+      display: grid;
+      gap: 6px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(163, 215, 149, 0.28);
+      background: rgba(163, 215, 149, 0.12);
+      box-shadow: inset 4px 0 0 #a3d795, 0 12px 28px rgba(0, 0, 0, 0.2);
+    }
+
+    .completion-callout[hidden] {
+      display: none;
+    }
+
+    .completion-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .completion-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     .export-actions {
       display: flex;
       gap: 10px;
@@ -874,6 +900,12 @@
             </div>
           </div>
 
+          <div class="completion-callout" id="completionCallout" hidden>
+            <div class="card-label">Finish state</div>
+            <div class="completion-title" id="completionTitle">Outputs ready to reuse</div>
+            <div class="completion-copy" id="completionCopy">The report and audit trail are prepared for the owner to reuse while updating the Google Doc.</div>
+          </div>
+
           <details class="card disclosure" open>
             <summary>
               <div>
@@ -1140,7 +1172,10 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       jsonOutput: document.getElementById("jsonOutput"),
       exportPanel: document.getElementById("exportPanel"),
       downloadJsonBtn: document.getElementById("downloadJsonBtn"),
-      downloadReportBtn: document.getElementById("downloadReportBtn")
+      downloadReportBtn: document.getElementById("downloadReportBtn"),
+      completionCallout: document.getElementById("completionCallout"),
+      completionTitle: document.getElementById("completionTitle"),
+      completionCopy: document.getElementById("completionCopy")
     };
 
     const state = {
@@ -1172,6 +1207,19 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       els.progressBlockerCopy.textContent = blockerCopy;
       els.progressNext.textContent = next;
       els.progressNextCopy.textContent = nextCopy;
+    }
+
+    function updateCompletionCallout() {
+      if (!state.ran) {
+        els.completionCallout.hidden = true;
+        return;
+      }
+
+      els.completionCallout.hidden = false;
+      els.completionTitle.textContent = "Outputs ready to reuse";
+      els.completionCopy.textContent = SAMPLE_PAYLOAD.summary.must_fix_count > 0
+        ? "The markdown report and JSON audit trail are already prepared. Review the must-fix items first, then reuse these outputs while updating the Google Doc."
+        : "The markdown report and JSON audit trail are ready to download and carry forward with the owner proposal.";
     }
 
     function updateGuidance() {
@@ -1385,6 +1433,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       els.downloadReportBtn.disabled = false;
 
       renderFindings();
+      updateCompletionCallout();
       setStatus("Ruleset demo complete. quincy prepared findings, suggested language, and a reusable QC report from the seeded Google Doc and markdown ruleset.", "ok");
       updateGuidance();
     }
@@ -1411,6 +1460,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       els.jsonOutput.textContent = "No response yet.";
       els.downloadJsonBtn.disabled = true;
       els.downloadReportBtn.disabled = true;
+      updateCompletionCallout();
       setStatus("Demo reset. Load the seeded sample to run the ruleset QC walkthrough again.", "ok");
       updateGuidance();
     }
@@ -1477,6 +1527,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       downloadFile("quincy-ruleset-qc-demo.md", SAMPLE_REPORT, "text/markdown");
     });
 
+    updateCompletionCallout();
     updateGuidance();
   </script>
   <div class="page">

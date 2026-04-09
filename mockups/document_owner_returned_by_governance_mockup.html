@@ -734,6 +734,45 @@
       font-size: 14px;
     }
 
+    .completion-callout {
+      display: grid;
+      gap: 6px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--accent-soft);
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+    }
+
+    .completion-callout[hidden] {
+      display: none;
+    }
+
+    .completion-callout.ready {
+      background: rgba(163, 215, 149, 0.12);
+      border-color: rgba(163, 215, 149, 0.28);
+      box-shadow: inset 4px 0 0 #a3d795, var(--shadow);
+    }
+
+    .completion-callout.done {
+      background: rgba(227, 230, 234, 0.12);
+      border-color: rgba(227, 230, 234, 0.18);
+      box-shadow: inset 4px 0 0 #e3e6ea, var(--shadow);
+    }
+
+    .completion-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .completion-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     .page-exit {
       margin-top: 18px;
       padding: 18px 20px;
@@ -1060,6 +1099,12 @@ Published versions of this Policy and associated approval evidence must be retai
           </div>
         </div>
         <div class="panel-body">
+          <div class="completion-callout" id="completionCallout" hidden>
+            <div class="card-label">Finish state</div>
+            <div class="completion-title" id="completionTitle">Ready to hand back</div>
+            <div class="completion-copy" id="completionCopy">The returned package is prepared for the next step.</div>
+          </div>
+
           <div class="card">
             <div class="card-label">What quincy will carry back</div>
             <div class="checklist">
@@ -1128,6 +1173,9 @@ Published versions of this Policy and associated approval evidence must be retai
       statusChipMain: document.getElementById("statusChipMain"),
       statusChipSecondary: document.getElementById("statusChipSecondary"),
       submitHint: document.getElementById("submitHint"),
+      completionCallout: document.getElementById("completionCallout"),
+      completionTitle: document.getElementById("completionTitle"),
+      completionCopy: document.getElementById("completionCopy"),
       stepReviewCard: document.getElementById("stepReviewCard"),
       stepReviewState: document.getElementById("stepReviewState"),
       stepUpdateCard: document.getElementById("stepUpdateCard"),
@@ -1236,10 +1284,32 @@ Published versions of this Policy and associated approval evidence must be retai
       els.progressNextCopy.textContent = nextCopy;
     }
 
+    function updateCompletionCallout(ready) {
+      if (state.submitted) {
+        els.completionCallout.hidden = false;
+        els.completionCallout.className = "completion-callout done";
+        els.completionTitle.textContent = "Updated package already handed back";
+        els.completionCopy.textContent = "quincy preserved the prior package, attached the refreshed owner response, and handed the updated package back to governance.";
+        return;
+      }
+
+      if (ready) {
+        els.completionCallout.hidden = false;
+        els.completionCallout.className = "completion-callout ready";
+        els.completionTitle.textContent = "Ready to hand back";
+        els.completionCopy.textContent = "Returned fixes are cleared and the refreshed owner note is attached. Export once and governance can resume from the preserved package.";
+        return;
+      }
+
+      els.completionCallout.hidden = true;
+      els.completionCallout.className = "completion-callout";
+    }
+
     function updateUI() {
       const open = getOpenFixes();
       const notePresent = els.returnNote.value.trim().length > 0;
       const ready = open === 0 && notePresent && !state.submitted;
+      updateCompletionCallout(ready);
 
       els.mustCount.textContent = open;
       els.packageStatus.textContent = ready || state.submitted ? "Ready" : "Needs action";

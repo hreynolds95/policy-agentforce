@@ -846,6 +846,44 @@
       font-size: 14px;
     }
 
+    .completion-callout {
+      display: grid;
+      gap: 6px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: var(--accent-soft);
+      box-shadow: var(--shadow);
+    }
+
+    .completion-callout[hidden] {
+      display: none;
+    }
+
+    .completion-callout.ready {
+      background: rgba(163, 215, 149, 0.12);
+      border-color: rgba(163, 215, 149, 0.28);
+      box-shadow: inset 4px 0 0 #a3d795, var(--shadow);
+    }
+
+    .completion-callout.done {
+      background: rgba(227, 230, 234, 0.12);
+      border-color: rgba(227, 230, 234, 0.18);
+      box-shadow: inset 4px 0 0 #e3e6ea, var(--shadow);
+    }
+
+    .completion-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .completion-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     .panel.read-only {
       opacity: 0.78;
     }
@@ -1334,6 +1372,12 @@
             <button class="primary-btn" id="nextActionBtn" type="button">Start with the delta</button>
           </div>
 
+          <div class="completion-callout" id="completionCallout" hidden>
+            <div class="card-label">Finish state</div>
+            <div class="completion-title" id="completionTitle">Ready to hand off</div>
+            <div class="completion-copy" id="completionCopy">The owner package is prepared for the next step.</div>
+          </div>
+
           <div class="readiness">
             <div class="mini-stat">
               <div>
@@ -1506,6 +1550,9 @@
       nextActionTitle: document.getElementById("nextActionTitle"),
       nextActionCopy: document.getElementById("nextActionCopy"),
       nextActionBtn: document.getElementById("nextActionBtn"),
+      completionCallout: document.getElementById("completionCallout"),
+      completionTitle: document.getElementById("completionTitle"),
+      completionCopy: document.getElementById("completionCopy"),
       stepDocCard: document.getElementById("stepDocCard"),
       stepDocState: document.getElementById("stepDocState"),
       stepQcCard: document.getElementById("stepQcCard"),
@@ -1974,6 +2021,27 @@
       elements.nextActionBtn.textContent = "Start with the delta";
     }
 
+    function updateCompletionCallout({ ready }) {
+      if (state.submitted) {
+        elements.completionCallout.hidden = false;
+        elements.completionCallout.className = "completion-callout done";
+        elements.completionTitle.textContent = "Package already handed to governance";
+        elements.completionCopy.textContent = "The owner handoff is complete. Governance can import the stored change summary and QC audit trail while reusing the same verified Google Doc.";
+        return;
+      }
+
+      if (ready) {
+        elements.completionCallout.hidden = false;
+        elements.completionCallout.className = "completion-callout ready";
+        elements.completionTitle.textContent = "Ready to hand off";
+        elements.completionCopy.textContent = "Required fixes are cleared and quincy already assembled the owner package. Export once and move straight into governance review.";
+        return;
+      }
+
+      elements.completionCallout.hidden = true;
+      elements.completionCallout.className = "completion-callout";
+    }
+
     // ── Upload labels ───────────────────────────────────────────────
     function updateUploadLabels() {
       document.getElementById("cleanStatus").textContent = state.uploads.clean ? "Uploaded: policy_clean_v3.docx" : "Not uploaded";
@@ -2049,6 +2117,7 @@
         && state.qcRun;
       const ready = state.qcRun && mustOpen === 0 && packageComplete;
       updateNextActionCard({ ready, packageComplete, mustOpen });
+      updateCompletionCallout({ ready });
 
       // Counts
       elements.mustCount.textContent = state.qcRun ? mustOpen : "—";
