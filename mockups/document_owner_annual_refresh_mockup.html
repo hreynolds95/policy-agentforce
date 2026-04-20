@@ -1398,11 +1398,17 @@
             </div>
           </div>
 
-          <div class="card">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+          <details class="card disclosure">
+            <summary>
               <div>
-                <div class="card-label">View</div>
+                <div class="card-label">View controls</div>
                 <div class="action-tag optional-tag">Optional helper</div>
+                <div class="subtle">Expand only when you need to filter findings or preview suggested text.</div>
+              </div>
+            </summary>
+            <div class="disclosure-body" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+              <div>
+                <div class="card-label">Findings filters</div>
                 <div class="subtle">Use filters to focus on only what blocks submission.</div>
               </div>
               <div style="display:flex;gap:10px;flex-wrap:wrap;">
@@ -1412,7 +1418,7 @@
                 <button class="small-btn" id="toggleSuggestedText">Show suggested text</button>
               </div>
             </div>
-          </div>
+          </details>
 
           <div class="qc-loading" id="qcLoading">
             <div><span class="spinner"></span> quincy is checking against the Policy on Policies…</div>

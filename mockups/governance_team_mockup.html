@@ -1071,10 +1071,15 @@
         <div class="panel-body">
           <div class="queue-nav" id="queueNav"></div>
 
-          <div class="summary-card">
-            <div class="card-label">Filters</div>
-            <div class="action-tag optional-tag">Optional helper</div>
-            <div class="summary-list">
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Filters</div>
+                <div class="action-tag optional-tag">Optional helper</div>
+                <div class="mono">Expand only when you need to narrow the queue view.</div>
+              </div>
+            </summary>
+            <div class="summary-list disclosure-body">
               <div>
                 <div class="card-label">Search</div>
                 <input class="search" id="searchInput" type="text" placeholder="Title or record ID" />
@@ -1097,12 +1102,17 @@
                 </select>
               </div>
             </div>
-          </div>
+          </details>
 
-          <div class="summary-card">
-            <div class="card-label">Governance agents</div>
-            <div class="action-tag optional-tag">Optional helper</div>
-            <div class="summary-list">
+          <details class="summary-card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Governance agents</div>
+                <div class="action-tag optional-tag">Optional helper</div>
+                <div class="mono">Expand for operational coverage and support context.</div>
+              </div>
+            </summary>
+            <div class="summary-list disclosure-body">
               <div class="summary-item"><span>Intake triage</span><span class="check-status ok">Active</span></div>
               <div class="summary-item"><span>Metadata and tiering</span><span class="check-status ok">Active</span></div>
               <div class="summary-item"><span>QC checklist</span><span class="check-status ok">Active</span></div>
@@ -1110,7 +1120,7 @@
               <div class="summary-item"><span>Publication and records</span><span class="check-status ok">Active</span></div>
               <div class="summary-item"><span>Reporting and monitoring</span><span class="check-status ok">Active</span></div>
             </div>
-          </div>
+          </details>
         </div>
       </aside>
 

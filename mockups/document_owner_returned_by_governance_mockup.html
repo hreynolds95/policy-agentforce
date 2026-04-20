@@ -466,6 +466,40 @@
       padding: 14px;
     }
 
+    .disclosure {
+      overflow: hidden;
+    }
+
+    .disclosure summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .disclosure summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .disclosure summary::after {
+      content: "+";
+      font-family: var(--font-mono);
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    .disclosure[open] summary::after {
+      content: "−";
+    }
+
+    .disclosure-body {
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+
     .ghost-btn, .secondary-btn, .small-btn, .chip, .meta-card, .mini-stat, .hero,
     .panel, .card, .summary-card, .comment-card, .issue-card, .history-card,
     .package-card, .textarea, .upload-box, .list-item, .badge {
@@ -1185,23 +1219,34 @@ Published versions of this Policy and associated approval evidence must be retai
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-label">Owner shortcuts</div>
-            <div class="action-tag optional-tag">Optional helper</div>
-            <div class="footer-actions">
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Owner shortcuts</div>
+                <div class="action-tag optional-tag">Optional helper</div>
+                <div class="subtle">Expand only when you need bulk helper actions or draft maintenance.</div>
+              </div>
+            </summary>
+            <div class="footer-actions disclosure-body">
               <button class="secondary-btn" id="applyAllFixes">Apply all suggested fixes</button>
               <button class="ghost-btn" id="replaceRedline">Refresh Google Doc link</button>
               <button class="ghost-btn" id="saveDraft">Save draft</button>
             </div>
-          </div>
+          </details>
 
-          <div class="card">
-            <div class="card-label">Activity log</div>
-            <div class="activity" id="activityLog">
+          <details class="card disclosure">
+            <summary>
+              <div>
+                <div class="card-label">Activity log</div>
+                <div class="action-tag optional-tag">Optional detail</div>
+                <div class="subtle">Expand for the full returned-item timeline.</div>
+              </div>
+            </summary>
+            <div class="activity disclosure-body" id="activityLog">
               <div class="activity-item">Governance returned the record with two required fixes.</div>
               <div class="activity-item">Prior uploads and accepted recommendations were preserved.</div>
             </div>
-          </div>
+          </details>
 
           <div class="footer-actions">
             <button class="primary-btn" id="resubmitBtn" disabled>Export resubmission package</button>
