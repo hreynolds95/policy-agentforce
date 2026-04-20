@@ -233,6 +233,43 @@
       gap: 10px;
     }
 
+    .job-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+
+    .job-card {
+      background: rgba(43, 47, 53, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .job-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .job-title {
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .job-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .meta-card, .mini-stat {
       background: var(--accent-soft);
       border: 1px solid var(--line);
@@ -823,6 +860,7 @@
       }
 
       .meta-grid,
+      .job-strip,
       .step-grid,
       .summary-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -852,7 +890,7 @@
     <section class="banner">
       <div>
         <strong>Returned by Governance for owner updates</strong>
-        <div>This returned-item workspace is for document owners handling targeted Governance feedback. It preserves the Google Doc, prior summary, and accepted improvements so the next export stays focused.</div>
+        <div>Use this workspace to address only the returned items, preserve the rest of the package, and hand the updated package back without rebuilding it.</div>
       </div>
       <button class="secondary-btn" id="jumpToFixes">Open returned-item workspace</button>
     </section>
@@ -870,6 +908,23 @@
           <span class="chip warn" id="statusChipSecondary">2 required fixes open</span>
         </div>
       </div>
+      <section class="job-strip" aria-label="returned workspace page jobs">
+        <div class="job-card">
+          <div class="job-kicker">Page job 1</div>
+          <div class="job-title">Review what came back</div>
+          <div class="job-copy">Start with the governance note and preserved package so only the new work stays in scope.</div>
+        </div>
+        <div class="job-card">
+          <div class="job-kicker">Page job 2</div>
+          <div class="job-title">Update only returned items</div>
+          <div class="job-copy">Refresh the owner note, adjust the Google Doc, and clear the required fixes that still block resubmission.</div>
+        </div>
+        <div class="job-card">
+          <div class="job-kicker">Page job 3</div>
+          <div class="job-title">Hand back the preserved package</div>
+          <div class="job-copy">Export once and send governance the preserved Google Doc plus the new owner updates.</div>
+        </div>
+      </section>
       <div class="meta-grid">
         <div class="meta-card">
           <div class="meta-label">Governance return date</div>

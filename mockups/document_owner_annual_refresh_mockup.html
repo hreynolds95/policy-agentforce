@@ -205,6 +205,43 @@
       gap: 10px;
     }
 
+    .job-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+
+    .job-card {
+      background: rgba(43, 47, 53, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .job-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .job-title {
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .job-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .meta-card, .mini-stat {
       background: var(--accent-soft);
       border: 1px solid var(--line);
@@ -1083,6 +1120,7 @@
       }
 
       .meta-grid,
+      .job-strip,
       .step-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1115,7 +1153,7 @@
     <section class="notification">
       <div>
         <strong>Annual review due in 14 days</strong>
-        <div>This owner workspace is for document owners starting from the verified editable Google Doc in LogicGate. It prepares the change summary and QC audit trail that travel with the package next.</div>
+        <div>Use this workspace to confirm the working draft, run quincy QC, and prepare the owner handoff package for governance review.</div>
       </div>
       <button class="secondary-btn" id="focusRefresh">Open owner workspace</button>
     </section>
@@ -1133,6 +1171,23 @@
           <span class="chip danger" id="statusChipSecondary">Waiting on owner delta</span>
         </div>
       </div>
+      <section class="job-strip" aria-label="owner workspace page jobs">
+        <div class="job-card">
+          <div class="job-kicker">Page job 1</div>
+          <div class="job-title">Confirm the working draft</div>
+          <div class="job-copy">Bring in the verified Google Doc, clean draft, and owner summary so the review package is grounded in the right source.</div>
+        </div>
+        <div class="job-card">
+          <div class="job-kicker">Page job 2</div>
+          <div class="job-title">Run QC and clear blockers</div>
+          <div class="job-copy">Let quincy surface must-fix items, then focus only on what still blocks handoff.</div>
+        </div>
+        <div class="job-card">
+          <div class="job-kicker">Page job 3</div>
+          <div class="job-title">Export the owner package</div>
+          <div class="job-copy">Carry forward the same Google Doc, the change summary, and the QC audit trail into governance review.</div>
+        </div>
+      </section>
       <div class="meta-grid">
         <div class="meta-card">
           <div class="meta-label">Next review date</div>

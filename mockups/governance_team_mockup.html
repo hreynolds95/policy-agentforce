@@ -174,6 +174,43 @@
       justify-content: flex-end;
     }
 
+    .job-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+
+    .job-card {
+      background: rgba(43, 47, 53, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: grid;
+      gap: 6px;
+      box-shadow: var(--shadow);
+    }
+
+    .job-kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .job-title {
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .job-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
     .snapshot-grid {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -906,6 +943,7 @@
       }
 
       .snapshot-grid,
+      .job-strip,
       .step-grid,
       .maintenance-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -948,7 +986,7 @@
         <div>
           <p class="eyebrow">Review workspace</p>
           <div class="hero-copy">
-            This governance workspace is for Compliance Governance reviewers. It brings the next record forward, prepares the packet summary or return note, and gets the record ready for the next decision.
+            Use this workspace to bring the next record forward, review the imported owner package, and make the next governance decision without losing context.
           </div>
         </div>
         <div class="hero-actions">
@@ -956,6 +994,23 @@
           <button class="ghost-btn" id="focusMaintenance">Jump to maintenance</button>
         </div>
       </div>
+      <section class="job-strip" aria-label="governance workspace page jobs">
+        <div class="job-card">
+          <div class="job-kicker">Page job 1</div>
+          <div class="job-title">Choose the queue and record</div>
+          <div class="job-copy">Bring one record into focus so the workspace can show the right governance action and package context.</div>
+        </div>
+        <div class="job-card">
+          <div class="job-kicker">Page job 2</div>
+          <div class="job-title">Review and prepare the handoff</div>
+          <div class="job-copy">Use checklist evidence, comments, and owner artifacts together before generating the return note or packet summary.</div>
+        </div>
+        <div class="job-card">
+          <div class="job-kicker">Page job 3</div>
+          <div class="job-title">Move the record forward</div>
+          <div class="job-copy">Take the stage action that keeps the lifecycle moving, whether that means QC, approvals, publication, or return to owner.</div>
+        </div>
+      </section>
 
       <div class="snapshot-grid" id="snapshotGrid"></div>
       <section class="step-grid" aria-label="governance workspace steps">
