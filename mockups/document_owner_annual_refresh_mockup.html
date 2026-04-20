@@ -242,6 +242,33 @@
       line-height: 1.45;
     }
 
+    .flow-breadcrumb {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .flow-breadcrumb a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .flow-breadcrumb a:hover,
+    .flow-breadcrumb a:focus-visible {
+      color: var(--ink);
+    }
+
+    .flow-breadcrumb .current {
+      color: var(--ink);
+    }
+
     .meta-card, .mini-stat {
       background: var(--accent-soft);
       border: 1px solid var(--line);
@@ -1180,6 +1207,13 @@
   <div class="page">
     <div class="topbar">
       <div>
+        <nav class="flow-breadcrumb" aria-label="Process position">
+          <a href="../index.html">Launcher</a>
+          <span aria-hidden="true">/</span>
+          <span>Owner workspace</span>
+          <span aria-hidden="true">/</span>
+          <span class="current">Annual review</span>
+        </nav>
         <p class="eyebrow">quincy owner workspace</p>
         <h1>Owner review workspace</h1>
       </div>
