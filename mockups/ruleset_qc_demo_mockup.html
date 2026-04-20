@@ -184,6 +184,12 @@
       box-shadow: inset 4px 0 0 #a3d795;
     }
 
+    .step-card.ready {
+      background: linear-gradient(180deg, rgba(163, 215, 149, 0.12) 0%, rgba(43, 47, 53, 0.96) 72%);
+      box-shadow: inset 4px 0 0 #a3d795, 0 10px 22px rgba(0, 0, 0, 0.22);
+      border-color: rgba(163, 215, 149, 0.34);
+    }
+
     .step-card.locked {
       opacity: 0.68;
     }
@@ -200,6 +206,43 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 1.3;
+    }
+
+    .step-status {
+      width: fit-content;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(227, 230, 234, 0.18);
+      background: rgba(227, 230, 234, 0.08);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .step-status.active {
+      border-color: rgba(163, 215, 149, 0.35);
+      background: rgba(163, 215, 149, 0.12);
+      color: #d8f0ca;
+    }
+
+    .step-status.ready {
+      border-color: rgba(163, 215, 149, 0.38);
+      background: rgba(163, 215, 149, 0.18);
+      color: #d8f0ca;
+    }
+
+    .step-status.done {
+      border-color: rgba(163, 215, 149, 0.3);
+      background: rgba(163, 215, 149, 0.1);
+      color: #d8f0ca;
+    }
+
+    .step-status.locked {
+      border-color: rgba(227, 230, 234, 0.12);
+      background: rgba(227, 230, 234, 0.04);
+      color: #8a9098;
     }
 
     .step-state {
@@ -725,31 +768,37 @@
       <div class="step-card active" id="stepDoc">
         <div class="step-index">Step 1</div>
         <div class="step-name">Link Google Doc</div>
+        <div class="step-status active" data-step-status>In progress</div>
         <div class="step-state" id="stepDocState">Required first</div>
       </div>
       <div class="step-card locked" id="stepRuleset">
         <div class="step-index">Step 2</div>
         <div class="step-name">Load ruleset</div>
+        <div class="step-status locked" data-step-status>Locked</div>
         <div class="step-state" id="stepRulesetState">Waiting on document</div>
       </div>
       <div class="step-card locked" id="stepModel">
         <div class="step-index">Step 3</div>
         <div class="step-name">Confirm model</div>
+        <div class="step-status locked" data-step-status>Locked</div>
         <div class="step-state" id="stepModelState">Ready when ruleset is loaded</div>
       </div>
       <div class="step-card locked" id="stepRun">
         <div class="step-index">Step 4</div>
         <div class="step-name">Run QC</div>
+        <div class="step-status locked" data-step-status>Locked</div>
         <div class="step-state" id="stepRunState">Locked until required inputs are complete</div>
       </div>
       <div class="step-card locked" id="stepReview">
         <div class="step-index">Step 5</div>
         <div class="step-name">Review blockers</div>
+        <div class="step-status locked" data-step-status>Locked</div>
         <div class="step-state" id="stepReviewState">Run QC first</div>
       </div>
       <div class="step-card locked" id="stepExport">
         <div class="step-index">Step 6</div>
         <div class="step-name">Export outputs</div>
+        <div class="step-status locked" data-step-status>Locked</div>
         <div class="step-state" id="stepExportState">Prepared after review</div>
       </div>
     </section>
@@ -1212,6 +1261,18 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
 
     function setStep(card, stateEl, mode, copy) {
       card.className = `step-card ${mode}`;
+      const badge = card.querySelector("[data-step-status]");
+      if (badge) {
+        const label = mode === "done"
+          ? "Done"
+          : mode === "locked"
+            ? "Locked"
+            : mode === "ready"
+              ? "Ready"
+              : "In progress";
+        badge.textContent = label;
+        badge.className = `step-status ${mode}`;
+      }
       stateEl.textContent = copy;
     }
 
@@ -1302,7 +1363,7 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
       setStep(
         els.stepExport,
         els.stepExportState,
-        !qcDone ? "locked" : mustOpen > 0 ? "active" : "done",
+        !qcDone ? "locked" : mustOpen > 0 ? "ready" : "done",
         !qcDone ? "Prepared after review" : mustOpen > 0 ? "Use the Step 6 export panel below after reviewing blockers" : "Use the Step 6 export panel below to download the report and JSON"
       );
 

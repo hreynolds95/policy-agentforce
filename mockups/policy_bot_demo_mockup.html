@@ -193,6 +193,12 @@
       box-shadow: inset 4px 0 0 #a3d795;
     }
 
+    .step-card.ready {
+      background: linear-gradient(180deg, rgba(163, 215, 149, 0.12) 0%, #32353b 72%);
+      box-shadow: inset 4px 0 0 #a3d795, var(--shadow);
+      border-color: rgba(163, 215, 149, 0.34);
+    }
+
     .step-card.locked {
       opacity: 0.68;
     }
@@ -209,6 +215,43 @@
       font-size: 14px;
       font-weight: 600;
       line-height: 1.3;
+    }
+
+    .step-status {
+      width: fit-content;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(227, 230, 234, 0.18);
+      background: rgba(227, 230, 234, 0.08);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .step-status.active {
+      border-color: rgba(163, 215, 149, 0.35);
+      background: rgba(163, 215, 149, 0.12);
+      color: #d8f0ca;
+    }
+
+    .step-status.ready {
+      border-color: rgba(163, 215, 149, 0.38);
+      background: rgba(163, 215, 149, 0.18);
+      color: #d8f0ca;
+    }
+
+    .step-status.done {
+      border-color: rgba(163, 215, 149, 0.3);
+      background: rgba(163, 215, 149, 0.1);
+      color: #d8f0ca;
+    }
+
+    .step-status.locked {
+      border-color: rgba(227, 230, 234, 0.12);
+      background: rgba(227, 230, 234, 0.04);
+      color: #8a9098;
     }
 
     .step-state {
@@ -584,26 +627,31 @@
         <div class="step-card active" id="stepQuestionCard">
           <div class="step-index">Step 1</div>
           <div class="step-name">Add a question</div>
+          <div class="step-status active" data-step-status>In progress</div>
           <div class="step-state" id="stepQuestionState">Start with a natural-language policy question.</div>
         </div>
         <div class="step-card locked" id="stepFilterCard">
           <div class="step-index">Step 2</div>
           <div class="step-name">Tune filters</div>
+          <div class="step-status locked" data-step-status>Locked</div>
           <div class="step-state" id="stepFilterState">Optional when you want to narrow the scope.</div>
         </div>
         <div class="step-card locked" id="stepSearchCard">
           <div class="step-index">Step 3</div>
           <div class="step-name">Run search</div>
+          <div class="step-status locked" data-step-status>Locked</div>
           <div class="step-state" id="stepSearchState">Retrieve grounded excerpts from the demo corpus.</div>
         </div>
         <div class="step-card locked" id="stepCitationsCard">
           <div class="step-index">Step 4</div>
           <div class="step-name">Review citations</div>
+          <div class="step-status locked" data-step-status>Locked</div>
           <div class="step-state" id="stepCitationsState">Inspect the source preview before reusing the answer.</div>
         </div>
         <div class="step-card locked" id="stepReuseCard">
           <div class="step-index">Step 5</div>
           <div class="step-name">Reuse the answer</div>
+          <div class="step-status locked" data-step-status>Locked</div>
           <div class="step-state" id="stepReuseState">Carry forward the grounded answer once it looks right.</div>
         </div>
       </section>
@@ -920,6 +968,18 @@
 
     function setStep(card, stateEl, mode, copy) {
       card.className = `step-card ${mode}`;
+      const badge = card.querySelector("[data-step-status]");
+      if (badge) {
+        const label = mode === "done"
+          ? "Done"
+          : mode === "locked"
+            ? "Locked"
+            : mode === "ready"
+              ? "Ready"
+              : "In progress";
+        badge.textContent = label;
+        badge.className = `step-status ${mode}`;
+      }
       stateEl.textContent = copy;
     }
 
@@ -1114,7 +1174,7 @@
         setStep(els.stepFilterCard, els.stepFilterState, "done", hasFilters ? "Filters helped narrow this answer." : "Default filters were enough for this answer.");
         setStep(els.stepSearchCard, els.stepSearchState, "done", "Grounded excerpts were retrieved from the demo corpus.");
         setStep(els.stepCitationsCard, els.stepCitationsState, "done", `Reviewed ${citations.length} cited ${citations.length === 1 ? "source" : "sources"} for this answer.`);
-        setStep(els.stepReuseCard, els.stepReuseState, "active", "The grounded answer is ready to reuse in downstream work.");
+        setStep(els.stepReuseCard, els.stepReuseState, "ready", "The grounded answer is ready to reuse in downstream work.");
         setProgressSummary("4 of 5 complete", "The grounded answer and citations are ready.", "No blockers", "The answer is already grounded in cited sources.", "Reuse the answer", "Carry the cited answer forward into downstream work once it looks right.");
       } else {
         els.botNextActionTitle.textContent = "Try a seeded sample prompt";
