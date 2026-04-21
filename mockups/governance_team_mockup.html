@@ -244,6 +244,83 @@
       gap: 10px;
     }
 
+    .carry-strip {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(43, 47, 53, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .carry-strip-head {
+      display: grid;
+      gap: 4px;
+    }
+
+    .carry-strip-title {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .carry-strip-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .carry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .carry-card {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--accent-soft);
+    }
+
+    .carry-card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .carry-card-title {
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .carry-badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(163, 215, 149, 0.3);
+      background: rgba(163, 215, 149, 0.12);
+      color: #d8f0ca;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .carry-card-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .step-grid {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1036,6 +1113,7 @@
       }
 
       .snapshot-grid,
+      .carry-grid,
       .job-strip,
       .step-grid,
       .maintenance-grid {
@@ -1113,6 +1191,35 @@
       </section>
 
       <div class="snapshot-grid" id="snapshotGrid"></div>
+      <section class="carry-strip" aria-label="Artifacts that carry forward">
+        <div class="carry-strip-head">
+          <h3 class="carry-strip-title">What governance keeps in view from the owner package</h3>
+          <div class="carry-strip-copy">These same package pieces stay attached as governance reviews, routes, or returns the record, so the handoff never loses the source context.</div>
+        </div>
+        <div class="carry-grid">
+          <article class="carry-card">
+            <div class="carry-card-head">
+              <div class="carry-card-title">Verified Google Doc</div>
+              <span class="carry-badge">On file</span>
+            </div>
+            <div class="carry-card-copy">Governance keeps the same verified Google Doc in view as the working redline while the record moves through review.</div>
+          </article>
+          <article class="carry-card">
+            <div class="carry-card-head">
+              <div class="carry-card-title">Change summary</div>
+              <span class="carry-badge">On file</span>
+            </div>
+            <div class="carry-card-copy">The imported change summary stays with the record so governance can review the owner’s proposed changes without asking for a rebuild.</div>
+          </article>
+          <article class="carry-card">
+            <div class="carry-card-head">
+              <div class="carry-card-title">QC audit trail</div>
+              <span class="carry-badge">On file</span>
+            </div>
+            <div class="carry-card-copy">The QC audit trail remains attached so governance can trace the evidence behind the owner handoff or returned fixes.</div>
+          </article>
+        </div>
+      </section>
       <section class="step-grid" aria-label="governance workspace steps">
         <div class="step-card active" id="stepQueueCard">
           <div class="step-index">Step 1</div>
