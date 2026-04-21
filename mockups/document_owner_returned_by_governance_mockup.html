@@ -953,9 +953,32 @@
     }
 
     .page-exit-actions {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .exit-card {
+      display: grid;
       gap: 10px;
-      flex-wrap: wrap;
+      align-content: start;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--accent-soft);
+    }
+
+    .exit-card-title {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .exit-card-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     @media (max-width: 1200px) {
@@ -1645,12 +1668,28 @@ Published versions of this Policy and associated approval evidence must be retai
   <div class="page">
     <section class="page-exit">
       <h3 class="page-exit-title">Where to go next</h3>
-      <div class="page-exit-copy">Show governance receiving the updated package next, return to the owner workspace for the full draft review path, or open the connected flow to explain the loop.</div>
+      <div class="page-exit-copy">This page ends with an updated package ready to go back. The usual next stop is governance review again, with the original owner path and lifecycle map available for context.</div>
       <div class="page-exit-actions">
-        <a class="primary-btn" href="./governance_team_mockup.html">Open governance workspace</a>
-        <a class="secondary-btn" href="./document_owner_annual_refresh_mockup.html">Open owner workspace</a>
-        <a class="ghost-btn" href="./end_to_end_process_flow.html">Open connected flow</a>
-        <a class="ghost-btn" href="../index.html">Return to launcher</a>
+        <div class="exit-card">
+          <h4 class="exit-card-title">Hand the updated package back</h4>
+          <div class="exit-card-copy">Open governance next to show the refreshed owner note and preserved package returning for the next review step.</div>
+          <a class="primary-btn" href="./governance_team_mockup.html">Open governance workspace</a>
+        </div>
+        <div class="exit-card">
+          <h4 class="exit-card-title">Return to the original owner path</h4>
+          <div class="exit-card-copy">Use the owner workspace when you want to show how the package was assembled before governance returned targeted fixes.</div>
+          <a class="secondary-btn" href="./document_owner_annual_refresh_mockup.html">Open owner workspace</a>
+        </div>
+        <div class="exit-card">
+          <h4 class="exit-card-title">See the loop in context</h4>
+          <div class="exit-card-copy">Open the connected flow to explain how this rework loop fits into the larger QC lifecycle.</div>
+          <a class="ghost-btn" href="./end_to_end_process_flow.html">Open connected flow</a>
+        </div>
+        <div class="exit-card">
+          <h4 class="exit-card-title">Choose a different starting point</h4>
+          <div class="exit-card-copy">Return to the launcher to switch paths or move into an assist demo instead.</div>
+          <a class="ghost-btn" href="../index.html">Return to launcher</a>
+        </div>
       </div>
     </section>
   </div>
