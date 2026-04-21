@@ -2577,7 +2577,7 @@
 
       const actions = getActionsForQueue(queue.id);
       els.stageActions.innerHTML = actions.map((action) => `
-        <button class="${action.primary ? "primary-btn" : "ghost-btn"}" data-action="${action.id}">${action.label}</button>
+        <button class="${action.primary ? "secondary-btn" : "ghost-btn"}" data-action="${action.id}">${action.label}</button>
       `).join("");
 
       els.stageActions.querySelectorAll("[data-action]").forEach((button) => {
