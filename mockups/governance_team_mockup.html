@@ -1129,8 +1129,8 @@
           <p class="progress-copy" id="progressCompleteCopy">Choose the queue that needs attention now.</p>
         </div>
         <div class="progress-card">
-          <div class="progress-label">Blocking now</div>
-          <div class="progress-value" id="progressBlocker">Queue not chosen</div>
+          <div class="progress-label">What still needs work</div>
+          <div class="progress-value" id="progressBlocker">No queue is selected</div>
           <p class="progress-copy" id="progressBlockerCopy">Open the queue first so the next record can be brought forward.</p>
         </div>
         <div class="progress-card">
@@ -2076,7 +2076,7 @@
         setStep(els.stepReviewCard, els.stepReviewState, "locked", "Review QC context after a record is selected.");
         setStep(els.stepPrepCard, els.stepPrepState, "locked", "Generate the packet summary or return note.");
         setStep(els.stepMoveCard, els.stepMoveState, "locked", "Take the stage action that keeps the record moving.");
-        setProgressSummary("0 of 5 complete", "No queue is in focus yet.", "Queue not chosen", "Governance work starts by choosing the part of the lifecycle that needs attention now.", "Choose the queue", "Bring the right queue into focus before reviewing a record.");
+        setProgressSummary("0 of 5 complete", "No queue is in focus yet.", "No queue is selected", "Choose the part of the lifecycle that needs attention before reviewing a record.", "Choose the queue", "Bring the right queue into focus before reviewing a record.");
         return;
       }
 
@@ -2088,7 +2088,7 @@
         setStep(els.stepReviewCard, els.stepReviewState, "locked", "Review QC context after a record is selected.");
         setStep(els.stepPrepCard, els.stepPrepState, "locked", "Generate the packet summary or return note.");
         setStep(els.stepMoveCard, els.stepMoveState, "locked", "Take the stage action that keeps the record moving.");
-        setProgressSummary("1 of 5 complete", `Queue in focus: ${queue.label}`, "Record not open", "A queue is selected, but the next record still needs to be brought forward.", "Open the record", "Select the next record so governance can review the QC context and owner artifacts.");
+        setProgressSummary("1 of 5 complete", `Queue in focus: ${queue.label}`, "No record is open yet", "A queue is selected, but the next record still needs to be brought forward.", "Open the record", "Select the next record so governance can review the QC context and owner artifacts.");
         return;
       }
 
@@ -2102,7 +2102,7 @@
         setStep(els.stepReviewCard, els.stepReviewState, "active", `Review ${record.stage.toLowerCase()} context and owner artifacts.`);
         setStep(els.stepPrepCard, els.stepPrepState, "locked", "Generate the packet summary or return note after review.");
         setStep(els.stepMoveCard, els.stepMoveState, "locked", "Take the stage action that keeps the record moving.");
-        setProgressSummary("2 of 5 complete", `${record.id} is open in the workspace.`, "Review in progress", "Governance still needs to finish the QC context and owner package review.", "Review QC context", "Use comments, checklist evidence, and owner artifacts together before preparing a handoff.");
+        setProgressSummary("2 of 5 complete", `${record.id} is open in the workspace.`, "Review the record context next", "Finish the QC context and owner package review before preparing the handoff.", "Review QC context", "Use comments, checklist evidence, and owner artifacts together before preparing a handoff.");
         return;
       }
 
@@ -2111,13 +2111,13 @@
       if (prepQueues.has(record.queue) && !moveQueues.has(record.queue)) {
         setStep(els.stepPrepCard, els.stepPrepState, "active", "Prepare the approval packet summary or owner note for this stage.");
         setStep(els.stepMoveCard, els.stepMoveState, "locked", "Move the record once the packet work is ready.");
-        setProgressSummary("3 of 5 complete", "The record context is reviewed and ready for packet work.", "Packet work pending", "Governance still needs to prepare the packet summary or owner note for this stage.", "Prepare packet or note", "Complete the handoff artifact before moving the record forward.");
+        setProgressSummary("3 of 5 complete", "The record context is reviewed and ready for packet work.", "The packet or note still needs to be prepared", "Prepare the packet summary or owner note before moving the record forward.", "Prepare packet or note", "Complete the handoff artifact before moving the record forward.");
         return;
       }
 
       setStep(els.stepPrepCard, els.stepPrepState, "done", "Packet summary or owner note is prepared for handoff.");
       setStep(els.stepMoveCard, els.stepMoveState, "ready", `Take the next action to move ${record.id} forward.`);
-      setProgressSummary("4 of 5 complete", "The packet or owner note is ready for handoff.", "Stage action pending", "The record still needs the final move that keeps the lifecycle progressing.", "Move the record", "Take the next queue action to hand the record to the next stage.");
+      setProgressSummary("4 of 5 complete", "The packet or owner note is ready for handoff.", "The final queue action still needs to happen", "The record is ready, but governance still needs to move it to the next stage.", "Move the record", "Take the next queue action to hand the record to the next stage.");
     }
 
     function renderQueueNextAction(queue, records) {

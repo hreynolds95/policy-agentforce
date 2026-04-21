@@ -696,8 +696,8 @@
           <p class="progress-copy" id="progressCompleteCopy">Start with a natural-language question.</p>
         </div>
         <div class="progress-card">
-          <div class="progress-label">Blocking now</div>
-          <div class="progress-value" id="progressBlocker">Question missing</div>
+          <div class="progress-label">What still needs work</div>
+          <div class="progress-value" id="progressBlocker">A policy question is still missing</div>
           <p class="progress-copy" id="progressBlockerCopy">The demo cannot retrieve grounded excerpts until a policy question is ready.</p>
         </div>
         <div class="progress-card">
@@ -1187,7 +1187,7 @@
         setStep(els.stepSearchCard, els.stepSearchState, "locked", "Retrieve grounded excerpts from the demo corpus.");
         setStep(els.stepCitationsCard, els.stepCitationsState, "locked", "Inspect the source preview before reusing the answer.");
         setStep(els.stepReuseCard, els.stepReuseState, "locked", "Carry forward the grounded answer once it looks right.");
-        setProgressSummary("0 of 5 complete", "The assist flow has not started yet.", "Question missing", "A grounded answer needs a clear policy question first.", "Add a question", "Use a seeded prompt or type a natural-language question to begin.");
+        setProgressSummary("0 of 5 complete", "The assist flow has not started yet.", "A policy question is still missing", "A grounded answer needs a clear policy question first.", "Add a question", "Use a seeded prompt or type a natural-language question to begin.");
       } else if (!state.lastPayload) {
         els.botNextActionTitle.textContent = "Run the search";
         els.botNextActionCopy.textContent = "The question is ready. Let quincy retrieve grounded excerpts and prepare a cited answer.";
@@ -1198,7 +1198,7 @@
         setStep(els.stepSearchCard, els.stepSearchState, "active", "Run the search to retrieve grounded excerpts.");
         setStep(els.stepCitationsCard, els.stepCitationsState, "locked", "Inspect the source preview before reusing the answer.");
         setStep(els.stepReuseCard, els.stepReuseState, "locked", "Carry forward the grounded answer once it looks right.");
-        setProgressSummary(hasFilters ? "2 of 5 complete" : "1 of 5 complete", hasFilters ? "The question and optional filters are ready to run." : "The question is ready to run.", "Search not run", "The answer and citations are still waiting on the search step.", "Run search", "Retrieve grounded excerpts so quincy can prepare the answer and citation set.");
+        setProgressSummary(hasFilters ? "2 of 5 complete" : "1 of 5 complete", hasFilters ? "The question and optional filters are ready to run." : "The question is ready to run.", "The grounded search still needs to run", "The answer and citations will appear after the search step.", "Run search", "Retrieve grounded excerpts so quincy can prepare the answer and citation set.");
       } else if (citations.length) {
         els.botNextActionTitle.textContent = "Review the cited source";
         els.botNextActionCopy.textContent = "The answer is ready. Jump to the citations and inspect the source preview before reusing the answer.";
@@ -1209,7 +1209,7 @@
         setStep(els.stepSearchCard, els.stepSearchState, "done", "Grounded excerpts were retrieved from the demo corpus.");
         setStep(els.stepCitationsCard, els.stepCitationsState, "done", `Reviewed ${citations.length} cited ${citations.length === 1 ? "source" : "sources"} for this answer.`);
         setStep(els.stepReuseCard, els.stepReuseState, "ready", "The grounded answer is ready to reuse in downstream work.");
-        setProgressSummary("4 of 5 complete", "The grounded answer and citations are ready.", "No blockers", "The answer is already grounded in cited sources.", "Reuse the answer", "Carry the cited answer forward into downstream work once it looks right.");
+        setProgressSummary("4 of 5 complete", "The grounded answer and citations are ready.", "Nothing else is blocking reuse", "The answer is already grounded in cited sources.", "Reuse the answer", "Carry the cited answer forward into downstream work once it looks right.");
       } else {
         els.botNextActionTitle.textContent = "Try a seeded sample prompt";
         els.botNextActionCopy.textContent = "This prompt did not return demo citations. Use one of the seeded prompts to walk through the full grounded answer flow.";

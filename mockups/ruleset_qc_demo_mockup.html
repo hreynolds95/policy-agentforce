@@ -843,8 +843,8 @@
         <p class="progress-copy" id="progressCompleteCopy">Start by linking the working Google Doc.</p>
       </div>
       <div class="progress-card">
-        <div class="progress-label">Blocking now</div>
-        <div class="progress-value" id="progressBlocker">Google Doc required</div>
+        <div class="progress-label">What still needs work</div>
+        <div class="progress-value" id="progressBlocker">The Google Doc link is still missing</div>
         <p class="progress-copy" id="progressBlockerCopy">The ruleset run is blocked until the working draft URL is available.</p>
       </div>
       <div class="progress-card">
@@ -1406,31 +1406,31 @@ Provider/model: anthropic / claude-3-5-sonnet-latest
         els.nextActionCopy.textContent = "Start with the working draft link so quincy knows which document the ruleset should evaluate.";
         els.nextActionBtn.textContent = "Start with sample inputs";
         els.nextActionBtn.dataset.mode = "load";
-        setProgressSummary("0 of 6 complete", "The ruleset QC flow has not started yet.", "Google Doc required", "The working draft URL is still missing, so the ruleset has nothing to evaluate.", "Link Google Doc", "Start with the same working draft URL the owner is already using.");
+        setProgressSummary("0 of 6 complete", "The ruleset QC flow has not started yet.", "The Google Doc link is still missing", "The working draft URL is still missing, so the ruleset has nothing to evaluate.", "Link Google Doc", "Start with the same working draft URL the owner is already using.");
       } else if (!rulesetReady) {
         els.nextActionTitle.textContent = "Load the markdown ruleset";
         els.nextActionCopy.textContent = "The document is linked. Load or paste the markdown ruleset so quincy knows which checks to run and in what structure.";
         els.nextActionBtn.textContent = "Load ruleset";
         els.nextActionBtn.dataset.mode = "ruleset";
-        setProgressSummary("1 of 6 complete", "The working draft is linked and ready.", "Ruleset missing", "The QC run is still waiting on the markdown ruleset contract.", "Load ruleset", "Paste or load the markdown ruleset so quincy knows which checks to run.");
+        setProgressSummary("1 of 6 complete", "The working draft is linked and ready.", "The markdown ruleset is still missing", "The QC run is still waiting on the markdown ruleset contract.", "Load ruleset", "Paste or load the markdown ruleset so quincy knows which checks to run.");
       } else if (!qcDone) {
         els.nextActionTitle.textContent = "Run the seeded QC pass";
         els.nextActionCopy.textContent = "The required inputs are ready. Run the ruleset QC pass to surface blockers, suggested enhancements, and the audit outputs.";
         els.nextActionBtn.textContent = "Run QC review";
         els.nextActionBtn.dataset.mode = "run";
-        setProgressSummary("3 of 6 complete", "The document, ruleset, and model are ready.", "QC not run", "Findings, suggested language, and audit outputs are still waiting on the QC pass.", "Run QC", "Run the ruleset pass to generate blockers, recommendations, and exportable outputs.");
+        setProgressSummary("3 of 6 complete", "The document, ruleset, and model are ready.", "The QC pass still needs to run", "Findings, suggested language, and audit outputs are still waiting on the QC pass.", "Run QC", "Run the ruleset pass to generate blockers, recommendations, and exportable outputs.");
       } else if (mustOpen > 0) {
         els.nextActionTitle.textContent = "Review must-fix items first";
         els.nextActionCopy.textContent = "The QC pass is prepared. Start with the must-fix findings, then reuse the suggested language and report when you propose edits back in the Google Doc.";
         els.nextActionBtn.textContent = "Review blockers";
         els.nextActionBtn.dataset.mode = "must";
-        setProgressSummary("4 of 6 complete", "The QC pass is finished and findings are prepared.", `${mustOpen} must-fix open`, "The output package is ready to inspect, but required items still need owner attention.", "Review blockers", "Start with must-fix items, then reuse the suggested language in the Google Doc.");
+        setProgressSummary("4 of 6 complete", "The QC pass is finished and findings are prepared.", `${mustOpen} must-fix ${mustOpen === 1 ? "item is" : "items are"} still open`, "The output package is ready to inspect, but required items still need owner attention.", "Review blockers", "Start with must-fix items, then reuse the suggested language in the Google Doc.");
       } else {
         els.nextActionTitle.textContent = "Export the prepared outputs";
         els.nextActionCopy.textContent = "The blockers are cleared. Go to the Step 6 export outputs section and download the markdown report or JSON audit trail.";
         els.nextActionBtn.textContent = "Export outputs";
         els.nextActionBtn.dataset.mode = "export";
-        setProgressSummary("6 of 6 complete", "The ruleset QC outputs are prepared for reuse.", "No blockers", "The report and JSON audit trail are ready to download.", "Export outputs", "Use the Step 6 export panel to carry the findings and audit evidence forward.");
+        setProgressSummary("6 of 6 complete", "The ruleset QC outputs are prepared for reuse.", "Nothing else is blocking export", "The report and JSON audit trail are ready to download.", "Export outputs", "Use the Step 6 export panel to carry the findings and audit evidence forward.");
       }
     }
 

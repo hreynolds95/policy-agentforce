@@ -1320,8 +1320,8 @@
           <p class="progress-copy" id="progressCompleteCopy">Start by confirming the owner delta and working draft.</p>
         </div>
         <div class="progress-card">
-          <div class="progress-label">Blocking now</div>
-          <div class="progress-value" id="progressBlocker">Required inputs</div>
+          <div class="progress-label">What still needs work</div>
+          <div class="progress-value" id="progressBlocker">Missing owner inputs</div>
           <p class="progress-copy" id="progressBlockerCopy">Add the Google Doc link, clean draft, and owner summary before QC can run.</p>
         </div>
         <div class="progress-card">
@@ -2415,31 +2415,31 @@
         setStep(elements.stepQcCard, elements.stepQcState, "locked", "Unlock after the required inputs are complete.");
         setStep(elements.stepReviewCard, elements.stepReviewState, "locked", "Run QC first to surface must-fix items.");
         setStep(elements.stepExportCard, elements.stepExportState, "locked", "Prepared after blockers are resolved.");
-        setProgressSummary("0 of 4 complete", "The owner package has not started yet.", "Required inputs", "Add the Google Doc link, clean draft, and owner summary before QC can run.", "Capture the delta", "quincy will prepare the QC pass once the working package is in place.");
+        setProgressSummary("0 of 4 complete", "The owner package has not started yet.", "Missing owner inputs", "Add the Google Doc link, clean draft, and owner summary before QC can run.", "Capture the delta", "quincy will prepare the QC pass once the working package is in place.");
       } else if (!qcDone) {
         setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs are ready for review.");
         setStep(elements.stepQcCard, elements.stepQcState, "active", "Run quincy QC on the prepared draft package.");
         setStep(elements.stepReviewCard, elements.stepReviewState, "locked", "Run QC first to surface must-fix items.");
         setStep(elements.stepExportCard, elements.stepExportState, "locked", "Prepared after blockers are resolved.");
-        setProgressSummary("1 of 4 complete", "The draft package is ready for the checklist.", "QC not run", "Findings and recommendations are still waiting on the QC pass.", "Run quincy QC", "Use the prepared inputs to surface blockers and recommended enhancements.");
+        setProgressSummary("1 of 4 complete", "The draft package is ready for the checklist.", "QC still needs to run", "Inputs are ready, and the findings package will appear after the QC pass.", "Run quincy QC", "Use the prepared inputs to surface blockers and recommended enhancements.");
       } else if (!allResolved) {
         setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs are ready for review.");
         setStep(elements.stepQcCard, elements.stepQcState, "done", "QC completed and findings are prepared.");
         setStep(elements.stepReviewCard, elements.stepReviewState, "active", `Resolve ${mustOpen} must-fix ${mustOpen === 1 ? "item" : "items"} before exporting.`);
         setStep(elements.stepExportCard, elements.stepExportState, "locked", "Prepared after blockers are resolved.");
-        setProgressSummary("2 of 4 complete", "The findings list is ready for owner review.", `${mustOpen} must-fix open`, "Required items still block the export package.", "Clear blockers", "Focus the must-fix findings first so quincy can prepare the package for handoff.");
+        setProgressSummary("2 of 4 complete", "The findings list is ready for owner review.", `${mustOpen} required ${mustOpen === 1 ? "fix is" : "fixes are"} still open`, "Recommended improvements can wait. Clear the required fixes before export.", "Clear blockers", "Focus the must-fix findings first so quincy can prepare the package for handoff.");
       } else if (!exported) {
         setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs are ready for review.");
         setStep(elements.stepQcCard, elements.stepQcState, "done", "QC completed and findings are prepared.");
         setStep(elements.stepReviewCard, elements.stepReviewState, "done", "Must-fix items are cleared.");
         setStep(elements.stepExportCard, elements.stepExportState, "ready", "Export the owner package and hand it forward.");
-        setProgressSummary("3 of 4 complete", "The package is cleared for export.", "No blockers", "Required fixes are cleared and the owner package is ready to move.", "Export package", "Download the prepared change summary and QC audit trail for governance intake.");
+        setProgressSummary("3 of 4 complete", "The package is cleared for export.", "Nothing else is blocking handoff", "Required fixes are cleared and the owner package is ready to export.", "Export package", "Download the prepared change summary and QC audit trail for governance intake.");
       } else {
         setStep(elements.stepDocCard, elements.stepDocState, "done", "Draft inputs were confirmed from the working package.");
         setStep(elements.stepQcCard, elements.stepQcState, "done", "QC completed and findings were prepared.");
         setStep(elements.stepReviewCard, elements.stepReviewState, "done", "Blockers were cleared before export.");
         setStep(elements.stepExportCard, elements.stepExportState, "done", "Submission package exported for governance intake.");
-        setProgressSummary("4 of 4 complete", "The owner package is prepared and exported.", "No blockers", "The handoff package is already ready for the next stage.", "Open governance workspace", "Governance can now review the imported package while reusing the same working Google Doc.");
+        setProgressSummary("4 of 4 complete", "The owner package is prepared and exported.", "Nothing else needs owner attention", "Governance owns the next step now, and the same working Google Doc carries forward.", "Open governance workspace", "Governance can now review the imported package while reusing the same working Google Doc.");
       }
     }
 
