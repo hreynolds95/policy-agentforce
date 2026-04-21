@@ -270,6 +270,109 @@
       line-height: 1.45;
     }
 
+    .lifecycle-map {
+      display: grid;
+      gap: 12px;
+      margin: 12px 0 0;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(43, 47, 53, 0.96);
+      box-shadow: var(--shadow);
+    }
+
+    .lifecycle-map-head {
+      display: grid;
+      gap: 4px;
+    }
+
+    .lifecycle-map-title {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .lifecycle-map-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .lifecycle-map-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .lifecycle-node {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--accent-soft);
+    }
+
+    .lifecycle-node.done {
+      border-color: rgba(163, 215, 149, 0.35);
+      background: rgba(163, 215, 149, 0.1);
+    }
+
+    .lifecycle-node.active {
+      border-color: rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .lifecycle-node.future {
+      opacity: 0.88;
+    }
+
+    .lifecycle-node-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .lifecycle-node-title {
+      font-size: 14px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .lifecycle-node-badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .lifecycle-node.done .lifecycle-node-badge {
+      border-color: rgba(163, 215, 149, 0.3);
+      background: rgba(163, 215, 149, 0.12);
+      color: #d8f0ca;
+    }
+
+    .lifecycle-node.active .lifecycle-node-badge {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--ink);
+    }
+
+    .lifecycle-node-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .flow-breadcrumb {
       display: flex;
       flex-wrap: wrap;
@@ -1065,6 +1168,7 @@
 
       .meta-grid,
       .job-strip,
+      .lifecycle-map-grid,
       .carry-grid,
       .step-grid,
       .summary-grid {
@@ -1120,6 +1224,42 @@
           <span class="chip warn" id="statusChipSecondary">2 required fixes open</span>
         </div>
       </div>
+      <section class="lifecycle-map" aria-label="Where this page sits in the lifecycle">
+        <div class="lifecycle-map-head">
+          <h3 class="lifecycle-map-title">Where you are in the lifecycle</h3>
+          <div class="lifecycle-map-copy">This page is the targeted return loop. Governance has already reviewed the package and sent back only the fixes that still need owner attention.</div>
+        </div>
+        <div class="lifecycle-map-grid">
+          <article class="lifecycle-node done">
+            <div class="lifecycle-node-head">
+              <div class="lifecycle-node-title">Owner review</div>
+              <span class="lifecycle-node-badge">Done</span>
+            </div>
+            <div class="lifecycle-node-copy">The original owner package was already prepared and handed into governance.</div>
+          </article>
+          <article class="lifecycle-node done">
+            <div class="lifecycle-node-head">
+              <div class="lifecycle-node-title">Governance review</div>
+              <span class="lifecycle-node-badge">Done</span>
+            </div>
+            <div class="lifecycle-node-copy">Governance reviewed the package and preserved the original artifacts before returning targeted fixes.</div>
+          </article>
+          <article class="lifecycle-node active">
+            <div class="lifecycle-node-head">
+              <div class="lifecycle-node-title">Returned fixes</div>
+              <span class="lifecycle-node-badge">In progress</span>
+            </div>
+            <div class="lifecycle-node-copy">Update only the returned items, then hand the preserved package back with the refreshed owner note.</div>
+          </article>
+          <article class="lifecycle-node future">
+            <div class="lifecycle-node-head">
+              <div class="lifecycle-node-title">Approval and publish</div>
+              <span class="lifecycle-node-badge">Next</span>
+            </div>
+            <div class="lifecycle-node-copy">Once governance clears the updated package, the record can continue through the normal approval path.</div>
+          </article>
+        </div>
+      </section>
       <section class="job-strip" aria-label="returned workspace page jobs">
         <div class="job-card">
           <div class="job-kicker">Page job 1</div>
