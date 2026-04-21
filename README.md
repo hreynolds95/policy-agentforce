@@ -8,6 +8,14 @@ This repository currently focuses on:
 - a `Compliance Governance / Policy Team` workflow model
 - subagent prototypes aligned to Block's `Compliance Policy on Policies`
 
+The public GitHub Pages experience is now organized around a simpler end-to-end story:
+
+1. start in the `launcher`
+2. move into `owner QC`
+3. continue into `governance review`
+4. optionally branch into `returned fixes`
+5. use the `policy bot` and `ruleset QC` pages as supporting demos rather than primary lifecycle steps
+
 ## What quincy does
 
 The webpage should be positioned as a pre-submission QC layer that sits between the in-progress Google Doc and the formal LogicGate workflow.
@@ -24,31 +32,68 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 
 ## Start here
 
-- [Open the connected flow](./mockups/end_to_end_process_flow.html)
+- [Open the launcher](./index.html)
 - [Open the owner workspace](./mockups/document_owner_annual_refresh_mockup.html)
-- [Open the returned-item workspace](./mockups/document_owner_returned_by_governance_mockup.html)
 - [Open the governance workspace](./mockups/governance_team_mockup.html)
+- [Open the returned-item workspace](./mockups/document_owner_returned_by_governance_mockup.html)
+- [Open the connected flow](./mockups/end_to_end_process_flow.html)
 - [Open the policy bot demo](./mockups/policy_bot_demo_mockup.html)
 - [Open the ruleset QC demo](./mockups/ruleset_qc_demo_mockup.html)
-- [Open the launcher](./index.html)
 - [View the annual refresh user story](./wireframes/document_owner_annual_refresh_user_story.md)
 
+## Current Pages on GitHub Pages
+
+### `launcher`
+
+- [`index.html`](./index.html)
+  The primary entry point for the Pages experience. It is now organized around the real process entry points:
+  - `Start owner QC`
+  - `Continue governance review`
+  - `Resolve returned fixes`
+  - assist demos as secondary paths
+
+### `main story`
+
+- [`mockups/document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
+  The first stop in the main demo story. This page shows owner-side draft confirmation, QC, blocker clearing, and package export.
+- [`mockups/governance_team_mockup.html`](./mockups/governance_team_mockup.html)
+  The second stop in the main demo story. This page shows governance review, queue focus, packet context, comments, and next-step decisions.
+
+### `alternate branch`
+
+- [`mockups/document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
+  The targeted return loop. This page is now framed as the alternate branch after governance sends back focused fixes, while preserving the original package context.
+
+### `orientation and support`
+
+- [`mockups/end_to_end_process_flow.html`](./mockups/end_to_end_process_flow.html)
+  A connected lifecycle map showing how owner review, governance review, returned fixes, and assist demos connect.
+- [`mockups/policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
+  A GitHub Pages-safe policy Q&A demo with grounded answers, citations, source preview, and guided question flow.
+- [`mockups/ruleset_qc_demo_mockup.html`](./mockups/ruleset_qc_demo_mockup.html)
+  A GitHub Pages-safe demo of Google Doc + markdown ruleset + provider-driven QC, with a guided 6-step flow and export outputs.
+
 ## Repository structure
+
+### top-level page
+
+- [`index.html`](./index.html)
+  Launcher page for the GitHub Pages experience, organized around real process entry points and a happy-path demo flow
 
 ### `mockups/`
 
 - [`end_to_end_process_flow.html`](./mockups/end_to_end_process_flow.html)
-  Connected flow showing how the owner workspace, governance workspace, policy bot demo, and ruleset QC demo fit together
+  Connected flow showing the main owner → governance story, the returned-item alternate branch, and the assist demos
 - [`document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
-  Owner workspace for annual refresh and proposed-change QC
+  Owner workspace for annual refresh and proposed-change QC; the first stop in the happy-path demo flow
 - [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
-  Returned-item workspace for targeted owner fixes after Governance review
+  Returned-item workspace for targeted owner fixes after Governance review; the alternate branch in the lifecycle
 - [`governance_team_mockup.html`](./mockups/governance_team_mockup.html)
-  Governance workspace for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
+  Governance workspace for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions; the second stop in the happy-path demo flow
 - [`policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
-  GitHub Pages-safe policy bot demo with grounded answers and citations
+  GitHub Pages-safe policy bot demo with grounded answers, citations, source preview, and guided next actions
 - [`ruleset_qc_demo_mockup.html`](./mockups/ruleset_qc_demo_mockup.html)
-  GitHub Pages-safe ruleset QC demo for Google Doc + markdown ruleset + provider-driven QC
+  GitHub Pages-safe ruleset QC demo for Google Doc + markdown ruleset + provider-driven QC with a guided step-by-step flow
 
 ### `wireframes/`
 
@@ -116,6 +161,17 @@ The current quincy concept is intentionally narrow:
 7. quincy prepares the supporting submission artifacts: a change summary and a one-page QC audit trail.
 
 This avoids making owners work through a full governance workflow while still preserving Policy Team standards and keeping the verified Google Doc as the authoritative working draft.
+
+## Current UX state
+
+The mockups have been simplified and standardized around a clearer end-to-end flow:
+
+- a shared darker Block-style dashboard shell
+- a launcher that behaves like the real process entry point instead of a page gallery
+- a cleaner happy-path demo story: `launcher → owner QC → governance review`
+- the returned-item workspace framed as an alternate branch rather than part of the default click-through
+- shared lifecycle breadcrumbs, mini-maps, step rails, progress summaries, and next-best-action modules across the core workspaces
+- more consistent CTA wording, helper copy, spacing, and action alignment across the main Pages flow
 
 ## Ruleset-driven Google Doc QC MVP
 
