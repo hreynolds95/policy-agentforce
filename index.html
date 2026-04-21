@@ -223,7 +223,7 @@
 
     .task-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
       margin-bottom: 24px;
     }
@@ -371,71 +371,89 @@
       <div class="hero-head">
         <div>
           <p class="eyebrow">quincy launcher</p>
-          <h1>Choose the workspace you want to open next</h1>
+          <h1>Start from the stage you are actually in</h1>
         </div>
         <div class="hero-brand" aria-label="Block logo">
           <img class="hero-brand-logo" src="./assets/images/block-lockup-black-no-padding.png" alt="Block" />
         </div>
       </div>
       <div class="lede">
-        This launcher is for Block employees moving through policy review work. It opens the right workspace quickly and makes it clear what each experience prepares next.
+        This launcher is for Block employees moving through document QC work. Start in the stage you are in now, then follow the connected flow only when you need the bigger lifecycle map.
       </div>
       <div class="actions">
-        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open owner workspace</a>
-        <a class="btn secondary" href="./mockups/end_to_end_process_flow.html">Open connected flow</a>
-        <a class="btn secondary" href="./mockups/governance_team_mockup.html">Open governance workspace</a>
-        <a class="btn" href="./mockups/policy_bot_demo_mockup.html">Open policy bot demo</a>
-        <a class="btn" href="./mockups/ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Start owner QC</a>
+        <a class="btn secondary" href="./mockups/governance_team_mockup.html">Continue governance review</a>
+        <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
+        <a class="btn" href="./mockups/end_to_end_process_flow.html">View connected flow</a>
       </div>
     </section>
 
     <section class="task-grid">
       <article class="task-card">
         <div class="task-kicker">Document Owners</div>
-        <h2>Review a draft in quincy</h2>
+        <h2>Start owner QC</h2>
         <div class="task-copy">
-          quincy reuses the verified Google Doc draft, checks it against Policy on Policies requirements, and prepares the summary and audit evidence owners would otherwise assemble by hand.
+          Use this when you are starting from the working Google Doc and need quincy to prepare the owner package before governance review.
         </div>
         <ul class="task-points">
-          <li>Run annual refresh QC without re-entering document metadata</li>
-          <li>Prepare change summary and audit trail artifacts automatically</li>
-          <li>Surface must-fix issues before handoff back to Governance</li>
+          <li>Verify the draft and owner inputs</li>
+          <li>Run QC and clear what still blocks handoff</li>
+          <li>Export the package governance reviews next</li>
         </ul>
         <div class="task-actions">
           <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open owner workspace</a>
-          <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Open returned-item workspace</a>
+          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#owner-review">View this stage in connected flow</a>
         </div>
       </article>
 
       <article class="task-card">
         <div class="task-kicker">Governance Team</div>
-        <h2>Run the governance workspace</h2>
+        <h2>Continue governance review</h2>
         <div class="task-copy">
-          The governance workspace brings the next record forward, keeps open gaps visible, and prepares owner notes and packet summaries from the current record state.
+          Use this when the owner package is already on file and governance needs to review, return, route, or advance the record.
         </div>
         <ul class="task-points">
-          <li>Bring the next record needing action to the top</li>
-          <li>Assemble return notes and packet summaries from live record data</li>
-          <li>Keep approval and publication work ready without manual recap</li>
+          <li>Choose the queue and bring the right record into focus</li>
+          <li>Review the preserved package and prepare the next decision</li>
+          <li>Move the record forward or send back targeted fixes</li>
         </ul>
         <div class="task-actions">
           <a class="btn primary" href="./mockups/governance_team_mockup.html">Open governance workspace</a>
+          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#governance-review">View this stage in connected flow</a>
         </div>
       </article>
 
       <article class="task-card">
-        <div class="task-kicker">Policy Search</div>
-        <h2>Ask the policy bot</h2>
+        <div class="task-kicker">Returned Items</div>
+        <h2>Resolve returned fixes</h2>
         <div class="task-copy">
-          quincy policy bot retrieves approved policy content, assembles a grounded answer, and puts the exact citation and excerpt in front of the user fast.
+          Use this when governance has already reviewed the package and only the targeted owner fixes need to come back before the record moves forward again.
         </div>
         <ul class="task-points">
-          <li>Ask natural-language policy questions</li>
-          <li>Inspect citations and source previews without leaving the answer</li>
-          <li>Reuse recent questions instead of starting from scratch</li>
+          <li>See exactly what stayed attached from the original package</li>
+          <li>Update only the owner note and returned draft changes</li>
+          <li>Hand the preserved package back into governance review</li>
+        </ul>
+        <div class="task-actions">
+          <a class="btn primary" href="./mockups/document_owner_returned_by_governance_mockup.html">Open returned-item workspace</a>
+          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#returned-loop">View this stage in connected flow</a>
+        </div>
+      </article>
+
+      <article class="task-card">
+        <div class="task-kicker">Assist Demos</div>
+        <h2>Explore assist demos</h2>
+        <div class="task-copy">
+          Use these when you want search or ruleset-driven help alongside the main lifecycle, not when you need to move the record itself to the next stage.
+        </div>
+        <ul class="task-points">
+          <li>Use the policy bot for grounded policy answers and citations</li>
+          <li>Use the ruleset demo for Google Doc plus markdown QC patterns</li>
+          <li>Return to the owner or governance workspace when you are ready to act</li>
         </ul>
         <div class="task-actions">
           <a class="btn primary" href="./mockups/policy_bot_demo_mockup.html">Open policy bot demo</a>
+          <a class="btn secondary" href="./mockups/ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
         </div>
       </article>
     </section>
@@ -444,10 +462,10 @@
       <div class="panel">
         <h2>Time back right now</h2>
         <ul>
-          <li>Less time spent figuring out where to start</li>
-          <li>More of the repetitive prep work surfaced or pre-assembled for the user</li>
-          <li>Cleaner handoff between owner, governance, and search experiences</li>
-          <li>Stronger alignment to Block’s “give time back” product principle</li>
+          <li>Start from the right stage instead of hunting through pages</li>
+          <li>Move faster between owner review, governance review, and return loops</li>
+          <li>Keep assist demos clearly separate from the main lifecycle actions</li>
+          <li>Make the full QC process easier to explain to a first-time stakeholder</li>
         </ul>
       </div>
 
@@ -492,13 +510,12 @@
 
     <section class="panel page-exit">
       <h2>Where to go next</h2>
-      <div class="page-exit-copy">Use the launcher to move into the right workspace, open the connected flow to explain the full story, or jump straight into one of the assist demos.</div>
+      <div class="page-exit-copy">Start from the stage you are in now, open the connected flow when you need the full lifecycle view, or step into an assist demo when the main work needs extra help.</div>
       <div class="page-exit-actions">
-        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open owner workspace</a>
-        <a class="btn secondary" href="./mockups/end_to_end_process_flow.html">Open connected flow</a>
-        <a class="btn secondary" href="./mockups/governance_team_mockup.html">Open governance workspace</a>
-        <a class="btn" href="./mockups/policy_bot_demo_mockup.html">Open policy bot demo</a>
-        <a class="btn" href="./mockups/ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+        <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Start owner QC</a>
+        <a class="btn secondary" href="./mockups/governance_team_mockup.html">Continue governance review</a>
+        <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
+        <a class="btn" href="./mockups/end_to_end_process_flow.html">View connected flow</a>
       </div>
     </section>
 
