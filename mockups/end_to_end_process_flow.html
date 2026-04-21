@@ -406,6 +406,12 @@
       flex-wrap: wrap;
     }
 
+    .flow-section,
+    .flow-card,
+    .assist-card {
+      scroll-margin-top: 28px;
+    }
+
     @media (max-width: 1100px) {
       .hero-grid,
       .flow-grid,
@@ -461,7 +467,7 @@
       </div>
     </section>
 
-    <section class="flow-section">
+    <section class="flow-section" id="primary-lifecycle">
       <div class="section-head">
         <div>
           <p class="eyebrow">Primary lifecycle</p>
@@ -471,7 +477,7 @@
       </div>
 
       <div class="flow-grid">
-        <article class="flow-card">
+        <article class="flow-card" id="owner-review-stage">
           <div class="flow-step">Step 1</div>
           <h3>Owner prepares the draft in quincy</h3>
           <p>The owner starts from the LogicGate-linked working Google Doc, explains what changed, runs quincy QC, and prepares the owner package with a change summary and QC audit trail.</p>
@@ -490,7 +496,7 @@
           </div>
         </article>
 
-        <article class="flow-card">
+        <article class="flow-card" id="governance-review-stage">
           <div class="flow-step">Step 2</div>
           <h3>Governance receives and reviews the package</h3>
           <p>The governance workspace imports the owner package, brings the next record forward, prepares packet summaries and return notes, and decides whether the record moves ahead or comes back with targeted fixes.</p>
@@ -508,7 +514,7 @@
           </div>
         </article>
 
-        <article class="flow-card">
+        <article class="flow-card" id="approval-lifecycle-stage">
           <div class="flow-step">Step 3</div>
           <h3>Record is approved and continues the normal lifecycle</h3>
           <p>If governance is satisfied, the package moves into approval and publication without extra owner cleanup. The approved document remains governed in the existing LogicGate and Google Drive lifecycle.</p>
@@ -525,7 +531,7 @@
       </div>
     </section>
 
-    <section class="flow-section">
+    <section class="flow-section" id="return-loop">
       <div class="section-head">
         <div>
           <p class="eyebrow">Return loop</p>
@@ -535,7 +541,7 @@
       </div>
 
       <div class="loop-grid">
-        <article class="flow-card">
+        <article class="flow-card" id="governance-return-stage">
           <div class="flow-step">Governance outcome</div>
           <h3>Returned with required fixes</h3>
           <p>Governance identifies the exact missing items and prepares a note so the owner knows what to change next and what can stay preserved.</p>
@@ -549,7 +555,7 @@
 
         <div class="connector">Loop back to owner</div>
 
-        <article class="flow-card">
+        <article class="flow-card" id="returned-item-stage">
           <div class="flow-step">Owner rework</div>
           <h3>Owner fixes only the returned items in quincy</h3>
           <p>The returned-state flow preserves the Google Doc and prior package so the owner only updates the targeted items, refreshes the note, and exports the updated package back to governance.</p>
@@ -563,7 +569,7 @@
       </div>
     </section>
 
-    <section class="flow-section">
+    <section class="flow-section" id="assist-paths">
       <div class="section-head">
         <div>
           <p class="eyebrow">Self-serve assists</p>
@@ -573,7 +579,7 @@
       </div>
 
       <div class="assist-grid">
-        <article class="assist-card">
+        <article class="assist-card" id="policy-bot-stage">
           <div class="flow-step">Support path A</div>
           <h3>quincy policy bot</h3>
           <p>Use the policy bot when an employee needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
@@ -586,7 +592,7 @@
           </div>
         </article>
 
-        <article class="assist-card">
+        <article class="assist-card" id="ruleset-qc-stage">
           <div class="flow-step">Support path B</div>
           <h3>Ruleset QC demo</h3>
           <p>Use the ruleset-driven QC flow when the owner wants to bring a Google Doc and markdown ruleset into a lighter-weight QC pass before entering the main lifecycle.</p>
