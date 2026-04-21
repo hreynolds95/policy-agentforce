@@ -232,6 +232,7 @@
       gap: 12px;
       min-height: 100%;
       position: relative;
+      scroll-margin-top: 28px;
     }
 
     .flow-card::before {
@@ -243,6 +244,13 @@
       background: linear-gradient(90deg, #e3e6ea 0%, #e3e6ea 74%, #a3d795 100%);
     }
 
+    .flow-card:target,
+    .assist-card:target {
+      border-color: rgba(163, 215, 149, 0.45);
+      box-shadow: 0 0 0 3px rgba(163, 215, 149, 0.14), var(--shadow);
+      background: linear-gradient(180deg, rgba(163, 215, 149, 0.12) 0%, rgba(50, 53, 59, 0.96) 78%);
+    }
+
     .flow-step {
       font-family: var(--font-mono);
       font-size: 12px;
@@ -250,6 +258,38 @@
       text-transform: uppercase;
       color: var(--muted);
       padding-top: 4px;
+    }
+
+    .stage-label {
+      width: fit-content;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(227, 230, 234, 0.12);
+      background: rgba(227, 230, 234, 0.08);
+      color: #d6dbe0;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .stage-label.lifecycle {
+      border-color: rgba(163, 215, 149, 0.26);
+      background: rgba(163, 215, 149, 0.12);
+      color: #dff0d7;
+    }
+
+    .stage-label.decision {
+      border-color: rgba(255, 227, 156, 0.24);
+      background: rgba(255, 227, 156, 0.12);
+      color: #ffe39c;
+    }
+
+    .stage-label.assist {
+      border-color: rgba(227, 230, 234, 0.18);
+      background: rgba(227, 230, 234, 0.08);
+      color: #e3e6ea;
     }
 
     .flow-card h3 {
@@ -337,6 +377,7 @@
       padding: 18px;
       display: grid;
       gap: 12px;
+      scroll-margin-top: 28px;
     }
 
     .assist-card h3 {
@@ -479,6 +520,7 @@
       <div class="flow-grid">
         <article class="flow-card" id="owner-review-stage">
           <div class="flow-step">Step 1</div>
+          <div class="stage-label lifecycle">Owner workspace</div>
           <h3>Owner prepares the draft in quincy</h3>
           <p>The owner starts from the LogicGate-linked working Google Doc, explains what changed, runs quincy QC, and prepares the owner package with a change summary and QC audit trail.</p>
           <div class="chip-row">
@@ -498,6 +540,7 @@
 
         <article class="flow-card" id="governance-review-stage">
           <div class="flow-step">Step 2</div>
+          <div class="stage-label decision">Governance workspace</div>
           <h3>Governance receives and reviews the package</h3>
           <p>The governance workspace imports the owner package, brings the next record forward, prepares packet summaries and return notes, and decides whether the record moves ahead or comes back with targeted fixes.</p>
           <div class="chip-row">
@@ -516,6 +559,7 @@
 
         <article class="flow-card" id="approval-lifecycle-stage">
           <div class="flow-step">Step 3</div>
+          <div class="stage-label lifecycle">Approval and publication</div>
           <h3>Record is approved and continues the normal lifecycle</h3>
           <p>If governance is satisfied, the package moves into approval and publication without extra owner cleanup. The approved document remains governed in the existing LogicGate and Google Drive lifecycle.</p>
           <div class="chip-row">
@@ -543,6 +587,7 @@
       <div class="loop-grid">
         <article class="flow-card" id="governance-return-stage">
           <div class="flow-step">Governance outcome</div>
+          <div class="stage-label decision">Return decision</div>
           <h3>Returned with required fixes</h3>
           <p>Governance identifies the exact missing items and prepares a note so the owner knows what to change next and what can stay preserved.</p>
           <div class="chip-row">
@@ -557,6 +602,7 @@
 
         <article class="flow-card" id="returned-item-stage">
           <div class="flow-step">Owner rework</div>
+          <div class="stage-label lifecycle">Returned-item workspace</div>
           <h3>Owner fixes only the returned items in quincy</h3>
           <p>The returned-state flow preserves the Google Doc and prior package so the owner only updates the targeted items, refreshes the note, and exports the updated package back to governance.</p>
           <div class="chip-row">
@@ -581,6 +627,7 @@
       <div class="assist-grid">
         <article class="assist-card" id="policy-bot-stage">
           <div class="flow-step">Support path A</div>
+          <div class="stage-label assist">Assist demo</div>
           <h3>quincy policy bot</h3>
           <p>Use the policy bot when an employee needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
           <div class="chip-row">
@@ -594,6 +641,7 @@
 
         <article class="assist-card" id="ruleset-qc-stage">
           <div class="flow-step">Support path B</div>
+          <div class="stage-label assist">Assist demo</div>
           <h3>Ruleset QC demo</h3>
           <p>Use the ruleset-driven QC flow when the owner wants to bring a Google Doc and markdown ruleset into a lighter-weight QC pass before entering the main lifecycle.</p>
           <div class="chip-row">
