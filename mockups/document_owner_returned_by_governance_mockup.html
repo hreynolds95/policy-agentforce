@@ -1140,12 +1140,19 @@
 
     .exit-card {
       display: grid;
-      gap: 10px;
+      gap: 12px;
       align-content: start;
-      padding: 14px;
+      padding: 16px;
       border: 1px solid var(--line);
       border-radius: 16px;
       background: var(--accent-soft);
+      min-height: 100%;
+    }
+
+    .exit-card .primary-btn,
+    .exit-card .secondary-btn,
+    .exit-card .ghost-btn {
+      width: 100%;
     }
 
     .exit-card-title {
