@@ -174,6 +174,65 @@
       color: var(--ink);
     }
 
+    .happy-path {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .happy-path-head {
+      display: grid;
+      gap: 6px;
+    }
+
+    .happy-path-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .happy-path-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .happy-step {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel-2);
+    }
+
+    .happy-step-number {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: #111111;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .happy-step-title {
+      font-size: 18px;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .happy-step-copy {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     h2 {
       margin: 0 0 14px;
       font-size: 22px;
@@ -342,6 +401,7 @@
     }
 
     @media (max-width: 900px) {
+      .happy-path-grid,
       .task-grid,
       .support-grid,
       .grid {
@@ -385,6 +445,33 @@
         <a class="btn secondary" href="./mockups/governance_team_mockup.html">Continue governance review</a>
         <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
         <a class="btn" href="./mockups/end_to_end_process_flow.html">View connected flow</a>
+      </div>
+    </section>
+
+    <section class="panel happy-path">
+      <div class="happy-path-head">
+        <h2>Fastest demo path</h2>
+        <p>Use this default click path when you want the cleanest end-to-end story. The returned-item workspace is still available, but it is the alternate branch after governance sends targeted fixes back.</p>
+      </div>
+      <div class="happy-path-grid">
+        <article class="happy-step">
+          <span class="happy-step-number">1</span>
+          <div class="happy-step-title">Start in owner QC</div>
+          <div class="happy-step-copy">Show how quincy prepares the package from the working Google Doc and clears owner-side blockers first.</div>
+          <a class="btn primary" href="./mockups/document_owner_annual_refresh_mockup.html">Open owner workspace</a>
+        </article>
+        <article class="happy-step">
+          <span class="happy-step-number">2</span>
+          <div class="happy-step-title">Continue in governance</div>
+          <div class="happy-step-copy">Show the prepared package arriving intact and the governance team making the next lifecycle decision.</div>
+          <a class="btn primary" href="./mockups/governance_team_mockup.html">Open governance workspace</a>
+        </article>
+        <article class="happy-step">
+          <span class="happy-step-number">3</span>
+          <div class="happy-step-title">Use the return loop only if needed</div>
+          <div class="happy-step-copy">Open the returned-item workspace only when you want to demonstrate the alternate branch for targeted fixes.</div>
+          <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Open returned-item workspace</a>
+        </article>
       </div>
     </section>
 

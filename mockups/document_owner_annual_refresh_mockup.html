@@ -174,6 +174,27 @@
       color: var(--ink);
     }
 
+    .demo-path-note {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(163, 215, 149, 0.22);
+      background: rgba(163, 215, 149, 0.1);
+      display: grid;
+      gap: 4px;
+    }
+
+    .demo-path-note strong {
+      font-size: 15px;
+      line-height: 1.3;
+    }
+
+    .demo-path-note div {
+      color: #d8f0ca;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
     .hero {
       background: var(--panel);
       border: 1px solid var(--line);
@@ -1488,6 +1509,10 @@
             <div class="lifecycle-node-copy">Once review is clear, the record continues through approvals and publication in the current lifecycle.</div>
           </article>
         </div>
+      </section>
+      <section class="demo-path-note" aria-label="Happy path guidance">
+        <strong>Happy path demo</strong>
+        <div>This is the first stop in the main story. After export, go straight to the governance workspace. Use the returned-item workspace only if you want to show the alternate branch later.</div>
       </section>
       <section class="job-strip" aria-label="owner workspace page jobs">
         <div class="job-card">
@@ -3004,7 +3029,7 @@
   <div class="page">
     <section class="page-exit">
       <h3 class="page-exit-title">Where to go next</h3>
-      <div class="page-exit-copy">This page ends with an owner-ready package. The next stop is usually governance, unless you want to explain the return loop or zoom back out to the full lifecycle.</div>
+      <div class="page-exit-copy">This page ends with an owner-ready package. In the default demo story, the next stop is governance. Use the return loop only when you want to show the alternate branch.</div>
       <div class="page-exit-actions">
         <div class="exit-card">
           <h4 class="exit-card-title">Hand off the prepared package</h4>
