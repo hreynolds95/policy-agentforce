@@ -394,63 +394,6 @@
       font-size: 15px;
     }
 
-    .legend {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .legend .summary-card {
-      padding: 14px 16px;
-      background: var(--panel-2);
-      box-shadow: none;
-      border-radius: 16px;
-      gap: 6px;
-    }
-
-    .legend strong {
-      font-size: 14px;
-    }
-
-    .legend span {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.45;
-    }
-
-    .page-exit {
-      margin-top: 18px;
-      padding: 18px 20px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      display: grid;
-      gap: 12px;
-    }
-
-    .page-exit-title {
-      margin: 0;
-      font-size: 20px;
-      line-height: 1.15;
-    }
-
-    .page-exit-copy {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
-    }
-
-    .page-exit-actions {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    .page-exit-actions .btn {
-      width: 100%;
-    }
-
     .flow-section,
     .flow-card,
     .assist-card {
@@ -461,7 +404,6 @@
       .hero-grid,
       .flow-grid,
       .assist-grid,
-      .legend,
       .loop-grid {
         grid-template-columns: 1fr;
       }
@@ -480,7 +422,7 @@
     <div class="topbar">
       <div>
         <p class="eyebrow">quincy connected flow</p>
-        <h1>Connected flow across quincy, governance, and policy search</h1>
+        <h1>See the full QC story in one place</h1>
       </div>
       <div class="hero-actions">
         <div class="brand-pill" aria-label="Block logo">
@@ -494,20 +436,16 @@
       <div class="hero-grid">
         <div>
           <p class="eyebrow">How the experiences connect</p>
-          <div class="hero-copy">
-            This connected flow is for teams who want to see how the pages work together. It now starts with the simplified step pages, then branches into advanced workspaces or assist demos only when needed.
-          </div>
+          <div class="hero-copy">Use this page only when you want the bigger lifecycle view. Start with the simplified owner and governance steps, then open the return loop or support paths only when they are actually needed.</div>
           <div class="hero-actions" style="margin-top:18px;">
             <a class="btn primary" href="./step_01_owner_confirm_inputs.html">Start owner QC</a>
-            <a class="btn secondary" href="./step_05_governance_review_packet.html">Continue governance review</a>
+            <a class="btn secondary" href="../index.html">Return to launcher</a>
           </div>
         </div>
         <div class="summary-card">
-          <div class="flow-step">Fastest reading order</div>
-          <h2 class="summary-title">Start with the lifecycle, then layer in self-serve assists</h2>
-          <div class="summary-copy">
-            The primary lifecycle is owner draft review in quincy, governance review, and then either publication or a targeted return to owner. The policy bot and ruleset QC mockups are support paths that help users prepare faster before they ever enter the governance cycle.
-          </div>
+          <div class="flow-step">Default reading order</div>
+          <h2 class="summary-title">Owner review, governance review, then either publish or return</h2>
+          <div class="summary-copy">Follow the three main lifecycle cards first. Use the return loop and assist demos only when you want to explain the alternate or supporting paths.</div>
         </div>
       </div>
     </section>
@@ -518,7 +456,7 @@
           <p class="eyebrow">Primary lifecycle</p>
           <h2 class="section-title">The main end-to-end path</h2>
         </div>
-        <div class="section-copy">This is the core process a document owner and governance team would follow for an annual refresh or proposed policy change.</div>
+        <div class="section-copy">This is the default story to walk first: owner review, governance review, then approval and publication.</div>
       </div>
 
       <div class="flow-grid">
@@ -526,7 +464,7 @@
           <div class="flow-step">Step 1</div>
           <div class="stage-label lifecycle">Owner workspace</div>
           <h3>Owner prepares the draft in quincy</h3>
-          <p>The owner now moves through four simpler pages: confirm inputs, run QC, resolve blockers, and export the package before governance review begins.</p>
+          <p>The owner moves through the simplified step pages to confirm inputs, run QC, resolve blockers, and export the package before governance review begins.</p>
           <div class="chip-row">
             <span class="chip ok">Start here</span>
             <span class="chip">Google Doc remains source</span>
@@ -546,7 +484,7 @@
           <div class="flow-step">Step 2</div>
           <div class="stage-label decision">Governance workspace</div>
           <h3>Governance receives and reviews the package</h3>
-          <p>The simplified governance page reviews the imported package first, then the denser governance workspace remains available when you want to show full queue and packet behavior.</p>
+          <p>The simplified governance page reviews the imported package first. The denser governance workspace stays available only when you want fuller queue and packet behavior.</p>
           <div class="chip-row">
             <span class="chip warn">Decision</span>
             <span class="chip">System of record remains LogicGate</span>
@@ -565,7 +503,7 @@
           <div class="flow-step">Step 3</div>
           <div class="stage-label lifecycle">Approval and publication</div>
           <h3>Record is approved and continues the normal lifecycle</h3>
-          <p>If governance is satisfied, the simplified happy path continues into a final approval-and-publish page before the record returns to the normal lifecycle.</p>
+          <p>If governance is satisfied, the simplified happy path continues into approval and publication before the record returns to the normal lifecycle.</p>
           <div class="chip-row">
             <span class="chip ok">Moves forward</span>
             <span class="chip">Simplified final page</span>
@@ -588,7 +526,7 @@
           <p class="eyebrow">Return loop</p>
           <h2 class="section-title">If governance sends the package back</h2>
         </div>
-        <div class="section-copy">This is the targeted rework loop: only the returned items come back to the owner, and the preserved package avoids rebuilding work that governance already accepted.</div>
+        <div class="section-copy">Use this alternate branch only when governance sends targeted fixes back. The preserved package avoids rebuilding work that was already accepted.</div>
       </div>
 
       <div class="loop-grid">
@@ -596,7 +534,7 @@
           <div class="flow-step">Governance outcome</div>
           <div class="stage-label decision">Return decision</div>
           <h3>Returned with required fixes</h3>
-          <p>Governance identifies the exact missing items and prepares a note so the owner knows what to change next and what can stay preserved.</p>
+          <p>Governance identifies the exact missing items and prepares a note so the owner knows what changes next and what stays preserved.</p>
           <div class="chip-row">
             <span class="chip danger">Returned to owner</span>
           </div>
@@ -611,7 +549,7 @@
           <div class="flow-step">Owner rework</div>
           <div class="stage-label lifecycle">Returned-item workspace</div>
           <h3>Owner fixes only the returned items in quincy</h3>
-          <p>The returned-state flow preserves the Google Doc and prior package so the owner only updates the targeted items, refreshes the note, and exports the updated package back to governance.</p>
+          <p>The returned-state flow preserves the Google Doc and prior package so the owner only updates the targeted items, refreshes the note, and hands the package back.</p>
           <div class="chip-row">
             <span class="chip warn">Reduced rework</span>
           </div>
@@ -628,7 +566,7 @@
           <p class="eyebrow">Self-serve assists</p>
           <h2 class="section-title">Optional tools that help users start faster</h2>
         </div>
-        <div class="section-copy">These mockups support the lifecycle but do not replace it. They help employees answer questions or do a lighter preflight before the main owner and governance path begins.</div>
+        <div class="section-copy">These support paths help users answer questions or preflight drafts faster, but they do not replace the main owner and governance flow.</div>
       </div>
 
       <div class="assist-grid">
@@ -636,7 +574,7 @@
           <div class="flow-step">Support path A</div>
           <div class="stage-label assist">Assist demo</div>
           <h3>quincy policy bot</h3>
-          <p>Use the policy bot when an employee needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
+          <p>Use the policy bot when someone needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
           <div class="chip-row">
             <span class="chip">Question answering</span>
             <span class="chip ok">Reusable citations</span>
@@ -650,7 +588,7 @@
           <div class="flow-step">Support path B</div>
           <div class="stage-label assist">Assist demo</div>
           <h3>Ruleset QC demo</h3>
-          <p>Use the ruleset-driven QC flow when the owner wants to bring a Google Doc and markdown ruleset into a lighter-weight QC pass before entering the main lifecycle.</p>
+          <p>Use the ruleset-driven QC flow when the owner wants a lighter-weight Google Doc plus markdown-ruleset pass before entering the main lifecycle.</p>
           <div class="chip-row">
             <span class="chip">Preflight review</span>
             <span class="chip ok">Markdown ruleset</span>
@@ -662,45 +600,6 @@
       </div>
     </section>
 
-    <section class="flow-section">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Legend</p>
-          <h2 class="section-title">How to read the flow</h2>
-        </div>
-      </div>
-
-      <div class="legend">
-        <div class="summary-card">
-          <strong>Start here</strong>
-          <span>Where most document owners should start in the lifecycle.</span>
-        </div>
-        <div class="summary-card">
-          <strong>Decision</strong>
-          <span>Where governance determines whether the record moves ahead or loops back.</span>
-        </div>
-        <div class="summary-card">
-          <strong>Return loop</strong>
-          <span>The targeted rework path that keeps the preserved package intact.</span>
-        </div>
-        <div class="summary-card">
-          <strong>Support path</strong>
-          <span>Optional assist experiences that help users answer questions or preflight drafts faster.</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-exit">
-      <h3 class="page-exit-title">Where to go next</h3>
-      <div class="page-exit-copy">Walk the simplified main story through the step pages first, or branch into the returned-item loop, advanced workspaces, and assist demos only when you want the fuller picture.</div>
-      <div class="page-exit-actions">
-        <a class="btn primary" href="./step_01_owner_confirm_inputs.html">Start owner QC</a>
-        <a class="btn secondary" href="./step_05_governance_review_packet.html">Continue governance review</a>
-        <a class="btn" href="./policy_bot_demo_mockup.html">Open policy bot demo</a>
-        <a class="btn" href="./ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
-        <a class="btn" href="../index.html">Return to launcher</a>
-      </div>
-    </section>
   </div>
 </body>
 </html>
