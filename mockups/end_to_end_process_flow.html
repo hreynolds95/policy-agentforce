@@ -370,7 +370,45 @@
 
     .assist-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .assist-summary {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+      min-height: 100%;
+      background: rgba(50, 53, 59, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .assist-summary h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .assist-summary p,
+    .assist-summary li {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .assist-summary ul {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .assist-stack {
+      display: grid;
       gap: 16px;
     }
 
@@ -380,6 +418,10 @@
       gap: 12px;
       scroll-margin-top: 28px;
       min-height: 100%;
+      background: rgba(50, 53, 59, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
     }
 
     .card-actions {
@@ -574,39 +616,52 @@
       <div class="section-head">
         <div>
           <p class="eyebrow">Support paths</p>
-          <h2 class="section-title">Optional tools that help users start faster</h2>
+          <h2 class="section-title">Optional support paths</h2>
         </div>
         <div class="section-copy">These support paths help users answer questions or preflight drafts faster, but they do not replace the main owner and governance flow.</div>
       </div>
 
       <div class="assist-grid">
-        <article class="assist-card" id="policy-bot-stage">
-          <div class="flow-step">Support path A</div>
-          <div class="stage-label assist">Assist demo</div>
-          <h3>quincy policy bot</h3>
-          <p>Use the policy bot when someone needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
-          <div class="chip-row">
-            <span class="chip">Question answering</span>
-            <span class="chip ok">Reusable citations</span>
-          </div>
-          <div class="card-actions">
-            <a class="btn secondary" href="./policy_bot_demo_mockup.html">Open policy bot demo</a>
-          </div>
-        </article>
+        <div class="assist-summary">
+          <div class="flow-step">Use these only when needed</div>
+          <h3>Keep the lifecycle primary</h3>
+          <p>Open these support paths only when someone needs extra help before acting in the main story.</p>
+          <ul>
+            <li>Use policy search when the owner or reviewer needs grounded answers and citations.</li>
+            <li>Use ruleset QC when the owner wants a lighter preflight before the main owner flow begins.</li>
+            <li>Return to the owner or governance path once the support work is done.</li>
+          </ul>
+        </div>
 
-        <article class="assist-card" id="ruleset-qc-stage">
-          <div class="flow-step">Support path B</div>
-          <div class="stage-label assist">Assist demo</div>
-          <h3>Ruleset QC demo</h3>
-          <p>Use the ruleset-driven QC flow when the owner wants a lighter-weight Google Doc plus markdown-ruleset pass before entering the main lifecycle.</p>
-          <div class="chip-row">
-            <span class="chip">Preflight review</span>
-            <span class="chip ok">Markdown ruleset</span>
-          </div>
-          <div class="card-actions">
-            <a class="btn secondary" href="./ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
-          </div>
-        </article>
+        <div class="assist-stack">
+          <article class="assist-card" id="policy-bot-stage">
+            <div class="flow-step">Support path A</div>
+            <div class="stage-label assist">Assist demo</div>
+            <h3>quincy policy bot</h3>
+            <p>Use the policy bot when someone needs a grounded answer, cited excerpt, or source preview before drafting edits or deciding which document applies.</p>
+            <div class="chip-row">
+              <span class="chip">Question answering</span>
+              <span class="chip ok">Reusable citations</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn secondary" href="./policy_bot_demo_mockup.html">Open policy bot demo</a>
+            </div>
+          </article>
+
+          <article class="assist-card" id="ruleset-qc-stage">
+            <div class="flow-step">Support path B</div>
+            <div class="stage-label assist">Assist demo</div>
+            <h3>Ruleset QC demo</h3>
+            <p>Use the ruleset-driven QC flow when the owner wants a lighter-weight Google Doc plus markdown-ruleset pass before entering the main lifecycle.</p>
+            <div class="chip-row">
+              <span class="chip">Preflight review</span>
+              <span class="chip ok">Markdown ruleset</span>
+            </div>
+            <div class="card-actions">
+              <a class="btn secondary" href="./ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
