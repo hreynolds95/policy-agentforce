@@ -136,3 +136,59 @@ body {
   text-rendering: optimizeLegibility;
 }
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap");
+
+.process-flow-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 1200;
+  display: grid;
+  gap: 4px;
+  max-width: min(320px, calc(100vw - 32px));
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(244, 246, 247, 0.96);
+  color: #111111;
+  text-decoration: none;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(10px);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.process-flow-fab:hover,
+.process-flow-fab:focus-visible {
+  transform: translateY(-1px);
+  filter: brightness(0.99);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.28);
+}
+
+.process-flow-fab-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #606c7a;
+}
+
+.process-flow-fab-title {
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: #111111;
+}
+
+.process-flow-fab-copy {
+  font-size: 13px;
+  line-height: 1.45;
+  color: #474e57;
+}
+
+@media (max-width: 720px) {
+  .process-flow-fab {
+    right: 12px;
+    bottom: 12px;
+    max-width: calc(100vw - 24px);
+    padding: 12px 14px;
+  }
+}

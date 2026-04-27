@@ -1,0 +1,79 @@
+<svg width="1600" height="980" viewBox="0 0 1600 980" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">quincy end-to-end process flow</title>
+  <desc id="desc">A downloadable end-to-end process flow for owner review, governance review, and the return loop across quincy webpages.</desc>
+  <rect width="1600" height="980" fill="#F4F6F7"/>
+  <rect x="48" y="48" width="1504" height="884" rx="32" fill="#FFFFFF" stroke="#E3E6EA" stroke-width="2"/>
+  <text x="96" y="118" fill="#606C7A" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="3">QUINCY END-TO-END PROCESS FLOW</text>
+  <text x="96" y="168" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="700">Owner QC, governance review, and return-loop support</text>
+  <text x="96" y="210" fill="#474E57" font-family="Arial, Helvetica, sans-serif" font-size="24">Use the simplified step pages for the main story, then jump to the denser workspaces only when you need deeper context.</text>
+
+  <rect x="96" y="266" width="1040" height="84" rx="24" fill="#F7F8FA" stroke="#E3E6EA"/>
+  <text x="132" y="318" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Main story</text>
+  <text x="300" y="318" fill="#474E57" font-family="Arial, Helvetica, sans-serif" font-size="22">Start owner QC → continue governance review → approve and publish</text>
+
+  <rect x="96" y="394" width="212" height="170" rx="24" fill="#22252A"/>
+  <text x="124" y="438" fill="#A7B0B9" font-family="Courier New, monospace" font-size="16" letter-spacing="2">STEP 1</text>
+  <text x="124" y="482" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Confirm draft inputs</text>
+  <text x="124" y="524" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="20">Verify the Google Doc, owner delta, and attached reference material.</text>
+
+  <rect x="356" y="394" width="212" height="170" rx="24" fill="#22252A"/>
+  <text x="384" y="438" fill="#A7B0B9" font-family="Courier New, monospace" font-size="16" letter-spacing="2">STEP 2</text>
+  <text x="384" y="482" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Run QC</text>
+  <text x="384" y="524" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="20">Review the grounded QC findings and the prepared supporting outputs.</text>
+
+  <rect x="616" y="394" width="212" height="170" rx="24" fill="#22252A"/>
+  <text x="644" y="438" fill="#A7B0B9" font-family="Courier New, monospace" font-size="16" letter-spacing="2">STEP 3</text>
+  <text x="644" y="482" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Resolve blockers</text>
+  <text x="644" y="524" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="20">Clear required fixes and decide which optional improvements to keep.</text>
+
+  <rect x="876" y="394" width="212" height="170" rx="24" fill="#22252A"/>
+  <text x="904" y="438" fill="#A7B0B9" font-family="Courier New, monospace" font-size="16" letter-spacing="2">STEP 4</text>
+  <text x="904" y="482" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Export package</text>
+  <text x="904" y="524" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="20">Prepare the owner package with the change summary and QC audit trail.</text>
+
+  <rect x="1136" y="394" width="212" height="170" rx="24" fill="#22252A"/>
+  <text x="1164" y="438" fill="#A7B0B9" font-family="Courier New, monospace" font-size="16" letter-spacing="2">STEP 5</text>
+  <text x="1164" y="482" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Governance review</text>
+  <text x="1164" y="524" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="20">Reuse the package, review inline findings, and decide whether to move forward.</text>
+
+  <rect x="1096" y="630" width="252" height="170" rx="24" fill="#B8FF2C" stroke="#A7B0B9"/>
+  <text x="1128" y="674" fill="#111111" font-family="Courier New, monospace" font-size="16" letter-spacing="2">STEP 6</text>
+  <text x="1128" y="718" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Approve and publish</text>
+  <text x="1128" y="760" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="20">Advance the accepted record through approval, publication, and archival readiness.</text>
+
+  <rect x="96" y="630" width="448" height="170" rx="24" fill="#FFF8E1" stroke="#FBCD44" stroke-width="2"/>
+  <text x="128" y="674" fill="#7B5200" font-family="Courier New, monospace" font-size="16" letter-spacing="2">ALTERNATE BRANCH</text>
+  <text x="128" y="718" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Returned fixes loop</text>
+  <text x="128" y="760" fill="#474E57" font-family="Arial, Helvetica, sans-serif" font-size="20">If governance sends targeted fixes back, the returned-item workspace prepares a clean hand-back package before governance re-reviews the record.</text>
+
+  <rect x="1224" y="266" width="264" height="540" rx="24" fill="#F7F8FA" stroke="#E3E6EA"/>
+  <text x="1260" y="318" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700">Support paths</text>
+  <text x="1260" y="358" fill="#474E57" font-family="Arial, Helvetica, sans-serif" font-size="20">Use only when the user needs extra help before acting in the main story.</text>
+  <rect x="1260" y="402" width="192" height="126" rx="20" fill="#22252A"/>
+  <text x="1286" y="442" fill="#A7B0B9" font-family="Courier New, monospace" font-size="15" letter-spacing="1.6">ASSIST DEMO</text>
+  <text x="1286" y="482" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Policy bot</text>
+  <text x="1286" y="514" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="18">Grounded questions, citations, and source previews.</text>
+  <rect x="1260" y="556" width="192" height="126" rx="20" fill="#22252A"/>
+  <text x="1286" y="596" fill="#A7B0B9" font-family="Courier New, monospace" font-size="15" letter-spacing="1.6">ASSIST DEMO</text>
+  <text x="1286" y="636" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">Ruleset QC</text>
+  <text x="1286" y="668" fill="#E3E6EA" font-family="Arial, Helvetica, sans-serif" font-size="18">Google Doc plus markdown ruleset review flow.</text>
+  <rect x="1260" y="710" width="192" height="72" rx="18" fill="#FFFFFF" stroke="#E3E6EA"/>
+  <text x="1286" y="752" fill="#111111" font-family="Arial, Helvetica, sans-serif" font-size="19" font-weight="700">Connected flow page</text>
+
+  <path d="M308 479H356" stroke="#A7B0B9" stroke-width="10" stroke-linecap="round"/>
+  <path d="M568 479H616" stroke="#A7B0B9" stroke-width="10" stroke-linecap="round"/>
+  <path d="M828 479H876" stroke="#A7B0B9" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1088 479H1136" stroke="#A7B0B9" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1242 564V630" stroke="#A3D795" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1242 622L1220 600" stroke="#A3D795" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1242 622L1264 600" stroke="#A3D795" stroke-width="10" stroke-linecap="round"/>
+
+  <path d="M1136 492C896 492 840 650 544 715" stroke="#FBCD44" stroke-width="8" stroke-linecap="round" stroke-dasharray="14 16"/>
+  <path d="M544 715L568 730" stroke="#FBCD44" stroke-width="8" stroke-linecap="round"/>
+  <path d="M544 715L563 693" stroke="#FBCD44" stroke-width="8" stroke-linecap="round"/>
+  <path d="M544 630C768 620 932 610 1096 715" stroke="#7CACFF" stroke-width="8" stroke-linecap="round" stroke-dasharray="14 16"/>
+  <path d="M1096 715L1071 700" stroke="#7CACFF" stroke-width="8" stroke-linecap="round"/>
+  <path d="M1096 715L1074 736" stroke="#7CACFF" stroke-width="8" stroke-linecap="round"/>
+
+  <text x="642" y="858" fill="#606C7A" font-family="Arial, Helvetica, sans-serif" font-size="18">Download this SVG from any webpage in the prototype via the floating bottom-right action.</text>
+</svg>
