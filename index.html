@@ -174,65 +174,6 @@
       color: var(--ink);
     }
 
-    .happy-path {
-      display: grid;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
-    .happy-path-head {
-      display: grid;
-      gap: 6px;
-    }
-
-    .happy-path-head p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
-    }
-
-    .happy-path-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .happy-step {
-      display: grid;
-      gap: 10px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--panel-2);
-    }
-
-    .happy-step-number {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent);
-      color: #111111;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .happy-step-title {
-      font-size: 18px;
-      line-height: 1.2;
-      font-weight: 700;
-    }
-
-    .happy-step-copy {
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
     h2 {
       margin: 0 0 14px;
       font-size: 22px;
@@ -280,9 +221,37 @@
       font-size: 14px;
     }
 
+    .stage-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .stage-pill {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .stage-pill strong {
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .stage-pill span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     .task-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
       margin-bottom: 24px;
     }
@@ -348,7 +317,7 @@
 
     .support-grid {
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
+      grid-template-columns: 0.95fr 1.05fr;
       gap: 20px;
       margin-bottom: 20px;
     }
@@ -379,23 +348,6 @@
       padding: 0 4px;
     }
 
-    .page-exit {
-      margin-bottom: 20px;
-    }
-
-    .page-exit-copy {
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.55;
-      margin-bottom: 16px;
-    }
-
-    .page-exit-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
     code {
       background: var(--panel-2);
       color: var(--ink);
@@ -405,7 +357,7 @@
     }
 
     @media (max-width: 900px) {
-      .happy-path-grid,
+      .stage-summary,
       .task-grid,
       .support-grid,
       .grid {
@@ -435,47 +387,34 @@
       <div class="hero-head">
         <div>
           <p class="eyebrow">quincy launcher</p>
-          <h1>Start from the stage you are actually in</h1>
+          <h1>Choose your stage and start there</h1>
         </div>
         <div class="hero-brand" aria-label="Block logo">
           <img class="hero-brand-logo" src="./assets/images/block-lockup-black-no-padding.png" alt="Block" />
         </div>
       </div>
       <div class="lede">
-        This launcher is for Block employees moving through document QC work. Start in the stage you are in now, then follow the connected flow only when you need the bigger lifecycle map.
+        This launcher keeps the document QC story simple. Start in owner review, jump into governance only when the package is ready, and use the return loop only when governance sends back targeted fixes.
       </div>
       <div class="actions">
         <a class="btn primary" href="./mockups/step_01_owner_confirm_inputs.html">Start owner QC</a>
         <a class="btn secondary" href="./mockups/step_05_governance_review_packet.html">Continue governance review</a>
         <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
-        <a class="btn" href="./mockups/end_to_end_process_flow.html">View connected flow</a>
       </div>
     </section>
 
-    <section class="panel happy-path">
-      <div class="happy-path-head">
-        <h2>Fastest demo path</h2>
-        <p>Use this default click path when you want the cleanest end-to-end story. The returned-item workspace is still available, but it is the alternate branch after governance sends targeted fixes back.</p>
+    <section class="stage-summary" aria-label="Default flow summary">
+      <div class="stage-pill">
+        <strong>1. Owner review</strong>
+        <span>Confirm inputs, run QC, clear blockers, and export the handoff package.</span>
       </div>
-      <div class="happy-path-grid">
-        <article class="happy-step">
-          <span class="happy-step-number">1</span>
-          <div class="happy-step-title">Start in owner QC</div>
-          <div class="happy-step-copy">Walk through the simplified step pages: confirm inputs, run QC, resolve blockers, and export the owner package.</div>
-          <a class="btn primary" href="./mockups/step_01_owner_confirm_inputs.html">Start owner QC</a>
-        </article>
-        <article class="happy-step">
-          <span class="happy-step-number">2</span>
-          <div class="happy-step-title">Continue in governance</div>
-          <div class="happy-step-copy">Use the simplified governance page to review the imported package and choose whether the happy path moves forward.</div>
-          <a class="btn primary" href="./mockups/step_05_governance_review_packet.html">Continue governance review</a>
-        </article>
-        <article class="happy-step">
-          <span class="happy-step-number">3</span>
-          <div class="happy-step-title">Use the return loop only if needed</div>
-          <div class="happy-step-copy">Open the returned-item workspace only when you want to demonstrate the alternate branch for targeted fixes.</div>
-          <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
-        </article>
+      <div class="stage-pill">
+        <strong>2. Governance review</strong>
+        <span>Review the imported package and decide whether the record moves forward.</span>
+      </div>
+      <div class="stage-pill">
+        <strong>3. Return loop only if needed</strong>
+        <span>Use the returned-item branch only when targeted owner fixes need to come back.</span>
       </div>
     </section>
 
@@ -484,7 +423,7 @@
         <div class="task-kicker">Document Owners</div>
         <h2>Start owner QC</h2>
         <div class="task-copy">
-          Use this when you want the simplified, step-by-step owner path instead of the dense all-in-one workspace.
+          Use the simplified step flow when the owner still needs to prepare, review, and hand off the package.
         </div>
         <ul class="task-points">
           <li>Verify the draft and owner inputs</li>
@@ -493,7 +432,7 @@
         </ul>
         <div class="task-actions">
           <a class="btn primary" href="./mockups/step_01_owner_confirm_inputs.html">Start owner QC</a>
-          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#owner-review">View connected flow</a>
+          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#owner-review">Open connected flow</a>
         </div>
       </article>
 
@@ -501,16 +440,16 @@
         <div class="task-kicker">Governance Team</div>
         <h2>Continue governance review</h2>
         <div class="task-copy">
-          Use this when you want the simplified governance decision page before dropping into the denser governance workspace.
+          Use the simplified governance page when the owner package is already prepared and ready for review.
         </div>
         <ul class="task-points">
-          <li>Choose the queue and bring the right record into focus</li>
+          <li>Review the imported package in one place</li>
           <li>Review the preserved package and prepare the next decision</li>
           <li>Move the record forward or send back targeted fixes</li>
         </ul>
         <div class="task-actions">
           <a class="btn primary" href="./mockups/step_05_governance_review_packet.html">Continue governance review</a>
-          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#governance-review">View connected flow</a>
+          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#governance-review">Open connected flow</a>
         </div>
       </article>
 
@@ -518,7 +457,7 @@
         <div class="task-kicker">Returned Items</div>
         <h2>Resolve returned fixes</h2>
         <div class="task-copy">
-          Use this when governance has already reviewed the package and only the targeted owner fixes need to come back before the record moves forward again.
+          Use this only when governance has already reviewed the package and sent back focused owner changes.
         </div>
         <ul class="task-points">
           <li>See exactly what stayed attached from the original package</li>
@@ -527,90 +466,49 @@
         </ul>
         <div class="task-actions">
           <a class="btn primary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
-          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#returned-loop">View connected flow</a>
-        </div>
-      </article>
-
-      <article class="task-card">
-        <div class="task-kicker">Assist Demos</div>
-        <h2>Explore assist demos</h2>
-        <div class="task-copy">
-          Use these when you want search or ruleset-driven help alongside the main lifecycle, not when you need to move the record itself to the next stage.
-        </div>
-        <ul class="task-points">
-          <li>Use the policy bot for grounded policy answers and citations</li>
-          <li>Use the ruleset demo for Google Doc plus markdown QC patterns</li>
-          <li>Return to the owner or governance workspace when you are ready to act</li>
-        </ul>
-        <div class="task-actions">
-          <a class="btn primary" href="./mockups/policy_bot_demo_mockup.html">Open policy bot demo</a>
-          <a class="btn secondary" href="./mockups/ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+          <a class="btn secondary" href="./mockups/end_to_end_process_flow.html#returned-loop">Open connected flow</a>
         </div>
       </article>
     </section>
 
     <section class="support-grid">
       <div class="panel">
-        <h2>Time back right now</h2>
+        <h2>Use this page for one thing</h2>
         <ul>
-          <li>Start from the right stage instead of hunting through pages</li>
-          <li>Move faster between owner review, governance review, and return loops</li>
-          <li>Keep assist demos clearly separate from the main lifecycle actions</li>
-          <li>Make the full QC process easier to explain to a first-time stakeholder</li>
+          <li>Pick the stage you are already in</li>
+          <li>Open the connected flow only when you need the bigger lifecycle map</li>
+          <li>Use demos and advanced workspaces only when the simplified path is not enough</li>
         </ul>
       </div>
 
       <div class="panel">
-        <h2>Supporting paths</h2>
+        <h2>Need more context?</h2>
         <div class="link-list">
           <a class="link-card" href="./mockups/end_to_end_process_flow.html">
             <strong>connected flow</strong>
-            <span>Connected map showing how the simplified step pages, returned-item branch, advanced workspaces, and assist demos fit together</span>
-          </a>
-          <a class="link-card" href="./mockups/step_01_owner_confirm_inputs.html">
-            <strong>simplified step flow</strong>
-            <span>Six single-purpose pages for the happy-path owner and governance story</span>
+            <span>Open the full lifecycle map when you want to explain how the simplified steps, return loop, and support paths connect</span>
           </a>
           <a class="link-card" href="./mockups/document_owner_annual_refresh_mockup.html">
             <strong>advanced owner workspace</strong>
-            <span>Original all-in-one owner QC workspace with the denser prototype controls still intact</span>
-          </a>
-          <a class="link-card" href="./mockups/document_owner_returned_by_governance_mockup.html">
-            <strong>returned-item workspace</strong>
-            <span>Interactive return, fix, and resubmission flow after Governance review</span>
+            <span>Use the denser all-in-one owner prototype when you need more controls than the simplified step flow shows</span>
           </a>
           <a class="link-card" href="./mockups/governance_team_mockup.html">
             <strong>advanced governance workspace</strong>
-            <span>Original queue triage and packet-prep workspace for governance teams</span>
+            <span>Use the denser governance prototype when you want queue triage, packet drill-down, and fuller routing context</span>
           </a>
           <a class="link-card" href="./mockups/policy_bot_demo_mockup.html">
             <strong>policy bot demo</strong>
-            <span>GitHub Pages-safe chatbot demo that surfaces grounded answers, citations, and source preview</span>
+            <span>Use grounded policy search and citations when the main lifecycle work needs extra policy context</span>
           </a>
           <a class="link-card" href="./mockups/ruleset_qc_demo_mockup.html">
             <strong>ruleset QC demo</strong>
-            <span>GitHub Pages-safe demo of Google Doc + markdown ruleset + model-driven QC output</span>
-          </a>
-          <a class="link-card" href="./wireframes/document_owner_annual_refresh_user_story.md">
-            <strong>annual refresh user story</strong>
-            <span>Detailed screen states, statuses, and owner interactions</span>
+            <span>Use the Google Doc plus markdown-ruleset concept when you want the newer QC direction outside the main story</span>
           </a>
           <a class="link-card" href="./prototypes/README.md">
             <strong>prototype pack</strong>
-            <span>Top-level agents, subagents, and lifecycle model</span>
+            <span>Reference notes, artifacts, and supporting prototype materials that sit behind the GitHub Pages demos</span>
           </a>
         </div>
-      </div>
-    </section>
-
-    <section class="panel page-exit">
-      <h2>Where to go next</h2>
-      <div class="page-exit-copy">Start from the stage you are in now, open the connected flow when you need the full lifecycle view, or step into an assist demo when the main work needs extra help.</div>
-      <div class="page-exit-actions">
-        <a class="btn primary" href="./mockups/step_01_owner_confirm_inputs.html">Start owner QC</a>
-        <a class="btn secondary" href="./mockups/step_05_governance_review_packet.html">Continue governance review</a>
-        <a class="btn secondary" href="./mockups/document_owner_returned_by_governance_mockup.html">Resolve returned fixes</a>
-        <a class="btn" href="./mockups/end_to_end_process_flow.html">View connected flow</a>
       </div>
     </section>
 
