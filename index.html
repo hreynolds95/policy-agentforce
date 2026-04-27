@@ -263,8 +263,9 @@
       padding: 28px;
       box-shadow: var(--shadow);
       display: grid;
-      gap: 14px;
+      gap: 16px;
       position: relative;
+      min-height: 100%;
     }
 
     .task-card::before {
@@ -305,14 +306,13 @@
     }
 
     .task-actions {
-      display: flex;
+      display: grid;
       gap: 10px;
-      flex-wrap: wrap;
       margin-top: auto;
     }
 
     .task-actions .btn {
-      flex: 1 1 190px;
+      width: 100%;
     }
 
     .support-grid {
@@ -326,6 +326,7 @@
       background: rgba(50, 53, 59, 0.9);
       box-shadow: var(--shadow);
       padding: 22px;
+      min-height: 100%;
     }
 
     .support-grid .link-card {
