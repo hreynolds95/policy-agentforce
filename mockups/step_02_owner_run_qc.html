@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quincy step 2 | Run QC</title>
+  <link rel="stylesheet" href="../assets/styles/block-theme-static.css" />
+  <link rel="stylesheet" href="../assets/styles/step-flow.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-a"></div>
+  <div class="bg-shape bg-shape-b"></div>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <nav class="flow-breadcrumb" aria-label="Process position">
+          <a href="../index.html">Launcher</a>
+          <span aria-hidden="true">/</span>
+          <span>Simplified flow</span>
+          <span aria-hidden="true">/</span>
+          <span class="current">Step 2</span>
+        </nav>
+        <p class="eyebrow">quincy simplified owner flow</p>
+        <h1>Step 2: Run quincy QC</h1>
+      </div>
+      <div class="topbar-actions">
+        <div class="brand-pill" aria-label="Block logo">
+          <img src="../assets/images/block-lockup-black-no-padding.png" alt="Block" />
+        </div>
+        <a class="btn" href="./step_01_owner_confirm_inputs.html">Back to step 1</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-head">
+        <div>
+          <p class="eyebrow">QC pass stage</p>
+          <div class="hero-copy">This step exists only to show what quincy checks and what the first-pass output looks like. It isolates the QC moment from data entry and export decisions so the owner can understand the review result without extra noise.</div>
+        </div>
+      </div>
+      <div class="step-progress">
+        <a class="step-pill done" href="./step_01_owner_confirm_inputs.html">
+          <span class="step-pill-number">1</span>
+          <div class="step-pill-label">Confirm inputs</div>
+          <div class="step-pill-state">Done</div>
+        </a>
+        <a class="step-pill active" href="./step_02_owner_run_qc.html">
+          <span class="step-pill-number">2</span>
+          <div class="step-pill-label">Run QC</div>
+          <div class="step-pill-state">In progress</div>
+        </a>
+        <a class="step-pill upcoming" href="./step_03_owner_resolve_blockers.html">
+          <span class="step-pill-number">3</span>
+          <div class="step-pill-label">Resolve blockers</div>
+          <div class="step-pill-state">Next</div>
+        </a>
+        <a class="step-pill upcoming" href="./step_04_owner_export_package.html">
+          <span class="step-pill-number">4</span>
+          <div class="step-pill-label">Export package</div>
+          <div class="step-pill-state">Later</div>
+        </a>
+        <a class="step-pill upcoming" href="./step_05_governance_review_packet.html">
+          <span class="step-pill-number">5</span>
+          <div class="step-pill-label">Governance review</div>
+          <div class="step-pill-state">Later</div>
+        </a>
+        <a class="step-pill upcoming" href="./step_06_approval_publish.html">
+          <span class="step-pill-number">6</span>
+          <div class="step-pill-label">Approve and publish</div>
+          <div class="step-pill-state">Later</div>
+        </a>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <section class="section-card">
+        <h2>What quincy checks here</h2>
+        <div class="section-copy">The QC pass compares the working Google Doc and owner delta against the Policy on Policies checklist. Instead of showing the entire dense findings pane, this page surfaces the key outcomes only.</div>
+        <ul class="artifact-list" style="margin-top:14px;">
+          <li class="artifact-item">
+            <strong>Purpose, scope, and ownership language</strong>
+            <span class="section-copy">Confirms the required structural sections are present and specific enough for governance review.</span>
+          </li>
+          <li class="artifact-item">
+            <strong>Retention and related-document references</strong>
+            <span class="section-copy">Flags vague retention language and missing or outdated linked standards or procedures.</span>
+          </li>
+          <li class="artifact-item">
+            <strong>Quality of the owner summary</strong>
+            <span class="section-copy">Uses the owner delta to prepare a clearer change summary and the basis for the audit trail.</span>
+          </li>
+        </ul>
+        <div class="callout alt">
+          <div class="callout-title">Result of this pass</div>
+          <div class="callout-copy">quincy found 2 must-fix items and 4 recommended enhancements. The next step is only about clearing the blockers, not re-reading every QC detail.</div>
+        </div>
+      </section>
+
+      <aside class="next-card">
+        <h2>QC output in one glance</h2>
+        <div class="check-grid">
+          <div class="check-item">
+            <div class="check-head">
+              <div class="check-title">Required fixes open</div>
+              <span class="status-badge danger">2 open</span>
+            </div>
+            <div class="section-copy">Related documentation references and retention language still block handoff.</div>
+          </div>
+          <div class="check-item">
+            <div class="check-head">
+              <div class="check-title">Recommended enhancements</div>
+              <span class="status-badge warn">4 open</span>
+            </div>
+            <div class="section-copy">These improve clarity, but they do not block the owner package once required fixes are cleared.</div>
+          </div>
+        </div>
+        <div class="next-actions">
+          <a class="btn primary" href="./step_03_owner_resolve_blockers.html">Continue to step 3</a>
+          <a class="btn secondary" href="./document_owner_annual_refresh_mockup.html">Open advanced owner workspace</a>
+          <a class="btn" href="./step_01_owner_confirm_inputs.html">Back to step 1</a>
+        </div>
+      </aside>
+    </div>
+
+    <section class="footer-nav">
+      <div class="footer-card">
+        <div class="footer-card-title">Previous</div>
+        <div class="footer-card-copy">Return to the input step if you want to revisit what unlocked QC.</div>
+        <a class="btn" href="./step_01_owner_confirm_inputs.html">Back to step 1</a>
+      </div>
+      <div class="footer-card">
+        <div class="footer-card-title">Main path</div>
+        <div class="footer-card-copy">Move straight into the blocker-clearing step.</div>
+        <a class="btn primary" href="./step_03_owner_resolve_blockers.html">Go to step 3</a>
+      </div>
+      <div class="footer-card">
+        <div class="footer-card-title">Advanced view</div>
+        <div class="footer-card-copy">Use the original workspace if you want to inspect the full findings list and controls.</div>
+        <a class="btn secondary" href="./document_owner_annual_refresh_mockup.html">Open advanced workspace</a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

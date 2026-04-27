@@ -11,10 +11,10 @@ This repository currently focuses on:
 The public GitHub Pages experience is now organized around a simpler end-to-end story:
 
 1. start in the `launcher`
-2. move into `owner QC`
-3. continue into `governance review`
+2. move into the `simplified step flow`
+3. continue into simplified `governance review`
 4. optionally branch into `returned fixes`
-5. use the `policy bot` and `ruleset QC` pages as supporting demos rather than primary lifecycle steps
+5. use the advanced workspaces, `policy bot`, and `ruleset QC` pages as supporting views rather than the default primary flow
 
 ## What quincy does
 
@@ -33,6 +33,7 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 ## Start here
 
 - [Open the launcher](./index.html)
+- [Open the simplified step flow](./mockups/step_01_owner_confirm_inputs.html)
 - [Open the owner workspace](./mockups/document_owner_annual_refresh_mockup.html)
 - [Open the governance workspace](./mockups/governance_team_mockup.html)
 - [Open the returned-item workspace](./mockups/document_owner_returned_by_governance_mockup.html)
@@ -50,14 +51,27 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
   - `Start owner QC`
   - `Continue governance review`
   - `Resolve returned fixes`
-  - assist demos as secondary paths
+  - the simplified step flow as the default happy path
+  - advanced workspaces and assist demos as secondary paths
 
 ### `main story`
 
+- [`mockups/step_01_owner_confirm_inputs.html`](./mockups/step_01_owner_confirm_inputs.html)
+  The first simplified page in the happy-path flow. It focuses only on confirming the required owner inputs.
+- [`mockups/step_02_owner_run_qc.html`](./mockups/step_02_owner_run_qc.html)
+  The second simplified page in the happy-path flow. It focuses only on the quincy QC pass and the first-pass output.
+- [`mockups/step_03_owner_resolve_blockers.html`](./mockups/step_03_owner_resolve_blockers.html)
+  The third simplified page in the happy-path flow. It focuses only on the must-fix items that still block handoff.
+- [`mockups/step_04_owner_export_package.html`](./mockups/step_04_owner_export_package.html)
+  The fourth simplified page in the happy-path flow. It focuses only on exporting the owner package.
+- [`mockups/step_05_governance_review_packet.html`](./mockups/step_05_governance_review_packet.html)
+  The fifth simplified page in the happy-path flow. It focuses only on governance review of the imported package.
+- [`mockups/step_06_approval_publish.html`](./mockups/step_06_approval_publish.html)
+  The final simplified page in the happy-path flow. It shows the approval-and-publication continuation after governance accepts the package.
 - [`mockups/document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
-  The first stop in the main demo story. This page shows owner-side draft confirmation, QC, blocker clearing, and package export.
+  The advanced owner workspace. It still contains the original all-in-one owner QC prototype for denser review.
 - [`mockups/governance_team_mockup.html`](./mockups/governance_team_mockup.html)
-  The second stop in the main demo story. This page shows governance review, queue focus, packet context, comments, and next-step decisions.
+  The advanced governance workspace. It still contains the original all-in-one governance review prototype with queue and packet detail.
 
 ### `alternate branch`
 
@@ -83,13 +97,25 @@ The QC Assistant evaluates the proposed changes against the Policy on Policies t
 ### `mockups/`
 
 - [`end_to_end_process_flow.html`](./mockups/end_to_end_process_flow.html)
-  Connected flow showing the main owner → governance story, the returned-item alternate branch, and the assist demos
+  Connected flow showing the simplified step-by-step happy path, the returned-item alternate branch, the advanced workspaces, and the assist demos
+- [`step_01_owner_confirm_inputs.html`](./mockups/step_01_owner_confirm_inputs.html)
+  Simplified step page for confirming the working Google Doc, owner delta, and draft inputs
+- [`step_02_owner_run_qc.html`](./mockups/step_02_owner_run_qc.html)
+  Simplified step page for running the quincy QC pass
+- [`step_03_owner_resolve_blockers.html`](./mockups/step_03_owner_resolve_blockers.html)
+  Simplified step page for clearing the must-fix blockers
+- [`step_04_owner_export_package.html`](./mockups/step_04_owner_export_package.html)
+  Simplified step page for packaging and exporting the owner handoff
+- [`step_05_governance_review_packet.html`](./mockups/step_05_governance_review_packet.html)
+  Simplified step page for reviewing the imported package in governance
+- [`step_06_approval_publish.html`](./mockups/step_06_approval_publish.html)
+  Simplified step page for the approval-and-publication continuation of the happy path
 - [`document_owner_annual_refresh_mockup.html`](./mockups/document_owner_annual_refresh_mockup.html)
-  Owner workspace for annual refresh and proposed-change QC; the first stop in the happy-path demo flow
+  Advanced owner workspace for annual refresh and proposed-change QC
 - [`document_owner_returned_by_governance_mockup.html`](./mockups/document_owner_returned_by_governance_mockup.html)
   Returned-item workspace for targeted owner fixes after Governance review; the alternate branch in the lifecycle
 - [`governance_team_mockup.html`](./mockups/governance_team_mockup.html)
-  Governance workspace for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions; the second stop in the happy-path demo flow
+  Advanced governance workspace for queue triage, Tollgate 3 QC, approval routing, publication, and maintenance decisions
 - [`policy_bot_demo_mockup.html`](./mockups/policy_bot_demo_mockup.html)
   GitHub Pages-safe policy bot demo with grounded answers, citations, source preview, and guided next actions
 - [`ruleset_qc_demo_mockup.html`](./mockups/ruleset_qc_demo_mockup.html)
@@ -168,7 +194,8 @@ The mockups have been simplified and standardized around a clearer end-to-end fl
 
 - a shared darker Block-style dashboard shell
 - a launcher that behaves like the real process entry point instead of a page gallery
-- a cleaner happy-path demo story: `launcher → owner QC → governance review`
+- a cleaner happy-path demo story: `launcher → simplified step flow → simplified governance review`
+- the noisiest owner and governance moments now also exist as dedicated single-purpose step pages
 - the returned-item workspace framed as an alternate branch rather than part of the default click-through
 - shared lifecycle breadcrumbs, mini-maps, step rails, progress summaries, and next-best-action modules across the core workspaces
 - more consistent CTA wording, helper copy, spacing, and action alignment across the main Pages flow
