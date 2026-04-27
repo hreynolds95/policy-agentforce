@@ -343,6 +343,47 @@
       font-size: 14px;
     }
 
+    .support-intro {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+
+    .support-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .support-card-block {
+      display: grid;
+      gap: 10px;
+      padding: 16px 18px;
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+
+    .support-card-block strong {
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .support-card-block span {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .support-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .support-actions .btn {
+      width: 100%;
+    }
+
     .footer {
       font-size: 14px;
       color: var(--muted);
@@ -484,27 +525,28 @@
 
       <div class="panel">
         <h2>Need more context?</h2>
-        <div class="link-list">
+        <div class="support-intro">Open these only when the simplified path is not enough and you need the bigger map, denser workspaces, or support demos.</div>
+        <div class="support-stack">
           <a class="link-card" href="./mockups/end_to_end_process_flow.html">
             <strong>connected flow</strong>
             <span>Open the full lifecycle map when you want to explain how the simplified steps, return loop, and support paths connect</span>
           </a>
-          <a class="link-card" href="./mockups/document_owner_annual_refresh_mockup.html">
-            <strong>advanced owner workspace</strong>
-            <span>Use the denser all-in-one owner prototype when you need more controls than the simplified step flow shows</span>
-          </a>
-          <a class="link-card" href="./mockups/governance_team_mockup.html">
-            <strong>advanced governance workspace</strong>
-            <span>Use the denser governance prototype when you want queue triage, packet drill-down, and fuller routing context</span>
-          </a>
-          <a class="link-card" href="./mockups/policy_bot_demo_mockup.html">
-            <strong>policy bot demo</strong>
-            <span>Use grounded policy search and citations when the main lifecycle work needs extra policy context</span>
-          </a>
-          <a class="link-card" href="./mockups/ruleset_qc_demo_mockup.html">
-            <strong>ruleset QC demo</strong>
-            <span>Use the Google Doc plus markdown-ruleset concept when you want the newer QC direction outside the main story</span>
-          </a>
+          <div class="support-card-block">
+            <strong>advanced workspaces</strong>
+            <span>Open the denser owner or governance prototypes only when you need fuller controls, queue behavior, or drill-down detail than the simplified steps show.</span>
+            <div class="support-actions">
+              <a class="btn secondary" href="./mockups/document_owner_annual_refresh_mockup.html">Open advanced owner workspace</a>
+              <a class="btn secondary" href="./mockups/governance_team_mockup.html">Open advanced governance workspace</a>
+            </div>
+          </div>
+          <div class="support-card-block">
+            <strong>support demos</strong>
+            <span>Use these when the lifecycle work needs policy search, citations, or a lighter ruleset-driven QC pass before someone acts in the main story.</span>
+            <div class="support-actions">
+              <a class="btn secondary" href="./mockups/policy_bot_demo_mockup.html">Open policy bot demo</a>
+              <a class="btn secondary" href="./mockups/ruleset_qc_demo_mockup.html">Open ruleset QC demo</a>
+            </div>
+          </div>
           <a class="link-card" href="./prototypes/README.md">
             <strong>prototype pack</strong>
             <span>Reference notes, artifacts, and supporting prototype materials that sit behind the GitHub Pages demos</span>
