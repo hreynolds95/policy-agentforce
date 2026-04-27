@@ -1654,17 +1654,19 @@
       </aside>
     </div>
 
-    <section class="panel" id="maintenancePanel" style="margin-top: 18px;">
-      <div class="panel-header">
+    <details class="panel disclosure" id="maintenancePanel" style="margin-top: 18px;">
+      <summary class="panel-header">
         <div>
           <p class="eyebrow">Maintenance and reporting</p>
           <h2 class="panel-title">Extensions, exceptions, reporting, and archival</h2>
+          <div class="mono">Expand only when you need the deeper reporting, exception, or archival view.</div>
         </div>
-      </div>
+        <div class="action-tag optional-tag">Optional context</div>
+      </summary>
       <div class="panel-body">
         <div class="maintenance-grid" id="maintenanceGrid"></div>
       </div>
-    </section>
+    </details>
   </div>
 
   <script>
