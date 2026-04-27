@@ -1613,25 +1613,18 @@
           <details class="summary-card disclosure">
             <summary>
               <div>
-                <div class="card-label">Approval packet drill-down</div>
-                <div class="action-tag optional-tag">Optional detail</div>
-                <div class="mono">Expand when you need artifact-level readiness detail.</div>
-              </div>
-            </summary>
-            <div class="packet-drilldown disclosure-body" id="packetDrilldown"></div>
-          </details>
-
-          <details class="summary-card disclosure">
-            <summary>
-              <div>
-                <div class="card-label">Approval packet summary</div>
+                <div class="card-label">Packet and note tools</div>
                 <div class="action-tag optional-tag">Optional helper</div>
-                <div class="mono">Expand to prepare or export the one-page packet summary.</div>
+                <div class="mono">Expand only when you need artifact drill-down, the packet summary, or a return-to-owner note.</div>
               </div>
             </summary>
             <div class="disclosure-body">
-              <div class="mono" id="packetSummaryMeta">Prepare a one-page packet summary from the current governance state.</div>
-              <div class="export-shell">
+              <div class="card-label" style="margin-bottom: 10px;">Approval packet drill-down</div>
+              <div class="packet-drilldown" id="packetDrilldown"></div>
+
+              <div class="export-shell" style="margin-top: 14px;">
+                <div class="card-label">Approval packet summary</div>
+                <div class="mono" id="packetSummaryMeta">Prepare a one-page packet summary from the current governance state.</div>
                 <textarea class="export-area" id="packetSummaryText" spellcheck="false"></textarea>
                 <div class="action-row">
                   <button class="small-btn" id="generatePacketSummaryBtn">Prepare summary</button>
@@ -1639,24 +1632,16 @@
                   <button class="small-btn" id="downloadPacketSummaryBtn">Download summary</button>
                 </div>
               </div>
-            </div>
-          </details>
 
-          <details class="summary-card disclosure">
-            <summary>
-              <div>
+              <div class="export-shell" style="margin-top: 14px;">
                 <div class="card-label">Return-to-owner note</div>
-                <div class="action-tag optional-tag">Optional helper</div>
-                <div class="mono">Expand to prepare or export the owner note.</div>
-              </div>
-            </summary>
-            <div class="disclosure-body">
-              <div class="mono" id="returnNoteMeta">Prepare a note from the open QC findings and reviewer comments.</div>
-              <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
-              <div class="action-row" style="margin-top: 10px;">
-                <button class="small-btn" id="generateReturnNoteBtn">Prepare note</button>
-                <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
-                <button class="small-btn" id="downloadReturnNoteBtn">Download note</button>
+                <div class="mono" id="returnNoteMeta">Prepare a note from the open QC findings and reviewer comments.</div>
+                <textarea class="note-area" id="returnNoteText" spellcheck="false"></textarea>
+                <div class="action-row" style="margin-top: 10px;">
+                  <button class="small-btn" id="generateReturnNoteBtn">Prepare note</button>
+                  <button class="small-btn" id="copyReturnNoteBtn">Copy note</button>
+                  <button class="small-btn" id="downloadReturnNoteBtn">Download note</button>
+                </div>
               </div>
             </div>
           </details>
